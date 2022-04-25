@@ -22,10 +22,10 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.showing.backend"))
+                .apis(RequestHandlerSelectors.basePackage("com.pillimi.backend"))
                 .paths(PathSelectors.ant("/api/**"))
                 .build()
-                .apiInfo(apiInfo("showing","1.0"))
+                .apiInfo(apiInfo("pillimi","1.0"))
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()));
     }
