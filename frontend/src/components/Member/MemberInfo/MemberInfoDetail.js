@@ -35,6 +35,7 @@ function MemberInfoDetail(props) {
             </div>
             <br></br>
             <Button color="sky" className={`${style.bigbnt}`}>수정</Button>
+            <Button color="danger" className={`${style.bigbnt}`}>로그아웃</Button>
           </div>
         </Container>
     </>
