@@ -8,14 +8,13 @@ import "../../assets/css/now-ui-kit.css";
 
 // core components
 
-function MemberInfo() {
+function MemberInfo(props) {
   return (
     <>
         <Container>
-          <div id="pillimi">
-            <h4>김말자님의 정보</h4>
+          <div>
+            <h4>{props.value}님의 정보</h4>
             <hr></hr>
-            <MemberInfoDetail></MemberInfoDetail>
           </div>
         </Container>
     </>
