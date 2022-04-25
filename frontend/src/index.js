@@ -30,30 +30,24 @@ import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "views/examples/LoginPage.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
+import MainPage from "views/MainPage.js";
+import ElderMain from "components/main/ElderMain";
+import PillToday from "components/main/PillToday";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Switch>
-        <Route path="/index" render={(props) => <Index {...props} />} />
-        <Route
-          path="/nucleo-icons"
-          render={(props) => <NucleoIcons {...props} />}
-        />
-        <Route
-          path="/landing-page"
-          render={(props) => <LandingPage {...props} />}
-        />
-        <Route
-          path="/profile-page"
-          render={(props) => <ProfilePage {...props} />}
-        />
-        <Route
-          path="/login-page"
-          render={(props) => <LoginPage {...props} />}
-        />
+        <Route exact path="/" render={(props) => <MainPage {...props} />} />
+        <Route exact path="/index" render={(props) => <Index {...props} />} />
+        <Route exact path="/nucleo-icons" render={(props) => <NucleoIcons {...props} />} />
+        <Route exact path="/landing-page" render={(props) => <LandingPage {...props} />} />
+        <Route exact path="/profile-page" render={(props) => <ProfilePage {...props} />} />
+        <Route exact path="/login-page" render={(props) => <LoginPage {...props} />} />
+        <Route exact path="/main" render={(props) => <ElderMain {...props} />} />
+        <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
         <Redirect to="/index" />
-        <Redirect from="/" to="/index" />
+        {/* <Redirect from="/" to="/index" /> */}
       </Switch>
     </Switch>
   </BrowserRouter>,
