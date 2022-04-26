@@ -1,0 +1,19 @@
+.center {
+  text-align: center;
+  font-size: large;
+}
+
+.allcenter {
+  display: grid;
+  place-items: center;
+  min-height: 50vh;
+}
+
+.circle {
+  color: #2BC228;
+}
+
+.bigfont {
+  font-size: larger;
+  line-height: 2.2;
+}
