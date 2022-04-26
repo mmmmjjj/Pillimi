@@ -76,7 +76,6 @@ function MemberRegisterInfo(props) {
               </Form>
               <br></br>
               <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
-              <Button color="danger" className={`${style.bigbnt}`}>취소</Button>
             </div>
           </Container>
       </>
@@ -113,7 +112,6 @@ function MemberRegisterInfo(props) {
               </Form>
               <br></br>
               <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
-              <Button color="danger" className={`${style.bigbnt}`}>취소</Button>
             </div>
           </Container>
       </>
