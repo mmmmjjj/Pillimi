@@ -623,15 +623,15 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   .datepicker.dropdown-menu:before {
     display: none; }
   .datepicker.datepicker-primary {
-    background-color: #f96332; }
+    background-color: #0369A1; }
     .datepicker.datepicker-primary th,
     .datepicker.datepicker-primary .day div,
     .datepicker.datepicker-primary table tr td span {
       color: #FFFFFF; }
     .datepicker.datepicker-primary:after {
-      border-bottom-color: #f96332; }
+      border-bottom-color: #0369A1; }
     .datepicker.datepicker-primary.datepicker-orient-top:after {
-      border-top-color: #f96332; }
+      border-top-color: #0369A1; }
     .datepicker.datepicker-primary .dow {
       color: rgba(255, 255, 255, 0.8); }
     .datepicker.datepicker-primary table tr td.old div,
@@ -652,7 +652,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     .datepicker.datepicker-primary table tr td.active.disabled div,
     .datepicker.datepicker-primary table tr td.active.disabled:hover div {
       background-color: #FFFFFF;
-      color: #f96332; }
+      color: #0369A1; }
     .datepicker.datepicker-primary table tr td.day:hover div,
     .datepicker.datepicker-primary table tr td.day.focused div {
       background: rgba(255, 255, 255, 0.2); }
@@ -717,7 +717,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     .datepicker.datepicker-primary table tr td span.active:hover[disabled],
     .datepicker.datepicker-primary table tr td span.active.disabled[disabled],
     .datepicker.datepicker-primary table tr td span.active.disabled:hover[disabled] {
-      color: #f96332; }
+      color: #0369A1; }
 
 .datepicker-inline {
   width: 220px; }
@@ -815,7 +815,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   cursor: pointer; }
 
 .datepicker th {
-  color: #f96332; }
+  color: #0369A1; }
 
 .table-condensed > tbody > tr > td,
 .table-condensed > tbody > tr > th,
@@ -1022,7 +1022,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .datepicker table tr td.active:hover div,
 .datepicker table tr td.active.disabled div,
 .datepicker table tr td.active.disabled:hover div {
-  background-color: #f96332;
+  background-color: #0369A1;
   color: #FFFFFF;
   box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2); }
 
@@ -1046,7 +1046,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .datepicker table tr td.active:hover[disabled] div,
 .datepicker table tr td.active.disabled[disabled] div,
 .datepicker table tr td.active.disabled:hover[disabled] div {
-  background-color: #f96332; }
+  background-color: #0369A1; }
 
 .datepicker table tr td.active:active,
 .datepicker table tr td.active:hover:active,
@@ -1086,7 +1086,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .datepicker table tr td span.active.disabled,
 .datepicker table tr td span.active.disabled:hover {
   color: #fff;
-  background-color: #f96332; }
+  background-color: #0369A1; }
 
 .datepicker table tr td span.active:hover,
 .datepicker table tr td span.active:hover:hover,
@@ -1108,7 +1108,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .datepicker table tr td span.active:hover[disabled],
 .datepicker table tr td span.active.disabled[disabled],
 .datepicker table tr td span.active.disabled:hover[disabled] {
-  background-color: #f96332;
+  background-color: #0369A1;
   box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2); }
 
 .datepicker table tr td span.active:active,
@@ -1927,8 +1927,8 @@ fieldset[disabled]
 
 .form-control {
   background-color: transparent;
-  border: 1px solid #E3E3E3;
-  border-radius: 30px;
+  border: 1px solid #0c4a6e;
+  border-radius: 15px;
   color: #2c2c2c;
   height: auto;
   line-height: normal;
@@ -1943,14 +1943,14 @@ fieldset[disabled]
   .has-success .form-control {
     border-color: #E3E3E3; }
   .form-control:focus {
-    border: 1px solid #f96332;
+    border: 1px solid #0369A1;
     -webkit-box-shadow: none;
     box-shadow: none;
     outline: 0 !important;
     color: #2c2c2c; }
     .form-control:focus + .input-group-text,
     .form-control:focus ~ .input-group-text {
-      border: 1px solid #f96332;
+      border: 1px solid #0369A1;
       border-left: none;
       background-color: transparent; }
   .has-success .form-control,
@@ -5725,7 +5725,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .rdtPicker th.rdtNext,
 .rdtPicker th.rdtPrev,
 .rdtPicker .rdtTimeToggle {
-  color: #f96332; }
+  color: #0369A1; }
 
 .rdtPrev span,
 .rdtNext span {
