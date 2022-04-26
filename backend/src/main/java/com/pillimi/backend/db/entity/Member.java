@@ -39,9 +39,6 @@ public class Member extends BaseTimeEntity {
     private LocalDate memberBirthdate;
 
     @Column
-    private Boolean memberGender;
-
-    @Column
     private String memberPhone;
 
     @Column
