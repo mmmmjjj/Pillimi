@@ -21,7 +21,7 @@ function PillCheckAlarm(props) {
               약이 확인되었습니다!
             </span>
             <div>
-              <AiOutlineCheckCircle className="mt-3" size={"2em"} color="2BC228"></AiOutlineCheckCircle>
+              <AiOutlineCheckCircle className="mt-3" size={"2.5em"} color="2BC228"></AiOutlineCheckCircle>
             </div>
           </div>
         </div>
