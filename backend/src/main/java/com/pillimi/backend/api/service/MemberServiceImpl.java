@@ -1,5 +1,6 @@
 package com.pillimi.backend.api.service;
 
+import com.pillimi.backend.api.request.RegisterReq;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
 import com.pillimi.backend.common.model.KakaoProfile;
 import com.pillimi.backend.common.model.RoleType;
@@ -65,8 +66,22 @@ public class MemberServiceImpl implements MemberService {
     accessToken 발급
      */
     @Override
-    public String createToken(Long id, RoleType roleType){
-        return tokenProvider.createToken(id.toString(),roleType);
+    public String createToken(Long id, RoleType roleType) {
+        return tokenProvider.createToken(id.toString(), roleType);
+    }
+
+
+    /*
+    추가 회원 정보 입력
+     */
+    @Override
+    public void registerInfo(Member member, RegisterReq req) {
+
+        member.setMemberIsfirst(false);
+        member.setMemberBirthdate(req.getBirthDate());
+        member.setMemberIsprotector(req.getIsProtector());
+        member.setMemberPhone(req.getPhone());
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.pillimi.backend.api.service;
 
+import com.pillimi.backend.api.request.RegisterReq;
 import com.pillimi.backend.common.model.KakaoProfile;
 import com.pillimi.backend.common.model.RoleType;
 import com.pillimi.backend.db.entity.Member;
@@ -17,5 +18,7 @@ public interface MemberService {
     Member createKakaoMember(KakaoProfile kakaoProfile);
 
     String createToken(Long id, RoleType roleType);
+
+    void registerInfo(Member member,RegisterReq req);
 
 }
