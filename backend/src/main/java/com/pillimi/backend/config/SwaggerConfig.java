@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 @Configuration
 public class SwaggerConfig {
 
@@ -25,7 +24,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.pillimi.backend"))
                 .paths(PathSelectors.ant("/api/**"))
                 .build()
-                .apiInfo(apiInfo("pillimi","1.0"))
+                .apiInfo(apiInfo("pillimi", "1.0"))
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()));
     }
@@ -38,7 +37,7 @@ public class SwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope(AUTHORIZATION_SCOPE_GLOBAL, AUTHORIZATION_SCOPE_GLOBAL_DESC);
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return  Arrays.asList(new SecurityReference(SECURITY_SCHEMA_NAME, authorizationScopes));
+        return Arrays.asList(new SecurityReference(SECURITY_SCHEMA_NAME, authorizationScopes));
     }
 
     private ApiInfo apiInfo(String title, String version) {
@@ -47,7 +46,7 @@ public class SwaggerConfig {
                 "헤더 토큰 값 : [Bearer 토큰값]",
                 version,
                 "pillimi.com",
-                new Contact("contact me","ssafy.com","ssafy.com"),
+                new Contact("contact me", "ssafy.com", "ssafy.com"),
                 "",
                 "",
                 new ArrayList<>());
