@@ -1,0 +1,31 @@
+#reg_caution{
+  text-align: center;
+  font-size: large;
+  background-color: #EAF0F8;
+  padding: 1rem;
+}
+.row{
+  justify-content: center;
+  vertical-align: middle;
+}
+.activebtn {
+  background-color: #0EA5E9;
+}
+.unactivebtn{
+  background-color: #777777;
+}
+.tooltip-inner{
+  background-color: red;
+  color: white;
+  font-size: large;
+}
+.input-group{
+  margin: 0px;
+}
+.confirmbutton{
+  font-size: large;
+}
+.card{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
