@@ -1,8 +1,12 @@
 package com.pillimi.backend.api.controller;
 
+import com.pillimi.backend.api.request.RegisterReq;
 import com.pillimi.backend.api.response.LoginRes;
 import com.pillimi.backend.api.service.AuthService;
 import com.pillimi.backend.api.service.MemberService;
+import com.pillimi.backend.common.auth.JwtUtil;
+import com.pillimi.backend.common.exception.NotFoundException;
+import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.exception.handler.ErrorResponse;
 import com.pillimi.backend.common.model.BaseResponseBody;
 import com.pillimi.backend.common.model.KakaoProfile;
@@ -15,6 +19,7 @@ import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import static com.pillimi.backend.common.model.ResponseMessage.*;
@@ -61,9 +66,34 @@ public class MemberController {
         // 4. JWT token 발급
         String token = memberService.createToken(member.getMemberSeq(), RoleType.MEMBER);
 
-        LoginRes loginRes = new LoginRes(member.getMemberSeq(), token, member.getMemberNickname(), member.getMemberImage());
+        LoginRes loginRes = LoginRes.builder().memberSeq(member.getMemberSeq())
+                .accessToken(token)
+                .nickName(member.getMemberNickname())
+                .memberImage(member.getMemberImage())
+                .isFirst(member.getMemberIsfirst())
+                .build();
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, LOGIN, loginRes));
+    }
+
+    @ApiOperation(value = "초기정보 입력", notes = "첫 로그인 후 회원 정보를 입력받는 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = REGISTER),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @PostMapping(value = "/register")
+    public ResponseEntity<BaseResponseBody> registerInfo(@RequestBody RegisterReq req) {
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        if(!member.getMemberIsfirst()) throw new AccessDeniedException(ErrorCode.ALREADY_REGISTERED.getMessage());
+
+        memberService.registerInfo(member,req);
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGISTER));
     }
 
 }

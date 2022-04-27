@@ -13,4 +13,5 @@ public class ResponseMessage {
 
     // Login
     public static final String LOGIN = "로그인 성공";
+    public static final String REGISTER = "회원가입 성공";
 }

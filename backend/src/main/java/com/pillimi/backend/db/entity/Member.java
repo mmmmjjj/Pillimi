@@ -48,7 +48,7 @@ public class Member extends BaseTimeEntity {
     private Boolean memberIsfirst;
 
     @Column
-    private Boolean memberIsprotector;
+    private Integer memberIsprotector;
 
 
 }
