@@ -61,7 +61,12 @@ public class MemberController {
         // 4. JWT token 발급
         String token = memberService.createToken(member.getMemberSeq(), RoleType.MEMBER);
 
-        LoginRes loginRes = new LoginRes(member.getMemberSeq(), token, member.getMemberNickname(), member.getMemberImage());
+        LoginRes loginRes = LoginRes.builder().memberSeq(member.getMemberSeq())
+                .accessToken(token)
+                .nickName(member.getMemberNickname())
+                .memberImage(member.getMemberImage())
+                .isFirst(member.getMemberIsfirst())
+                .build();
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, LOGIN, loginRes));
     }

@@ -31,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
     public String getKakaoAccessToken(String code) {
         String reqURL = "https://kauth.kakao.com/oauth/token";
 
+        // TODO 프론트 로그인 구현 후 서버URI로 변경하기
         String param = "grant_type=authorization_code" +
                 "&client_id=" + KAKAO_CLIENT_ID +
                 "&redirect_uri=http://localhost:8080/callback" +
