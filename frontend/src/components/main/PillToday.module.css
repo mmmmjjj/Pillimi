@@ -39,6 +39,14 @@
   background-color: #2bc228;
 }
 
+.DoneBtn:hover,
+.DoneBtn:focus {
+  background-color: #2bc228 !important;
+  color: black !important;
+  cursor: default !important;
+  box-shadow: none !important;
+}
+
 .PictureBtn {
   color: black;
   font-weight: bold;
@@ -48,6 +56,14 @@
   margin: auto;
   display: block;
   background-color: #0284c7;
+}
+
+.PictureBtn:hover,
+.PictureBtn:active,
+.PictureBtn:focus {
+  color: black !important;
+  background-color: #0284c7 !important;
+  box-shadow: none !important;
 }
 
 .Icon {
