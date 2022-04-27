@@ -29,3 +29,11 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
+hr{
+  background-color: #676767;
+}
+#outsidecon{
+  width: 100%;
+  text-align: center;
+  padding: 0px;
+}

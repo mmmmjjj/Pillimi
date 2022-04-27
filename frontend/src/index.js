@@ -30,6 +30,7 @@ import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "views/examples/LoginPage.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
+import Family from "components/family/FamilyPage.js";
 import FamilyRegisterRequest from "components/family/familyRegister/FamilyRegisterRequest.js";
 
 ReactDOM.render(
@@ -37,6 +38,7 @@ ReactDOM.render(
     <Switch>
       <Switch>
         <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
+        <Route path="/family" render={(props) => <Family {...props} />} />
         <Route path="/index" render={(props) => <Index {...props} />} />
         <Route
           path="/nucleo-icons"

@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useState, useEffect }from "react";
 import "../familycss.css";
 
 // reactstrap components
@@ -17,7 +17,10 @@ import {
 
 // core components
 
-function FamilyRegisterRequest() {
+function FamilyRegisterRequest(props) {
+  useEffect(()=>{
+    props.getheader("가족 등록")
+  })
   const [phonenumber, setphonenumber] = useState("");
   const [membername, setmembername] = useState("");
   const [nameok, setnameok] = useState(false);
@@ -104,7 +107,7 @@ function FamilyRegisterRequest() {
   };
   return (
     <>
-      <Container>
+      <Container style={{ padding:"50px" }}>
         <Row>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -124,7 +127,7 @@ function FamilyRegisterRequest() {
             <div
               style={{
                 width: "100%",
-                height: "20px",
+                height: "50px",
                 paddingLeft: "20px",
                 color: "red",
               }}
@@ -133,7 +136,7 @@ function FamilyRegisterRequest() {
               이름은 한글로 2~10글자 입력가능합니다.
             </div>
           ) : (
-            <div style={{ height: "20px", width:"100%" }}></div>
+            <div style={{ height: "50px", width:"100%" }}></div>
           )}
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -154,7 +157,7 @@ function FamilyRegisterRequest() {
             <div
               style={{
                 width: "100%",
-                height: "20px",
+                height: "50px",
                 paddingLeft: "20px",
                 color: "red",
               }}
@@ -163,7 +166,7 @@ function FamilyRegisterRequest() {
               전화번호는 숫자로 9~11글자 입력가능합니다.
             </div>
           ) : (
-            <div style={{ height: "20px", width:"100%" }}></div>
+            <div style={{ height: "50px", width:"100%" }}></div>
           )}
         </Row>
         <Row>
