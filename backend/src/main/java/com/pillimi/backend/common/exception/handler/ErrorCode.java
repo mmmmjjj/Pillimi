@@ -10,8 +10,9 @@ public enum ErrorCode {
     DUPLICATE_INPUT_VALUE(400, "C002", "Duplicate Input Value"),
     // Member
     REFRESH_TOKEN_INVALID(403,"M001","Refresh token is invalid"),
-    USER_NOT_FOUND(404, "M002", "Member Not Found"),
-    ACCESS_DENIED(403, "M003", "Access Denied");
+    MEMBER_NOT_FOUND(404, "M002", "Member Not Found"),
+    ACCESS_DENIED(403, "M003", "Access Denied"),
+    ALREADY_REGISTERED(403,"M004","Already Registered Member");
 
     private int status;
     private final String code;
