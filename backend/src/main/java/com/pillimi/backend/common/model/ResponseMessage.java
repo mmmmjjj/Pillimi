@@ -11,7 +11,8 @@ public class ResponseMessage {
     // Auth
     public static final String GET_KAKAO_ACCESS_TOKEN = "카카오 토큰 생성 성공";
 
-    // Login
+    // Member
     public static final String LOGIN = "로그인 성공";
     public static final String REGISTER = "회원가입 성공";
+    public static final String GET_MEMBER_INFO = "회원 정보 조회 성공";
 }

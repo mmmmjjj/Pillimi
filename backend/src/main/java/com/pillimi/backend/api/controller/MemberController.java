@@ -73,7 +73,7 @@ public class MemberController {
                 .isFirst(member.getMemberIsfirst())
                 .build();
 
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, LOGIN, loginRes));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, LOGIN, loginRes));
     }
 
     @ApiOperation(value = "초기정보 입력", notes = "첫 로그인 후 회원 정보를 입력받는 api입니다.")
@@ -89,11 +89,27 @@ public class MemberController {
 
         Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
-        if(!member.getMemberIsfirst()) throw new AccessDeniedException(ErrorCode.ALREADY_REGISTERED.getMessage());
+        if (!member.getMemberIsfirst()) throw new AccessDeniedException(ErrorCode.ALREADY_REGISTERED.getMessage());
 
-        memberService.registerInfo(member,req);
+        memberService.registerInfo(member, req);
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGISTER));
+    }
+
+    @ApiOperation(value = "회원정보 조회", notes = "회원 정보 조회 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = GET_MEMBER_INFO),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @GetMapping(value = "")
+    public ResponseEntity<BaseResponseBody> getMemberInfo(@RequestParam Long memberSeq) {
+
+        Member member = memberService.getMemberById(memberSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, GET_MEMBER_INFO,memberService.getMemberInfo(member)));
     }
 
 }

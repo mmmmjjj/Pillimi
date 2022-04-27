@@ -1,6 +1,7 @@
 package com.pillimi.backend.api.service;
 
 import com.pillimi.backend.api.request.RegisterReq;
+import com.pillimi.backend.api.response.MemberInfoRes;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
 import com.pillimi.backend.common.model.KakaoProfile;
 import com.pillimi.backend.common.model.RoleType;
@@ -82,6 +83,19 @@ public class MemberServiceImpl implements MemberService {
         member.setMemberIsprotector(req.getIsProtector());
         member.setMemberPhone(req.getPhone());
 
+    }
+
+    /*
+    회원 정보 조회
+     */
+    public MemberInfoRes getMemberInfo(Member member) {
+
+        return MemberInfoRes.builder().memberSeq(member.getMemberSeq())
+                .nickName(member.getMemberNickname())
+                .birthDate(member.getMemberBirthdate())
+                .phone(member.getMemberPhone())
+                .memberImage(member.getMemberImage())
+                .build();
     }
 
 
