@@ -6,6 +6,7 @@ import com.pillimi.backend.common.auth.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -34,6 +35,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) {
+        // Security 설정 해제할 api 추가해주세요
+        web.ignoring()
+                .antMatchers(
+                        "/error",
+                        "/swagger-resources/**",
+                        "/swagger-ui/**",
+                        "/v2/api-docs",
+                        "/api/v1/member/kakao/**"
+                );
+    }
+
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
@@ -53,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .anyRequest()
-                .permitAll()
+//                .permitAll()  // security 해제 
+                .authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
     }
