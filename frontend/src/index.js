@@ -31,8 +31,9 @@ import LoginPage from "views/examples/LoginPage.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import MainPage from "views/MainPage.js";
-import ElderMain from "components/main/ElderMain";
-import PillToday from "components/main/PillToday";
+import ElderMain from "components/main/ElderMain.js";
+import PillToday from "components/main/PillToday.js";
+import PillDetail from "components/pill/PillDetail.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -46,6 +47,7 @@ ReactDOM.render(
         <Route exact path="/login-page" render={(props) => <LoginPage {...props} />} />
         <Route exact path="/main" render={(props) => <ElderMain {...props} />} />
         <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
+        <Route exact path="/pill-detail" render={(props) => <PillDetail {...props} />} />
         <Redirect to="/index" />
         {/* <Redirect from="/" to="/index" /> */}
       </Switch>
