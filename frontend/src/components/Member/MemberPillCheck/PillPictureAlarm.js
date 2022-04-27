@@ -33,7 +33,7 @@ function PillPictureAlarm(props) {
   const PillList = () => {
     let result = [];
     pills.forEach(element => {
-      result.push(<p>{element.name}({element.alias})&nbsp;{element.num}정</p>)
+      result.push(<span>{element.name}({element.alias})&nbsp;{element.num}정<br></br></span>)
     });
     return result;
   }
@@ -42,8 +42,9 @@ function PillPictureAlarm(props) {
     if(isChecked){
       return(
         <>
-          <div>
-            <p>(엄마)님께서 (9시 06분) 약 복용이 확인되셨습니다.</p>
+          <div className={`${style.checkAlarm} ${style.bold}`}>
+            <span>(엄마)님께서 (9시 06분)</span><br></br>
+            <span>약 복용이 확인되셨습니다.</span>
           </div>
           <Button color="sky">확인</Button>
         </>
@@ -51,12 +52,13 @@ function PillPictureAlarm(props) {
     }else{
       return(
         <>
-          <div>
-            <p>(엄마)님의 (19시 12분)</p>
-            <p>약 복용 사진입니다</p>
-            <p>올바른 사진이라면 확인 버튼을 눌러주세요</p>
+          <div className={`${style.checkAlarm} ${style.bold}`}>
+            <span>(엄마)님의 (19시 12분)</span><br></br>
+            <span>약 복용 사진입니다</span><br></br>
+            <span>복용할 약이 맞다면 </span><br></br>
+            <span><span className={`${style.blue}`}>확인</span> 버튼을 눌러주세요</span>
           </div>
-          <Button color="sky" onClick={onChangeIsChecked}>확인</Button>
+          <Button color="sky" onClick={onChangeIsChecked} className="mr-5">확인</Button>
           <Button>보류</Button>
         </>
       )
@@ -67,16 +69,19 @@ function PillPictureAlarm(props) {
     <>
       <Container>
         <MemberPillCheck></MemberPillCheck>
-        <div>
-          <div>
-            2022-04-12
+        <div  className={ `${style.center} ${style.backcolor}`}>
+          <div className="pt-3">
+            <span className={`${style.bold}`}>2022-04-12</span>
           </div>
           <div>
             <img src="http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif"></img>
-            <p>복용시간 : <span>9시 00분</span></p>
+          </div>
+          <div className={`${style.smaller} mt-2`}>
+            <span>복용시간 : 9시 00분</span>
+            <br></br>
             <PillList></PillList>
           </div>
-          <div>
+          <div className={`mt-3`}>
             <IsCheckedPicture></IsCheckedPicture>
           </div>
         </div>

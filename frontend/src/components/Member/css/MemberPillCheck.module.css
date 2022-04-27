@@ -1,6 +1,7 @@
 .center {
   text-align: center;
   font-size: large;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .allcenter {
@@ -13,8 +14,44 @@
   color: #2BC228;
 }
 
+.blue {
+  color: #0369A1;
+}
+
 .bigfont {
   font-size: 30px;
   line-height: 2.2;
   font-weight: 500;
+}
+
+.smaller {
+  clear: both;
+  font-size: small;
+}
+
+.checkAlarm {
+  clear: both;
+  font-size: medium;
+  line-height: 1.8;
+  margin-top: 10%;
+  background-color: white;
+  margin: 0px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  /* width: 100vw; */
+}
+
+.backcolor {
+  background-color: #EAF0F8;
+  margin: 0;
+  /* width: 100vw; */
+  /* height: 200vw; */
+}
+
+hr {
+  margin-bottom : 0;
+}
+
+.bold {
+  font-weight: bold;
 }
