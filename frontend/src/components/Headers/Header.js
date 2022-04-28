@@ -2,7 +2,7 @@
 import React from "react";
 
 // reactstrap components
-import style from "./css/MemberPillCheck.module.css"
+import style from "./Header.module.css"
 
 // core components
 
