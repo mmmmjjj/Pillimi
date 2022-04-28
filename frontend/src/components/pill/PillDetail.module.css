@@ -9,13 +9,11 @@ hr {
 
 .Label {
   font-size: 23px;
-  margin-left: 10%;
   font-weight: bold;
 }
 
 .LabelContent {
   font-size: 20px;
-  margin-left: 10%;
 }
 
 .CompanyName {
@@ -40,4 +38,9 @@ hr {
   background-color: #2bc228 !important;
   color: black !important;
   box-shadow: none !important;
+}
+
+.Content {
+  margin-left: 10%;
+  margin-right: 10%;
 }

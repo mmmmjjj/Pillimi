@@ -20,14 +20,16 @@ function PillDetail() {
         ></img>
       </h3>
       <br></br>
-      <h3 className={PillDetailCSS.PillDetailTitle}>에이서캡슐(아세클로페낙)</h3>
-      <h3 className={PillDetailCSS.CompanyName}>경동제약(주)</h3>
-      <br></br>
-      <Label value={"효능"} content={"류마티스관절염,강직척추염"}></Label>
-      <Label value={"주의사항"} content={"위장관계 위험"}></Label>
-      <Label value={"복용방법"} content={"이 약은 씹거나 부수지 말고 그대로 복용한다."}></Label>
-      <Label value={"동시 복용 불가 약품"} content={"타이레놀"}></Label>
-      <Label value={"성분표"} content={"아세클로페낙(EP) 100mg"}></Label>
+      <div className={PillDetailCSS.Content}>
+        <h3 className={PillDetailCSS.PillDetailTitle}>에이서캡슐(아세클로페낙)</h3>
+        <h3 className={PillDetailCSS.CompanyName}>경동제약(주)</h3>
+        <br></br>
+        <Label value={"효능"} content={"류마티스관절염,강직척추염"}></Label>
+        <Label value={"주의사항"} content={"위장관계 위험"}></Label>
+        <Label value={"복용방법"} content={"이 약은 씹거나 부수지 말고 그대로 복용한다."}></Label>
+        <Label value={"동시 복용 불가 약품"} content={"타이레놀"}></Label>
+        <Label value={"성분표"} content={"아세클로페낙(EP) 100mg"}></Label>
+      </div>
     </>
   );
 }
