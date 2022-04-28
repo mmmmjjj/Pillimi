@@ -1,4 +1,5 @@
 /*eslint-disable*/
+import Header from "components/Headers/Header";
 import React from "react";
 
 // reactstrap components
@@ -11,10 +12,7 @@ import style from "./css/MemberPillCheck.module.css"
 function MemberPillCheck(props) {
   return (
     <>
-          <div className={`${style.center}`}>
-            <h4>복용 확인</h4>
-            <hr></hr>
-          </div>
+      <Header header="복용 확인"></Header>
     </>
   );
 }
