@@ -5,10 +5,12 @@
   margin: 0 auto;
 }
 .MainText {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   color: black;
   text-align: center;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 .TimeText {
   font-size: 25px;
@@ -25,7 +27,7 @@
 .Img {
   font-size: 25px;
   font-weight: bold;
-  margin-left: 20%;
+  margin-left: 8%;
   margin-right: 30%;
 }
 .DoneBtn {
@@ -69,7 +71,7 @@
 .Icon {
   float: right;
   margin-top: 40px;
-  margin-right: 60px;
+  margin-right: 10%;
   font-size: 30px;
 }
 
@@ -77,11 +79,12 @@
   float: left;
   font-weight: bold;
   font-size: 20px;
-  margin-left: 60px;
+  margin-left: 10%;
   margin-top: 40px;
 }
 
 .Family {
   font-weight: bold;
-  margin-left: 60px;
+  margin-left: 10%;
+  /* margin-left: 60px; */
 }
