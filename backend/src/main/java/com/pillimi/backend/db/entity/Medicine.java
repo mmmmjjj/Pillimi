@@ -1,12 +1,12 @@
 package com.pillimi.backend.db.entity;
 
 
+import com.pillimi.backend.db.entity.Shape;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -70,6 +70,6 @@ public class Medicine{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shape_seq")
-    private Shape shapeSeq;
+    private Shape shape;
 
 }
