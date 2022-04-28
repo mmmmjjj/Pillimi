@@ -21,7 +21,7 @@ public class MedicineIntake {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberMedicineSeq;
+    private Long medicineIntakeSeq;
 
     @Column
     private String memberMedicineName;
