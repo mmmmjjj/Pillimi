@@ -1,6 +1,7 @@
 package com.pillimi.backend.api.controller;
 
 import com.pillimi.backend.api.request.RegisterReq;
+import com.pillimi.backend.api.request.UpdateMemberReq;
 import com.pillimi.backend.api.response.LoginRes;
 import com.pillimi.backend.api.service.AuthService;
 import com.pillimi.backend.api.service.MemberService;
@@ -110,6 +111,23 @@ public class MemberController {
         Member member = memberService.getMemberById(memberSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, GET_MEMBER_INFO,memberService.getMemberInfo(member)));
+    }
+
+    @ApiOperation(value = "회원정보 수정", notes = "회원 정보 수정 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = UPDATE_MEMBER_INFO),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @PutMapping(value = "")
+    public ResponseEntity<BaseResponseBody> updateMemberInfo(@RequestBody UpdateMemberReq req) {
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        memberService.updateInfo(member,req);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, UPDATE_MEMBER_INFO));
     }
 
 }

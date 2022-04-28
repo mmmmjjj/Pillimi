@@ -1,6 +1,7 @@
 package com.pillimi.backend.api.service;
 
 import com.pillimi.backend.api.request.RegisterReq;
+import com.pillimi.backend.api.request.UpdateMemberReq;
 import com.pillimi.backend.api.response.MemberInfoRes;
 import com.pillimi.backend.common.model.KakaoProfile;
 import com.pillimi.backend.common.model.RoleType;
@@ -23,5 +24,7 @@ public interface MemberService {
     void registerInfo(Member member, RegisterReq req);
 
     MemberInfoRes getMemberInfo(Member member);
+
+    void updateInfo(Member member, UpdateMemberReq req);
 
 }

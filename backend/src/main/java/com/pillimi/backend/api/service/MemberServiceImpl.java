@@ -1,16 +1,22 @@
 package com.pillimi.backend.api.service;
 
 import com.pillimi.backend.api.request.RegisterReq;
+import com.pillimi.backend.api.request.UpdateMemberReq;
 import com.pillimi.backend.api.response.MemberInfoRes;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
+import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.model.KakaoProfile;
 import com.pillimi.backend.common.model.RoleType;
 import com.pillimi.backend.db.entity.Member;
+import com.pillimi.backend.db.repository.FamilyRepository;
 import com.pillimi.backend.db.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
     private final JwtTokenProvider tokenProvider;
 
     private final MemberRepository memberRepository;
+    private final FamilyRepository familyRepository;
 
     /*
     회원 정보 DB 저장
@@ -96,6 +103,33 @@ public class MemberServiceImpl implements MemberService {
                 .phone(member.getMemberPhone())
                 .memberImage(member.getMemberImage())
                 .build();
+    }
+
+    /*
+    회원 정보 수정
+     */
+    @Override
+    public void updateInfo(Member member, UpdateMemberReq req) {
+
+        Member target = memberRepository.getById(req.getMemberSeq());
+
+        // 요청자가 보호자가 아닐 시
+        if (member.getMemberIsprotector() == 0) {
+            if (!Objects.equals(member, target))
+                throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getCode());
+        }
+        // 보호자일 시
+        else {
+            List<Member> family = familyRepository.findFamilyByMember(member);
+
+            if (!(family.contains(target) || Objects.equals(member, target)))
+                throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getCode());
+
+        }
+
+        target.setMemberPhone(req.getPhone());
+        target.setMemberBirthdate(req.getBirthDate());
+        target.setMemberNickname(req.getNickName());
     }
 
 
