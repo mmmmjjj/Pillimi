@@ -1,7 +1,7 @@
 import React from "react";
 import { Input, Button, Card } from "reactstrap";
 
-import PillSearchCSS from "./PillSearch.module.css";
+import PillSearchCSS from "./css/PillSearch.module.css";
 import Header from "components/Headers/Header";
 
 function PillSearch() {

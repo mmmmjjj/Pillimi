@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-import PillTodayCSS from "./PillToday.module.css";
+import PillTodayCSS from "./css/PillToday.module.css";
 
 function PillToday() {
   React.useEffect(() => {}, []);
