@@ -64,7 +64,6 @@ function ProtectorTakeAlarm(props) {
 
   return (
     <>  
-      <MemberPillPage></MemberPillPage>
       <div className={`${style.center} ${style.whole}`}>
         <div className="d-flex">
           <div className="flex-fill pt-2 pb-2 pr-4 m-0 border border-top-0 border-dark bg-white">
