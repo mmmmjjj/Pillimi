@@ -16,8 +16,6 @@ function PillSearch() {
         <Button className={PillSearchCSS.SearchBtn}>검색</Button>
         <br></br>
         <Card className={PillSearchCSS.PillList} onClick={gotoPillDetail}>
-          {/* <div className="align-items-center justify-content-left">
-            <div className="align-items-center"> */}
           <div className="d-flex align-items-center">
             <img
               className={`${PillSearchCSS.Img}`}
@@ -27,8 +25,6 @@ function PillSearch() {
             <span className={`${PillSearchCSS.PillName} flex-fill`}>타이레놀정500mg</span>
             <i className={`now-ui-icons arrows-1_minimal-right`}></i>
           </div>
-          {/* </div>
-          </div> */}
         </Card>
       </div>
     </>
