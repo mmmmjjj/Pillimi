@@ -28,11 +28,11 @@ public class MedicineIntake {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
-    private Member memberSeq;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medicine_seq")
-    private Medicine medicineSeq;
+    private Medicine medicine;
 
     @Column
     private boolean memberMedicineNow;
