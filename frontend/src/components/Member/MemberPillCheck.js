@@ -11,12 +11,10 @@ import style from "./css/MemberPillCheck.module.css"
 function MemberPillCheck(props) {
   return (
     <>
-        <Container>
           <div className={`${style.center}`}>
             <h4>복용 확인</h4>
             <hr></hr>
           </div>
-        </Container>
     </>
   );
 }

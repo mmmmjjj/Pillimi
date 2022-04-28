@@ -67,8 +67,9 @@ function PillPictureAlarm(props) {
 
   return (
     <>
-      <Container>
-        <MemberPillCheck></MemberPillCheck>
+    <MemberPillCheck></MemberPillCheck>
+    <div className={`${style.whole}`}>
+        
         <div  className={ `${style.center} ${style.backcolor}`}>
           <div className="pt-3">
             <span className={`${style.bold}`}>2022-04-12</span>
@@ -85,7 +86,7 @@ function PillPictureAlarm(props) {
             <IsCheckedPicture></IsCheckedPicture>
           </div>
         </div>
-      </Container>
+      </div>
     </>
   )
 }
