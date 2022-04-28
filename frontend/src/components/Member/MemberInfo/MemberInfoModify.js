@@ -39,50 +39,48 @@ function MemberInfoModify(props) {
   }
   return (
     <>
-        <Container>
-          <div id="pillimi" className={`${style.center}`}>
-            <MemberInfo></MemberInfo>
-            <img src="" alt="프로필 사진"></img>
+      <MemberInfo></MemberInfo>
+      <div id="pillimi" className={`${style.center}`}>
+        <img src="" alt="프로필 사진"></img>
+        <br></br>
+        <Form>
+          <FormGroup>
+            <Label value={"닉네임"} ></Label>
+            <Input
+              id="nickname"
+              name="nickname"
+              type="text"
+              className={`${style.datepicker}`}
+            ></Input>
+          </FormGroup>
+          <FormGroup>
+            <Label value={"생년월일"}></Label>
+            <Datetime 
+              className={`${style.datepicker}`}
+              // inputProps={inputprops}
+              timeFormat={false}></Datetime>
+          </FormGroup>
+          <FormGroup>
+          <Label value={"전화번호"}></Label>
+            <span><Input 
+            id="phone" 
+            name="phone" 
+            type="tel" 
+            className={`${style.datepicker}`}
+            onChange={onChangeProfile}></Input></span>
             <br></br>
-            <Form>
-              <FormGroup>
-                <Label value={"닉네임"} ></Label>
-                <Input
-                  id="nickname"
-                  name="nickname"
-                  type="text"
-                  className={`${style.datepicker}`}
-                ></Input>
-              </FormGroup>
-              <FormGroup>
-                <Label value={"생년월일"}></Label>
-                <Datetime 
-                  className={`${style.datepicker}`}
-                  // inputProps={inputprops}
-                  timeFormat={false}></Datetime>
-              </FormGroup>
-              <FormGroup>
-              <Label value={"전화번호"}></Label>
-                <span><Input 
-                id="phone" 
-                name="phone" 
-                type="tel" 
-                className={`${style.datepicker}`}
-                onChange={onChangeProfile}></Input></span>
-                <br></br>
-              </FormGroup>
-              <FormGroup>
-                <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
-                <div>
-                  <DiseaseList arr={array1}></DiseaseList>
-                </div>
-              </FormGroup>
-            </Form>
-            <br></br>
-            <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
-            <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
-          </div>
-        </Container>
+          </FormGroup>
+          <FormGroup>
+            <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
+            <div>
+              <DiseaseList arr={array1}></DiseaseList>
+            </div>
+          </FormGroup>
+        </Form>
+        <br></br>
+        <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
+        <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
+      </div>
     </>
   );
 }
