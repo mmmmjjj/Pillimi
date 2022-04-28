@@ -2,14 +2,13 @@ import React from "react";
 import { Button } from "reactstrap";
 
 import PillDetailCSS from "./PillDetail.module.css";
+import Header from "components/Headers/Header";
 
 function PillDetail() {
   React.useEffect(() => {}, []);
   return (
     <>
-      <br></br>
-      <h3 className={PillDetailCSS.PillDetailTitle}>알약 정보</h3>
-      <hr></hr>
+      <Header header="알약 정보"></Header>
       <br></br>
       <Button className={PillDetailCSS.AddBtn}>추가</Button>
       <br></br>
