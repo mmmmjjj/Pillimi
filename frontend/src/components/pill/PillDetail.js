@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-import PillDetailCSS from "./PillDetail.module.css";
+import PillDetailCSS from "./css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 
 function PillDetail() {
