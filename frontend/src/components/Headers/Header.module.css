@@ -1,0 +1,12 @@
+.center {
+  text-align: center;
+  font-size: large;
+  width: 100vw;
+  height: 100wh;
+  margin: 0 auto;
+}
+
+hr {
+  margin-bottom : 0;
+  background-color: #676767;
+}
