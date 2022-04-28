@@ -18,7 +18,7 @@ hr {
   background-color: white;
   margin-left: 10%;
   margin-right: 5%;
-  width: 48%;
+  width: 52.5%;
   height: 6%;
   float: left;
   border-radius: 2px;
@@ -33,11 +33,13 @@ hr {
   font-weight: bold;
   font-size: 14px;
   text-align: center;
-  width: 24%;
+  width: 20%;
   margin-top: 0px;
   margin-bottom: 0px;
   display: block;
   background-color: #0284c7;
+  padding-right: 10px !important;
+  padding-left: 10px !important;
 }
 
 .SearchBtn:hover,
