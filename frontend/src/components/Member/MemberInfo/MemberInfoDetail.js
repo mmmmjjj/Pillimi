@@ -21,23 +21,22 @@ function MemberInfoDetail(props) {
   
   return (
     <>
-        <Container>
-          <div id="pillimi" className={`${style.center}`}>
-            <MemberInfo></MemberInfo>
-            <img src="" alt="프로필 사진"></img>
-            <br></br>
-            <Label value={"닉네임"} content={"김말자"} ></Label>
-            <Label value={"생년월일"} content={"1987.02.12"}></Label>
-            <Label value={"전화번호"} content={"010-2012-1020"}></Label>
-            <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
-            <div>
-              {disease()}
-            </div>
-            <br></br>
-            <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>수정</Button>
-            <Button color="danger" className={`${style.bigbnt}`}>로그아웃</Button>
-          </div>
-        </Container>
+      <MemberInfo></MemberInfo>
+      <div className={`${style.center}`}>
+        
+        <img src="" alt="프로필 사진" className="mt-5"></img>
+        <br></br>
+        <Label value={"닉네임"} content={"김말자"} ></Label>
+        <Label value={"생년월일"} content={"1987.02.12"}></Label>
+        <Label value={"전화번호"} content={"010-2012-1020"}></Label>
+        <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
+        <div>
+          {disease()}
+        </div>
+        <br></br>
+        <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>수정</Button>
+        <Button color="danger" className={`${style.bigbnt}`}>로그아웃</Button>
+      </div>
     </>
   );
 }

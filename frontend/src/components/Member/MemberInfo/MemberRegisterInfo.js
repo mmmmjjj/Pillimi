@@ -35,85 +35,81 @@ function MemberRegisterInfo(props) {
   if(!isProtector){
     return (
       <>
-          <Container>
-            <div id="pillimi" className={`${style.center}`}>
-              <MemberInfo></MemberInfo>
-              <Form>
-                <FormGroup>
-                  <label>
-                    <Input 
-                      id="isProtector"
-                      name="isProtector"
-                      type="checkbox" 
-                      onChange={onChangeIsProtector}></Input>
-                    <span className="form-check-sign"></span>
-                    보호자이십니까?
-                  </label>
-                </FormGroup>
-                <FormGroup>
-                  <Lbl value={"생년월일"}></Lbl>
-                  <Datetime 
-                    className={`${style.datepicker}`}
-                    // inputProps={inputprops}
-                    timeFormat={false}></Datetime>
-                </FormGroup>
-                <FormGroup>
-                <Lbl value={"전화번호"}></Lbl>
-                  <span><Input 
-                  id="phone" 
-                  name="phone" 
-                  type="tel" 
-                  className={`${style.datepicker}`}
-                  onChange={onChangeProfile}></Input></span>
-                  <br></br>
-                </FormGroup>
-                <FormGroup>
-                  <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
-                  <div>
-                    <DiseaseList></DiseaseList>
-                  </div>
-                </FormGroup>
-              </Form>
+        <MemberInfo></MemberInfo>
+        <div id="pillimi" className={`${style.center}`}>
+          <Form>
+            <FormGroup>
+              <label>
+                <Input 
+                  id="isProtector"
+                  name="isProtector"
+                  type="checkbox" 
+                  onChange={onChangeIsProtector}></Input>
+                <span className="form-check-sign"></span>
+                보호자이십니까?
+              </label>
+            </FormGroup>
+            <FormGroup>
+              <Lbl value={"생년월일"}></Lbl>
+              <Datetime 
+                className={`${style.datepicker}`}
+                // inputProps={inputprops}
+                timeFormat={false}></Datetime>
+            </FormGroup>
+            <FormGroup>
+            <Lbl value={"전화번호"}></Lbl>
+              <span><Input 
+              id="phone" 
+              name="phone" 
+              type="tel" 
+              className={`${style.datepicker}`}
+              onChange={onChangeProfile}></Input></span>
               <br></br>
-              <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
-            </div>
-          </Container>
+            </FormGroup>
+            <FormGroup>
+              <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
+              <div>
+                <DiseaseList></DiseaseList>
+              </div>
+            </FormGroup>
+          </Form>
+          <br></br>
+          <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
+        </div>
       </>
     );
   }else {
     return (
       <>
-          <Container>
-            <div id="pillimi" className={`${style.center}`}>
-              <MemberInfo></MemberInfo>
-              <Form>
-                <FormGroup>
-                  <label>
-                    <Input 
-                      id="isProtector"
-                      name="isProtector"
-                      type="checkbox" 
-                      onChange={onChangeIsProtector}
-                      ></Input>
-                    <span className="form-check-sign"></span>
-                    보호자이십니까?
-                  </label>
-                </FormGroup>
-                <FormGroup>
-                <Lbl value={"전화번호"}></Lbl>
-                  <span><Input 
-                  id="phone" 
-                  name="phone" 
-                  type="tel" 
-                  className={`${style.datepicker}`}
-                  onChange={onChangeProfile}></Input></span>
-                  <br></br>
-                </FormGroup>
-              </Form>
+        <MemberInfo></MemberInfo>
+        <div id="pillimi" className={`${style.center}`}>
+          <Form>
+            <FormGroup>
+              <label>
+                <Input 
+                  id="isProtector"
+                  name="isProtector"
+                  type="checkbox" 
+                  onChange={onChangeIsProtector}
+                  ></Input>
+                <span className="form-check-sign"></span>
+                보호자이십니까?
+              </label>
+            </FormGroup>
+            <FormGroup>
+            <Lbl value={"전화번호"}></Lbl>
+              <span><Input 
+              id="phone" 
+              name="phone" 
+              type="tel" 
+              className={`${style.datepicker}`}
+              onChange={onChangeProfile}></Input></span>
               <br></br>
-              <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
-            </div>
-          </Container>
+            </FormGroup>
+          </Form>
+          <br></br>
+          <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
+        </div>
       </>
     );
   }
