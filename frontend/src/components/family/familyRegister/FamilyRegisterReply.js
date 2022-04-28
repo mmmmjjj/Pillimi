@@ -7,6 +7,7 @@ function FamilyRegisterReply(props) {
   const [number, setnumber] = useState("");
   useEffect(() => {
     props.getheader("가족 요청");
+    props.getnavbar(false);
     setpage();
   });
   const setpage = () => {
@@ -16,10 +17,10 @@ function FamilyRegisterReply(props) {
   return (
     <Container style={{ padding: "50px" }}>
       <Row style={{ marginBottom: "40px"}}>
-        <h1>
+        <h2>
           {name}님을 가족으로 수락하시겠습니까?<br></br>
           {number}
-        </h1>
+        </h2>
       </Row>
       <Button className="activebtn" size="lg" style={{ width: "70%", marginBottom: "40px"}}>
         네

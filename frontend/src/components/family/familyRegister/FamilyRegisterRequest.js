@@ -20,6 +20,7 @@ import {
 function FamilyRegisterRequest(props) {
   useEffect(()=>{
     props.getheader("가족 등록")
+    props.getnavbar(false);
   })
   const [phonenumber, setphonenumber] = useState("");
   const [membername, setmembername] = useState("");
