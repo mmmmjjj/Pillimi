@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "shape")
+@Table(name = "medicine_shape")
 public class Shape{
 
     @Id
