@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-import PillTodayCSS from "./PillToday.module.css";
+import PillTodayCSS from "./css/PillToday.module.css";
 
 function PillToday() {
   React.useEffect(() => {}, []);
@@ -34,9 +34,9 @@ function PillToday() {
           <h3 className={PillTodayCSS.TimeText}>시간</h3>
           <span className={PillTodayCSS.Img}>이미지</span>
           <span className={PillTodayCSS.TimeText}>알약이름</span>
-          <br></br>
-          <br></br>
           {/* 로그인한 사용자가 피보호자일 때 */}
+          <br></br>
+          <br></br>
           <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
           {/*  */}
           <br></br>
@@ -47,9 +47,9 @@ function PillToday() {
           <h3 className={PillTodayCSS.TimeText}>시간</h3>
           <span className={PillTodayCSS.Img}>이미지</span>
           <span className={PillTodayCSS.TimeText}>알약이름</span>
-          <br></br>
-          <br></br>
           {/* 로그인한 사용자가 피보호자일 때 */}
+          <br></br>
+          <br></br>
           <Button className={PillTodayCSS.PictureBtn}>사진 찍기</Button>
           {/*  */}
           <br></br>
