@@ -2,15 +2,14 @@ import React from "react";
 import { Input, Button, Card } from "reactstrap";
 
 import PillSearchCSS from "./PillSearch.module.css";
+import Header from "components/Headers/Header";
 
 function PillSearch() {
   React.useEffect(() => {}, []);
   return (
     <>
-      <br></br>
-      <h3 className={PillSearchCSS.PillDetailTitle}>검색</h3>
+      <Header header="검색"></Header>
       <div className={PillSearchCSS.Whole}>
-        <hr></hr>
         <br></br>
         <Input className={PillSearchCSS.SearchInput} placeholder="검색어를 입력해주세요" type="text"></Input>
         <Button className={PillSearchCSS.SearchBtn}>검색</Button>
