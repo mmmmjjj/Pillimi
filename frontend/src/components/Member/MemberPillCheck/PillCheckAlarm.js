@@ -12,9 +12,8 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 function PillCheckAlarm(props) {
   return (
     <>
-      <Container className={`${style.center}`}>
         <MemberPillCheck></MemberPillCheck>
-        <div className={`${style.allcenter}`}>
+        <div className={`${style.allcenter} ${style.center}`}>
           <div>
             <span className={`${style.bigfont}`}>
               감사합니다!<br></br>
@@ -25,7 +24,6 @@ function PillCheckAlarm(props) {
             </div>
           </div>
         </div>
-      </Container>
     </>
   )
 }
