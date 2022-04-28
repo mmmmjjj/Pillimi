@@ -5,14 +5,13 @@ import kakao_login from "../../assets/img/kakao_login.png";
 import naver_login from "../../assets/img/naver_login.png";
 
 import LoginCSS from "./css/Login.module.css";
+import Header from "components/Headers/Header";
 
 function Login() {
   React.useEffect(() => {}, []);
   return (
     <>
-      <br></br>
-      <h3 className={LoginCSS.LoginTitle}>로그인</h3>
-      <hr></hr>
+      <Header header="로그인"></Header>
       <div className={LoginCSS.LoginBtnDiv}>
         <Link to="/main">
           <img src={kakao_login} className={LoginCSS.LoginBtn} alt="kakao_login" />
