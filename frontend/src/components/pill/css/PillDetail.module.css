@@ -44,3 +44,17 @@ hr {
   margin-left: 10%;
   margin-right: 10%;
 }
+
+.modalBody {
+  text-align: center !important;
+  padding-top: 5% !important;
+}
+
+.closeBtn {
+  color: #0284c7 !important;
+  opacity: 1 !important;
+}
+
+.familyName {
+  font-size: 18px;
+}
