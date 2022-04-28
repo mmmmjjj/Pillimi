@@ -19,10 +19,10 @@ public class MemberMedicineReq {
     private String memberMedicineName;
 
     @ApiModelProperty(name = "복용 시작 일자", example = "1990-01-10")
-    private LocalDateTime startDay;
+    private LocalDate startDay;
 
     @ApiModelProperty(name = "복용 종료 일자", example = "1990-01-10")
-    private LocalDateTime endDay;
+    private LocalDate endDay;
 
     @ApiModelProperty(name = "복용 요일", example = "월,수,금")
     private List<Integer> intakeDay;
@@ -34,6 +34,6 @@ public class MemberMedicineReq {
     private int intakeCount;
 
     @ApiModelProperty(name = "섭취 후 특이사항", example = "나른함")
-    private String intakeContent;
+    private String remarkContent;
 
 }

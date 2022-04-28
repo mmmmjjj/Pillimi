@@ -12,7 +12,9 @@ public enum ErrorCode {
     REFRESH_TOKEN_INVALID(403,"M001","Refresh token is invalid"),
     MEMBER_NOT_FOUND(404, "M002", "Member Not Found"),
     ACCESS_DENIED(403, "M003", "Access Denied"),
-    ALREADY_REGISTERED(403,"M004","Already Registered Member");
+    ALREADY_REGISTERED(403,"M004","Already Registered Member"),
+    // Medicine
+    MEDICINE_NOT_FOUND(404, "M105", "Medicine Not Found");
 
     private int status;
     private final String code;
