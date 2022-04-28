@@ -13,8 +13,53 @@
   color: #2BC228;
 }
 
+.blue {
+  color: #0369A1;
+}
+
 .bigfont {
   font-size: 30px;
   line-height: 2.2;
   font-weight: 500;
+}
+
+.smaller {
+  clear: both;
+  font-size: small;
+}
+
+.checkAlarm {
+  clear: both;
+  font-size: medium;
+  line-height: 1.8;
+  margin-top: 10%;
+  background-color: white;
+  margin-left: 0 auto;
+  margin-right: 0 auto;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  width: 100vw;
+}
+
+.backcolor {
+  background-color: #EAF0F8;
+  margin: 0;
+  /* width: 100vw; */
+  /* height: 200vw; */
+}
+
+hr {
+  margin-bottom : 0;
+  background-color: #676767;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.whole {
+  width: 100vw;
+  height: 100vh;
+  background-color: #EAF0F8;
+  margin: 0 auto;
 }
