@@ -1,5 +1,6 @@
 package com.pillimi.backend.api.service;
 
+import com.pillimi.backend.api.request.MemberMedicineReq;
 import com.pillimi.backend.api.request.RegisterReq;
 import com.pillimi.backend.api.request.UpdateMemberReq;
 import com.pillimi.backend.api.response.MemberInfoRes;
@@ -28,4 +29,8 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
     private final MemberRepository memberRepository;
 
+    @Override
+    public void createMemberMedicine(Member member, MemberMedicineReq req) {
+        
+    }
 }
