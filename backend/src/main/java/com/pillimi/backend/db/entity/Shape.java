@@ -21,7 +21,7 @@ public class Shape{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long medicineSeq;
+    private Long shapeSeq;
 
     @Column
     private String shapeImage;
