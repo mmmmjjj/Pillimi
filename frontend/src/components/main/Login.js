@@ -13,6 +13,7 @@ function Login() {
     <>
       <Header header="로그인"></Header>
       <div className={LoginCSS.LoginBtnDiv}>
+        <br></br>
         <Link to="/main">
           <img src={kakao_login} className={LoginCSS.LoginBtn} alt="kakao_login" />
         </Link>
