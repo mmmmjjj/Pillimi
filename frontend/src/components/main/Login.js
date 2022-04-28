@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import kakao_login from "../../assets/img/kakao_login.png";
 import naver_login from "../../assets/img/naver_login.png";
 
-import LoginCSS from "./Login.module.css";
+import LoginCSS from "./css/Login.module.css";
 
 function Login() {
   React.useEffect(() => {}, []);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import ElderMainCSS from "./ElderMain.module.css";
+import ElderMainCSS from "./css/ElderMain.module.css";
 
 function ElderMain() {
   React.useEffect(() => {}, []);
