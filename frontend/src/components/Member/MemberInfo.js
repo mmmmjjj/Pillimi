@@ -5,18 +5,14 @@ import React from "react";
 import { Button, Container } from "reactstrap";
 import MemberInfoDetail from "./MemberInfo/MemberInfoDetail";
 import "../../assets/css/now-ui-kit.css";
+import Header from "components/Headers/Header";
 
 // core components
 
 function MemberInfo(props) {
   return (
     <>
-        <Container>
-          <div>
-            <h4>{props.value}님의 정보</h4>
-            <hr></hr>
-          </div>
-        </Container>
+      <Header header={`${props.nickname}님의 정보`}></Header>
     </>
   );
 }
