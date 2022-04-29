@@ -21,4 +21,7 @@ public class ResponseMessage {
     // Search
     public static final String SEARCH = "검색 성공";
 
+    // Medicine
+    public static final String GET_MEDICINE_INFO = "약품 상세 정보 조회 성공";
+
 }
