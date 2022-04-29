@@ -41,6 +41,29 @@
   width: 100vw;
 }
 
+.checkAlarm2 {
+   clear: both;
+  font-size: medium;
+  line-height: 1.8;
+  margin-bottom: 8px;
+  background-color: white;
+  margin-left: 0 auto;
+  margin-right: 0 auto;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  width: 100vw;
+}
+
+.alarmDescript {
+  clear: both;
+  font-size: small;
+}
+
+.alarmDescript2 {
+  text-align: left;
+  margin-left: 3%;
+}
+
 .backcolor {
   background-color: #EAF0F8;
   margin: 0;
@@ -62,4 +85,8 @@ hr {
   height: 100vh;
   background-color: #EAF0F8;
   margin: 0 auto;
+}
+
+.imgsize {
+  width: 35px;
 }
