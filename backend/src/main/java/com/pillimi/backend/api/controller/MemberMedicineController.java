@@ -38,7 +38,7 @@ public class MemberMedicineController {
 
     @ApiOperation(value = "사용자 복용 약품 등록", notes = "사용자 복용 약품 등록 api입니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = UPDATE_MEMBER_INFO),
+            @ApiResponse(code = 200, message = REGIST_MEMBER_MEDICINE),
             @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
@@ -52,6 +52,14 @@ public class MemberMedicineController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGIST_MEMBER_MEDICINE));
     }
 
+    @ApiOperation(value = "사용자 복용 약품 수정", notes = "사용자 복용 약품 수정 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = UPDATE_MEMBER_MEDICINE),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
     @PutMapping(value = "")
     public ResponseEntity<BaseResponseBody> updateMemberMedicineInfo(@RequestBody MemberMedicineUpdateReq req) {
 
@@ -60,6 +68,14 @@ public class MemberMedicineController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, UPDATE_MEMBER_MEDICINE));
     }
 
+    @ApiOperation(value = "사용자 복용 약품 삭제", notes = "사용자 복용 약품 삭제 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = DELETE_MEMBER_MEDICINE),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
     @DeleteMapping(value = "")
     public ResponseEntity<BaseResponseBody> deleteMemberMedicineInfo(@RequestParam Long memberMedicineSeq) {
 
@@ -68,12 +84,20 @@ public class MemberMedicineController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, DELETE_MEMBER_MEDICINE));
     }
 
+    @ApiOperation(value = "사용자 복용 약품 목록", notes = "사용자 복용 약품 목록 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = SELECT_MEMBER_MEDICINE),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
     @GetMapping(value = "")
     public ResponseEntity<BaseResponseBody> getMemberMedicineInfo() {
 
         Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
         List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(member);
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, DELETE_MEMBER_MEDICINE));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
     }
 
 

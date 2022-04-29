@@ -21,4 +21,5 @@ public class ResponseMessage {
     public static final String REGIST_MEMBER_MEDICINE = "사용자 복용 약물 등록 성공";
     public static final String UPDATE_MEMBER_MEDICINE = "사용자 복용 약물 수정 성공";
     public static final String DELETE_MEMBER_MEDICINE = "사용자 복용 약물 삭제 성공";
+    public static final String SELECT_MEMBER_MEDICINE = "사용자 복용 약물 조회 성공";
 }

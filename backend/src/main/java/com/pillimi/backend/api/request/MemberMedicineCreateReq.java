@@ -26,7 +26,7 @@ public class MemberMedicineCreateReq {
     @ApiModelProperty(name = "복용 주기", example = "3")
     private int intakeDay;
 
-    @ApiModelProperty(name = "복약 시간")
+    @ApiModelProperty(name = "복약 시간", example = "[9.5,10.5]")
     private List<Double> intakeTime;
 
     @ApiModelProperty(name = "복약 갯수", example = "2")
