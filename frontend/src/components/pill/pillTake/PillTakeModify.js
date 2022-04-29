@@ -5,7 +5,7 @@ import Datetime from "react-datetime";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
 
-function PillTakeRegister() {
+function PillTakeModify() {
   React.useEffect(() => {}, []);
 
   const [pillRegister, setPillRegister] = useState({
@@ -51,7 +51,7 @@ function PillTakeRegister() {
 
   return (
     <>
-      <Header header="복용 약 추가"></Header>
+      <Header header="복용 약 수정"></Header>
       <br></br>
       <h3 className={PillTakeRegisterCSS.PillName}>에이서캡슐(아세클로페낙)</h3>
       <div className={PillTakeRegisterCSS.Whole}>
@@ -133,8 +133,16 @@ function PillTakeRegister() {
       <Button className={PillTakeRegisterCSS.DoneBtn}>완료</Button>
       <br></br>
       <br></br>
+      <h3 className={PillTakeRegisterCSS.More} onClick={gotoPillDetail}>
+        약 상세 정보 더보기
+      </h3>
+      <br></br>
     </>
   );
+}
+
+function gotoPillDetail() {
+  window.location.href = "/pill-detail";
 }
 
 // function Label(params) {
@@ -215,4 +223,4 @@ function PillTakeRegister() {
 //   );
 // }
 
-export default PillTakeRegister;
+export default PillTakeModify;
