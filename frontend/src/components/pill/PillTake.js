@@ -13,9 +13,9 @@ function PillTake(props) {
       <BrowserRouter>
         <Switch>
           <Switch>
-            <Route path={`${basicurl}/register`} render={(props) => <PillTakeRegister {...props} />} />
-            <Route path={`${basicurl}/modify`} render={(props) => <PillTakeModify {...props} />} />
-            <Route path={`${basicurl}/detail`} render={(props) => <PillTakeDetail {...props} />} />
+            <Route exact path={`${basicurl}`} render={(props) => <PillTakeRegister {...props} />} />
+            <Route exact path={`${basicurl}/modify`} render={(props) => <PillTakeModify {...props} />} />
+            <Route exact path={`${basicurl}/detail`} render={(props) => <PillTakeDetail {...props} />} />
           </Switch>
         </Switch>
       </BrowserRouter>

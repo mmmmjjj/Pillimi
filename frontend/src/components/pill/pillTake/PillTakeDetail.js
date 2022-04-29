@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Input, Badge, Button } from "reactstrap";
+import { Input, Badge, Button, Modal } from "reactstrap";
 import Datetime from "react-datetime";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
+import PillDetailCSS from "../css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 
 function PillTakeDetail() {
   React.useEffect(() => {}, []);
+
+  const [removePillModal, setRemovePillModal] = React.useState(false);
 
   const [pillRegister, setPillRegister] = useState({
     nick: "",
@@ -132,13 +135,46 @@ function PillTakeDetail() {
       <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={gotoPillModify}>
         수정
       </Button>
-      <Button className={PillTakeRegisterCSS.RemoveBtn}>삭제</Button>
+      <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={() => setRemovePillModal(true)}>
+        삭제
+      </Button>
       <br></br>
       <br></br>
       <h3 className={PillTakeRegisterCSS.More} onClick={gotoPillDetail}>
         약 상세 정보 더보기
       </h3>
       <br></br>
+
+      <Modal
+        centered
+        isOpen={removePillModal}
+        className="modal-sm"
+        modalClassName="bd-example-modal-sm"
+        toggle={() => setRemovePillModal(false)}
+      >
+        <div className="modal-header">
+          <h4 className="modal-title" id="mySmallModalLabel">
+            <br></br>
+          </h4>
+          <button
+            aria-label="Close"
+            className={`${PillDetailCSS.closeBtn} close`}
+            type="button"
+            onClick={() => setRemovePillModal(false)}
+          >
+            <span aria-hidden={true}>×</span>
+          </button>
+        </div>
+        <div className={`${PillDetailCSS.modalBody_remove} modal-body`}>
+          <h4>에이서캡슐(아세클로페낙)을 정말 삭제하시겠습니까?</h4>
+          <br></br>
+          <Button className={PillTakeRegisterCSS.RealRemoveBtn}>삭제</Button>
+          <Button className={PillTakeRegisterCSS.CancelBtn} onClick={() => setRemovePillModal(false)}>
+            취소
+          </Button>
+          <br></br>
+        </div>
+      </Modal>
     </>
   );
 }
