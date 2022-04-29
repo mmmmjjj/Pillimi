@@ -35,6 +35,7 @@ import ElderMain from "components/main/ElderMain.js";
 import PillToday from "components/main/PillToday.js";
 import PillDetail from "components/pill/PillDetail.js";
 import PillSearch from "components/pill/PillSearch.js";
+import PillTake from "components/pill/PillTake.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -50,6 +51,7 @@ ReactDOM.render(
         <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
         <Route exact path="/pill-detail" render={(props) => <PillDetail {...props} />} />
         <Route exact path="/pill-search" render={(props) => <PillSearch {...props} />} />
+        <Route path="/pill-take" render={(props) => <PillTake {...props} />} />
         <Redirect to="/index" />
         {/* <Redirect from="/" to="/index" /> */}
       </Switch>
