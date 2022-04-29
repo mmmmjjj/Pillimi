@@ -68,7 +68,7 @@ public class Medicine{
     @Column
     private String medicineCautionSub;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shape_seq")
     private Shape shape;
 
