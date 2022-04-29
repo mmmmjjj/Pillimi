@@ -17,7 +17,7 @@ function MemberPillPage(props) {
     <>
       
       <BrowserRouter>
-      <Header header="김말자"></Header>
+        <Header header="김말자"></Header>
         <Switch>
           <Switch>
             <Route
@@ -26,7 +26,7 @@ function MemberPillPage(props) {
                 <ProtectorTakeAlarm {...props} />
               )}
             />
-            <Redirect to={`${basicurl}/protector-take-alarm`}></Redirect>
+            {/* <Redirect to={`${basicurl}/protector-take-alarm`}></Redirect> */}
           </Switch>
         </Switch>
       </BrowserRouter>
