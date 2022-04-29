@@ -23,24 +23,23 @@ public class MedicineIntake {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long medicineIntakeSeq;
 
-    @Column
-    private String memberMedicineName;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_seq")
-    private Member member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicine_seq")
-    private Medicine medicine;
+    @JoinColumn(name = "member_medicine_seq")
+    private MemberMedicine memberMedicine;
 
     @Column
-    private boolean memberMedicineNow;
+    private int intakeDay;
 
     @Column
-    private LocalDate memberMedicineStart;
+    private int intakeCount;
 
     @Column
-    private LocalDate memberMedicineEnd;
+    private boolean intakeIsconfirm;
+
+    @Column
+    private LocalDate intakeStart;
+
+    @Column
+    private LocalDate intakeEnd;
 
 }

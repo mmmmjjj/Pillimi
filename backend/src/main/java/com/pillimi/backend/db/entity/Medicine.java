@@ -57,7 +57,7 @@ public class Medicine{
     private String medicineValidity;
 
     @Column
-    private Long medicineTotalamount;
+    private String medicineTotalamount;
 
     @Column
     private String medicineEffectSub;

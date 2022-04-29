@@ -5,12 +5,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
-@ApiModel("MemberMedicineReq")
+@ApiModel("MemberMedicineUpdateReq")
 @Getter
-public class MemberMedicineReq {
+public class MemberMedicineUpdateReq {
+
+    @ApiModelProperty(name = "맴버약품 번호", example = "1")
+    private Long memberMedicineSeq;
 
     @ApiModelProperty(name = "약품 번호", example = "1")
     private Long medicineSeq;
@@ -24,11 +26,11 @@ public class MemberMedicineReq {
     @ApiModelProperty(name = "복용 종료 일자", example = "1990-01-10")
     private LocalDate endDay;
 
-    @ApiModelProperty(name = "복용 요일", example = "월,수,금")
-    private List<Integer> intakeDay;
+    @ApiModelProperty(name = "복용 주기", example = "3")
+    private int intakeDay;
 
     @ApiModelProperty(name = "복약 시간", example = "09:30")
-    private String intakeTime;
+    private List<Double> intakeTime;
 
     @ApiModelProperty(name = "복약 갯수", example = "2")
     private int intakeCount;
