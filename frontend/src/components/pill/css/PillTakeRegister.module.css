@@ -20,6 +20,10 @@
   border-color: #0284c7 !important;
 }
 
+.TimePlus {
+  cursor: pointer;
+}
+
 .Badge {
   margin-top: 4% !important;
   margin-bottom: 4% !important;
@@ -43,4 +47,11 @@
   color: black !important;
   background-color: #0284c7 !important;
   box-shadow: none !important;
+}
+
+.More {
+  font-size: 23px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
 }
