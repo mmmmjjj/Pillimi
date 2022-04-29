@@ -36,7 +36,7 @@ function ProtectorTakeAlarm(props) {
       if(element.type===false){
         console.log(true + " : "+ element.time);
         result.push(<div className={`${style.checkAlarm2}`}>
-          <div className={`${style.alarmDescript2} `}>
+          <div>
             <span className={`${style.bold}`}>{element.date}</span><br></br>
           </div>
           <div className="d-flex align-items-center">
@@ -51,7 +51,7 @@ function ProtectorTakeAlarm(props) {
       } else {
         console.log(false + " : "+ element.time);
         result.push(<div className={`${style.checkAlarm2}`}>
-          <div className={`${style.alarmDescript2} `}>
+          <div>
             <span className={`${style.bold}`}>{element.date}</span><br></br>
           </div>
           <span>{element.name}(님)의 {element.time}</span><br></br>
