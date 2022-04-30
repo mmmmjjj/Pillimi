@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input, Badge, Button, Modal } from "reactstrap";
 import Datetime from "react-datetime";
+import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import PillDetailCSS from "../css/PillDetail.module.css";
@@ -13,43 +14,27 @@ function PillTakeDetail() {
 
   const [pillRegister, setPillRegister] = useState({
     nick: "",
-    // startDate: "",
-    // endDate: "",
+    startDate: "",
+    endDate: "",
     period: "",
-    // time: "",
+    time: "",
     volume: "",
     caution: "",
   });
 
-  const { nick, startDate, endDate, period, time, volume, caution } = pillRegister;
-
-  const [startDateValue, setstartDateValue] = useState("");
-  const [endDateValue, setendDateValue] = useState("");
-  const [timeValue, settimeValue] = useState([""]);
-  var timeTemp = "";
-
   const onChangePillRegister = (e) => {
-    setPillRegister({
-      ...pillRegister,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const onChange = (event) => {
-    // console.log(event);
-    // console.log(event._d);
-    timeTemp = event.format("HH-mm-ss a");
-    console.log(timeTemp);
-    settimeValue(event._d);
-    // setstartDateValue(event._d);
-    // console.log(event);
-    // setstartDateValue(event);
-    // setstartDateValue(event.target);
-    // setstartDateValue(event.target.value);
-  };
-
-  const timeList = () => {
-    // return alert("temp");
+    if (moment.isMoment(e)) {
+      setPillRegister({
+        ...pillRegister,
+        [e.name]: e._d,
+      });
+      console.log(pillRegister.time);
+    } else {
+      setPillRegister({
+        ...pillRegister,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   return (
@@ -67,36 +52,16 @@ function PillTakeDetail() {
         <Label content={"섭취 후 특이사항"}></Label> */}
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>약 별칭</h3>
-        <Input onChange={onChangePillRegister} name="nick" className={PillTakeRegisterCSS.Input} type="text"></Input>
+        <h5>고혈압 약</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 시작 일자</h3>
-        <Datetime
-          // onChange={onChangePillRegister}
-          value={startDateValue}
-          // name="startDate"
-          className={PillTakeRegisterCSS.Input}
-          timeFormat={false}
-          onChange={onChange}
-        />
-        {startDateValue}
+        <h5>2022/04/29</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 종료 일자</h3>
-        <Datetime
-          // onChange={onChangePillRegister}
-          // name="endDate"
-          className={PillTakeRegisterCSS.Input}
-          timeFormat={false}
-          value={endDateValue}
-          onChange={onChange}
-        />
+        <h5>2022/05/30</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 주기</h3>
-        <Input
-          onChange={onChangePillRegister}
-          name="period"
-          className={PillTakeRegisterCSS.Input}
-          type="number"
-        ></Input>
+        <h5>7일</h5>
         <br></br>
         <div className="d-flex align-items-center">
           <h3
@@ -105,31 +70,16 @@ function PillTakeDetail() {
           >
             복용 시간
           </h3>
-          <i onClick={timeList()} className={`${PillTakeRegisterCSS.TimePlus} now-ui-icons ui-1_simple-add`}></i>
         </div>
-        <Datetime
-          // onChange={onChangePillRegister}
-          // name="takeTime"
-          className={PillTakeRegisterCSS.Input}
-          dateFormat={false}
-          onChange={onChange}
-          viewMode="time"
-        />{" "}
-        <div id="timeList"></div>
-        <Badge className={PillTakeRegisterCSS.Badge} color="info">
+        <Badge className={PillTakeRegisterCSS.BadgeTime} color="info" id="timeList">
           9:00
         </Badge>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 용량</h3>
-        <Input
-          onChange={onChangePillRegister}
-          name="volume"
-          className={PillTakeRegisterCSS.Input}
-          type="number"
-        ></Input>
+        <h5>500mg</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>섭취 후 특이사항</h3>
-        <Input onChange={onChangePillRegister} name="caution" className={PillTakeRegisterCSS.Input} type="text"></Input>
+        <h5>없음</h5>
       </div>
       <br></br>
       <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={gotoPillModify}>
