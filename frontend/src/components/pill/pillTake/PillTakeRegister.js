@@ -21,11 +21,19 @@ function PillTakeRegister() {
 
   const onChangePillRegister = (e) => {
     if (moment.isMoment(e)) {
-      setPillRegister({
-        ...pillRegister,
-        [e.name]: e._d,
-      });
-      console.log(pillRegister.time);
+      if (e.name === "time") {
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: e.format("HH:mm a"),
+        });
+        console.log(pillRegister.time);
+      } else {
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: e.format("YYYY/MM/DD"),
+        });
+        console.log(pillRegister.startDate);
+      }
     } else {
       setPillRegister({
         ...pillRegister,
