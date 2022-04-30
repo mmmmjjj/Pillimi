@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input, Badge, Button } from "reactstrap";
 import Datetime from "react-datetime";
+import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
@@ -10,43 +11,27 @@ function PillTakeModify() {
 
   const [pillRegister, setPillRegister] = useState({
     nick: "",
-    // startDate: "",
-    // endDate: "",
+    startDate: "",
+    endDate: "",
     period: "",
-    // time: "",
+    time: "",
     volume: "",
     caution: "",
   });
 
-  const { nick, startDate, endDate, period, time, volume, caution } = pillRegister;
-
-  const [startDateValue, setstartDateValue] = useState("");
-  const [endDateValue, setendDateValue] = useState("");
-  const [timeValue, settimeValue] = useState([""]);
-  var timeTemp = "";
-
   const onChangePillRegister = (e) => {
-    setPillRegister({
-      ...pillRegister,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const onChange = (event) => {
-    // console.log(event);
-    // console.log(event._d);
-    timeTemp = event.format("HH-mm-ss a");
-    console.log(timeTemp);
-    settimeValue(event._d);
-    // setstartDateValue(event._d);
-    // console.log(event);
-    // setstartDateValue(event);
-    // setstartDateValue(event.target);
-    // setstartDateValue(event.target.value);
-  };
-
-  const timeList = () => {
-    // return alert("temp");
+    if (moment.isMoment(e)) {
+      setPillRegister({
+        ...pillRegister,
+        [e.name]: e._d,
+      });
+      console.log(pillRegister.time);
+    } else {
+      setPillRegister({
+        ...pillRegister,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   return (
@@ -68,23 +53,26 @@ function PillTakeModify() {
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 시작 일자</h3>
         <Datetime
-          // onChange={onChangePillRegister}
-          value={startDateValue}
-          // name="startDate"
+          onChange={(e) => {
+            e.name = "startDate";
+            onChangePillRegister(e);
+          }}
+          value={pillRegister.startDate}
+          name="startDate"
           className={PillTakeRegisterCSS.Input}
           timeFormat={false}
-          onChange={onChange}
         />
-        {startDateValue}
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 종료 일자</h3>
         <Datetime
-          // onChange={onChangePillRegister}
-          // name="endDate"
+          onChange={(e) => {
+            e.name = "endDate";
+            onChangePillRegister(e);
+          }}
+          name="endDate"
+          value={pillRegister.endDate}
           className={PillTakeRegisterCSS.Input}
           timeFormat={false}
-          value={endDateValue}
-          onChange={onChange}
         />
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 주기</h3>
@@ -102,20 +90,29 @@ function PillTakeModify() {
           >
             복용 시간
           </h3>
-          <i onClick={timeList()} className={`${PillTakeRegisterCSS.TimePlus} now-ui-icons ui-1_simple-add`}></i>
+          <i
+            onClick={() => {
+              if (pillRegister.time !== "") {
+                var print = document.getElementById("timeList");
+                var value = "";
+                value += `<Badge className={PillTakeRegisterCSS.Badge} color="info">${pillRegister.time}</Badge>`;
+                print.innerHTML = value;
+              }
+            }}
+            className={`${PillTakeRegisterCSS.TimePlus} now-ui-icons ui-1_simple-add`}
+          ></i>
         </div>
         <Datetime
-          // onChange={onChangePillRegister}
-          // name="takeTime"
+          onChange={(e) => {
+            e.name = "time";
+            onChangePillRegister(e);
+          }}
+          name="time"
+          value={pillRegister.time}
           className={PillTakeRegisterCSS.Input}
           dateFormat={false}
-          onChange={onChange}
-          viewMode="time"
-        />{" "}
-        <div id="timeList"></div>
-        <Badge className={PillTakeRegisterCSS.Badge} color="info">
-          9:00
-        </Badge>
+        />
+        <Badge className={PillTakeRegisterCSS.Badge} color="info" id="timeList"></Badge>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 용량</h3>
         <Input
