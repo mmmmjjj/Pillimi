@@ -30,6 +30,11 @@
   color: black !important;
 }
 
+.BadgeTime {
+  color: black !important;
+  margin-bottom: 20px !important;
+}
+
 .ModifyBtn {
   color: E0F2FE;
   font-weight: bold;
@@ -134,4 +139,8 @@
   color: E0F2FE !important;
   /* background-color: #0284c7 !important; */
   box-shadow: none !important;
+}
+
+h5 {
+  margin-bottom: 0px !important;
 }
