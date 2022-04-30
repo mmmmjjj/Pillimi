@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Input, Badge, Button, Modal } from "reactstrap";
-import Datetime from "react-datetime";
-import moment from "moment";
+import React from "react";
+import { Badge, Button, Modal } from "reactstrap";
+// import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import PillDetailCSS from "../css/PillDetail.module.css";
@@ -12,30 +11,30 @@ function PillTakeDetail() {
 
   const [removePillModal, setRemovePillModal] = React.useState(false);
 
-  const [pillRegister, setPillRegister] = useState({
-    nick: "",
-    startDate: "",
-    endDate: "",
-    period: "",
-    time: "",
-    volume: "",
-    caution: "",
-  });
+  // const [pillRegister, setPillRegister] = useState({
+  //   nick: "",
+  //   startDate: "",
+  //   endDate: "",
+  //   period: "",
+  //   time: "",
+  //   volume: "",
+  //   caution: "",
+  // });
 
-  const onChangePillRegister = (e) => {
-    if (moment.isMoment(e)) {
-      setPillRegister({
-        ...pillRegister,
-        [e.name]: e._d,
-      });
-      console.log(pillRegister.time);
-    } else {
-      setPillRegister({
-        ...pillRegister,
-        [e.target.name]: e.target.value,
-      });
-    }
-  };
+  // const onChangePillRegister = (e) => {
+  //   if (moment.isMoment(e)) {
+  //     setPillRegister({
+  //       ...pillRegister,
+  //       [e.name]: e._d,
+  //     });
+  //     console.log(pillRegister.time);
+  //   } else {
+  //     setPillRegister({
+  //       ...pillRegister,
+  //       [e.target.name]: e.target.value,
+  //     });
+  //   }
+  // };
 
   return (
     <>
