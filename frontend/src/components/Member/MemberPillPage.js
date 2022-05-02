@@ -28,13 +28,13 @@ function MemberPillPage(props) {
                 <ProtectorTakeAlarm {...props} />
               )}
             />
-            <Route
+            <Route 
               path={`${basicurl}/member-pill-list`}
               render={(props) => (
                 <MemberPillList {...props} />
               )}
             />
-            <Route
+            <Route exact
               path={`${basicurl}/pill-take-picture`}
               render={(props) => (
                 <PillTakePicture {...props} />
