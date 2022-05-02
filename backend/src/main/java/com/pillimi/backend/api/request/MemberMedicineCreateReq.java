@@ -11,6 +11,9 @@ import java.util.List;
 @Getter
 public class MemberMedicineCreateReq {
 
+    @ApiModelProperty(name = "맴버 번호", example = "1")
+    private Long memberSeq;
+
     @ApiModelProperty(name = "약품 번호", example = "1")
     private Long medicineSeq;
 

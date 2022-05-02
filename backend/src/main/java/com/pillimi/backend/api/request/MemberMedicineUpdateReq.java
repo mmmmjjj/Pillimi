@@ -14,6 +14,9 @@ public class MemberMedicineUpdateReq {
     @ApiModelProperty(name = "맴버약품 번호", example = "1")
     private Long memberMedicineSeq;
 
+    @ApiModelProperty(name = "맴버 번호", example = "1")
+    private Long memberSeq;
+
     @ApiModelProperty(name = "약품 번호", example = "1")
     private Long medicineSeq;
 

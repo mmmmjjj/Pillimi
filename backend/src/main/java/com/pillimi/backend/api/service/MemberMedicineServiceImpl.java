@@ -6,7 +6,6 @@ import com.pillimi.backend.api.response.MemberMedicineRes;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.db.entity.*;
 import com.pillimi.backend.db.repository.*;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
 
     @Override
-    public void createMemberMedicine(Member member, MemberMedicineCreateReq req) {
+    public void createMemberMedicine(MemberMedicineCreateReq req) {
+
+        Member member = memberRepository.getById(req.getMemberSeq());
+        if(member==null){
+            throw new AccessDeniedException(ErrorCode.MEMBER_NOT_FOUND.getCode());
+        }
 
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
         if(medicine==null){
@@ -92,7 +96,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     }
 
     @Override
-    public void updateMemberMedicine(Member member, MemberMedicineUpdateReq req) {
+    public void updateMemberMedicine(MemberMedicineUpdateReq req) {
+
+        Member member = memberRepository.getById(req.getMemberSeq());
+        if(member==null){
+            throw new AccessDeniedException(ErrorCode.MEMBER_NOT_FOUND.getCode());
+        }
 
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
         if(medicine==null){
@@ -139,10 +148,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     }
 
     @Override
-    public void deleteMemberMedicine(Member member, Long memberMedicineSeq) {
+    public void deleteMemberMedicine(Long memberMedicineSeq) {
 
         MemberMedicine memberMedicine = memberMedicineRepository.getById(memberMedicineSeq);
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(memberMedicine.getMedicine());
+
+        Member member = memberMedicine.getMember();
 
         for(MedicineIngredient medicineIngredient : medicineIngredients){
             memberIngredientRepository.deleteByMemberAndIngredient(member, medicineIngredient.getIngredient());
@@ -153,7 +164,13 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     }
 
     @Override
-    public List<MemberMedicineRes> getMemberMedicine(Member member) {
+    public List<MemberMedicineRes> getMemberMedicine(Long memberSeq) {
+
+        Member member = memberRepository.getById(memberSeq);
+        if(member==null){
+            throw new AccessDeniedException(ErrorCode.MEMBER_NOT_FOUND.getCode());
+        }
+
         List<MemberMedicine> memberMedicines = memberMedicineRepository.getByMember(member);
         List<MemberMedicineRes> memberMedicineResList = new LinkedList<MemberMedicineRes>();
         for(MemberMedicine memberMedicine : memberMedicines){

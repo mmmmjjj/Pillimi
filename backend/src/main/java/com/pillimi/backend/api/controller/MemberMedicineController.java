@@ -48,7 +48,7 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> createMemberMedicineInfo(@RequestBody MemberMedicineCreateReq req) {
 
         Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        memberMedicineService.createMemberMedicine(member,req);
+        memberMedicineService.createMemberMedicine(req);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGIST_MEMBER_MEDICINE));
     }
 
@@ -64,7 +64,7 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> updateMemberMedicineInfo(@RequestBody MemberMedicineUpdateReq req) {
 
         Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        memberMedicineService.updateMemberMedicine(member,req);
+        memberMedicineService.updateMemberMedicine(req);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, UPDATE_MEMBER_MEDICINE));
     }
 
@@ -80,7 +80,7 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> deleteMemberMedicineInfo(@RequestParam Long memberMedicineSeq) {
 
         Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        memberMedicineService.deleteMemberMedicine(member, memberMedicineSeq);
+        memberMedicineService.deleteMemberMedicine(memberMedicineSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, DELETE_MEMBER_MEDICINE));
     }
 
@@ -93,10 +93,10 @@ public class MemberMedicineController {
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
     })
     @GetMapping(value = "")
-    public ResponseEntity<BaseResponseBody> getMemberMedicineInfo() {
+    public ResponseEntity<BaseResponseBody> getMemberMedicineInfo(@RequestParam Long memberSeq) {
 
         Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(member);
+        List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(memberSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
     }
 
