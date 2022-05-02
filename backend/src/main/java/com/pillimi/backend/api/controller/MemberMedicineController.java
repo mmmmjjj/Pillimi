@@ -119,6 +119,27 @@ public class MemberMedicineController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
     }
 
+    @ApiOperation(value = "사용자 복용 약품 확인", notes = "사용자 복용 약품 확인 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = SELECT_MEMBER_MEDICINE),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @GetMapping(value = "")
+    public ResponseEntity<BaseResponseBody> checkMemberMedicine(@RequestParam Long protegeSeq) {
+
+        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        System.out.println(JwtUtil.getCurrentId());
+        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
+        List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(protegeSeq);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
+    }
+
 
 
 }
