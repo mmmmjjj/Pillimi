@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -19,9 +21,10 @@ public class FamilyServiceImpl implements FamilyService{
     private final JwtTokenProvider tokenProvider;
     private final MemberRepository memberRepository;
     private final FamilyRequestRepository familyRequestRepository;
+    private final FamilyRepository familyRepository;
 
     @Override  //보호자가 피보호자 가족 등록하는 상황
-    public FamilyRequest createFamily(FamilyRegistReq req) {
+    public void createFamily(FamilyRegistReq req) {
         FamilyRequest familyrequest = new FamilyRequest();
         Member protegeName = memberRepository.findByMemberPhone(req.getPhone()); //피보호자 멤버정보
         Member protectorId = memberRepository.getById(req.getMemberSeq()); //보호자 아이디
@@ -29,7 +32,19 @@ public class FamilyServiceImpl implements FamilyService{
             familyrequest.setRequestProtege(protegeName);
             familyrequest.setRequestProtector(protectorId);
         }
-        return familyRequestRepository.save(familyrequest);
+        familyRequestRepository.save(familyrequest);
+    }
+
+    @Override
+    public List<Family> findAll() {
+        List<Family> familys = familyRepository.findAll();
+        return familys;
+    }
+
+    @Override
+    public long delete(long familySeq) {
+        long delete = familyRepository.deleteByFamilySeq(familySeq);
+        return delete;
     }
 
 }
