@@ -1,5 +1,6 @@
 package com.pillimi.backend.db.repository;
 
+import com.pillimi.backend.db.entity.Family;
 import com.pillimi.backend.db.entity.Member;
 import com.pillimi.backend.db.entity.QFamily;
 import com.pillimi.backend.db.entity.QMember;
@@ -7,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class FamilyRepositoryCustomImpl implements FamilyRepositoryCustom {
@@ -32,5 +34,14 @@ public class FamilyRepositoryCustomImpl implements FamilyRepositoryCustom {
                     .fetch();
         // TODO 피보호자일 경우 어디까지가 가족인가?
         else return null;
+    }
+
+    @Override
+    public Optional<Family> findFamilyByProtectorAndProtege(Member protector, Member protege) {
+        return Optional.ofNullable(jpaQueryFactory.select(qFamily)
+                .from(qFamily)
+                .where(qFamily.protector.memberSeq.eq(protector.getMemberSeq())
+                        .and(qFamily.protege.memberSeq.eq(protege.getMemberSeq())))
+                .fetchOne());
     }
 }

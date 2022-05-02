@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.Optional;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +48,12 @@ public class FamilyServiceImpl implements FamilyService{
     public long delete(long familySeq) {
         long delete = familyRepository.deleteByFamilySeq(familySeq);
         return delete;
+    }
+
+    @Override
+    public Optional<Family> checkFamily(Member protector, Member protege) {
+
+        return familyRepository.findFamilyByProtectorAndProtege(protector, protege);
     }
 
 }
