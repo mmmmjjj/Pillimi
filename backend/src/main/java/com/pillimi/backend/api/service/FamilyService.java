@@ -8,6 +8,8 @@ import com.pillimi.backend.db.entity.Member;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface FamilyService {
 
     FamilyRequest createFamily(FamilyRegistReq req);
@@ -17,4 +19,10 @@ public interface FamilyService {
     void addFamily(Member member, Long familyRequestSeq);
 
     void rejectFamilyRequest(Member member, Long familyRequestSeq);
+
+    void createFamily(FamilyRegistReq req);
+
+    List<Family> findAll();
+    
+    long delete(long familySeq);
 }
