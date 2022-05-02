@@ -24,12 +24,8 @@ public class Remark {
     private Long remarkSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_seq")
-    private Member member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicine_seq")
-    private Medicine medicine;
+    @JoinColumn(name = "member_medicine_seq")
+    private MemberMedicine memberMedicine;
 
     @Column
     private String remarkContent;

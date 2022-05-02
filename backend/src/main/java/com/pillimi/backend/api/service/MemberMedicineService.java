@@ -1,17 +1,19 @@
 package com.pillimi.backend.api.service;
 
-import com.pillimi.backend.api.request.MemberMedicineReq;
-import com.pillimi.backend.api.request.RegisterReq;
-import com.pillimi.backend.api.request.UpdateMemberReq;
-import com.pillimi.backend.api.response.MemberInfoRes;
-import com.pillimi.backend.common.model.KakaoProfile;
-import com.pillimi.backend.common.model.RoleType;
-import com.pillimi.backend.db.entity.Member;
+import com.pillimi.backend.api.request.MemberMedicineCreateReq;
+import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
+import com.pillimi.backend.api.response.MemberMedicineRes;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface MemberMedicineService {
 
 
-    void createMemberMedicine(Member member, MemberMedicineReq req);
+    void createMemberMedicine(MemberMedicineCreateReq req);
+
+    void updateMemberMedicine(MemberMedicineUpdateReq req);
+
+    void deleteMemberMedicine(Long memberMedicineSeq);
+
+    List<MemberMedicineRes> getMemberMedicine(Long memberSeq);
 }
