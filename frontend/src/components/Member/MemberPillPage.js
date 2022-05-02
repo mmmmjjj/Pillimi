@@ -7,6 +7,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 // reactstrap components
 import "../../assets/css/now-ui-kit.css";
 import style from "./css/MemberPillCheck.module.css"
+import MemberPillList from "./MemberPillPage/MemberPillList";
 import ProtectorTakeAlarm from "./MemberPillPage/ProtectorTakeAlarm";
 
 // core components
@@ -24,6 +25,12 @@ function MemberPillPage(props) {
               path={`${basicurl}/protector-take-alarm`}
               render={(props) => (
                 <ProtectorTakeAlarm {...props} />
+              )}
+            />
+            <Route
+              path={`${basicurl}/member-pill-list`}
+              render={(props) => (
+                <MemberPillList {...props} />
               )}
             />
             {/* <Redirect to={`${basicurl}/protector-take-alarm`}></Redirect> */}
