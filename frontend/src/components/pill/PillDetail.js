@@ -1,16 +1,35 @@
 import React from "react";
-import { Button } from "reactstrap";
+import { Button, Modal } from "reactstrap";
 
 import PillDetailCSS from "./css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 
 function PillDetail() {
   React.useEffect(() => {}, []);
+
+  const [registerPillModal, setRegisterPillModal] = React.useState(false);
+
+  const familyName = ["김말자", "박옥자", "김싸피"];
+  const whosePill = () => {
+    const result = [];
+    for (let i = 0; i < familyName.length; i++) {
+      result.push(
+        <span onClick={gotoPillRegister} className={PillDetailCSS.familyName} key={{ i }}>
+          {familyName[i]}
+        </span>
+      );
+      result.push(<br></br>);
+    }
+    return result;
+  };
+
   return (
     <>
       <Header header="알약 정보"></Header>
       <br></br>
-      <Button className={PillDetailCSS.AddBtn}>추가</Button>
+      <Button className={PillDetailCSS.AddBtn} onClick={() => setRegisterPillModal(true)}>
+        추가
+      </Button>
       <br></br>
       <br></br>
       <h3 style={{ textAlign: "center" }}>
@@ -30,6 +49,33 @@ function PillDetail() {
         <Label value={"동시 복용 불가 약품"} content={"타이레놀"}></Label>
         <Label value={"성분표"} content={"아세클로페낙(EP) 100mg"}></Label>
       </div>
+
+      <Modal
+        centered
+        isOpen={registerPillModal}
+        className="modal-sm"
+        modalClassName="bd-example-modal-sm"
+        toggle={() => setRegisterPillModal(false)}
+      >
+        <div className="modal-header">
+          <h4 className="modal-title" id="mySmallModalLabel">
+            <br></br>
+          </h4>
+          <button
+            aria-label="Close"
+            className={`${PillDetailCSS.closeBtn} close`}
+            type="button"
+            onClick={() => setRegisterPillModal(false)}
+          >
+            <span aria-hidden={true}>×</span>
+          </button>
+        </div>
+        <div className={`${PillDetailCSS.modalBody} modal-body`}>
+          <h3>누구의 약인가요?</h3> {whosePill()}
+          <br></br>
+          <br></br>
+        </div>
+      </Modal>
     </>
   );
 }
@@ -43,6 +89,10 @@ function Label(params) {
       <br></br>
     </>
   );
+}
+
+function gotoPillRegister() {
+  window.location.href = "/pill-detail";
 }
 
 export default PillDetail;

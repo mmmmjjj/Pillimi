@@ -14,7 +14,7 @@ public enum ErrorCode {
     ACCESS_DENIED(403, "M003", "Access Denied"),
     ALREADY_REGISTERED(403,"M004","Already Registered Member"),
     // Medicine
-    MEDICINE_NOT_FOUND(404, "M105", "Medicine Not Found");
+    MEDICINE_NOT_FOUND(404,"MD001","Medicine Not Found");
 
     private int status;
     private final String code;
