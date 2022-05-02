@@ -15,8 +15,10 @@ public enum ErrorCode {
     ALREADY_REGISTERED(403,"M004","Already Registered Member"),
     // Medicine
     MEDICINE_NOT_FOUND(404,"MD001","Medicine Not Found"),
+    MEMBER_MEDICINE_NOT_FOUND(404,"M106","Member-Medicine not found"),
     // Family
-    FAMILY_REQUEST_NOT_FOUND(404,"F001","Family Request Not Found");
+    FAMILY_REQUEST_NOT_FOUND(404,"F001","Family Request Not Found"),
+    THEY_NOT_FAMILY(403,"F002","They Not Family");
 
     private int status;
     private final String code;

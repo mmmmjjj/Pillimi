@@ -23,15 +23,15 @@ function MyFamily() {
       {
         familyTab ?
         <ListGroup style={{ backgroundColor: "#EAF0F8", width: "100%", paddingBottom:"30px" }}>
-          <ListGroupItem><Row xs="4"><Col><img alt="" src="/img/1.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3>엄마</h3></Col></Row></ListGroupItem>
-          <ListGroupItem><Row xs="4"><Col><img alt="" src="/img/2.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3>아빠</h3></Col></Row></ListGroupItem>
-          <ListGroupItem><Row xs="4"><Col><img alt="" src="/img/3.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3>할머니</h3></Col></Row></ListGroupItem>
-          <ListGroupItem><Row xs="4"><Col><img alt="" src="/img/4.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3>할아버지</h3></Col></Row></ListGroupItem>
+          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/1.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">엄마</h3></Col></Row></ListGroupItem>
+          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/2.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">아빠</h3></Col></Row></ListGroupItem>
+          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/3.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">할머니</h3></Col></Row></ListGroupItem>
+          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/4.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">할아버지</h3></Col></Row></ListGroupItem>
 
         </ListGroup>
         : <ListGroup style={{ backgroundColor: "#EAF0F8", width: "100%", paddingBottom:"30px" }}>
-            <ListGroupItem><Row xs="4"><Col><img alt="" src="/img/5.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3>누구야</h3></Col></Row></ListGroupItem>
-            <ListGroupItem><Row xs="4"><Col><img alt="" src="/img/6.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3>가족찾음</h3></Col></Row></ListGroupItem>
+            <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/5.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">누구야</h3></Col></Row></ListGroupItem>
+            <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/6.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">가족찾음</h3></Col></Row></ListGroupItem>
           </ListGroup>
         }
     </div>

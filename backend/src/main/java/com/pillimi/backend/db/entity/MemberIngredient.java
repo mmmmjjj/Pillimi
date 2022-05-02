@@ -1,12 +1,19 @@
 package com.pillimi.backend.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @Table(name = "member_ingredient")
 public class MemberIngredient {
@@ -20,6 +27,6 @@ public class MemberIngredient {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "medicine_ingredient_seq")
-    private MemberIngredient memberIngredient;
+    @JoinColumn(name = "ingredient_seq")
+    private Ingredient Ingredient;
 }

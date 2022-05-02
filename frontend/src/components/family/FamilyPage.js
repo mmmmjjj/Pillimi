@@ -24,7 +24,7 @@ function Family(props) {
           <Col xs="2" className="familypagecol1">
             <i
               className="fa fa-solid fa-arrow-left"
-              style={{ fontSize: "xx-large", margin:"auto" }}
+              style={{ fontSize: "xx-large", margin:"auto", float:"left" }}
             ></i>
           </Col>
           <Col xs="8" className="familypagecol2">

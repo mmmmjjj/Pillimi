@@ -4,6 +4,10 @@ import com.pillimi.backend.api.request.FamilyRegistReq;
 import com.pillimi.backend.api.response.FamilyRequestRes;
 import com.pillimi.backend.api.response.FamilyRes;
 import com.pillimi.backend.db.entity.Member;
+import com.pillimi.backend.db.entity.Family;
+import com.pillimi.backend.db.entity.FamilyRequest;
+
+import java.util.Optional;
 
 import java.util.List;
 
@@ -20,4 +24,7 @@ public interface FamilyService {
     List<FamilyRes> getFamilyList(Member member);
     
     void deleteFamily(Member member, Member target);
+
+    Optional<Family> checkFamily(Member protector, Member protege);
+
 }

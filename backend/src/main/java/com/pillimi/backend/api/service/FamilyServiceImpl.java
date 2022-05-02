@@ -19,11 +19,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+
+import java.util.Optional;
 import java.util.List;
 import java.util.Objects;
 
 import static com.pillimi.backend.common.exception.handler.ErrorCode.INVALID_INPUT_VALUE;
 import static com.pillimi.backend.common.exception.handler.ErrorCode.MEMBER_NOT_FOUND;
+
 
 @Service
 @RequiredArgsConstructor
@@ -116,6 +119,12 @@ public class FamilyServiceImpl implements FamilyService {
             throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getMessage());
 
         familyRequestRepository.delete(request);
+    }
+
+    @Override
+    public Optional<Family> checkFamily(Member protector, Member protege) {
+
+        return familyRepository.findFamilyByProtectorAndProtege(protector, protege);
     }
 
 }
