@@ -11,10 +11,7 @@ import com.pillimi.backend.common.exception.handler.ErrorResponse;
 import com.pillimi.backend.common.model.BaseResponseBody;
 import com.pillimi.backend.db.entity.FamilyRequest;
 import com.pillimi.backend.db.entity.Member;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +39,7 @@ public class FamilyController {
             @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<FamilyRequest> regist(@RequestBody FamilyRegistReq req){
+    public ResponseEntity<FamilyRequest> regist(@RequestBody FamilyRegistReq req) {
         familyService.createFamily(req);
         return ResponseEntity.status(200).body(familyService.createFamily(req));
         //return ResponseEntity.status(200).body("Success");
@@ -61,6 +58,23 @@ public class FamilyController {
 
         Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_FAMILY_REQUEST,familyService.getFamilyRequestList(member)));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_FAMILY_REQUEST, familyService.getFamilyRequestList(member)));
+    }
+
+    @ApiOperation(value = "가족 추가 (가족 요청 승인)", notes = "피보호자가 가족 요청을 승인하는 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = ADD_FAMILY),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @PostMapping(value = "/add")
+    public ResponseEntity<BaseResponseBody> addFamily(@RequestParam Long familyRequestSeq) {
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        familyService.addFamily(member,familyRequestSeq);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ADD_FAMILY));
     }
 }

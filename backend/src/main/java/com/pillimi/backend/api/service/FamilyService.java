@@ -13,4 +13,6 @@ public interface FamilyService {
     FamilyRequest createFamily(FamilyRegistReq req);
 
     List<FamilyRequestRes> getFamilyRequestList(Member member);
+
+    void addFamily(Member member, Long familyRequestSeq);
 }
