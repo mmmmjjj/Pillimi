@@ -1,6 +1,7 @@
 package com.pillimi.backend.api.service;
 
 import com.pillimi.backend.api.request.FamilyRegistReq;
+import com.pillimi.backend.api.response.FamilyRequestRes;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
 import com.pillimi.backend.db.entity.Family;
 import com.pillimi.backend.db.entity.FamilyRequest;
@@ -12,11 +13,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class FamilyServiceImpl implements FamilyService{
-    private final JwtTokenProvider tokenProvider;
     private final MemberRepository memberRepository;
     private final FamilyRequestRepository familyRequestRepository;
 
@@ -30,6 +32,15 @@ public class FamilyServiceImpl implements FamilyService{
             familyrequest.setRequestProtector(protectorId);
         }
         return familyRequestRepository.save(familyrequest);
+    }
+
+    /*
+    가족 요청 목록 조회
+     */
+    @Override
+    public List<FamilyRequestRes> getFamilyRequestList(Member member) {
+
+        return familyRequestRepository.findFamilyRequestByMember(member);
     }
 
 }

@@ -1,10 +1,16 @@
 package com.pillimi.backend.api.controller;
 
 import com.pillimi.backend.api.request.FamilyRegistReq;
+import com.pillimi.backend.api.request.MemberMedicineReq;
 import com.pillimi.backend.api.service.FamilyService;
+import com.pillimi.backend.api.service.MemberService;
+import com.pillimi.backend.common.auth.JwtUtil;
+import com.pillimi.backend.common.exception.NotFoundException;
+import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.exception.handler.ErrorResponse;
 import com.pillimi.backend.common.model.BaseResponseBody;
 import com.pillimi.backend.db.entity.FamilyRequest;
+import com.pillimi.backend.db.entity.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -12,10 +18,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.pillimi.backend.common.model.ResponseMessage.*;
 
@@ -26,6 +29,7 @@ import static com.pillimi.backend.common.model.ResponseMessage.*;
 public class FamilyController {
 
     private final FamilyService familyService;
+    private final MemberService memberService;
 
     @PostMapping("/regist/protector")
     @ApiOperation(value = "가족등록 요청", notes = "보호자가 가족등록을 하는 api")
@@ -43,5 +47,20 @@ public class FamilyController {
         return ResponseEntity.status(200).body(familyService.createFamily(req));
         //return ResponseEntity.status(200).body("Success");
         //return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGISTER,familyService.createFamily(req)));
+    }
+
+    @ApiOperation(value = "가족 요청 목록 조회", notes = "피보호자의 가족 요청 목록 조회 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = GET_FAMILY_REQUEST),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @GetMapping(value = "/request")
+    public ResponseEntity<BaseResponseBody> getFamilyRequest() {
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_FAMILY_REQUEST,familyService.getFamilyRequestList(member)));
     }
 }
