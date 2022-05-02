@@ -7,6 +7,7 @@ import { Button, Container, FormGroup, Form, Input } from "reactstrap";
 import style from "../css/MemberInfo.module.css";
 import MemberInfo from "../MemberInfo";
 import Datetime from 'react-datetime';
+import moment from "moment";
 
 // core components
 
@@ -14,9 +15,18 @@ function MemberRegisterInfo(props) {
 
   const [profile, setProfile] = useState({
     nickname: "",
-    birthDate: new Date(),
+    Moment: Date,
     phone: "",
   })
+
+  const [birthDate, setBirthDate] = useState(new Date());
+
+  const onChangeDate = (value) => {
+    // setBirthDate(value);
+    console.log(value);
+    profile.Moment = value._d;
+    console.log(profile.Moment);
+  }
 
   const [isProtector, setIsProtector] = useState(false);
 
@@ -26,11 +36,15 @@ function MemberRegisterInfo(props) {
   }
 
   const onChangeProfile = (e) => {
-    setProfile({
-      ...profile,
-      [e.target.name]: e.target.value,
-    })
+      if (moment.isMoment(e)){
+          setProfile({...profile, [e.name]:e});
+          console.log(profile.Moment)
+      }
+      else{
+          setProfile({...profile, [e.target.name]:e.target.value});
+      }
   }
+
 
   if(!isProtector){
     return (
@@ -54,6 +68,11 @@ function MemberRegisterInfo(props) {
               <Datetime 
                 className={`${style.datepicker}`}
                 // inputProps={inputprops}
+                value={profile.Moment}
+                onChange={(e) => {
+                  e.name = "Moment"
+                  onChangeProfile(e)
+                }}
                 timeFormat={false}></Datetime>
             </FormGroup>
             <FormGroup>
