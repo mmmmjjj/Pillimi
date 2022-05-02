@@ -3,6 +3,7 @@ package com.pillimi.backend.api.controller;
 import com.pillimi.backend.api.request.MemberMedicineCreateReq;
 import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
 import com.pillimi.backend.api.response.MemberMedicineRes;
+import com.pillimi.backend.api.service.FamilyService;
 import com.pillimi.backend.api.service.MemberMedicineService;
 import com.pillimi.backend.api.service.MemberService;
 import com.pillimi.backend.common.auth.JwtUtil;
@@ -11,7 +12,6 @@ import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.exception.handler.ErrorResponse;
 import com.pillimi.backend.common.model.BaseResponseBody;
 import com.pillimi.backend.db.entity.Member;
-import com.pillimi.backend.db.entity.MemberMedicine;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,6 +33,8 @@ public class MemberMedicineController {
 
     private final MemberService memberService;
 
+    private final FamilyService familyService;
+
     private final MemberMedicineService memberMedicineService;
 
 
@@ -47,7 +49,11 @@ public class MemberMedicineController {
     @PostMapping(value = "")
     public ResponseEntity<BaseResponseBody> createMemberMedicineInfo(@RequestBody MemberMedicineCreateReq req) {
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(req.getMemberSeq()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
         memberMedicineService.createMemberMedicine(req);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGIST_MEMBER_MEDICINE));
     }
@@ -63,7 +69,11 @@ public class MemberMedicineController {
     @PutMapping(value = "")
     public ResponseEntity<BaseResponseBody> updateMemberMedicineInfo(@RequestBody MemberMedicineUpdateReq req) {
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(req.getMemberSeq()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
         memberMedicineService.updateMemberMedicine(req);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, UPDATE_MEMBER_MEDICINE));
     }
@@ -77,9 +87,13 @@ public class MemberMedicineController {
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
     })
     @DeleteMapping(value = "")
-    public ResponseEntity<BaseResponseBody> deleteMemberMedicineInfo(@RequestParam Long memberMedicineSeq) {
+    public ResponseEntity<BaseResponseBody> deleteMemberMedicineInfo(@RequestParam Long memberMedicineSeq, @RequestParam Long protegeSeq) {
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
         memberMedicineService.deleteMemberMedicine(memberMedicineSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, DELETE_MEMBER_MEDICINE));
     }
@@ -93,10 +107,14 @@ public class MemberMedicineController {
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
     })
     @GetMapping(value = "")
-    public ResponseEntity<BaseResponseBody> getMemberMedicineInfo(@RequestParam Long memberSeq) {
+    public ResponseEntity<BaseResponseBody> getMemberMedicineInfo(@RequestParam Long protegeSeq) {
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(memberSeq);
+        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
+        List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(protegeSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
     }
 

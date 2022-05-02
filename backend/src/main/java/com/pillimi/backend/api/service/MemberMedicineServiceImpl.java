@@ -3,10 +3,12 @@ package com.pillimi.backend.api.service;
 import com.pillimi.backend.api.request.MemberMedicineCreateReq;
 import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
 import com.pillimi.backend.api.response.MemberMedicineRes;
+import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.db.entity.*;
 import com.pillimi.backend.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,13 +44,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     public void createMemberMedicine(MemberMedicineCreateReq req) {
 
         Member member = memberRepository.getById(req.getMemberSeq());
-        if(member==null){
-            throw new AccessDeniedException(ErrorCode.MEMBER_NOT_FOUND.getCode());
-        }
-
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
         if(medicine==null){
-            throw new AccessDeniedException(ErrorCode.MEDICINE_NOT_FOUND.getCode());
+            throw new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode());
         }
 
 
@@ -99,13 +97,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     public void updateMemberMedicine(MemberMedicineUpdateReq req) {
 
         Member member = memberRepository.getById(req.getMemberSeq());
-        if(member==null){
-            throw new AccessDeniedException(ErrorCode.MEMBER_NOT_FOUND.getCode());
-        }
-
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
         if(medicine==null){
-            throw new AccessDeniedException(ErrorCode.MEDICINE_NOT_FOUND.getCode());
+            throw new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode());
         }
 
         MemberMedicine memberMedicine = memberMedicineRepository.save(MemberMedicine.builder().member(member)
@@ -151,6 +145,10 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     public void deleteMemberMedicine(Long memberMedicineSeq) {
 
         MemberMedicine memberMedicine = memberMedicineRepository.getById(memberMedicineSeq);
+        if(memberMedicine == null){
+            throw new NotFoundException(ErrorCode.MEMBER_MEDICINE_NOT_FOUND.getCode());
+        }
+
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(memberMedicine.getMedicine());
 
         Member member = memberMedicine.getMember();
@@ -167,9 +165,6 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     public List<MemberMedicineRes> getMemberMedicine(Long memberSeq) {
 
         Member member = memberRepository.getById(memberSeq);
-        if(member==null){
-            throw new AccessDeniedException(ErrorCode.MEMBER_NOT_FOUND.getCode());
-        }
 
         List<MemberMedicine> memberMedicines = memberMedicineRepository.getByMember(member);
         List<MemberMedicineRes> memberMedicineResList = new LinkedList<MemberMedicineRes>();
@@ -184,6 +179,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
             MemberMedicineRes memberMedicineRes = MemberMedicineRes.builder()
                     .memberMedicineSeq(memberMedicine.getMemberMedicineSeq())
+                    .imageURL("www.jcgroup.hk/wp-content/uploads/2019/08/test-img-300x194_2.png")
                     .medicineSeq(memberMedicine.getMedicine().getMedicineSeq())
                     .memberMedicineName(memberMedicine.getMemberMedicineName())
                     .startDay(medicineIntake.getIntakeStart())
@@ -192,6 +188,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                     .intakeTime(Times)
                     .intakeCount(medicineIntake.getIntakeCount())
                     .remarkContent(remark.getRemarkContent())
+                    .isNow(memberMedicine.isMemberMedicineNow())
                     .build();
 
             memberMedicineResList.add(memberMedicineRes);
