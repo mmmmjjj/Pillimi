@@ -24,8 +24,7 @@ import java.util.Optional;
 import java.util.List;
 import java.util.Objects;
 
-import static com.pillimi.backend.common.exception.handler.ErrorCode.INVALID_INPUT_VALUE;
-import static com.pillimi.backend.common.exception.handler.ErrorCode.MEMBER_NOT_FOUND;
+import static com.pillimi.backend.common.exception.handler.ErrorCode.*;
 
 
 @Service
@@ -41,11 +40,15 @@ public class FamilyServiceImpl implements FamilyService {
      */
     @Override
     public void createFamily(Member protector, FamilyRegistReq req) {
-        Member protege = memberRepository.findByMemberPhone(req.getMemberPhone())
+        Member protege = memberRepository.findByMemberPhoneAndMemberNickname(req.getMemberPhone(), req.getMemberName())
                 .orElseThrow(() -> new NotFoundException(MEMBER_NOT_FOUND)); //피보호자 멤버정보
 
-        if(!Objects.equals(protege.getMemberNickname(), req.getMemberName())|| protege.getMemberIsprotector()==1)
+        if(protege.getMemberIsprotector()==1)
             throw new InvalidException(INVALID_INPUT_VALUE);
+
+        if(checkFamily(protector, protege).isPresent()
+                || familyRequestRepository.findByRequestProtectorAndRequestProtege(protector,protege).isPresent())
+            throw new InvalidException(ALREADY_FAMILY);
 
 
         FamilyRequest familyrequest = FamilyRequest.builder()

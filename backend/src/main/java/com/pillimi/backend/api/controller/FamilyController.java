@@ -27,11 +27,12 @@ public class FamilyController {
     private final MemberService memberService;
 
     @PostMapping("/request")
-    @ApiOperation(value = "가족등록 요청", notes = "보호자가 가족등록을 하는 api")
+    @ApiOperation(value = "가족등록 요청", notes = "보호자가 가족등록을 하는 api. 보호자에게 요청 시 에러 반환")
     @ApiResponses({
             @ApiResponse(code = 200, message = POST_FAMILY_REQUEST),
             @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = "Already family", response = ErrorResponse.class),
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
     })
