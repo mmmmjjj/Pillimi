@@ -37,14 +37,13 @@ public class FamilyServiceImpl implements FamilyService {
     가족 요청
      */
     @Override
-    public void createFamily(FamilyRegistReq req) {
+    public void createFamily(Member protector, FamilyRegistReq req) {
         Member protege = memberRepository.findByMemberPhone(req.getMemberPhone())
                 .orElseThrow(() -> new NotFoundException(MEMBER_NOT_FOUND)); //피보호자 멤버정보
 
         if(!Objects.equals(protege.getMemberNickname(), req.getMemberName())|| protege.getMemberIsprotector()==1)
             throw new InvalidException(INVALID_INPUT_VALUE);
 
-        Member protector = memberRepository.getById(req.getMemberSeq()); //보호자 아이디
 
         FamilyRequest familyrequest = FamilyRequest.builder()
                 .requestProtector(protector)
@@ -74,9 +73,8 @@ public class FamilyServiceImpl implements FamilyService {
 
 
     @Override
-    public long delete(long familySeq) {
-        long delete = familyRepository.deleteByFamilySeq(familySeq);
-        return delete;
+    public void deleteFamily(Member member, Member protege) {
+        familyRepository.deleteByProtectorAndProtege(member,protege);
     }
 
     /*

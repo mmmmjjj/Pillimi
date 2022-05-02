@@ -15,9 +15,9 @@ public interface FamilyService {
 
     void rejectFamilyRequest(Member member, Long familyRequestSeq);
 
-    void createFamily(FamilyRegistReq req);
+    void createFamily(Member member, FamilyRegistReq req);
 
     List<FamilyRes> getFamilyList(Member member);
     
-    long delete(long familySeq);
+    void deleteFamily(Member member, Member target);
 }
