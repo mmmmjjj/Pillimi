@@ -4,6 +4,7 @@ import com.pillimi.backend.api.request.FamilyRegistReq;
 import com.pillimi.backend.api.response.FamilyRequestRes;
 import com.pillimi.backend.api.response.FamilyRes;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
+import com.pillimi.backend.common.exception.InvalidException;
 import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.db.entity.Family;
@@ -19,6 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static com.pillimi.backend.common.exception.handler.ErrorCode.INVALID_INPUT_VALUE;
+import static com.pillimi.backend.common.exception.handler.ErrorCode.MEMBER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -28,15 +33,24 @@ public class FamilyServiceImpl implements FamilyService {
     private final FamilyRepository familyRepository;
     private final FamilyRequestRepository familyRequestRepository;
 
-    @Override  //보호자가 피보호자 가족 등록하는 상황
+    /*
+    가족 요청
+     */
+    @Override
     public void createFamily(FamilyRegistReq req) {
-        FamilyRequest familyrequest = new FamilyRequest();
-        Member protegeName = memberRepository.findByMemberPhone(req.getPhone()); //피보호자 멤버정보
-        Member protectorId = memberRepository.getById(req.getMemberSeq()); //보호자 아이디
-        if (protegeName.getMemberPhone().equals(req.getPhone())) {
-            familyrequest.setRequestProtege(protegeName);
-            familyrequest.setRequestProtector(protectorId);
-        }
+        Member protege = memberRepository.findByMemberPhone(req.getMemberPhone())
+                .orElseThrow(() -> new NotFoundException(MEMBER_NOT_FOUND)); //피보호자 멤버정보
+
+        if(!Objects.equals(protege.getMemberNickname(), req.getMemberName())|| protege.getMemberIsprotector()==1)
+            throw new InvalidException(INVALID_INPUT_VALUE);
+
+        Member protector = memberRepository.getById(req.getMemberSeq()); //보호자 아이디
+
+        FamilyRequest familyrequest = FamilyRequest.builder()
+                .requestProtector(protector)
+                .requestProtege(protege)
+                .build();
+
         familyRequestRepository.save(familyrequest);
     }
 

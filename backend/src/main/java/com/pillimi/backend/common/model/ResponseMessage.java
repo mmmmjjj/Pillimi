@@ -25,6 +25,7 @@ public class ResponseMessage {
     public static final String GET_MEDICINE_INFO = "약품 상세 정보 조회 성공";
 
     // Family
+    public static final String POST_FAMILY_REQUEST = "가족 요청 성공";
     public static final String GET_FAMILY_REQUEST = "가족 요청 목록 조회 성공";
     public static final String GET_FAMILY = "가족 목록 조회 성공";
     public static final String ADD_FAMILY = "가족 추가 성공";

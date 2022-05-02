@@ -8,12 +8,12 @@ import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.exception.handler.ErrorResponse;
 import com.pillimi.backend.common.model.BaseResponseBody;
-import com.pillimi.backend.db.entity.Family;
 import com.pillimi.backend.db.entity.Member;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import static com.pillimi.backend.common.model.ResponseMessage.*;
@@ -27,24 +27,22 @@ public class FamilyController {
     private final FamilyService familyService;
     private final MemberService memberService;
 
-    @PostMapping("/regist/protector")
+    @PostMapping("/request")
     @ApiOperation(value = "가족등록 요청", notes = "보호자가 가족등록을 하는 api")
     @ApiResponses({
-//            @ApiResponse(code = 200, message = REGISTER),
-//            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
-//            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
-//            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
-//            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
-            @ApiResponse(code = 200, message = "성공"), @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"), @ApiResponse(code = 500, message = "서버 오류")
+            @ApiResponse(code = 200, message = POST_FAMILY_REQUEST),
+            @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
     })
-    public ResponseEntity<BaseResponseBody> regist(@RequestBody FamilyRegistReq req){
-        familyService.createFamily(req);
-        System.out.println(req);
-        //return ResponseEntity.status(200).body(familyService.createFamily(req));
-        //return ResponseEntity.status(200).body("Success");
+    public ResponseEntity<BaseResponseBody> requestFamily(@RequestBody FamilyRegistReq req){
 
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGISTER));
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        familyService.createFamily(req);
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, POST_FAMILY_REQUEST));
     }
 
     @GetMapping("")
@@ -62,7 +60,7 @@ public class FamilyController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_FAMILY, familyService.getFamilyList(member)));
     }
 
-    @DeleteMapping("/famaily/delete/{familySeq}")
+    @DeleteMapping("")
     @ApiOperation(value = "등록된 가족 삭제 페이지", notes = "가족 삭제하는 api")
     @ApiResponses({
             @ApiResponse(code = 200, message = SEARCH),
@@ -71,7 +69,7 @@ public class FamilyController {
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
     })
-    public ResponseEntity<Long> deletefamily(@PathVariable long familySeq){
+    public ResponseEntity<Long> deleteFamily(@RequestParam long familySeq){
         return ResponseEntity.status(200).body(familyService.delete(familySeq));
     }
 
