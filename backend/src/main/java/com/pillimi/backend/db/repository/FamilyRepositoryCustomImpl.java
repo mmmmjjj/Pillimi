@@ -32,8 +32,14 @@ public class FamilyRepositoryCustomImpl implements FamilyRepositoryCustom {
                     .on(qFamily.protege.eq(qMember))
                     .where(qFamily.protector.eq(member))
                     .fetch();
-        // TODO 피보호자일 경우 어디까지가 가족인가?
-        else return null;
+
+        // member가 피보호자일 경우
+        else return jpaQueryFactory.select(qMember)
+                .from(qFamily)
+                .join(qMember)
+                .on(qFamily.protector.eq(qMember))
+                .where(qFamily.protege.eq(member))
+                .fetch();
     }
 
     @Override
