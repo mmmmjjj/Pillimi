@@ -65,7 +65,7 @@ function MemberPillList(props) {
     array1.forEach(element =>{
       if(element.isNow==props.isNow){
         console.log(element.type);
-        result.push(<div className={`d-flex align-items-center flex-row pl-3 ${style.checkAlarm2} `}>
+        result.push(<div className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `}>
           <div className={`${style.imgsize2} ml-2`}>
             <img src={element.img} className={`${style.size}`}></img>
           </div>
