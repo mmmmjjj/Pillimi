@@ -30,16 +30,22 @@ import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "views/examples/LoginPage.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
+import Family from "components/family/FamilyPage.js";
+import FamilyRegisterRequest from "components/family/familyRegister/FamilyRegisterRequest.js";
 import MainPage from "views/MainPage.js";
 import ElderMain from "components/main/ElderMain.js";
 import PillToday from "components/main/PillToday.js";
 import PillDetail from "components/pill/PillDetail.js";
 import PillSearch from "components/pill/PillSearch.js";
+import PillTake from "components/pill/PillTake.js";
+import PillPicture from "components/pill/PillPicture.js";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Switch>
+        <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
+        <Route path="/family" render={(props) => <Family {...props} />} />
         <Route exact path="/" render={(props) => <MainPage {...props} />} />
         <Route exact path="/index" render={(props) => <Index {...props} />} />
         <Route exact path="/nucleo-icons" render={(props) => <NucleoIcons {...props} />} />
@@ -50,6 +56,8 @@ ReactDOM.render(
         <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
         <Route exact path="/pill-detail" render={(props) => <PillDetail {...props} />} />
         <Route exact path="/pill-search" render={(props) => <PillSearch {...props} />} />
+        <Route path="/pill-take" render={(props) => <PillTake {...props} />} />
+        <Route path="/pill-picture" render={(props) => <PillPicture {...props} />} />
         <Redirect to="/index" />
         {/* <Redirect from="/" to="/index" /> */}
       </Switch>

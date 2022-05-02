@@ -1,0 +1,38 @@
+.Whole {
+  text-align: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.Img {
+  width: 100%;
+  height: 80%;
+}
+
+.CameraArea {
+  height: 100%;
+  background-color: #eaf0f8 !important;
+}
+
+.IconArea {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 15%;
+}
+
+.Camera {
+  margin: auto;
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+
+.SendBtn {
+  background-color: #0369a1 !important;
+  color: #e0f2fe !important;
+  margin: auto;
+  display: block;
+  width: 80%;
+  font-weight: bold;
+  font-size: 20px;
+}

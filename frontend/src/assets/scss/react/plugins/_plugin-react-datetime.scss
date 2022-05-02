@@ -101,7 +101,7 @@
   &.rdtToday.rdtActive,
   &.rdtActive,
   &.rdtActive:hover {
-    background-color: $primary-color !important;
+    background-color: #0284c7 !important;
     color: $white-color;
   }
 }
@@ -176,7 +176,7 @@
   th.rdtNext,
   th.rdtPrev,
   .rdtTimeToggle {
-    color: $primary-color;
+    color: #0284c7;
   }
 }
 
@@ -262,9 +262,9 @@ td.rdtYear:hover {
 .rdtCounters {
   .rdtCounter:last-child {
     .rdtCount {
-      color: $primary-color;
+      color: #0284c7;
       border-radius: 50%;
-      border: 1px solid $primary-color;
+      border: 1px solid #0284c7;
     }
   }
 }

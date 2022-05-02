@@ -110,6 +110,7 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> getMemberMedicineInfo(@RequestParam Long protegeSeq) {
 
         Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        System.out.println(JwtUtil.getCurrentId());
         Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
         familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
