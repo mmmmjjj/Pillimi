@@ -28,7 +28,7 @@ function FamilyProtector() {
         <ListGroupItem onClick={toggle}>
           <Row xs="4">
             <Col>
-              <img alt="" src="/img/1.jpg" />
+              <img className="listimg" alt="" src="/img/1.jpg" />
             </Col>
             <Col xs={{ offset: 1, size: 8 }} className="listitemtext">
               <h3>엄마</h3>
@@ -38,7 +38,7 @@ function FamilyProtector() {
         <ListGroupItem>
           <Row xs="4">
             <Col>
-              <img alt="" src="/img/2.jpg" />
+              <img className="listimg" alt="" src="/img/2.jpg" />
             </Col>
             <Col xs={{ offset: 1, size: 8 }} className="listitemtext">
               <h3>아빠</h3>
@@ -48,7 +48,7 @@ function FamilyProtector() {
         <ListGroupItem>
           <Row xs="4">
             <Col>
-              <img alt="" src="/img/3.jpg" />
+              <img className="listimg" alt="" src="/img/3.jpg" />
             </Col>
             <Col xs={{ offset: 1, size: 8 }} className="listitemtext">
               <h3>할머니</h3>
@@ -58,7 +58,7 @@ function FamilyProtector() {
         <ListGroupItem>
           <Row xs="4">
             <Col>
-              <img alt="" src="/img/4.jpg" />
+              <img className="listimg" alt="" src="/img/4.jpg" />
             </Col>
             <Col xs={{ offset: 1, size: 8 }} className="listitemtext">
               <h3>할아버지</h3>
