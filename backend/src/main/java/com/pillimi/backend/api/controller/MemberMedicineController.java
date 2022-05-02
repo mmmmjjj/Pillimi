@@ -28,7 +28,7 @@ import static com.pillimi.backend.common.model.ResponseMessage.*;
 @Api(value = "회원 API", tags = "Member")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/member/medicine/")
+@RequestMapping("/api/v1/member/medicine")
 public class MemberMedicineController {
 
     private final MemberService memberService;
