@@ -1,0 +1,146 @@
+.Whole {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.PillName {
+  font-weight: bold;
+  text-align: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.Label {
+  font-size: 23px;
+  font-weight: bold;
+  margin-bottom: 2% !important;
+}
+
+.Input:focus {
+  border-color: #0284c7 !important;
+}
+
+.TimePlus {
+  cursor: pointer;
+}
+
+.Badge {
+  margin-top: 4% !important;
+  margin-bottom: 4% !important;
+  color: black !important;
+}
+
+.BadgeTime {
+  color: black !important;
+  margin-bottom: 20px !important;
+}
+
+.ModifyBtn {
+  color: E0F2FE;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  width: 35%;
+  float: left;
+  margin-left: 10% !important;
+  margin-right: 10% !important;
+  display: block;
+  background-color: #0284c7;
+}
+
+.ModifyBtn:hover,
+.ModifyBtn:active,
+.ModifyBtn:focus {
+  color: E0F2FE !important;
+  background-color: #0284c7 !important;
+  box-shadow: none !important;
+}
+
+.DoneBtn {
+  color: E0F2FE;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  display: block;
+  background-color: #0284c7;
+}
+
+.DoneBtn:hover,
+.DoneBtn:active,
+.DoneBtn:focus {
+  color: E0F2FE !important;
+  background-color: #0284c7 !important;
+  box-shadow: none !important;
+}
+
+.More {
+  font-size: 23px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.RemoveBtn {
+  color: E0F2FE;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  width: 35%;
+  margin-right: 10% !important;
+  display: block;
+  background-color: #f44444;
+}
+
+.RemoveBtn:hover,
+.RemoveBtn:active,
+.RemoveBtn:focus {
+  color: E0F2FE !important;
+  background-color: #f44444 !important;
+  box-shadow: none !important;
+}
+
+.RealRemoveBtn {
+  color: E0F2FE;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  width: 35%;
+  float: left;
+  margin-left: 10% !important;
+  margin-right: 10% !important;
+  display: block;
+  background-color: #f44444;
+}
+
+.RealRemoveBtn:hover,
+.RealRemoveBtn:active,
+.RealRemoveBtn:focus {
+  color: E0F2FE !important;
+  background-color: #f44444 !important;
+  box-shadow: none !important;
+}
+
+.CancelBtn {
+  color: E0F2FE;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  width: 35%;
+  margin-right: 10% !important;
+  display: block;
+  /* background-color: #0284c7; */
+}
+
+.CancelBtn:hover,
+.CancelBtn:active,
+.CancelBtn:focus {
+  color: E0F2FE !important;
+  /* background-color: #0284c7 !important; */
+  box-shadow: none !important;
+}
+
+h5 {
+  margin-bottom: 0px !important;
+}
