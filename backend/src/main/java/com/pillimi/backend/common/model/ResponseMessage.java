@@ -26,6 +26,7 @@ public class ResponseMessage {
 
     // Family
     public static final String GET_FAMILY_REQUEST = "가족 요청 목록 조회 성공";
+    public static final String GET_FAMILY = "가족 목록 조회 성공";
     public static final String ADD_FAMILY = "가족 추가 성공";
     public static final String REJECT_FAMILY_REQUEST = "가족 요청 거절";
 

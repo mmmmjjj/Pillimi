@@ -2,6 +2,7 @@ package com.pillimi.backend.api.service;
 
 import com.pillimi.backend.api.request.FamilyRegistReq;
 import com.pillimi.backend.api.response.FamilyRequestRes;
+import com.pillimi.backend.api.response.FamilyRes;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
 import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
@@ -16,12 +17,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class FamilyServiceImpl implements FamilyService{
+public class FamilyServiceImpl implements FamilyService {
     private final MemberRepository memberRepository;
     private final FamilyRepository familyRepository;
     private final FamilyRequestRepository familyRequestRepository;
@@ -31,18 +33,31 @@ public class FamilyServiceImpl implements FamilyService{
         FamilyRequest familyrequest = new FamilyRequest();
         Member protegeName = memberRepository.findByMemberPhone(req.getPhone()); //피보호자 멤버정보
         Member protectorId = memberRepository.getById(req.getMemberSeq()); //보호자 아이디
-        if(protegeName.getMemberPhone().equals(req.getPhone())) {
+        if (protegeName.getMemberPhone().equals(req.getPhone())) {
             familyrequest.setRequestProtege(protegeName);
             familyrequest.setRequestProtector(protectorId);
         }
         familyRequestRepository.save(familyrequest);
     }
 
+    /*
+    가족 요청 목록 조회
+     */
     @Override
-    public List<Family> findAll() {
-        List<Family> familys = familyRepository.findAll();
-        return familys;
+    public List<FamilyRes> getFamilyList(Member member) {
+        List<Member> list = familyRepository.findFamilyByMember(member);
+        List<FamilyRes> res = new ArrayList<>();
+
+        for (Member m : list) {
+            res.add(FamilyRes.builder()
+                    .memberSeq(m.getMemberSeq())
+                    .memberName(m.getMemberNickname())
+                    .memberImage(m.getMemberImage()).build());
+        }
+
+        return res;
     }
+
 
     @Override
     public long delete(long familySeq) {
@@ -66,7 +81,8 @@ public class FamilyServiceImpl implements FamilyService{
     public void addFamily(Member member, Long familyRequestSeq) {
         FamilyRequest request = familyRequestRepository.findById(familyRequestSeq).orElseThrow(() -> new NotFoundException(ErrorCode.FAMILY_REQUEST_NOT_FOUND));
 
-        if(!member.equals(request.getRequestProtege())) throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getMessage());
+        if (!member.equals(request.getRequestProtege()))
+            throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getMessage());
 
         Family family = Family.builder()
                 .protector(request.getRequestProtector())
@@ -84,7 +100,8 @@ public class FamilyServiceImpl implements FamilyService{
     public void rejectFamilyRequest(Member member, Long familyRequestSeq) {
         FamilyRequest request = familyRequestRepository.findById(familyRequestSeq).orElseThrow(() -> new NotFoundException(ErrorCode.FAMILY_REQUEST_NOT_FOUND));
 
-        if(!member.equals(request.getRequestProtege())) throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getMessage());
+        if (!member.equals(request.getRequestProtege()))
+            throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getMessage());
 
         familyRequestRepository.delete(request);
     }

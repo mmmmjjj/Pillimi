@@ -1,7 +1,6 @@
 package com.pillimi.backend.api.controller;
 
 import com.pillimi.backend.api.request.FamilyRegistReq;
-import com.pillimi.backend.api.request.MemberMedicineReq;
 import com.pillimi.backend.api.service.FamilyService;
 import com.pillimi.backend.api.service.MemberService;
 import com.pillimi.backend.common.auth.JwtUtil;
@@ -10,7 +9,6 @@ import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.exception.handler.ErrorResponse;
 import com.pillimi.backend.common.model.BaseResponseBody;
 import com.pillimi.backend.db.entity.Family;
-import com.pillimi.backend.db.entity.FamilyRequest;
 import com.pillimi.backend.db.entity.Member;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -51,18 +49,19 @@ public class FamilyController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGISTER));
     }
 
-    @GetMapping("/family/search")
-    @ApiOperation(value = "등록된 가족 목록 페이지", notes = "가족 목록 페이지 가져오는 api")
+    @GetMapping("")
+    @ApiOperation(value = "등록된 가족 목록 조회", notes = "등록된 가족 목록을 조회하는 api입니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = SEARCH),
+            @ApiResponse(code = 200, message = GET_FAMILY),
             @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
-            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
     })
-    public ResponseEntity<List<Family>> findlist(){
-        //return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, SEARCH, familyService.findAll()));
-        return ResponseEntity.status(200).body(familyService.findAll());
+    public ResponseEntity<BaseResponseBody> getFamily(){
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_FAMILY, familyService.getFamilyList(member)));
     }
 
     @DeleteMapping("/famaily/delete/{familySeq}")
