@@ -77,4 +77,20 @@ public class FamilyController {
         familyService.addFamily(member,familyRequestSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, ADD_FAMILY));
     }
+
+    @ApiOperation(value = "가족 요청 거절", notes = "피보호자가 가족 요청을 거절하는 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = REJECT_FAMILY_REQUEST),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @DeleteMapping(value = "/request")
+    public ResponseEntity<BaseResponseBody> deleteFamilyRequest(@RequestParam Long familyRequestSeq) {
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        familyService.rejectFamilyRequest(member,familyRequestSeq);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, REJECT_FAMILY_REQUEST));
+    }
 }

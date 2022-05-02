@@ -65,4 +65,16 @@ public class FamilyServiceImpl implements FamilyService{
         familyRequestRepository.delete(request);
     }
 
+    /*
+    가족 요청 거절 및 가족 요청 삭제
+     */
+    @Override
+    public void rejectFamilyRequest(Member member, Long familyRequestSeq) {
+        FamilyRequest request = familyRequestRepository.findById(familyRequestSeq).orElseThrow(() -> new NotFoundException(ErrorCode.FAMILY_REQUEST_NOT_FOUND));
+
+        if(!member.equals(request.getRequestProtege())) throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getMessage());
+
+        familyRequestRepository.delete(request);
+    }
+
 }
