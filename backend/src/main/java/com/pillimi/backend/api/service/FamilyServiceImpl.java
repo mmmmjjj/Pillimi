@@ -25,7 +25,6 @@ public class FamilyServiceImpl implements FamilyService{
     private final MemberRepository memberRepository;
     private final FamilyRepository familyRepository;
     private final FamilyRequestRepository familyRequestRepository;
-    private final FamilyRepository familyRepository;
 
     @Override  //보호자가 피보호자 가족 등록하는 상황
     public void createFamily(FamilyRegistReq req) {
