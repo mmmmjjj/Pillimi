@@ -237,7 +237,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                                         + medicineIngredient.getMedicine().getMedicineName()
                                         + "악품의 " + medicineIngredient.getIngredient().getIngredientName()
                                         + "성분을 확인해주세요.\n"
-                                        + dea.getDeaEffectName() + ")")
+                                        + dea.getDeaEffectName())
                                 .build();
                     }
                 }
@@ -255,8 +255,8 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                             .checkDesc(medicineIngredient.getMedicine().getMedicineName()
                                     + "의 성분 " + medicineIngredient.getIngredient().getIngredientName()
                                     + "은 현재 복용중인 " + memberIngredient.getIngredient().getIngredientName()
-                                    + " 성분과 함께 먹을수 없습니다. 확인해주세요.\n("
-                                    + dca.getDcaAvoidDesc() + ")")
+                                    + " 성분과 함께 먹을수 없습니다. 확인해주세요.\n"
+                                    + dca.getDcaAvoidDesc())
                             .build();
                 }
             }
