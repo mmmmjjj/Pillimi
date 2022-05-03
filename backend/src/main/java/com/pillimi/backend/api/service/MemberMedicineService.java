@@ -19,6 +19,6 @@ public interface MemberMedicineService {
 
     List<MemberMedicineRes> getMemberMedicine(Long memberSeq);
 
-    MemberMedicine getMemberMedicineInfo(Long memberMedicineSeq);
+    MemberMedicineRes getMemberMedicineInfo(Long memberMedicineSeq);
     CheckMedicineRes checkMemberMedicine(Long memberSeq, Long medicineSeq);
 }
