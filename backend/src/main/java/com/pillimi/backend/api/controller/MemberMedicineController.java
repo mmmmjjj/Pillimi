@@ -2,6 +2,7 @@ package com.pillimi.backend.api.controller;
 
 import com.pillimi.backend.api.request.MemberMedicineCreateReq;
 import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
+import com.pillimi.backend.api.response.CheckMedicineRes;
 import com.pillimi.backend.api.response.MemberMedicineRes;
 import com.pillimi.backend.api.service.FamilyService;
 import com.pillimi.backend.api.service.MemberMedicineService;
@@ -110,7 +111,6 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> getMemberMedicineInfo(@RequestParam Long protegeSeq) {
 
         Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        System.out.println(JwtUtil.getCurrentId());
         Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
         familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
@@ -127,17 +127,15 @@ public class MemberMedicineController {
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
     })
-    @GetMapping(value = "")
-    public ResponseEntity<BaseResponseBody> checkMemberMedicine(@RequestParam Long protegeSeq) {
+    @GetMapping(value = "/check")
+    public ResponseEntity<BaseResponseBody> checkMemberMedicine(@RequestParam Long memberSeq, Long medicineSeq) {
 
-        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        System.out.println(JwtUtil.getCurrentId());
-        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        memberService.getMemberById(memberSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
-        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+        CheckMedicineRes checkMedicineRes = memberMedicineService.checkMemberMedicine(memberSeq, medicineSeq);
 
-        List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(protegeSeq);
-        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, MEMBER_MEDICINE_OK, checkMedicineRes));
     }
 
 

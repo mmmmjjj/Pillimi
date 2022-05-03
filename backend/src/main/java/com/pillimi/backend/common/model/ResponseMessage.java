@@ -23,6 +23,8 @@ public class ResponseMessage {
     public static final String UPDATE_MEMBER_MEDICINE = "사용자 복용 약물 수정 성공";
     public static final String DELETE_MEMBER_MEDICINE = "사용자 복용 약물 삭제 성공";
     public static final String SELECT_MEMBER_MEDICINE = "사용자 복용 약물 조회 성공";
+    public static final String MEMBER_MEDICINE_OK = "약물 적합 여부 확인 완료";
+
 
     // Search
     public static final String SEARCH = "검색 성공";
