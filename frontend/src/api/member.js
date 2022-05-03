@@ -1,4 +1,4 @@
-import { apiInstance, apiInstance2 } from "./index.js";
+import { apiInstance2 } from "./index.js";
 
 const api2 = apiInstance2();
 
