@@ -201,6 +201,34 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     }
 
     @Override
+    public MemberMedicineRes getMemberMedicineInfo(Long memberMedicineSeq) {
+        MemberMedicine memberMedicine = memberMedicineRepository.findByMemberMedicineSeq(memberMedicineSeq);
+
+            MedicineIntake medicineIntake = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
+            Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
+            List<Double> Times = new LinkedList<Double>();
+            List<IntakeTime> intakeTimes = intakeTimeRepository.findByMedicineIntake(medicineIntake);
+            for (IntakeTime intakeTime : intakeTimes) {
+                Times.add(intakeTime.getIntakeTime());
+            }
+
+            MemberMedicineRes memberMedicineRes = MemberMedicineRes.builder()
+                    .memberMedicineSeq(memberMedicine.getMemberMedicineSeq())
+                    .imageURL("www.jcgroup.hk/wp-content/uploads/2019/08/test-img-300x194_2.png")
+                    .medicineSeq(memberMedicine.getMedicine().getMedicineSeq())
+                    .memberMedicineName(memberMedicine.getMemberMedicineName())
+                    .startDay(medicineIntake.getIntakeStart())
+                    .endDay(medicineIntake.getIntakeEnd())
+                    .intakeDay(medicineIntake.getIntakeDay())
+                    .intakeTime(Times)
+                    .intakeCount(medicineIntake.getIntakeCount())
+                    .remarkContent(remark.getRemarkContent())
+                    .isNow(memberMedicine.isMemberMedicineNow())
+                    .build();
+
+        return memberMedicineRes;
+    }
+
     public CheckMedicineRes checkMemberMedicine(Long memberSeq, Long medicineSeq) {
         Member member = memberRepository.getById(memberSeq);
         Medicine medicine = medicineRepository.findById(medicineSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode()));
