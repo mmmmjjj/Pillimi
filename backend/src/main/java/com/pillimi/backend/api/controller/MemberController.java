@@ -37,7 +37,7 @@ public class MemberController {
     @ApiOperation(value = "카카오 토큰 요청", notes = "카카오 인가 코드로 액세스 토큰을 요청하는 api입니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = GET_KAKAO_ACCESS_TOKEN),
-            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
     })
     @GetMapping(value = "/kakao/token")
     public ResponseEntity<BaseResponseBody> requestKakaoToken(@RequestParam String code) {

@@ -196,5 +196,11 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         return memberMedicineResList;
     }
 
+    @Override
+    public MemberMedicine getMemberMedicineInfo(Long memberMedicineSeq) {
+        MemberMedicine memberMedicine = memberMedicineRepository.findByMemberMedicineSeq(memberMedicineSeq);
+        return memberMedicine;
+    }
+
 
 }

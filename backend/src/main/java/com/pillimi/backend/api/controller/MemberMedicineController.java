@@ -119,6 +119,16 @@ public class MemberMedicineController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
     }
 
-
-
+    @ApiOperation(value = "사용자 복용 약품 상세조회", notes = "사용자 복용 약품 상세조회 api입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = GET_MEDICINE_INFO),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 403, message = FORBIDDEN, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @GetMapping(value = "{memberMedicineSeq}")
+    public ResponseEntity<BaseResponseBody> getMemberMedicineInfodetail(@PathVariable Long memberMedicineSeq){
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_MEDICINE_INFO, memberMedicineService.getMemberMedicineInfo(memberMedicineSeq)));
+    }
 }
