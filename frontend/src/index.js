@@ -19,11 +19,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-// import { store } from "./store/index";
+// store 사용 설정
 import { Provider } from "react-redux";
 import { legacy_createStore as createStore } from "redux";
-// import createStore from "./store";
 import rootReducer from "./reducers/index";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -47,33 +49,36 @@ import PillTake from "components/pill/PillTake.js";
 import PillPicture from "components/pill/PillPicture.js";
 import Callback from "components/main/Callback.js";
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
+const persistor = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Switch>
+    <PersistGate persistor={persistor}>
+      <BrowserRouter>
         <Switch>
-          <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
-          <Route path="/family" render={(props) => <Family {...props} />} />
-          <Route exact path="/" render={(props) => <MainPage {...props} />} />
-          <Route exact path="/index" render={(props) => <Index {...props} />} />
-          <Route exact path="/nucleo-icons" render={(props) => <NucleoIcons {...props} />} />
-          <Route exact path="/landing-page" render={(props) => <LandingPage {...props} />} />
-          <Route exact path="/profile-page" render={(props) => <ProfilePage {...props} />} />
-          <Route exact path="/login-page" render={(props) => <LoginPage {...props} />} />
-          <Route exact path="/main" render={(props) => <ElderMain {...props} />} />
-          <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
-          <Route exact path="/pill-detail" render={(props) => <PillDetail {...props} />} />
-          <Route exact path="/pill-search" render={(props) => <PillSearch {...props} />} />
-          <Route path="/pill-take" render={(props) => <PillTake {...props} />} />
-          <Route path="/pill-picture" render={(props) => <PillPicture {...props} />} />
-          <Route exact path="/callback" render={(props) => <Callback {...props} />} />
-          <Redirect to="/index" />
-          {/* <Redirect from="/" to="/index" /> */}
+          <Switch>
+            <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
+            <Route path="/family" render={(props) => <Family {...props} />} />
+            <Route exact path="/" render={(props) => <MainPage {...props} />} />
+            <Route exact path="/index" render={(props) => <Index {...props} />} />
+            <Route exact path="/nucleo-icons" render={(props) => <NucleoIcons {...props} />} />
+            <Route exact path="/landing-page" render={(props) => <LandingPage {...props} />} />
+            <Route exact path="/profile-page" render={(props) => <ProfilePage {...props} />} />
+            <Route exact path="/login-page" render={(props) => <LoginPage {...props} />} />
+            <Route exact path="/main" render={(props) => <ElderMain {...props} />} />
+            <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
+            <Route exact path="/pill-detail" render={(props) => <PillDetail {...props} />} />
+            <Route exact path="/pill-search" render={(props) => <PillSearch {...props} />} />
+            <Route path="/pill-take" render={(props) => <PillTake {...props} />} />
+            <Route path="/pill-picture" render={(props) => <PillPicture {...props} />} />
+            <Route exact path="/callback" render={(props) => <Callback {...props} />} />
+            <Redirect to="/index" />
+            {/* <Redirect from="/" to="/index" /> */}
+          </Switch>
         </Switch>
-      </Switch>
-    </BrowserRouter>
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );
