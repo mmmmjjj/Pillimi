@@ -1,8 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import kakao_login from "../../assets/img/kakao_login.png";
-import naver_login from "../../assets/img/naver_login.png";
+// import naver_login from "../../assets/img/naver_login.png";
 
 import LoginCSS from "./css/Login.module.css";
 import Header from "components/Headers/Header";
@@ -14,14 +13,17 @@ function Login() {
       <Header header="로그인"></Header>
       <div className={LoginCSS.LoginBtnDiv}>
         <br></br>
-        <Link to="/main">
+        <a
+          href="https://kauth.kakao.com/oauth/authorize?client_id=74245badb067a597419134fbf90742dd&redirect_uri=http://localhost:3000/callback
+&response_type=code"
+        >
           <img src={kakao_login} className={LoginCSS.LoginBtn} alt="kakao_login" />
-        </Link>
+        </a>
         <br></br>
         <br></br>
-        <Link to="/pill-today">
+        {/* <Link to="/pill-today">
           <img src={naver_login} className={LoginCSS.LoginBtn} alt="naver_login" />
-        </Link>
+        </Link> */}
       </div>
     </>
   );
