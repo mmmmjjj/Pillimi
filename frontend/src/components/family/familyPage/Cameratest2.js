@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 
 
 function Cameratest2() {
-  // const [picimg, setImage] = useState();
+  // const [picimg,setImage] = useState();
   const [pic, setPicture] = useState(false);
   const takepic = () => {
     setPicture(true);
@@ -28,7 +28,7 @@ function Cameratest2() {
       <h2>test1</h2>
       {pic ? (
         <div style={{ width: "80%", margin: "auto" }}>
-          <img src={picimg} style={{transform: "scaleX(-1)"}} alt="다시찍기를 눌러주세요" />
+          <img src="" style={{transform: "scaleX(-1)"}} alt="다시찍기를 눌러주세요" />
           <br />
           <Button className="activebtn" size="lg" onClick={retry}>
             전송하기
