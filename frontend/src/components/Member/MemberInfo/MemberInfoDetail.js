@@ -6,13 +6,18 @@ import { Button } from "reactstrap";
 import { useRouteMatch } from 'react-router-dom'
 import style from "../css/MemberInfo.module.css";
 import { getMemberInfoDetail } from '../../../api/member';
-
+import { useSelector } from 'react-redux';
+import { logoutAction } from "actions/memberAction";
+import { useDispatch } from "react-redux";
 // core components
 
 
 
 function MemberInfoDetail({match}) {
   const memberSeq = match.params.memberSeq;
+  const dispatch = useDispatch();
+
+  let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
 
   const [profile, setProfile] = useState({
     member_nickname: "",
@@ -80,6 +85,27 @@ function MemberInfoDetail({match}) {
     }
   }
 
+  function LogOutBtn(){
+    console.log(loginSeq);
+    console.log(memberSeq);
+    console.log(loginSeq==memberSeq)
+    if(loginSeq==memberSeq){
+      return(
+        <Button color="danger" className={`${style.bigbnt}`} onClick={LogOut}>로그아웃</Button>
+      )
+    }else{
+      return(
+        <></>
+      )
+    }
+  }
+
+  function LogOut(){
+    dispatch(logoutAction());
+    localStorage.removeItem('ACCESS_TOKEN');
+    window.location.href="/"
+  }
+
   return (
     <>
       <div className={`${style.center}`}>
@@ -90,7 +116,7 @@ function MemberInfoDetail({match}) {
           <br></br>
         </div>
         <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>수정</Button>
-        <Button color="danger" className={`${style.bigbnt}`}>로그아웃</Button>
+        <LogOutBtn></LogOutBtn>
       </div>
     </>
   );
