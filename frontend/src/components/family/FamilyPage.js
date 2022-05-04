@@ -4,7 +4,7 @@ import FamilyRegisterRequest from "components/family/familyRegister/FamilyRegist
 import FamilyRegisterReply from "components/family/familyRegister/FamilyRegisterReply.js";
 import MyFamily from "components/family/familyPage/MyFamily.js";
 import FamilyProtector from "components/family/familyPage/FamilyProtector.js";
-// import Cameratest from "components/family/familyPage/Cameratest.js";
+import Cameratest from "components/family/familyPage/Cameratest.js";
 import Cameratest2 from "components/family/familyPage/Cameratest2.js";
 import Navbar from "layout/Navbar.js";
 import { Row, Col } from "reactstrap";
@@ -66,12 +66,12 @@ function Family(props) {
               <FamilyProtector getheader={getheader} {...props} />
             )}
           />
-          {/* <Route
+          <Route
             path={`${basicurl}/camera`}
             render={(props) => (
               <Cameratest {...props} />
             )}
-          /> */}
+          />
           <Route
             path={`${basicurl}/camera2`}
             render={(props) => (
