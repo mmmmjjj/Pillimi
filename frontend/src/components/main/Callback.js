@@ -8,6 +8,8 @@ function Callback() {
   const dispatch = useDispatch();
 
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
+  let isFirst = useSelector((state) => state.memberInfo.memberInfo.first);
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
 
   React.useEffect(() => {
     if (!isLogin) {
@@ -35,11 +37,27 @@ function Callback() {
         }
       );
     } else {
-      gotoPillToday();
+      if (isFirst) {
+        gotoRegisterInfo();
+      } else {
+        if (isProtector) {
+          gotoPillToday();
+        } else {
+          gotoElderMain();
+        }
+      }
     }
-  }, [dispatch, isLogin]);
+  }, [dispatch, isFirst, isLogin, isProtector]);
 
   return <>카카오 로그인 중</>;
+}
+
+function gotoRegisterInfo() {
+  window.location.href = "/member-info/member-register-info";
+}
+
+function gotoElderMain() {
+  window.location.href = "/main";
 }
 
 function gotoPillToday() {
