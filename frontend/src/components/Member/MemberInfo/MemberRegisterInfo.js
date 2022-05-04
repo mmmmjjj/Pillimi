@@ -16,22 +16,14 @@ function MemberRegisterInfo(props) {
 
   const [profile, setProfile] = useState({
     nickname: "",
-    Moment: Date,
+    Moment: undefined,
     phone: "",
   })
 
-  const [birthDate, setBirthDate] = useState(new Date());
-
-  const onChangeDate = (value) => {
-    // setBirthDate(value);
-    console.log(value);
-    profile.Moment = value._d;
-    console.log(profile.Moment);
-  }
 
   const [isProtector, setIsProtector] = useState(false);
 
-  const onChangeIsProtector = () => {
+  const onChangeIsProtector = (props) => {
     setIsProtector(!isProtector);
     console.log(isProtector);
   }
@@ -42,6 +34,7 @@ function MemberRegisterInfo(props) {
           console.log(profile.Moment)
       }
       else{
+          console.log(e.target.value);
           setProfile({...profile, [e.target.name]:e.target.value});
       }
   }
@@ -73,6 +66,11 @@ function MemberRegisterInfo(props) {
     (fail)=>{
       console.log(fail)
     });
+    setProfile({
+      phone: "",
+      Moment: new Date(null),
+    })
+    console.log(profile.phone)
   }
 
   if(!isProtector){
@@ -81,14 +79,13 @@ function MemberRegisterInfo(props) {
         <div id="pillimi" className={`${style.center}`}>
           <Form>
             <FormGroup>
-              <label>
+              <label className="mt-3">
                 <Input 
                   id="isProtector"
                   name="isProtector"
                   type="checkbox" 
                   onChange={onChangeIsProtector}></Input>
-                <span className="form-check-sign"></span>
-                보호자이십니까?
+                <span className="form-check-sign">보호자이십니까?</span>
               </label>
             </FormGroup>
             <FormGroup>
@@ -109,6 +106,7 @@ function MemberRegisterInfo(props) {
               id="phone" 
               name="phone" 
               type="tel" 
+              value={profile.phone}
               className={`${style.datepicker}`}
               onChange={onChangeProfile}></Input></span>
               <br></br>
@@ -131,15 +129,15 @@ function MemberRegisterInfo(props) {
         <div id="pillimi" className={`${style.center}`}>
           <Form>
             <FormGroup>
-              <label>
+              <label className="mt-3">
                 <Input 
                   id="isProtector"
                   name="isProtector"
                   type="checkbox" 
                   onChange={onChangeIsProtector}
                   ></Input>
-                <span className="form-check-sign"></span>
-                보호자이십니까?
+                <span className="form-check-sign">보호자이십니까?</span>
+                
               </label>
             </FormGroup>
             <FormGroup>
