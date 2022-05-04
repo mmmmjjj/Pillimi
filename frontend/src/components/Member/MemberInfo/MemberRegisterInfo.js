@@ -93,6 +93,7 @@ function MemberRegisterInfo(props) {
                   id="isProtector"
                   name="isProtector"
                   type="checkbox" 
+                  checked={isProtector}
                   onChange={onChangeIsProtector}></Input>
                 <span className="form-check-sign">보호자이십니까?</span>
               </label>
@@ -142,7 +143,8 @@ function MemberRegisterInfo(props) {
                 <Input 
                   id="isProtector"
                   name="isProtector"
-                  type="checkbox" 
+                  type="checkbox"
+                  checked={isProtector}
                   onChange={onChangeIsProtector}
                   ></Input>
                 <span className="form-check-sign">보호자이십니까?</span>
