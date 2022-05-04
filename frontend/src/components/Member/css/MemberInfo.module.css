@@ -12,8 +12,9 @@
 }
 
 .bigbnt {
-  margin-top: 10%;
+  margin-top: 5%;
   width: 70%;
+  
 }
 
 .datepicker {
@@ -30,4 +31,13 @@ input[type="checkbox"] {
 
 .dateinput {
   border-radius: 0px
+}
+
+.imgsize {
+  width: 20%;
+  border-radius: 50%;
+}
+
+.top {
+  height: 60vh;
 }

@@ -21,6 +21,12 @@ function MemberInfoDetail({match}) {
     member_phone: "",
     member_isprotector: 0
   });
+  
+  useEffect(() => {
+    console.log("마운트")
+    console.log(match.params.memberSeq);
+    getMemberDetail(memberSeq);
+  },[])
 
   const array1 = ["고혈압", "당뇨"];
   const disease = () => {
@@ -31,12 +37,6 @@ function MemberInfoDetail({match}) {
     }
     return result;
   }
-  
-  useEffect(() => {
-    console.log("마운트")
-    console.log(match.params.memberSeq);
-    getMemberDetail(memberSeq);
-  },[])
 
   const getMemberDetail = (memberSeq) => {
     getMemberInfoDetail(memberSeq,
@@ -79,10 +79,12 @@ function MemberInfoDetail({match}) {
   return (
     <>
       <div className={`${style.center}`}>
-        <img src={profile.member_img} alt="프로필 사진" className="mt-5"></img>
-        <br></br>
-        <Content></Content>
-        <br></br>
+        <div className={`${style.top}`}>
+          <img src={profile.member_img} alt="프로필 사진" className={`mt-5 ${style.imgsize}`}></img>
+          <br></br>
+          <Content></Content>
+          <br></br>
+        </div>
         <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>수정</Button>
         <Button color="danger" className={`${style.bigbnt}`}>로그아웃</Button>
       </div>
