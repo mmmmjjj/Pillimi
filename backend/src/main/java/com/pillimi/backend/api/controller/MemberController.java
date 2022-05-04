@@ -72,6 +72,7 @@ public class MemberController {
                 .nickName(member.getMemberNickname())
                 .memberImage(member.getMemberImage())
                 .isFirst(member.getMemberIsfirst())
+                .isProtector(member.getMemberIsprotector() == 1)
                 .build();
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, LOGIN, loginRes));
