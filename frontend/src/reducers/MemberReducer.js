@@ -6,6 +6,7 @@ const initialMemberInfo = {
   memberImage: "",
   memberSeq: 0,
   nickName: "",
+  protector: false,
 };
 
 const initialState = { isLogin: false, memberInfo: initialMemberInfo };
