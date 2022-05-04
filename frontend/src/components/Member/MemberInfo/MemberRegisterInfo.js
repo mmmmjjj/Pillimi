@@ -3,9 +3,8 @@ import React from "react";
 import { useState } from "react";
 
 // reactstrap components
-import { Button, Container, FormGroup, Form, Input } from "reactstrap";
+import { Button, FormGroup, Form, Input } from "reactstrap";
 import style from "../css/MemberInfo.module.css";
-import MemberInfo from "../MemberInfo";
 import Datetime from 'react-datetime';
 import moment from "moment";
 import { addRegInfo } from "../../../api/member"
@@ -15,15 +14,14 @@ import { addRegInfo } from "../../../api/member"
 function MemberRegisterInfo(props) {
 
   const [profile, setProfile] = useState({
-    nickname: "",
-    Moment: undefined,
+    Moment: new Date(null),
     phone: "",
   })
 
 
   const [isProtector, setIsProtector] = useState(false);
 
-  const onChangeIsProtector = (props) => {
+  const onChangeIsProtector = () => {
     setIsProtector(!isProtector);
     console.log(isProtector);
   }
@@ -62,17 +60,28 @@ function MemberRegisterInfo(props) {
     console.log(reginfo);
     addRegInfo(reginfo, (success) =>{
       console.log(success)
+      gotoMain();
     },
     (fail)=>{
       console.log(fail)
+      setProfile({
+        phone: "",
+      })
+      if(isProtector){
+        setIsProtector();
+      }
     });
-    setProfile({
-      phone: "",
-      Moment: new Date(null),
-    })
+    
     console.log(profile.phone)
   }
 
+  function gotoMain() {
+    if(isProtector){
+      window.location.href = "/pill-today";
+    }else{
+      window.location.href = "/main";
+    }
+  }
   if(!isProtector){
     return (
       <>
@@ -146,6 +155,7 @@ function MemberRegisterInfo(props) {
               id="phone" 
               name="phone" 
               type="tel" 
+              value={profile.phone}
               className={`${style.datepicker}`}
               onChange={onChangeProfile}></Input></span>
               <br></br>
