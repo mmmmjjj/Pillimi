@@ -30,4 +30,7 @@ public class LoginRes {
 
     @ApiModelProperty(name = "신규 회원 여부", example = "true")
     private boolean isFirst;
+
+    @ApiModelProperty(name = "보호자 여부", example = "true")
+    private boolean isProtector;
 }
