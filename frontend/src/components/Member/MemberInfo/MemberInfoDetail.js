@@ -53,6 +53,10 @@ function MemberInfoDetail({match}) {
       })
   }
 
+  function gotoMemberInfoModify(){
+    window.location.href = "/member-info/member-info-modify/"+memberSeq;
+  }
+
   function Content(){
     if(profile.member_birthDate!==null){
       return(
@@ -106,7 +110,5 @@ function Label(params) {
   )  
 }
 
-function gotoMemberInfoModify(){
-  window.location.href = "/memberInfoModify"
-}
+
 export default MemberInfoDetail;

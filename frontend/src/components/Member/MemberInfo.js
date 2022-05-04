@@ -6,6 +6,7 @@ import "../../assets/css/now-ui-kit.css";
 import Header from "components/Headers/Header";
 import MemberRegisterInfo from "./MemberInfo/MemberRegisterInfo";
 import MemberInfoDetail from "./MemberInfo/MemberInfoDetail";
+import MemberInfoModify from "./MemberInfo/MemberInfoModify";
 
 // core components
 
@@ -29,6 +30,12 @@ function MemberInfo(props) {
               path={`${props.match.path}/member-info-detail/:memberSeq`}
               render={(props) => (
                 <MemberInfoDetail {...props} />
+              )}
+            />
+            <Route exact
+              path={`${props.match.path}/member-info-modify/:memberSeq`}
+              render={(props) => (
+                <MemberInfoModify {...props} />
               )}
             />
           </Switch>
