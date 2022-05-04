@@ -3,14 +3,12 @@ import { API_BASE_URL } from "../config";
 
 // 헤더에 토큰을 가지는 axios 객체 생성
 function apiInstance() {
-  //   const token = sessionStorage.getItem("access-token");
+  const token = localStorage.getItem("ACCESS_TOKEN");
   const instance = axios.create({
     baseURL: API_BASE_URL,
     headers: {
       "Content-type": "application/json",
-      Authorization:
-        `Bearer ` +
-        `eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwicm9sZXMiOiJNRU1CRVIiLCJleHAiOjE4NjcwMzUwMTl9.cO0imtsCiklkEViB7s1n0KJk2kVdTTc59my6-rT7yQpSMWU6OYsajAQ1MdnY2knBT6WWPHfyHs89BWMiEroJKg`,
+      Authorization: `Bearer ` + token,
     },
   });
   return instance;
