@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 
 
 function Cameratest2() {
-  const [picimg, setImage] = useState();
+  // const [picimg, setImage] = useState();
   const [pic, setPicture] = useState(false);
   const takepic = () => {
     setPicture(true);
