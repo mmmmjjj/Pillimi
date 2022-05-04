@@ -8,6 +8,7 @@ import style from "../css/MemberInfo.module.css";
 import MemberInfo from "../MemberInfo";
 import Datetime from 'react-datetime';
 import moment from "moment";
+import { addRegInfo } from "../../../api/member"
 
 // core components
 
@@ -37,7 +38,7 @@ function MemberRegisterInfo(props) {
 
   const onChangeProfile = (e) => {
       if (moment.isMoment(e)){
-          setProfile({...profile, [e.name]:e});
+          setProfile({...profile, [e.name]:e._d});
           console.log(profile.Moment)
       }
       else{
@@ -45,11 +46,38 @@ function MemberRegisterInfo(props) {
       }
   }
 
+  function dateformat(bDay){
+    if(moment.isMoment(bDay)) return "2022-02-13";
+    else{
+      var month = bDay.getMonth() + 1;
+      if (month < 10) month = "0" + month;
+      var day = bDay.getDate();
+      if (day < 10) day = "0" + day;
+      var tmp = bDay.getFullYear() + "-" + month + "-" + day;
+      return tmp;
+    }
+  }
+  function addRegisterInfo() {
+    let birthDate = dateformat(new Date(profile.Moment));
+    // let birthDate = profile.Moment;
+    if(isProtector) birthDate = null;
+    let reginfo = {
+      birthDate: birthDate,
+      isProtector: isProtector === true? 1 : 0,
+      phone: profile.phone
+    };
+    console.log(reginfo);
+    addRegInfo(reginfo, (success) =>{
+      console.log(success)
+    },
+    (fail)=>{
+      console.log(fail)
+    });
+  }
 
   if(!isProtector){
     return (
       <>
-        <MemberInfo></MemberInfo>
         <div id="pillimi" className={`${style.center}`}>
           <Form>
             <FormGroup>
@@ -93,14 +121,13 @@ function MemberRegisterInfo(props) {
             </FormGroup>
           </Form>
           <br></br>
-          <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
+          <Button color="sky" className={`${style.bigbnt}`} onClick={addRegisterInfo}>완료</Button>
         </div>
       </>
     );
   }else {
     return (
       <>
-        <MemberInfo></MemberInfo>
         <div id="pillimi" className={`${style.center}`}>
           <Form>
             <FormGroup>
@@ -127,7 +154,7 @@ function MemberRegisterInfo(props) {
             </FormGroup>
           </Form>
           <br></br>
-          <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
+          <Button color="sky" onClick={addRegisterInfo}>완료</Button>
         </div>
       </>
     );
@@ -163,19 +190,6 @@ const DiseaseList = (params) => {
   )
 }
 
-function check(issue, array){
-  console.log("issue" + issue);
-  array.forEach(element => {
-    console.log(element);
-    console.log(issue===element)
-    if(element===issue) {
-      console.log("true 리턴할 거임") 
-      return true;
-    }
-  });
-  return false;
-}
-
 function Space(props) {
   if(props.index%2===1) {
     return(
@@ -191,5 +205,6 @@ function Space(props) {
     )
   }
 }
+
 
 export default MemberRegisterInfo;
