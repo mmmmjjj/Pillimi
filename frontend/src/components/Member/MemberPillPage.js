@@ -30,7 +30,7 @@ function MemberPillPage(props) {
               )}
             />
             <Route 
-              path={`${basicurl}/member-pill-list`}
+              path={`${basicurl}/member-pill-list/:memberSeq`}
               render={(props) => (
                 <MemberPillList {...props} />
               )}
