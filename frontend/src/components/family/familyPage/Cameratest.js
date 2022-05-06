@@ -33,7 +33,7 @@ function Cameratest() {
         </div>
       ) : (
         <div style={{ width: "80%", margin: "auto" }}>
-          <Camera ref={cam} aspectRatio={2 / 3} facingMode/>
+          <Camera ref={cam} aspectRatio={2 / 3} facingMode={"environment"}/>
           <Button
             className="activebtn"
             size="lg"
