@@ -18,4 +18,9 @@ function addRegInfo(regInfo, success, fail) {
 function getMemberInfoDetail(memberSeq, success, fail){
   api.get(`/member?memberSeq=${memberSeq}`).then(success).catch(fail);
 }
-export { getKakaoToken, getKakaoLogin, addRegInfo, getMemberInfoDetail };
+
+function modifyMemberInfo(memberInfo, success, fail){
+  api.put(`/member`, memberInfo).then(success).catch(fail);
+}
+
+export { getKakaoToken, getKakaoLogin, addRegInfo, getMemberInfoDetail, modifyMemberInfo };
