@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useMemo } from "react";
 import { useState, useEffect } from "react";
 
 // reactstrap components
@@ -7,9 +7,12 @@ import { Button, Container, FormGroup, Form, Input } from "reactstrap";
 import style from "../css/MemberInfo.module.css";
 import MemberInfo from "../MemberInfo";
 import Datetime from 'react-datetime';
-import { getMemberInfoDetail } from '../../../api/member'
+import { getMemberInfoDetail, modifyMemberInfo } from '../../../api/member'
+import moment from "moment";
 
 // core components
+
+const InputField = Input;
 
 function MemberInfoModify({match}) {
 
@@ -22,6 +25,19 @@ function MemberInfoModify({match}) {
     member_phone: "",
     member_isprotector: 0
   });
+
+  const onChangeProfile = (e) => {
+    if (moment.isMoment(e)){
+        setProfile({...profile, [e.name]:e._d});
+        console.log(profile.Moment)
+    }
+    else{
+        console.log(e.target.value);
+        setProfile({...profile, [e.target.name]:e.target.value});
+    }
+  }
+
+  const outProfile = useMemo(() => onChangeProfile, [profile]);
   
   useEffect(() => {
     console.log("마운트")
@@ -54,27 +70,40 @@ function MemberInfoModify({match}) {
     return result;
   }
   
-  const onChangeProfile = (e) => {
-    if (moment.isMoment(e)){
-        setProfile({...profile, [e.name]:e._d});
-        console.log(profile.Moment)
+  
+
+  const modifyInfo = () => {
+    let memberInfo = {
+      birthDate: profile.member_birthDate,
+      memberSeq: memberSeq,
+      nickName: profile.member_nickname,
+      phone: profile.member_phone
     }
-    else{
-        console.log(e.target.value);
-        setProfile({...profile, [e.target.name]:e.target.value});
-    }
+    modifyMemberInfo(memberInfo,
+      ( success ) => {
+        console.log(success)
+      }, ( fail ) => {
+        console.log(fail)
+      })
   }
 
-  const Content = () => {
-    if(profile.member_birthDate!==null){
-      return(
-        <div>
+  const gotoMemberInfoDetail = () =>{
+    window.location.href = "/member-info/member-info-detail/"+memberSeq;
+  }
+
+  if(profile.member_birthDate!==null){
+    return (
+      <>
+        <div id="pillimi" className={`${style.center}`}>
+          <img src={profile.member_img} className={`${style.imgsize} mt-5`} alt="프로필 사진"></img>
+          <br></br>
+          <div>
           <Form>
             <FormGroup>
               <Label value={"닉네임"} ></Label>
               <Input
                 id="nickname"
-                name="nickname"
+                name="member_nickname"
                 type="text"
                 value={profile.member_nickname}
                 onChange={onChangeProfile}
@@ -87,7 +116,7 @@ function MemberInfoModify({match}) {
                 className={`${style.datepicker}`}
                 value={profile.Moment}
                 onChange={(e) => {
-                  e.name = "Moment"
+                  e.name = "member_birthDate"
                   onChangeProfile(e)
                 }}
                 // inputProps={inputprops}
@@ -95,13 +124,13 @@ function MemberInfoModify({match}) {
             </FormGroup>
             <FormGroup>
             <Label value={"전화번호"}></Label>
-              <span><Input 
+              <span><InputField 
               id="phone" 
-              name="phone" 
+              name="member_phone" 
               type="tel" 
-              value={profile.member_phone}
+              value={outProfile.member_phone}
               className={`${style.datepicker}`}
-              onChange={onChangeProfile}></Input></span>
+              onChange={onChangeProfile}></InputField></span>
               <br></br>
             </FormGroup>
             <FormGroup>
@@ -112,59 +141,56 @@ function MemberInfoModify({match}) {
             </FormGroup>
           </Form>
         </div>
-      )
-    }else{
-      return(
-        <div>
+          <br></br>
+          <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>완료</Button>
+          <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div id="pillimi" className={`${style.center}`}>
+          <img src={profile.member_img} className={`${style.imgsize} mt-5`} alt="프로필 사진"></img>
+          <br></br>
+          <div>
           <Form>
           <FormGroup>
             <Label value={"닉네임"} ></Label>
-            <Input
+            <InputField
               id="nickname"
-              name="nickname"
+              name="member_nickname"
               type="text"
               value={profile.member_nickname}
               onChange={onChangeProfile}
               className={`${style.datepicker}`}
-            ></Input>
+            ></InputField>
           </FormGroup>
           <FormGroup>
           <Label value={"전화번호"}></Label>
-            <span><Input 
-            id="phone" 
-            name="phone" 
+            <span><InputField 
+            id="member_phone" 
+            name="member_phone" 
             type="tel" 
             value={profile.member_phone}
             className={`${style.datepicker}`}
-            onChange={onChangeProfile}></Input></span>
+            onChange={outProfile}></InputField></span>
             <br></br>
           </FormGroup>
         </Form>
         </div>
-      )
-    }
+          <br></br>
+          <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>완료</Button>
+          <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
+        </div>
+      </>
+    );
   }
-
-  const inputprops = {
-    className: "`${style.dateinput}`"
-  }
-  return (
-    <>
-      <div id="pillimi" className={`${style.center}`}>
-        <img src={profile.member_img} className={`${style.imgsize} mt-5`} alt="프로필 사진"></img>
-        <br></br>
-        <Content></Content>
-        <br></br>
-        <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
-        <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
-      </div>
-    </>
-  );
 }
 
-const gotoMemberInfoDetail = () =>{
-  window.location.href = "/mypage"
-}
+
+
+
 
 function Label(params) {
   return (
