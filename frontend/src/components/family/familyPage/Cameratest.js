@@ -46,7 +46,7 @@ function Cameratest() {
           </Button>
         </div>
       )}
-      <Link to="/family/camera2">
+      <Link to="/family/reply">
         <Button>
           <p>Click Me!</p>
         </Button>
