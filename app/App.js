@@ -15,12 +15,30 @@ import {
   Text,
   useColorScheme,
   View,
+  Alert,
+  BackHandler,
 } from 'react-native';
 
 import MyWebView from './component/MyWebView';
+import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+
+  // background, quit 상태 일 경우
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Message handled in the background', remoteMessage);
+  });
+
+  // foreground일 경우
+  React.useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('a new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  });
+
   return (
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />

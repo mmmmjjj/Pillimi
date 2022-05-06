@@ -14,4 +14,13 @@ async function getKakaoLogin(kakaoToken, success, fail) {
 function addRegInfo(regInfo, success, fail) {
   api.post(`/member/register`, regInfo).then(success).catch(fail);
 }
-export { getKakaoToken, getKakaoLogin, addRegInfo };
+
+function getMemberInfoDetail(memberSeq, success, fail){
+  api.get(`/member?memberSeq=${memberSeq}`).then(success).catch(fail);
+}
+
+function modifyMemberInfo(memberInfo, success, fail){
+  api.put(`/member`, memberInfo).then(success).catch(fail);
+}
+
+export { getKakaoToken, getKakaoLogin, addRegInfo, getMemberInfoDetail, modifyMemberInfo };

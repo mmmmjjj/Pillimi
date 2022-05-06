@@ -1,18 +1,66 @@
 /*eslint-disable*/
-import React from "react";
-import { useState } from "react";
+import React, { useMemo } from "react";
+import { useState, useEffect } from "react";
 
 // reactstrap components
 import { Button, Container, FormGroup, Form, Input } from "reactstrap";
 import style from "../css/MemberInfo.module.css";
 import MemberInfo from "../MemberInfo";
 import Datetime from 'react-datetime';
+import { getMemberInfoDetail, modifyMemberInfo } from '../../../api/member'
+import moment from "moment";
 
 // core components
 
-function MemberInfoModify(props) {
+
+function MemberInfoModify({match}) {
+
+  const memberSeq = match.params.memberSeq;
+
+  const [profile, setProfile] = useState({
+    member_nickname: "",
+    member_img: "",
+    member_birthDate: "",
+    member_phone: "",
+    member_isprotector: 0
+  });
+
+  const onChangeProfile = (e) => {
+    if (moment.isMoment(e)){
+        setProfile({...profile, [e.name]:e._d});
+        console.log(profile.Moment)
+    }
+    else{
+        console.log(e.target.value);
+        setProfile({...profile, [e.target.name]:e.target.value});
+    }
+  }
+
+  const outProfile = useMemo(() => onChangeProfile, [profile]);
+  
+  useEffect(() => {
+    console.log("마운트")
+    console.log(match.params.memberSeq);
+    getMemberDetail(memberSeq);
+  },[])
+
+  const getMemberDetail = (memberSeq) => {
+    getMemberInfoDetail(memberSeq,
+      (success) => {
+        console.log(success);
+        setProfile({
+          member_nickname: success.data.data.nickName,
+          member_img: success.data.data.memberImage,
+          member_birthDate: success.data.data.birthDate,
+          member_phone: success.data.data.phone,
+        })
+      }, (fail) => {
+        console.log(fail);
+      })
+  }
+
   const array1 = [1, "당뇨"];
-  const disease = () => {
+  const Disease = () => {
     const result = [];
     for (let i = 0; i < array1.length; i++) {
       result.push(<span key={{i}}>{array1[i]}</span>);
@@ -21,73 +69,138 @@ function MemberInfoModify(props) {
     return result;
   }
   
-  const [profile, setProfile] = useState({
-    nickname: "",
-    birthDate: new Date(),
-    phone: "",
-  })
-
-  const onChangeProfile = (e) => {
-    setProfile({
-      ...profile,
-      [e.target.name]: e.target.value,
-    })
+  function dateformat(bDay){
+    if(moment.isMoment(bDay)) return "2022-02-13";
+    else{
+      var month = bDay.getMonth() + 1;
+      if (month < 10) month = "0" + month;
+      var day = bDay.getDate();
+      if (day < 10) day = "0" + day;
+      var tmp = bDay.getFullYear() + "-" + month + "-" + day;
+      return tmp;
+    }
   }
 
-  const inputprops = {
-    className: "`${style.dateinput}`"
+  const modifyInfo = () => {
+    let birthDate = dateformat(new Date(profile.member_birthDate));
+    let memberInfo = {
+      birthDate: birthDate,
+      memberSeq: memberSeq,
+      nickName: profile.member_nickname,
+      phone: profile.member_phone
+    }
+    modifyMemberInfo(memberInfo,
+      ( success ) => {
+        console.log(success)
+      }, ( fail ) => {
+        console.log(fail)
+      })
   }
-  return (
-    <>
-      <MemberInfo></MemberInfo>
-      <div id="pillimi" className={`${style.center}`}>
-        <img src="" alt="프로필 사진"></img>
-        <br></br>
-        <Form>
+
+  const gotoMemberInfoDetail = () =>{
+    window.location.href = "/member-info/member-info-detail/"+memberSeq;
+  }
+
+  if(profile.member_birthDate!==null){
+    return (
+      <>
+        <div id="pillimi" className={`${style.center}`}>
+          <img src={profile.member_img} className={`${style.imgsize} mt-5`} alt="프로필 사진"></img>
+          <br></br>
+          <div>
+          <Form>
+            <FormGroup>
+              <Label value={"닉네임"} ></Label>
+              <Input
+                id="nickname"
+                name="member_nickname"
+                type="text"
+                value={profile.member_nickname}
+                onChange={onChangeProfile}
+                className={`${style.datepicker}`}
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Label value={"생년월일"}></Label>
+              <Datetime 
+                className={`${style.datepicker}`}
+                value={profile.Moment}
+                onChange={(e) => {
+                  e.name = "member_birthDate"
+                  onChangeProfile(e)
+                }}
+                // inputProps={inputprops}
+                timeFormat={false}></Datetime>
+            </FormGroup>
+            <FormGroup>
+            <Label value={"전화번호"}></Label>
+              <span><Input 
+              id="phone" 
+              name="member_phone" 
+              type="tel" 
+              value={profile.member_phone}
+              className={`${style.datepicker}`}
+              onChange={onChangeProfile}></Input></span>
+              <br></br>
+            </FormGroup>
+            <FormGroup>
+              <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
+              <div>
+                <Disease arr={array1}></Disease>
+              </div>
+            </FormGroup>
+          </Form>
+        </div>
+          <br></br>
+          <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>완료</Button>
+          <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div id="pillimi" className={`${style.center}`}>
+          <img src={profile.member_img} className={`${style.imgsize} mt-5`} alt="프로필 사진"></img>
+          <br></br>
+          <div>
+          <Form>
           <FormGroup>
             <Label value={"닉네임"} ></Label>
             <Input
               id="nickname"
-              name="nickname"
+              name="member_nickname"
               type="text"
+              value={profile.member_nickname}
+              onChange={onChangeProfile}
               className={`${style.datepicker}`}
             ></Input>
           </FormGroup>
           <FormGroup>
-            <Label value={"생년월일"}></Label>
-            <Datetime 
-              className={`${style.datepicker}`}
-              // inputProps={inputprops}
-              timeFormat={false}></Datetime>
-          </FormGroup>
-          <FormGroup>
           <Label value={"전화번호"}></Label>
             <span><Input 
-            id="phone" 
-            name="phone" 
+            id="member_phone" 
+            name="member_phone" 
             type="tel" 
+            value={profile.member_phone}
             className={`${style.datepicker}`}
             onChange={onChangeProfile}></Input></span>
             <br></br>
           </FormGroup>
-          <FormGroup>
-            <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
-            <div>
-              <DiseaseList arr={array1}></DiseaseList>
-            </div>
-          </FormGroup>
         </Form>
-        <br></br>
-        <Button color="sky" className={`${style.bigbnt}`}>완료</Button>
-        <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
-      </div>
-    </>
-  );
+        </div>
+          <br></br>
+          <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>완료</Button>
+          <Button color="danger" className={`${style.bigbnt}`} onClick={gotoMemberInfoDetail}>취소</Button>
+        </div>
+      </>
+    );
+  }
 }
 
-const gotoMemberInfoDetail = () =>{
-  window.location.href = "/mypage"
-}
+
+
+
 
 function Label(params) {
   return (
