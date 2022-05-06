@@ -28,12 +28,16 @@ function MemberPillList({match}) {
       })
   }
 
+  const gotoMedicineDetail = (memMediSeq) => {
+    window.location.replace = "/pill-take/detail/"+memMediSeq;
+  }
+
   const PillList =  (props) => {
     let result = [];
         console.log(pills)
     pills.forEach(element =>{
       if(element.now==props.isNow){
-        result.push(<div className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `}>
+        result.push(<div className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `} onClick={gotoMedicineDetail(memMediSeq)}> 
           <div className={`${style.imgsize2} ml-2`}>
             <img src={element.imageURL} className={`${style.size}`}></img>
           </div>
