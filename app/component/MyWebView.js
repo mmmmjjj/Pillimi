@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {BackHandler} from 'react-native';
 import {WebView} from 'react-native-webview';
 const MyWebView = ({handleClose}) => {
-  const BASE_URL = 'https://k6a307.p.ssafy.io/';
+  const BASE_URL = 'https://k6a307.p.ssafy.io/family/camera2';
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
   useEffect(() => {

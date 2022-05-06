@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Camera } from "react-camera-pro";
 import { Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 function Cameratest() {
   const cam = useRef();
@@ -14,10 +15,14 @@ function Cameratest() {
   };
   return (
     <>
-      <h2>test1</h2>
+      <div style={{ height: "40px" }}></div>
       {pic ? (
         <div style={{ width: "80%", margin: "auto" }}>
-          <img src={picimg} style={{transform: "scaleX(-1)"}} alt="다시찍기를 눌러주세요" />
+          <img
+            src={picimg}
+            style={{ transform: "scaleX(-1)" }}
+            alt="다시찍기를 눌러주세요"
+          />
           <br />
           <Button className="activebtn" size="lg" onClick={retry}>
             전송하기
@@ -41,6 +46,11 @@ function Cameratest() {
           </Button>
         </div>
       )}
+      <Link to="/family/camera2">
+        <Button>
+          <p>Click Me!</p>
+        </Button>
+      </Link>
     </>
   );
 }
