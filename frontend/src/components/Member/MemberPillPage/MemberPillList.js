@@ -1,13 +1,15 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useEffect } from "react";
 
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css"
 
 // core components
 
-function MemberPillList(props) {
+function MemberPillList({match}) {
   
+  const memberSeq = match.params.memberSeq;
+
   const PillList =  (props) => {
     let result = [];
     array1.forEach(element =>{
