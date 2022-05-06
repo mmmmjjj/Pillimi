@@ -4,6 +4,7 @@ import com.pillimi.backend.api.request.MemberMedicineCreateReq;
 import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
 import com.pillimi.backend.api.response.CheckMedicineRes;
 import com.pillimi.backend.api.response.MemberMedicineRes;
+import com.pillimi.backend.api.response.TodayListRes;
 import com.pillimi.backend.common.exception.DuplicateException;
 import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
@@ -290,5 +291,13 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         return CheckMedicineRes.builder()
                 .checkType(0)
                 .build();
+    }
+
+    /*
+    오늘의 약 목록 조회
+     */
+    @Override
+    public List<TodayListRes> findTodayMedicineList(Member member) {
+        return null;
     }
 }
