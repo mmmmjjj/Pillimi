@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
-@ApiModel("KakaoLoginResponse")
+@ApiModel("MemberMedicineResponse")
 @Getter
 @Setter
 @Builder

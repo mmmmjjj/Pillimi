@@ -47,7 +47,4 @@ public class MemberMedicine{
     @Column
     private LocalDate memberMedicineEnd;
 
-    @OneToMany (mappedBy = "memberMedicine", cascade = CascadeType.ALL)
-    private List<MedicineIntake> medicineIntakes = new ArrayList<>();
-
 }
