@@ -80,10 +80,7 @@ function PillDetail({ match }) {
       <br></br>
       <br></br>
       <h3 style={{ textAlign: "center" }}>
-        <img
-          alt="pillImg"
-          src="http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif"
-        ></img>
+        <img alt="pillImg" src={pillInfo.image}></img>
       </h3>
       <br></br>
       <div className={PillDetailCSS.Content}>
