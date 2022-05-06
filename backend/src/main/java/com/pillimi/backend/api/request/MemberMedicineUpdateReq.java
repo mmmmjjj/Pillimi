@@ -29,8 +29,8 @@ public class MemberMedicineUpdateReq {
     @ApiModelProperty(name = "복용 종료 일자", example = "1990-01-10")
     private LocalDate endDay;
 
-    @ApiModelProperty(name = "복용 주기", example = "3")
-    private int intakeDay;
+    @ApiModelProperty(name = "복용 요일", example = "[1,3,4]")
+    private List<Integer> intakeDay;
 
     @ApiModelProperty(name = "복약 시간", example = "[9.5,10.5]")
     private List<Double> intakeTime;
