@@ -39,7 +39,7 @@ public class MemberMedicineRes {
     private LocalDate endDay;
 
     @ApiModelProperty(name = "복용 주기", example = "3")
-    private int intakeDay;
+    private List<Integer> intakeDay;
 
     @ApiModelProperty(name = "복약 시간", example = "[9.5,10.5]")
     private List<Double> intakeTime;
