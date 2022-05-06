@@ -147,7 +147,7 @@ function PillTakeRegister() {
         </FormGroup>
         <Badge className={PillTakeRegisterCSS.Badge} color="info" id="timeList"></Badge>
         <br></br>
-        <h3 className={PillTakeRegisterCSS.Label}>복용 용량</h3>
+        <h3 className={PillTakeRegisterCSS.Label}>복용 개수</h3>
         <FormGroup>
           <Input
             onChange={onChangePillRegister}
