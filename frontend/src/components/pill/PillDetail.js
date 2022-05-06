@@ -1,11 +1,58 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "reactstrap";
 
 import PillDetailCSS from "./css/PillDetail.module.css";
 import Header from "components/Headers/Header";
+import { getPillInfo } from "../../api/pill.js";
 
-function PillDetail() {
-  React.useEffect(() => {}, []);
+function PillDetail({ match }) {
+  const pillSeq = match.params.pillSeq;
+
+  var temp = "";
+
+  const [pillInfo, setPillInfo] = useState({
+    image: "",
+    name: "",
+    company: "",
+    effect: "",
+    caution: "",
+    dosage: "",
+    validity: "",
+    ingredient: "",
+  });
+
+  useEffect(() => {
+    getPillDetail(pillSeq);
+  }, [pillSeq]);
+
+  const getPillDetail = (pillSeq) => {
+    getPillInfo(
+      pillSeq,
+      (response) => {
+        for (let i = 0; i < response.data.data.ingredientList.length; i++) {
+          temp += response.data.data.ingredientList[i];
+          if (i !== response.data.data.ingredientList.length - 1) {
+            temp += ", ";
+          }
+        }
+
+        setPillInfo({
+          image: response.data.data.medicineDetail.image,
+          name: response.data.data.medicineDetail.name,
+          company: response.data.data.medicineDetail.company,
+          effect: response.data.data.medicineDetail.effect,
+          caution: response.data.data.medicineDetail.caution,
+          dosage: response.data.data.medicineDetail.dosage,
+          validity: response.data.data.medicineDetail.validity,
+          ingredient: temp,
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
 
   const [registerPillModal, setRegisterPillModal] = React.useState(false);
 
@@ -40,14 +87,14 @@ function PillDetail() {
       </h3>
       <br></br>
       <div className={PillDetailCSS.Content}>
-        <h3 className={PillDetailCSS.PillDetailTitle}>에이서캡슐(아세클로페낙)</h3>
-        <h3 className={PillDetailCSS.CompanyName}>경동제약(주)</h3>
+        <h3 className={PillDetailCSS.PillDetailTitle}>{pillInfo.name}</h3>
+        <h3 className={PillDetailCSS.CompanyName}>{pillInfo.company}</h3>
         <br></br>
-        <Label value={"효능"} content={"류마티스관절염,강직척추염"}></Label>
-        <Label value={"주의사항"} content={"위장관계 위험"}></Label>
-        <Label value={"복용방법"} content={"이 약은 씹거나 부수지 말고 그대로 복용한다."}></Label>
-        <Label value={"동시 복용 불가 약품"} content={"타이레놀"}></Label>
-        <Label value={"성분표"} content={"아세클로페낙(EP) 100mg"}></Label>
+        <Label value={"효능"} content={pillInfo.effect}></Label>
+        <Label value={"주의사항"} content={pillInfo.caution}></Label>
+        <Label value={"복용방법"} content={pillInfo.dosage}></Label>
+        <Label value={"유통기한"} content={pillInfo.validity}></Label>
+        <Label value={"성분표"} content={pillInfo.ingredient}></Label>
       </div>
 
       <Modal
