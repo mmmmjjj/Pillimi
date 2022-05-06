@@ -4,7 +4,6 @@ import com.pillimi.backend.api.request.MemberMedicineCreateReq;
 import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
 import com.pillimi.backend.api.response.CheckMedicineRes;
 import com.pillimi.backend.api.response.MemberMedicineRes;
-import com.pillimi.backend.api.response.TodayListRes;
 import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.db.entity.Member;
 

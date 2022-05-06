@@ -4,7 +4,6 @@ import com.pillimi.backend.api.request.MemberMedicineCreateReq;
 import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
 import com.pillimi.backend.api.response.CheckMedicineRes;
 import com.pillimi.backend.api.response.MemberMedicineRes;
-import com.pillimi.backend.api.response.TodayListRes;
 import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.common.exception.DuplicateException;
 import com.pillimi.backend.common.exception.NotFoundException;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
