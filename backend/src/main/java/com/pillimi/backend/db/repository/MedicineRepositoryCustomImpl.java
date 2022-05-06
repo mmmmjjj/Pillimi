@@ -39,6 +39,7 @@ public class MedicineRepositoryCustomImpl implements MedicineRepositoryCustom {
     public MedicineDetailRes findDetailInfo(Medicine medicine) {
         return jpaQueryFactory.select(Projections.constructor(MedicineDetailRes.class,
                         qMedicine.medicineName,
+                        qMedicine.medicineCompany,
                         qShape.shapeImage,
                         qMedicine.medicineEffectSub.coalesce(qMedicine.medicineEffect),
                         qMedicine.medicineCautionSub.coalesce(qMedicine.medicineCaution),
