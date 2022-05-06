@@ -2080,7 +2080,7 @@ fieldset[disabled]
 
 .form-group.no-border .input-group-prepend .input-group-text,
 .input-group.no-border .input-group-prepend .input-group-text {
-  background-color: rgba(222, 222, 222, 0.3);
+  background-color: #0369A1;
   border: none;
   border-left: transparent !important; }
 
@@ -2096,7 +2096,7 @@ fieldset[disabled]
 
 .input-group-text {
   background-color: #FFFFFF;
-  border: 1px solid #E3E3E3;
+  border: 1px solid #0c4a6e;
   border-radius: 30px;
   color: #555555;
   -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -2134,7 +2134,7 @@ fieldset[disabled]
   margin-right: 0; }
   .input-group .input-group-prepend .input-group-text,
   .form-group .input-group-prepend .input-group-text {
-    border-left: 1px solid #E3E3E3; }
+    border-left: 1px solid #0c4a6e; }
 
 .input-group .input-group-append .input-group-text,
 .form-group .input-group-append .input-group-text {
