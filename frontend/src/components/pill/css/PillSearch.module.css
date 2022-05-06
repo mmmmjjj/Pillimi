@@ -15,29 +15,29 @@ hr {
 }
 
 .SearchInput {
-  background-color: white;
-  margin-left: 10%;
-  margin-right: 5%;
-  width: 52.5%;
-  height: 6%;
-  float: left;
-  border-radius: 2px;
+  background-color: white !important;
+  margin-left: 10% !important;
+  margin-right: 5% !important;
+  width: 52.5% !important;
+  height: 6% !important;
+  float: left !important;
+  border-radius: 2px !important;
 }
 
 .SearchInput:focus {
-  border-color: #0284c7;
+  border-color: #0284c7 !important;
 }
 
 .SearchBtn {
-  color: black;
-  font-weight: bold;
-  font-size: 14px;
-  text-align: center;
-  width: 20%;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  display: block;
-  background-color: #0284c7;
+  color: black !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  width: 20% !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  display: block !important;
+  background-color: #0284c7 !important;
   padding-right: 10px !important;
   padding-left: 10px !important;
 }
@@ -51,10 +51,10 @@ hr {
 }
 
 .PillList {
-  margin-left: 10%;
-  width: 77.5%;
-  box-shadow: none;
-  cursor: pointer;
+  margin-left: 10% !important;
+  width: 77.5% !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
 }
 
 .Img {
