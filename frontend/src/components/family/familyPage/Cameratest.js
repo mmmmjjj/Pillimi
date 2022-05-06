@@ -44,6 +44,15 @@ function Cameratest() {
           >
             사진찍기
           </Button>
+          <Button
+            className="unactivebtn"
+            size="lg"
+            onClick={() => {
+              cam.current.switchCamera();
+            }}
+          >
+            카메라 교체
+          </Button>
         </div>
       )}
       <Link to="/family/reply">
