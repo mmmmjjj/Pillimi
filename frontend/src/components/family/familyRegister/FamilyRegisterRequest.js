@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState, useEffect }from "react";
+import React, { useState, useEffect } from "react";
 import "../familycss.css";
 
 // reactstrap components
@@ -18,10 +18,10 @@ import {
 // core components
 
 function FamilyRegisterRequest(props) {
-  useEffect(()=>{
-    props.getheader("가족 등록")
+  useEffect(() => {
+    props.getheader("가족 등록");
     props.getnavbar(false);
-  })
+  });
   const [phonenumber, setphonenumber] = useState("");
   const [membername, setmembername] = useState("");
   const [nameok, setnameok] = useState(false);
@@ -29,9 +29,7 @@ function FamilyRegisterRequest(props) {
   const checkname = (event) => {
     var strname = event.currentTarget.value;
     if (strname.length > 0) {
-      var strname2 = strname
-        .substr(0, strname.length - 1)
-        .replace(/[^가-힣]/g, "");
+      var strname2 = strname.substr(0, strname.length - 1).replace(/[^가-힣]/g, "");
       if (strname.length > 1 && /[가-힣]/.test(strname[strname.length - 1])) {
         setnameok(true);
       } else {
@@ -108,7 +106,7 @@ function FamilyRegisterRequest(props) {
   };
   return (
     <>
-      <Container style={{ padding:"50px" }}>
+      <Container style={{ padding: "50px" }}>
         <Row>
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -116,13 +114,7 @@ function FamilyRegisterRequest(props) {
                 <i className="now-ui-icons users_circle-08"></i>
               </InputGroupText>
             </InputGroupAddon>
-            <Input
-              placeholder="성함"
-              type="text"
-              onChange={checkname}
-              value={membername}
-              maxLength="10"
-            ></Input>
+            <Input placeholder="성함" type="text" onChange={checkname} value={membername} maxLength="10"></Input>
           </InputGroup>
           {nameok == false ? (
             <div
@@ -137,7 +129,7 @@ function FamilyRegisterRequest(props) {
               이름은 한글로 2~10글자 입력가능합니다.
             </div>
           ) : (
-            <div style={{ height: "50px", width:"100%" }}></div>
+            <div style={{ height: "50px", width: "100%" }}></div>
           )}
           <InputGroup>
             <InputGroupAddon addonType="prepend">
@@ -167,14 +159,14 @@ function FamilyRegisterRequest(props) {
               전화번호는 숫자로 9~11글자 입력가능합니다.
             </div>
           ) : (
-            <div style={{ height: "50px", width:"100%" }}></div>
+            <div style={{ height: "50px", width: "100%" }}></div>
           )}
         </Row>
         <Row>
-          <Card>
+          <Card style={{ marginTop: "30px", marginBottom: "30px" }}>
             <div id="reg_caution">
-              어르신을 가족회원으로 추가하는 경우, 요청 및 승인 과정이
-              필수입니다. 가족회원의 핸드폰에서 동의 요청을 승낙하세요
+              어르신을 가족회원으로 추가하는 경우, 요청 및 승인 과정이 필수입니다. 가족회원의 핸드폰에서 동의 요청을
+              승낙하세요
             </div>
           </Card>
         </Row>
@@ -185,12 +177,12 @@ function FamilyRegisterRequest(props) {
             </Button>
           ) : (
             <div className="text-center">
-              <Button id="confirmbutton" className="unactivebtn" size="lg">완료</Button>
-              <UncontrolledTooltip
-                placement="bottom"
-                target="confirmbutton"
-                trigger="click"
-              >이름과 전화번호를 정확히 입력했는지 확인해주세요.</UncontrolledTooltip>
+              <Button id="confirmbutton" className="unactivebtn" size="lg">
+                완료
+              </Button>
+              <UncontrolledTooltip placement="bottom" target="confirmbutton" trigger="click">
+                이름과 전화번호를 정확히 입력했는지 확인해주세요.
+              </UncontrolledTooltip>
             </div>
           )}
         </Row>
