@@ -15,6 +15,9 @@ public class MedicineDetailRes {
     @ApiModelProperty(name = "약 이름", example = "타이레놀서방정")
     private String name;
 
+    @ApiModelProperty(name = "제약 회사", example = "(주)대웅제약")
+    private String company;
+
     @ApiModelProperty(name = "약 이미지", example = "이미지 uri")
     private String image;
 
