@@ -111,10 +111,11 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> getMemberMedicineInfo(@RequestParam Long protegeSeq) {
 
         Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        if(!(protector.getMemberSeq()==protegeSeq)) {
+            Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
-        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
-
+            familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+        }
         List<MemberMedicineRes> memberMedicines = memberMedicineService.getMemberMedicine(protegeSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, SELECT_MEMBER_MEDICINE, memberMedicines));
     }
@@ -150,7 +151,4 @@ public class MemberMedicineController {
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, MEMBER_MEDICINE_OK, checkMedicineRes));
     }
-
-
-
 }
