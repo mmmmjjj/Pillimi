@@ -5,6 +5,7 @@ import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
 import com.pillimi.backend.api.response.CheckMedicineRes;
 import com.pillimi.backend.api.response.MemberMedicineRes;
 import com.pillimi.backend.api.response.TodayListRes;
+import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.common.exception.DuplicateException;
 import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
@@ -16,10 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -297,7 +296,21 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     오늘의 약 목록 조회
      */
     @Override
-    public List<TodayListRes> findTodayMedicineList(Member member) {
-        return null;
+    public HashMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member) {
+
+        List<TodayMedicineRes> list = memberMedicineRepository.findTodayMedicineList(member);
+
+        HashMap<LocalTime, List<TodayMedicineRes>> res = new HashMap<>();
+
+        for (TodayMedicineRes todayMedicineRes : list) {
+            LocalTime time = todayMedicineRes.getTime();
+
+            if(!res.containsKey(time)){
+                res.put(time, new ArrayList<>());
+            }
+            res.get(time).add(todayMedicineRes);
+        }
+
+        return res;
     }
 }
