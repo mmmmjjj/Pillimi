@@ -51,15 +51,11 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         Member member = memberRepository.getById(req.getMemberSeq());
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
-        if (medicine == null) {
-            throw new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode());
-        }
 
-        Optional<MemberMedicine> memberMedicineOptional = memberMedicineRepository.findByMemberAndMedicine(member, medicine);
-        if(memberMedicineOptional.isPresent()){
-            throw new DuplicateException(ErrorCode.ALREADY_REGISTERED_MEMBER_MEDICINE);
-        }
-        MemberMedicine memberMedicine = memberMedicineRepository.save(MemberMedicine.builder().member(member)
+        // 이미 등록된 약품이라면 에러 처리
+        MemberMedicine memberMedicine = memberMedicineRepository.findByMemberAndMedicine(member, medicine).orElseThrow(() -> new DuplicateException(ErrorCode.ALREADY_REGISTERED_MEMBER_MEDICINE));
+
+        memberMedicineRepository.save(MemberMedicine.builder().member(member)
                         .medicine(medicine)
                         .memberMedicineName(req.getMemberMedicineName())
                         .memberMedicineNow(true)
@@ -69,16 +65,14 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .build());
 
         for(int day : req.getIntakeDay()){
-            for(double time : req.getIntakeTime()){
+            for(LocalTime time : req.getIntakeTime()){
                 medicineIntakeRepository.save(MedicineIntake.builder()
                         .memberMedicine(memberMedicine)
                         .intakeDay(day)
                         .intakeTime(time)
-                        .intakeIsconfirm(false)
                         .build());
             }
         }
-
 
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(medicine);
 
@@ -118,7 +112,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         medicineIntakeRepository.deleteByMemberMedicine(memberMedicine);
 
         for(int day : req.getIntakeDay()){
-            for(double time : req.getIntakeTime()){
+            for(LocalTime time : req.getIntakeTime()){
                 medicineIntakeRepository.save(MedicineIntake.builder()
                         .memberMedicine(memberMedicine)
                         .intakeDay(day)
@@ -168,13 +162,13 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
             List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
             Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
             HashSet<Integer> dayset = new HashSet<>();
-            HashSet<Double> timeset = new HashSet<>();
+            HashSet<LocalTime> timeset = new HashSet<>();
             for(MedicineIntake medicineIntake : medicineIntakes) {
                 timeset.add(medicineIntake.getIntakeTime());
                 dayset.add(medicineIntake.getIntakeDay());
             }
             System.out.println(timeset);
-            List<Double> times = new LinkedList<>(timeset);
+            List<LocalTime> times = new LinkedList<>(timeset);
             List<Integer> days = new LinkedList<>(dayset);
 
             MemberMedicineRes memberMedicineRes = MemberMedicineRes.builder()
@@ -202,7 +196,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
         Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
-        List<Double> times = new LinkedList<Double>();
+        List<LocalTime> times = new LinkedList<>();
         HashSet<Integer> dayset = new HashSet<>();
         for(MedicineIntake medicineIntake : medicineIntakes) {
             times.add(medicineIntake.getIntakeTime());
