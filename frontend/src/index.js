@@ -19,6 +19,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
+// store 사용 설정
+import { Provider } from "react-redux";
+import { legacy_createStore as createStore } from "redux";
+import rootReducer from "./reducers/index";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { composeWithDevTools } from "redux-devtools-extension";
+
 // styles for this kit
 import "assets/css/bootstrap.min.css";
 import "assets/scss/now-ui-kit.scss?v=1.5.0";
@@ -39,29 +47,42 @@ import PillDetail from "components/pill/PillDetail.js";
 import PillSearch from "components/pill/PillSearch.js";
 import PillTake from "components/pill/PillTake.js";
 import PillPicture from "components/pill/PillPicture.js";
+import Callback from "components/main/Callback.js";
+import MemberInfo from "components/Member/MemberInfo.js";
+import MemberPillPage from "components/Member/MemberPillPage";
+
+const store = createStore(rootReducer, composeWithDevTools());
+const persistor = persistStore(store);
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Switch>
-        <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
-        <Route path="/family" render={(props) => <Family {...props} />} />
-        <Route exact path="/" render={(props) => <MainPage {...props} />} />
-        <Route exact path="/index" render={(props) => <Index {...props} />} />
-        <Route exact path="/nucleo-icons" render={(props) => <NucleoIcons {...props} />} />
-        <Route exact path="/landing-page" render={(props) => <LandingPage {...props} />} />
-        <Route exact path="/profile-page" render={(props) => <ProfilePage {...props} />} />
-        <Route exact path="/login-page" render={(props) => <LoginPage {...props} />} />
-        <Route exact path="/main" render={(props) => <ElderMain {...props} />} />
-        <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
-        <Route exact path="/pill-detail" render={(props) => <PillDetail {...props} />} />
-        <Route exact path="/pill-search" render={(props) => <PillSearch {...props} />} />
-        <Route path="/pill-take" render={(props) => <PillTake {...props} />} />
-        <Route path="/pill-picture" render={(props) => <PillPicture {...props} />} />
-        <Redirect to="/index" />
-        {/* <Redirect from="/" to="/index" /> */}
-      </Switch>
-    </Switch>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <BrowserRouter>
+        <Switch>
+          <Switch>
+            <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
+            <Route path="/family" render={(props) => <Family {...props} />} />
+            <Route exact path="/" render={(props) => <MainPage {...props} />} />
+            <Route exact path="/index" render={(props) => <Index {...props} />} />
+            <Route exact path="/nucleo-icons" render={(props) => <NucleoIcons {...props} />} />
+            <Route exact path="/landing-page" render={(props) => <LandingPage {...props} />} />
+            <Route exact path="/profile-page" render={(props) => <ProfilePage {...props} />} />
+            <Route exact path="/login-page" render={(props) => <LoginPage {...props} />} />
+            <Route exact path="/main" render={(props) => <ElderMain {...props} />} />
+            <Route exact path="/pill-today" render={(props) => <PillToday {...props} />} />
+            <Route exact path="/pill-detail" render={(props) => <PillDetail {...props} />} />
+            <Route exact path="/pill-search" render={(props) => <PillSearch {...props} />} />
+            <Route path="/pill-take" render={(props) => <PillTake {...props} />} />
+            <Route path="/pill-picture" render={(props) => <PillPicture {...props} />} />
+            <Route path="/member-info" render={(props) => <MemberInfo {...props} />} />
+            <Route path="/member-pill-page" render={(props) => <MemberPillPage {...props} />} />
+            <Route exact path="/callback" render={(props) => <Callback {...props} />} />
+            <Redirect to="/index" />
+            {/* <Redirect from="/" to="/index" /> */}
+          </Switch>
+        </Switch>
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>,
   document.getElementById("root")
 );

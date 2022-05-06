@@ -16,6 +16,7 @@ public enum ErrorCode {
     // Medicine
     MEDICINE_NOT_FOUND(404,"MD001","Medicine Not Found"),
     MEMBER_MEDICINE_NOT_FOUND(404,"M106","Member-Medicine not found"),
+    ALREADY_REGISTERED_MEMBER_MEDICINE(403,"M107","Already Registered Member Medicine"),
     // Family
     FAMILY_REQUEST_NOT_FOUND(404,"F001","Family Request Not Found"),
     THEY_NOT_FAMILY(403,"F002","They Not Family"),

@@ -1,18 +1,48 @@
 /*eslint-disable*/
 import React from "react";
-
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 // reactstrap components
-import { Button, Container } from "reactstrap";
-import MemberInfoDetail from "./MemberInfo/MemberInfoDetail";
 import "../../assets/css/now-ui-kit.css";
 import Header from "components/Headers/Header";
+import MemberRegisterInfo from "./MemberInfo/MemberRegisterInfo";
+import MemberInfoDetail from "./MemberInfo/MemberInfoDetail";
+import MemberInfoModify from "./MemberInfo/MemberInfoModify";
+import { useSelector } from 'react-redux';
 
 // core components
 
 function MemberInfo(props) {
+
+  // var basicurl = props.match.path;
+  let nickName = useSelector((state) => state.memberInfo.memberInfo.nickName);
+  console.log(nickName)
   return (
     <>
-      <Header header={`${props.nickname}님의 정보`}></Header>
+      <BrowserRouter>
+        <Header header={nickName+`님의 정보`}></Header>
+        <Switch>
+          <Switch>
+            <Route exact
+              path={`${props.match.path}/member-register-info`}
+              render={(props) => (
+                <MemberRegisterInfo {...props} />
+              )}
+            />
+            <Route exact
+              path={`${props.match.path}/member-info-detail/:memberSeq`}
+              render={(props) => (
+                <MemberInfoDetail {...props} />
+              )}
+            />
+            <Route exact
+              path={`${props.match.path}/member-info-modify/:memberSeq`}
+              render={(props) => (
+                <MemberInfoModify {...props} />
+              )}
+            />
+          </Switch>
+        </Switch>
+      </BrowserRouter>
     </>
   );
 }

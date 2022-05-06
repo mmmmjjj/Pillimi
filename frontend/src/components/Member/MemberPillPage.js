@@ -8,6 +8,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "../../assets/css/now-ui-kit.css";
 import style from "./css/MemberPillCheck.module.css"
 import MemberPillList from "./MemberPillPage/MemberPillList";
+import PillTakeAlarm from "./MemberPillPage/PillTakeAlarm";
 import PillTakePicture from "./MemberPillPage/PillTakePicture";
 import ProtectorTakeAlarm from "./MemberPillPage/ProtectorTakeAlarm";
 
@@ -29,7 +30,7 @@ function MemberPillPage(props) {
               )}
             />
             <Route 
-              path={`${basicurl}/member-pill-list`}
+              path={`${basicurl}/member-pill-list/:memberSeq`}
               render={(props) => (
                 <MemberPillList {...props} />
               )}
@@ -38,6 +39,12 @@ function MemberPillPage(props) {
               path={`${basicurl}/pill-take-picture`}
               render={(props) => (
                 <PillTakePicture {...props} />
+              )}
+            />
+            <Route
+              path={`${basicurl}/pill-take-alarm`}
+              render={(props) => (
+                <PillTakeAlarm {...props} />
               )}
             />
             {/* <Redirect to={`${basicurl}/protector-take-alarm`}></Redirect> */}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row } from "reactstrap";
 import "../familycss.css";
+import { Link } from "react-router-dom";
 
 function FamilyRegisterReply(props) {
   const [name, setname] = useState("");
@@ -29,6 +30,11 @@ function FamilyRegisterReply(props) {
       <Button className="unactivebtn" size="lg" style={{ width: "70%"}}>
         아니오
       </Button>
+      <Link to="/family/camera">
+        <Button>
+          <p>Click Me!</p>
+        </Button>
+      </Link>
     </Container>
   );
 }
