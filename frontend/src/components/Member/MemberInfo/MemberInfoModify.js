@@ -12,7 +12,6 @@ import moment from "moment";
 
 // core components
 
-const InputField = Input;
 
 function MemberInfoModify({match}) {
 
@@ -70,11 +69,22 @@ function MemberInfoModify({match}) {
     return result;
   }
   
-  
+  function dateformat(bDay){
+    if(moment.isMoment(bDay)) return "2022-02-13";
+    else{
+      var month = bDay.getMonth() + 1;
+      if (month < 10) month = "0" + month;
+      var day = bDay.getDate();
+      if (day < 10) day = "0" + day;
+      var tmp = bDay.getFullYear() + "-" + month + "-" + day;
+      return tmp;
+    }
+  }
 
   const modifyInfo = () => {
+    let birthDate = dateformat(new Date(profile.member_birthDate));
     let memberInfo = {
-      birthDate: profile.member_birthDate,
+      birthDate: birthDate,
       memberSeq: memberSeq,
       nickName: profile.member_nickname,
       phone: profile.member_phone
@@ -124,13 +134,13 @@ function MemberInfoModify({match}) {
             </FormGroup>
             <FormGroup>
             <Label value={"전화번호"}></Label>
-              <span><InputField 
+              <span><Input 
               id="phone" 
               name="member_phone" 
               type="tel" 
-              value={outProfile.member_phone}
+              value={profile.member_phone}
               className={`${style.datepicker}`}
-              onChange={onChangeProfile}></InputField></span>
+              onChange={onChangeProfile}></Input></span>
               <br></br>
             </FormGroup>
             <FormGroup>
@@ -157,24 +167,24 @@ function MemberInfoModify({match}) {
           <Form>
           <FormGroup>
             <Label value={"닉네임"} ></Label>
-            <InputField
+            <Input
               id="nickname"
               name="member_nickname"
               type="text"
               value={profile.member_nickname}
               onChange={onChangeProfile}
               className={`${style.datepicker}`}
-            ></InputField>
+            ></Input>
           </FormGroup>
           <FormGroup>
           <Label value={"전화번호"}></Label>
-            <span><InputField 
+            <span><Input 
             id="member_phone" 
             name="member_phone" 
             type="tel" 
             value={profile.member_phone}
             className={`${style.datepicker}`}
-            onChange={outProfile}></InputField></span>
+            onChange={onChangeProfile}></Input></span>
             <br></br>
           </FormGroup>
         </Form>
