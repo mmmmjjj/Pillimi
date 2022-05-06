@@ -23,4 +23,8 @@ function modifyMemberInfo(memberInfo, success, fail){
   api.put(`/member`, memberInfo).then(success).catch(fail);
 }
 
-export { getKakaoToken, getKakaoLogin, addRegInfo, getMemberInfoDetail, modifyMemberInfo };
+function getMemberMedicineList(memberSeq, success, fail){
+  api.put(`/member/medicine?protegeSeq=`+memberSeq).then(success).catch(fail);
+}
+
+export { getKakaoToken, getKakaoLogin, addRegInfo, getMemberInfoDetail, modifyMemberInfo, getMemberMedicineList };
