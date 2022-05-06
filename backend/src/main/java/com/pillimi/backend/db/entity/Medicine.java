@@ -75,7 +75,4 @@ public class Medicine{
     @JoinColumn(name = "shape_seq")
     private Shape shape;
 
-    @Column
-    private String medicineImage;
-
 }
