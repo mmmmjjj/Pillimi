@@ -13,6 +13,7 @@ function Cameratest() {
   const retry = () => {
     setPicture(false);
   };
+
   return (
     <>
       <div style={{ height: "40px" }}></div>
@@ -20,7 +21,6 @@ function Cameratest() {
         <div style={{ width: "80%", margin: "auto" }}>
           <img
             src={picimg}
-            style={{ transform: "scaleX(-1)" }}
             alt="다시찍기를 눌러주세요"
           />
           <br />
@@ -33,7 +33,7 @@ function Cameratest() {
         </div>
       ) : (
         <div style={{ width: "80%", margin: "auto" }}>
-          <Camera ref={cam} aspectRatio={2 / 3} />
+          <Camera ref={cam} aspectRatio={2 / 3} facingMode/>
           <Button
             className="activebtn"
             size="lg"
