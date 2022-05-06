@@ -7,17 +7,19 @@ import Header from "components/Headers/Header";
 import MemberRegisterInfo from "./MemberInfo/MemberRegisterInfo";
 import MemberInfoDetail from "./MemberInfo/MemberInfoDetail";
 import MemberInfoModify from "./MemberInfo/MemberInfoModify";
+import { useSelector } from 'react-redux';
 
 // core components
 
 function MemberInfo(props) {
 
   // var basicurl = props.match.path;
-
+  let nickName = useSelector((state) => state.memberInfo.memberInfo.nickName);
+  console.log(nickName)
   return (
     <>
       <BrowserRouter>
-        <Header header={`님의 정보`}></Header>
+        <Header header={nickName+`님의 정보`}></Header>
         <Switch>
           <Switch>
             <Route exact
