@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Camera } from "react-camera-pro";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
-function Cameratest() {
+function Cameratest(props) {
   const cam = useRef();
   const [picimg, setImage] = useState();
   const [pic, setPicture] = useState(false);
@@ -13,6 +13,10 @@ function Cameratest() {
   const retry = () => {
     setPicture(false);
   };
+  useEffect(() => {
+    props.getnavbar(false);
+    props.getheader("사진 찍기");
+  });
 
   return (
     <>
