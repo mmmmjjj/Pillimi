@@ -24,7 +24,7 @@ function modifyMemberInfo(memberInfo, success, fail){
 }
 
 function getMemberMedicineList(memberSeq, success, fail){
-  api.put(`/member/medicine?protegeSeq=`+memberSeq).then(success).catch(fail);
+  api.get(`/member/medicine?protegeSeq=`+memberSeq).then(success).catch(fail);
 }
 
 export { getKakaoToken, getKakaoLogin, addRegInfo, getMemberInfoDetail, modifyMemberInfo, getMemberMedicineList };

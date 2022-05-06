@@ -1,8 +1,9 @@
 /*eslint-disable*/
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css"
+import { getMemberMedicineList } from '../../../api/member'
 
 // core components
 
@@ -10,18 +11,35 @@ function MemberPillList({match}) {
   
   const memberSeq = match.params.memberSeq;
 
+  const [pills, setPills] = useState([]);
+
+  useEffect(() => {
+    console.log("마운트")
+    console.log(match.params.memberSeq);
+    getMediList();
+  },[])
+
+  const getMediList = () => {
+    getMemberMedicineList(memberSeq,
+      ( success ) => {
+        setPills(success.data.data)
+      }, ( fail ) => {
+        console.log(fail)
+      })
+  }
+
   const PillList =  (props) => {
     let result = [];
-    array1.forEach(element =>{
-      if(element.isNow==props.isNow){
-        console.log(element.type);
+        console.log(pills)
+    pills.forEach(element =>{
+      if(element.now==props.isNow){
         result.push(<div className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `}>
           <div className={`${style.imgsize2} ml-2`}>
-            <img src={element.img} className={`${style.size}`}></img>
+            <img src={element.imageURL} className={`${style.size}`}></img>
           </div>
           <div className="flex-fill">
-            <span>{element.name}</span><br></br>
-            <span>({element.alias})</span><br></br>
+            <span>{element.medicineName}</span><br></br>
+            <span>({element.memberMedicineName})</span><br></br>
           </div>
         </div>)
       }
