@@ -5,6 +5,7 @@ import { Button, Modal } from "reactstrap";
 import PillDetailCSS from "./css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 import { getPillInfo } from "../../api/pill.js";
+import { getMyFamily } from "../../api/family.js";
 
 function PillDetail({ match }) {
   const pillSeq = match.params.pillSeq;
@@ -22,8 +23,11 @@ function PillDetail({ match }) {
     ingredient: "",
   });
 
+  const [familyList, setFamilyList] = useState([]);
+
   useEffect(() => {
     getPillDetail(pillSeq);
+    getFamilyList();
   }, [pillSeq]);
 
   const getPillDetail = (pillSeq) => {
@@ -54,21 +58,31 @@ function PillDetail({ match }) {
     );
   };
 
-  const [registerPillModal, setRegisterPillModal] = React.useState(false);
+  const getFamilyList = () => {
+    getMyFamily(
+      (response) => {
+        setFamilyList(response.data.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
 
-  const familyName = ["김말자", "박옥자", "김싸피"];
-  const whosePill = () => {
-    const result = [];
-    for (let i = 0; i < familyName.length; i++) {
+  const FamilyName = () => {
+    let result = [];
+    familyList.forEach((element) => {
       result.push(
-        <span onClick={gotoPillRegister} className={PillDetailCSS.familyName} key={{ i }}>
-          {familyName[i]}
-        </span>
+        <>
+          <span onClick={gotoPillRegister}>{element.memberName}</span>
+          <br></br>
+        </>
       );
-      result.push(<br></br>);
-    }
+    });
     return result;
   };
+
+  const [registerPillModal, setRegisterPillModal] = React.useState(false);
 
   return (
     <>
@@ -80,10 +94,7 @@ function PillDetail({ match }) {
       <br></br>
       <br></br>
       <h3 style={{ textAlign: "center" }}>
-        <img
-          alt="pillImg"
-          src="http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif"
-        ></img>
+        <img alt="pillImg" src={pillInfo.image}></img>
       </h3>
       <br></br>
       <div className={PillDetailCSS.Content}>
@@ -118,7 +129,8 @@ function PillDetail({ match }) {
           </button>
         </div>
         <div className={`${PillDetailCSS.modalBody} modal-body`}>
-          <h3>누구의 약인가요?</h3> {whosePill()}
+          <h3>누구의 약인가요?</h3>
+          <FamilyName></FamilyName>
           <br></br>
           <br></br>
         </div>
@@ -139,7 +151,7 @@ function Label(params) {
 }
 
 function gotoPillRegister() {
-  window.location.href = "/pill-detail";
+  window.location.href = "/pill-take";
 }
 
 export default PillDetail;
