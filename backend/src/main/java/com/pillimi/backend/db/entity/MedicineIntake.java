@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,6 @@ public class MedicineIntake {
     private boolean intakeIsconfirm;
 
     @Column
-    private Double intakeTime;
+    private LocalTime intakeTime;
 
 }
