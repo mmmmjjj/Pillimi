@@ -1,16 +1,54 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import { Button } from "reactstrap";
 
+import { useSelector } from "react-redux";
 import PillTodayCSS from "./css/PillToday.module.css";
+import { getMyFamily } from "../../api/family.js";
 
 function PillToday() {
-  React.useEffect(() => {}, []);
+  const [familyList, setFamilyList] = useState([]);
+
+  const myName = useSelector((state) => state.memberInfo.memberInfo.nickName);
+
+  useEffect(() => {
+    getFamilyList();
+  }, []);
+
+  const getFamilyList = () => {
+    getMyFamily(
+      (response) => {
+        setFamilyList(response.data.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const FamilyName = () => {
+    let result = [];
+    familyList.forEach((element) => {
+      result.push(
+        <>
+          <div>
+            <div>
+              <img src={element.memberImage} alt="memberImg" className={PillTodayCSS.img}></img>
+            </div>
+            <div>{element.memberName}</div>
+          </div>
+        </>
+      );
+    });
+    return result;
+  };
+
   return (
     <>
       <div className={PillTodayCSS.Whole}>
         <div className={PillTodayCSS.Header}>
           {/* 로그인한 사용자가 보호자일 때 */}
-          <span className={PillTodayCSS.MemberName}>김말자</span>
+          <span className={PillTodayCSS.MemberName}>{myName}</span>
           <span className={PillTodayCSS.Icon}>
             <i className={"now-ui-icons ui-1_bell-53"}></i>
           </span>
@@ -21,8 +59,9 @@ function PillToday() {
         </div>
         {/* 로그인한 사용자가 보호자일 때 */}
         <div className={PillTodayCSS.Family}>
-          <div>가족 이미지</div>
-          <div>가족 이름</div>
+          <FamilyName></FamilyName>
+          {/* <div>가족 이미지</div>
+          <div>가족 이름</div> */}
         </div>
         {/*  */}
         <br></br>
