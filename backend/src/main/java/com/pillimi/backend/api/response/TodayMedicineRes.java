@@ -30,4 +30,7 @@ public class TodayMedicineRes {
     @ApiModelProperty(name = "약 복용 여부", example = "true")
     private boolean isTaken;
 
+    @ApiModelProperty(name = "해당 알림 ID", example = "1")
+    private Long alarmSeq;
+
 }
