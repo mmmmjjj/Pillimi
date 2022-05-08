@@ -118,6 +118,7 @@ function FamilyRegisterRequest(props) {
         console.log(fail)
       })
   }
+  
   return (
     <>
       <Container style={{ padding: "50px" }}>
