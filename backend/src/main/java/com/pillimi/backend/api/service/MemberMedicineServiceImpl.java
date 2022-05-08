@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -34,8 +33,6 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     private final MedicineIngredientRepository medicineIngredientRepository;
 
     private final MemberIngredientRepository memberIngredientRepository;
-
-    private final RemarkRepository remarkRepository;
 
     private final DaaRepository daaRepository;
 
@@ -60,6 +57,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .memberMedicineCount(req.getIntakeCount())
                         .memberMedicineStart(req.getStartDay())
                         .memberMedicineEnd(req.getEndDay())
+                        .memberMedicineRemark(req.getRemarkContent())
                         .build());
 
         for(int day : req.getIntakeDay()){
@@ -81,11 +79,6 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                     .member(member)
                     .build());
         }
-
-        Remark remark = remarkRepository.save(Remark.builder().memberMedicine(memberMedicine)
-                .remarkContent(req.getRemarkContent())
-                .remarkDate(LocalDate.now())
-                .build());
     }
 
     @Override
@@ -93,9 +86,6 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         Member member = memberRepository.getById(req.getMemberSeq());
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
-        if (medicine == null) {
-            throw new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode());
-        }
 
         MemberMedicine memberMedicine = memberMedicineRepository.save(MemberMedicine.builder().member(member)
                 .memberMedicineSeq(req.getMemberMedicineSeq())
@@ -105,6 +95,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                 .memberMedicineCount(req.getIntakeCount())
                 .memberMedicineStart(req.getStartDay())
                 .memberMedicineEnd(req.getEndDay())
+                .memberMedicineRemark(req.getRemarkContent())
                 .build());
 
         medicineIntakeRepository.deleteByMemberMedicine(memberMedicine);
@@ -120,23 +111,14 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
             }
         }
 
-        Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
-        remarkRepository.save(Remark.builder()
-                .remarkSeq(remark.getRemarkSeq())
-                .memberMedicine(memberMedicine)
-                .remarkContent(req.getRemarkContent())
-                .remarkDate(LocalDate.now())
-                .build());
     }
 
     @Override
     public void deleteMemberMedicine(Long memberMedicineSeq) {
 
-        Optional<MemberMedicine> memberMedicineOptional = memberMedicineRepository.findById(memberMedicineSeq);
-        if (!memberMedicineOptional.isPresent()) {
-            throw new NotFoundException(ErrorCode.MEMBER_MEDICINE_NOT_FOUND.getCode());
-        }
-        MemberMedicine memberMedicine = memberMedicineOptional.get();
+        MemberMedicine memberMedicine = memberMedicineRepository.findById(memberMedicineSeq)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_MEDICINE_NOT_FOUND.getCode()));
+
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(memberMedicine.getMedicine());
 
         Member member = memberMedicine.getMember();
@@ -158,20 +140,18 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         List<MemberMedicineRes> memberMedicineResList = new LinkedList<MemberMedicineRes>();
         for (MemberMedicine memberMedicine : memberMedicines) {
             List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
-            Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
             HashSet<Integer> dayset = new HashSet<>();
             HashSet<LocalTime> timeset = new HashSet<>();
             for(MedicineIntake medicineIntake : medicineIntakes) {
                 timeset.add(medicineIntake.getIntakeTime());
                 dayset.add(medicineIntake.getIntakeDay());
             }
-            System.out.println(timeset);
             List<LocalTime> times = new LinkedList<>(timeset);
             List<Integer> days = new LinkedList<>(dayset);
 
             MemberMedicineRes memberMedicineRes = MemberMedicineRes.builder()
                     .memberMedicineSeq(memberMedicine.getMemberMedicineSeq())
-                    .imageURL("www.jcgroup.hk/wp-content/uploads/2019/08/test-img-300x194_2.png")
+                    .imageURL("")
                     .medicineSeq(memberMedicine.getMedicine().getMedicineSeq())
                     .memberMedicineName(memberMedicine.getMemberMedicineName())
                     .startDay(memberMedicine.getMemberMedicineStart())
@@ -179,7 +159,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                     .intakeDay(days)
                     .intakeTime(times)
                     .intakeCount(memberMedicine.getMemberMedicineCount())
-                    .remarkContent(remark.getRemarkContent())
+                    .remarkContent(memberMedicine.getMemberMedicineRemark())
                     .isNow(memberMedicine.isMemberMedicineNow())
                     .build();
 
@@ -193,7 +173,6 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         MemberMedicine memberMedicine = memberMedicineRepository.findByMemberMedicineSeq(memberMedicineSeq);
 
         List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
-        Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
         List<LocalTime> times = new LinkedList<>();
         HashSet<Integer> dayset = new HashSet<>();
         for(MedicineIntake medicineIntake : medicineIntakes) {
@@ -212,7 +191,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                 .intakeDay(days)
                 .intakeTime(times)
                 .intakeCount(memberMedicine.getMemberMedicineCount())
-                .remarkContent(remark.getRemarkContent())
+                .remarkContent(memberMedicine.getMemberMedicineRemark())
                 .isNow(memberMedicine.isMemberMedicineNow())
                 .build();
 
