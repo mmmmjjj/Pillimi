@@ -47,6 +47,11 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         Member member = memberRepository.getById(req.getMemberSeq());
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
 
+        // 이미 등록된 약품이라면 에러 처리
+        Optional<MemberMedicine> memberMedicineOptional = memberMedicineRepository.findByMemberAndMedicine(member, medicine);
+        if(memberMedicineOptional.isPresent()){
+            throw new DuplicateException(ErrorCode.ALREADY_REGISTERED_MEMBER_MEDICINE);
+        }
         MemberMedicine memberMedicine = memberMedicineRepository.save(MemberMedicine.builder()
                         .member(member)
                         .medicine(medicine)
