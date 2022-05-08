@@ -10,6 +10,7 @@ import com.pillimi.backend.db.entity.Member;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public interface MemberMedicineService {
 
@@ -25,5 +26,5 @@ public interface MemberMedicineService {
 
     CheckMedicineRes checkMemberMedicine(Long memberSeq, Long medicineSeq);
 
-    HashMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member);
+    TreeMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member);
 }
