@@ -110,12 +110,15 @@ function MemberInfoDetail({match}) {
         title: "로그아웃 되었습니다.",
         confirmButtonColor: `#0369a1`,
       }).then(function () {
-        history.push(`/`)
+        //history.push(`/`)
+        dispatch(logoutAction());
+        localStorage.removeItem('ACCESS_TOKEN');
+        window.location.href="/"
       });
     };
-    dispatch(logoutAction());
-    localStorage.removeItem('ACCESS_TOKEN');
-    window.location.href="/"
+    // dispatch(logoutAction());
+    // localStorage.removeItem('ACCESS_TOKEN');
+    // window.location.href="/"
   }
 
   return (
