@@ -288,11 +288,11 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     오늘의 약 목록 조회
      */
     @Override
-    public HashMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member) {
+    public TreeMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member) {
 
         List<TodayMedicineRes> list = memberMedicineRepository.findTodayMedicineList(member);
 
-        HashMap<LocalTime, List<TodayMedicineRes>> res = new HashMap<>();
+        TreeMap<LocalTime, List<TodayMedicineRes>> res = new TreeMap<>();
 
         for (TodayMedicineRes todayMedicineRes : list) {
             LocalTime time = todayMedicineRes.getTime();
