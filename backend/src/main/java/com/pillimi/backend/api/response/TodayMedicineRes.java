@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
@@ -29,8 +30,5 @@ public class TodayMedicineRes {
 
     @ApiModelProperty(name = "약 복용 여부", example = "true")
     private boolean isTaken;
-
-    @ApiModelProperty(name = "해당 알림 ID", example = "1")
-    private Long alarmSeq;
 
 }

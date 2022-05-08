@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -39,6 +40,8 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     private final DcaRepository dcaRepository;
 
     private final DeaRepository deaRepository;
+
+    private final AlarmRepository alarmRepository;
 
 
     @Override
@@ -269,19 +272,21 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
     오늘의 약 목록 조회
      */
     @Override
-    public TreeMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member) {
+    public TreeMap<String, List<TodayMedicineRes>> findTodayMedicineList(Member member) {
 
         List<TodayMedicineRes> list = memberMedicineRepository.findTodayMedicineList(member);
 
-        TreeMap<LocalTime, List<TodayMedicineRes>> res = new TreeMap<>();
+        TreeMap<String, List<TodayMedicineRes>> res = new TreeMap<>();
 
+        Long alarmSeq = null;
         for (TodayMedicineRes todayMedicineRes : list) {
             LocalTime time = todayMedicineRes.getTime();
 
-            if(!res.containsKey(time)){
-                res.put(time, new ArrayList<>());
+            if(!res.containsKey(time+" "+alarmSeq)){
+                alarmSeq = alarmRepository.findByAlarmDateAndAlarmTimeAndReceiver(LocalDate.now(),time,member).getAlarmSeq();
+                res.put(time+" "+alarmSeq, new ArrayList<>());
             }
-            res.get(time).add(todayMedicineRes);
+            res.get(time+" "+alarmSeq).add(todayMedicineRes);
         }
 
         return res;
