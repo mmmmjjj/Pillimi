@@ -69,7 +69,7 @@ function Family(props) {
           <Route
             path={`${basicurl}/camera`}
             render={(props) => (
-              <Cameratest getheader={getheader} getnavbar={getnavbar} {...props} />
+              <Cameratest {...props} />
             )}
           />
           <Route

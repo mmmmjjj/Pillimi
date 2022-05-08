@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useState } from "react";
 import { Input, Button, Card } from "reactstrap";
 
@@ -8,7 +7,7 @@ import { getPillSearch } from "../../api/pill.js";
 
 function PillSearch() {
   const [keyword, setKeyword] = useState("");
-  const [pillList, setPillList] = useState([]);
+  let pillList = [];
 
   const onChangeKeyword = (e) => {
     setKeyword(e.target.value);
@@ -20,43 +19,7 @@ function PillSearch() {
     }
   };
 
-  const goPillSearch = () => {
-    getPillSearch(
-      keyword,
-      async (response) => {
-        setPillList(response.data.data);
-        setKeyword("");
-        ShowPillList();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  };
-
-  const ShowPillList = () => {
-    let result = [];
-    pillList.forEach((element) => {
-      if (pillList.length !== 0) {
-        result.push(
-          <Card id="pillListDiv" className={PillSearchCSS.PillList} onClick={() => gotoPillDetail(element.medicineSeq)}>
-            <div className="d-flex align-items-center">
-              <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
-              <span className={`${PillSearchCSS.PillName} flex-fill`}>{element.medicineName}</span>
-              <i className={`now-ui-icons arrows-1_minimal-right`}></i>
-            </div>
-          </Card>
-        );
-      }
-    });
-
-    return result;
-  };
-
-  React.useEffect(() => {
-    ShowPillList();
-  }, []);
-
+  React.useEffect(() => {}, []);
   return (
     <>
       <Header header="검색"></Header>
@@ -70,19 +33,67 @@ function PillSearch() {
           value={keyword}
           type="text"
         ></Input>
-        <Button className={PillSearchCSS.SearchBtn} onClick={() => goPillSearch()}>
+        <Button className={PillSearchCSS.SearchBtn} onClick={goPillSearch}>
           {" "}
           검색
         </Button>
         <br></br>
-        <ShowPillList></ShowPillList>
+        <Card id="pillListDiv" className={PillSearchCSS.PillList} onClick={gotoPillDetail}>
+          {/* <div className="d-flex align-items-center">
+            <img
+              className={`${PillSearchCSS.Img}`}
+              alt="pillImg"
+              src="http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif"
+            ></img>
+            <span className={`${PillSearchCSS.PillName} flex-fill`}>타이레놀정500mg</span>
+            <i className={`now-ui-icons arrows-1_minimal-right`}></i>
+          </div> */}
+        </Card>
       </div>
     </>
   );
+
+  function goPillSearch() {
+    if (keyword.length >= 2) {
+      pillList = [];
+      var print = document.getElementById("pillListDiv");
+      var value = "";
+
+      getPillSearch(keyword, (response) => {
+        for (var i = 0; i < response.data.data.length; i++) {
+          const tempImg = response.data.data[i].medicineImage;
+          const tempSeq = response.data.data[i].medicineSeq;
+          const tempName = response.data.data[i].medicineName;
+
+          const tempInfo = {
+            medicineImage: tempImg,
+            medicineSeq: tempSeq,
+            medicineName: tempName,
+          };
+
+          pillList.push(tempInfo);
+          value += `<div className="d-flex align-items-center">
+        <img
+        id="pillImg"
+        alt="pillImg"
+        src="${pillList[i].medicineImage}"
+      ></img><span className={\`\${PillSearchCSS.PillName} flex-fill\`}>${pillList[i].medicineName}</span>
+      <i className={\`now-ui-icons arrows-1_minimal-right\`}></i></div>`;
+        }
+        console.log(value);
+        print.innerHTML = value;
+      });
+
+      setKeyword("");
+    } else {
+      setKeyword("");
+      alert("2글자 이상의 검색어를 입력해주세요");
+    }
+  }
 }
 
-function gotoPillDetail(pillSeq) {
-  window.location.href = `/pill-detail/${pillSeq}`;
+function gotoPillDetail() {
+  window.location.href = "/pill-detail";
 }
 
 export default PillSearch;

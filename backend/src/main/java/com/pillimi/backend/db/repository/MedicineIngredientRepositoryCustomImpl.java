@@ -18,7 +18,6 @@ public class MedicineIngredientRepositoryCustomImpl implements MedicineIngredien
      */
     @Override
     public List<MedicineIngredient> findMedicineIngredientByMedicine(Medicine medicine) {
-
         return jpaQueryFactory.select(qMedicineIngredient)
                 .from(qMedicineIngredient)
                 .where(qMedicineIngredient.medicine.medicineSeq.eq(medicine.getMedicineSeq()))

@@ -1,5 +1,6 @@
 package com.pillimi.backend.db.entity;
 
+
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -15,26 +16,18 @@ import java.time.LocalDate;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "member_medicine")
-public class MemberMedicine{
+@Table(name = "intake_time")
+public class IntakeTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberMedicineSeq;
-
-    @Column
-    private String memberMedicineName;
+    private Long intakeTimeSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_seq")
-    private Member member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicine_seq")
-    private Medicine medicine;
+    @JoinColumn(name = "medicine_intake_seq")
+    private MedicineIntake medicineIntake;
 
     @Column
-    private boolean memberMedicineNow;
-
+    private double intakeTime;
 
 }

@@ -22,11 +22,11 @@ public class MemberIngredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberIngredientSeq;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "member_seq")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ingredient_seq")
     private Ingredient Ingredient;
 }

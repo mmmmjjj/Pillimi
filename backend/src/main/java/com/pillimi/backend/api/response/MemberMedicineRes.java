@@ -8,10 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
-@ApiModel("MemberMedicineResponse")
+@ApiModel("KakaoLoginResponse")
 @Getter
 @Setter
 @Builder
@@ -40,10 +39,10 @@ public class MemberMedicineRes {
     private LocalDate endDay;
 
     @ApiModelProperty(name = "복용 주기", example = "3")
-    private List<Integer> intakeDay;
+    private int intakeDay;
 
     @ApiModelProperty(name = "복약 시간", example = "[9.5,10.5]")
-    private List<LocalTime> intakeTime;
+    private List<Double> intakeTime;
 
     @ApiModelProperty(name = "복약 갯수", example = "2")
     private int intakeCount;

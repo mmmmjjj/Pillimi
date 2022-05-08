@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Camera } from "react-camera-pro";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
-function Cameratest(props) {
+function Cameratest() {
   const cam = useRef();
   const [picimg, setImage] = useState();
   const [pic, setPicture] = useState(false);
@@ -13,11 +13,6 @@ function Cameratest(props) {
   const retry = () => {
     setPicture(false);
   };
-  useEffect(() => {
-    props.getnavbar(false);
-    props.getheader("사진 찍기");
-  });
-
   return (
     <>
       <div style={{ height: "40px" }}></div>
@@ -25,6 +20,7 @@ function Cameratest(props) {
         <div style={{ width: "80%", margin: "auto" }}>
           <img
             src={picimg}
+            style={{ transform: "scaleX(-1)" }}
             alt="다시찍기를 눌러주세요"
           />
           <br />
@@ -37,7 +33,7 @@ function Cameratest(props) {
         </div>
       ) : (
         <div style={{ width: "80%", margin: "auto" }}>
-          <Camera ref={cam} aspectRatio={2 / 3} facingMode={"environment"}/>
+          <Camera ref={cam} aspectRatio={2 / 3} />
           <Button
             className="activebtn"
             size="lg"

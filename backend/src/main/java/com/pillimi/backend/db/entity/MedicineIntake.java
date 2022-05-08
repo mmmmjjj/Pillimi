@@ -7,9 +7,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -34,9 +31,15 @@ public class MedicineIntake {
     private int intakeDay;
 
     @Column
+    private int intakeCount;
+
+    @Column
     private boolean intakeIsconfirm;
 
     @Column
-    private LocalTime intakeTime;
+    private LocalDate intakeStart;
+
+    @Column
+    private LocalDate intakeEnd;
 
 }

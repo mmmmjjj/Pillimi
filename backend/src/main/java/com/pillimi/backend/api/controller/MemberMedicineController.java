@@ -12,8 +12,7 @@ import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.exception.handler.ErrorResponse;
 import com.pillimi.backend.common.model.BaseResponseBody;
-import com.pillimi.backend.db.entity.*;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.pillimi.backend.db.entity.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,8 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.pillimi.backend.common.model.ResponseMessage.*;
@@ -54,11 +51,10 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> createMemberMedicineInfo(@RequestBody MemberMedicineCreateReq req) {
 
         Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        if(!(protector.getMemberSeq()==req.getMemberSeq())) {
-            Member protege = memberService.getMemberById(req.getMemberSeq()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(req.getMemberSeq()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
-            familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
-        }
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
         memberMedicineService.createMemberMedicine(req);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, REGIST_MEMBER_MEDICINE));
     }
@@ -75,11 +71,10 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> updateMemberMedicineInfo(@RequestBody MemberMedicineUpdateReq req) {
 
         Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        if(!(protector.getMemberSeq()==req.getMemberSeq())) {
-            Member protege = memberService.getMemberById(req.getMemberSeq()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(req.getMemberSeq()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
-            familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
-        }
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
         memberMedicineService.updateMemberMedicine(req);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, UPDATE_MEMBER_MEDICINE));
     }
@@ -96,11 +91,10 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> deleteMemberMedicineInfo(@RequestParam Long memberMedicineSeq, @RequestParam Long protegeSeq) {
 
         Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        if(!(protector.getMemberSeq()==protegeSeq)) {
-            Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
-            familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
-        }
+        familyService.checkFamily(protector, protege).orElseThrow(() -> new NotFoundException(ErrorCode.THEY_NOT_FAMILY));
+
         memberMedicineService.deleteMemberMedicine(memberMedicineSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, DELETE_MEMBER_MEDICINE));
     }
@@ -138,7 +132,7 @@ public class MemberMedicineController {
     public ResponseEntity<BaseResponseBody> getMemberMedicineInfodetail(@PathVariable Long memberMedicineSeq){
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_MEDICINE_INFO, memberMedicineService.getMemberMedicineInfo(memberMedicineSeq)));
     }
-
+    
     @ApiOperation(value = "사용자 복용 약품 확인", notes = "사용자 복용 약품 확인 api입니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = SELECT_MEMBER_MEDICINE),
