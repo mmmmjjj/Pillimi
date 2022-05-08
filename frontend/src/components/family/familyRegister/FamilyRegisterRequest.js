@@ -1,7 +1,6 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import "../familycss.css";
-import { requestAddFamily  } from "api/family";
 
 // reactstrap components
 import {
@@ -105,19 +104,6 @@ function FamilyRegisterRequest(props) {
       }
     }
   };
-
-  const requestFamily = () => {
-    let memberInfo = {
-      memberName: membername,
-      memberPhone: phonenumber
-    }
-    requestAddFamily(memberInfo,
-      ( success ) => {
-        console.log(success)
-      }, ( fail ) => {
-        console.log(fail)
-      })
-  }
   return (
     <>
       <Container style={{ padding: "50px" }}>
@@ -186,7 +172,7 @@ function FamilyRegisterRequest(props) {
         </Row>
         <Row>
           {numberok && nameok == true ? (
-            <Button className="activebtn" size="lg" onClick={requestFamily}>
+            <Button className="activebtn" size="lg">
               완료
             </Button>
           ) : (
