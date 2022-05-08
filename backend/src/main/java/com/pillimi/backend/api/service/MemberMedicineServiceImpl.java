@@ -4,6 +4,7 @@ import com.pillimi.backend.api.request.MemberMedicineCreateReq;
 import com.pillimi.backend.api.request.MemberMedicineUpdateReq;
 import com.pillimi.backend.api.response.CheckMedicineRes;
 import com.pillimi.backend.api.response.MemberMedicineRes;
+import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.common.exception.DuplicateException;
 import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
@@ -14,11 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -51,15 +49,11 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         Member member = memberRepository.getById(req.getMemberSeq());
         Medicine medicine = medicineRepository.getById(req.getMedicineSeq());
-        if (medicine == null) {
-            throw new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode());
-        }
 
-        Optional<MemberMedicine> memberMedicineOptional = memberMedicineRepository.findByMemberAndMedicine(member, medicine);
-        if(memberMedicineOptional.isPresent()){
-            throw new DuplicateException(ErrorCode.ALREADY_REGISTERED_MEMBER_MEDICINE);
-        }
-        MemberMedicine memberMedicine = memberMedicineRepository.save(MemberMedicine.builder().member(member)
+        // 이미 등록된 약품이라면 에러 처리
+        MemberMedicine memberMedicine = memberMedicineRepository.findByMemberAndMedicine(member, medicine).orElseThrow(() -> new DuplicateException(ErrorCode.ALREADY_REGISTERED_MEMBER_MEDICINE));
+
+        memberMedicineRepository.save(MemberMedicine.builder().member(member)
                         .medicine(medicine)
                         .memberMedicineName(req.getMemberMedicineName())
                         .memberMedicineNow(true)
@@ -69,16 +63,14 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .build());
 
         for(int day : req.getIntakeDay()){
-            for(double time : req.getIntakeTime()){
+            for(LocalTime time : req.getIntakeTime()){
                 medicineIntakeRepository.save(MedicineIntake.builder()
                         .memberMedicine(memberMedicine)
                         .intakeDay(day)
                         .intakeTime(time)
-                        .intakeIsconfirm(false)
                         .build());
             }
         }
-
 
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(medicine);
 
@@ -118,7 +110,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         medicineIntakeRepository.deleteByMemberMedicine(memberMedicine);
 
         for(int day : req.getIntakeDay()){
-            for(double time : req.getIntakeTime()){
+            for(LocalTime time : req.getIntakeTime()){
                 medicineIntakeRepository.save(MedicineIntake.builder()
                         .memberMedicine(memberMedicine)
                         .intakeDay(day)
@@ -168,13 +160,13 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
             List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
             Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
             HashSet<Integer> dayset = new HashSet<>();
-            HashSet<Double> timeset = new HashSet<>();
+            HashSet<LocalTime> timeset = new HashSet<>();
             for(MedicineIntake medicineIntake : medicineIntakes) {
                 timeset.add(medicineIntake.getIntakeTime());
                 dayset.add(medicineIntake.getIntakeDay());
             }
             System.out.println(timeset);
-            List<Double> times = new LinkedList<>(timeset);
+            List<LocalTime> times = new LinkedList<>(timeset);
             List<Integer> days = new LinkedList<>(dayset);
 
             MemberMedicineRes memberMedicineRes = MemberMedicineRes.builder()
@@ -202,7 +194,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
         Remark remark = remarkRepository.getByMemberMedicine(memberMedicine);
-        List<Double> times = new LinkedList<Double>();
+        List<LocalTime> times = new LinkedList<>();
         HashSet<Integer> dayset = new HashSet<>();
         for(MedicineIntake medicineIntake : medicineIntakes) {
             times.add(medicineIntake.getIntakeTime());
@@ -290,5 +282,27 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         return CheckMedicineRes.builder()
                 .checkType(0)
                 .build();
+    }
+
+    /*
+    오늘의 약 목록 조회
+     */
+    @Override
+    public HashMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member) {
+
+        List<TodayMedicineRes> list = memberMedicineRepository.findTodayMedicineList(member);
+
+        HashMap<LocalTime, List<TodayMedicineRes>> res = new HashMap<>();
+
+        for (TodayMedicineRes todayMedicineRes : list) {
+            LocalTime time = todayMedicineRes.getTime();
+
+            if(!res.containsKey(time)){
+                res.put(time, new ArrayList<>());
+            }
+            res.get(time).add(todayMedicineRes);
+        }
+
+        return res;
     }
 }
