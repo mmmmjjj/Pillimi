@@ -138,7 +138,6 @@ function PillToday() {
 
       result.push(
         <>
-          <br></br>
           <div className={PillTodayCSS.Background}>&nbsp;</div>
         </>
       );
