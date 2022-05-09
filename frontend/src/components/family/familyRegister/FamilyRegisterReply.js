@@ -3,6 +3,8 @@ import { Button, Container, Row } from "reactstrap";
 import "../familycss.css";
 import Swal from "sweetalert2";
 import { useHistory  } from "react-router-dom";
+import { addFamily, revertFamilyRequest } from 'api/family';
+
 function FamilyRegisterReply(props) {
   const [name, setname] = useState("");
   const [number, setnumber] = useState("");
@@ -18,15 +20,24 @@ function FamilyRegisterReply(props) {
     setnumber(props.history.location.props.memberInfo.phone);
   };
   const history = useHistory();
+  
+  const familyRequestSeq = props.history.location.props.memberInfo.reqSeq;
+
   const onSubmityes = (event) => {
-    event.preventDefault();
-    Swal.fire({
-      icon: "success",
-      title: "가족 등록을 수락하였습니다.",
-      confirmButtonColor: `#0369a1`,
-    }).then(function () {
-      history.push(`/family/myfamily`)
-    });
+    addFamily(familyRequestSeq, (success) => {
+      console.log(success);
+      event.preventDefault();
+      Swal.fire({
+        icon: "success",
+        title: "가족 등록을 수락하였습니다.",
+        confirmButtonColor: `#0369a1`,
+      }).then(function () {
+        history.push(`/family/myfamily`)
+      });
+    }, ( fail ) => {
+      console.log(fail);
+    })
+    
   };
   const onSubmitno = (event) => {
     event.preventDefault();
