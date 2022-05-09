@@ -33,7 +33,7 @@ public class AlarmController {
     
     private final AlarmService alarmService;
 
-    @GetMapping("/{alarmSeq}")
+    @GetMapping("/protege/{alarmSeq}")
     @ApiOperation(value = "복용 인증 약 정보 조회", notes = "사진 찍기를 클릭 시 요청해야 하는 API입니다.\n해당 알림 시간에 복용해야 하는 약 정보를 반환하는 API입니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = GET_TAKE_ALARM),
