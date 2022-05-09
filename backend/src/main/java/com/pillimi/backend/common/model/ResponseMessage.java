@@ -25,7 +25,6 @@ public class ResponseMessage {
     public static final String SELECT_MEMBER_MEDICINE = "사용자 복용 약물 조회 성공";
     public static final String MEMBER_MEDICINE_OK = "약물 적합 여부 확인 완료";
 
-
     // Search
     public static final String SEARCH = "검색 성공";
 
@@ -40,5 +39,10 @@ public class ResponseMessage {
     public static final String ADD_FAMILY = "가족 추가 성공";
     public static final String DELETE_FAMILY = "가족 삭제 성공";
     public static final String REJECT_FAMILY_REQUEST = "가족 요청 거절";
+
+    // Alarm
+    public static final String GET_TAKE_ALARM = "복용 알림 조회 성공";
+    public static final String POST_TAKE = "복용 인증 성공";
+
 
 }
