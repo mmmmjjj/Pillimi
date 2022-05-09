@@ -34,6 +34,18 @@
   margin-left: 8%;
   margin-right: 30%;
 }
+.PillImg {
+  margin-left: 5%;
+  width: 10% !important;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-radius: 10px;
+}
+.ItemAlign {
+  font-size: medium;
+  line-height: 1.8;
+  text-align: center;
+}
 .DoneBtn {
   color: black !important;
   font-weight: bold !important;

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import PillTodayCSS from "./css/PillToday.module.css";
 import { getMyFamily } from "../../api/family.js";
 import { getPillToday, getMyPillToday } from "../../api/pill.js";
+import style from "../Member/css/MemberPillCheck.module.css";
 
 function PillToday() {
   const [familyList, setFamilyList] = useState([]);
@@ -76,6 +77,7 @@ function PillToday() {
             <div className={PillTodayCSS.WhiteBox}>
               <br></br>
               <h3 className={PillTodayCSS.TimeText}>{element.split(" ")[0]}</h3>
+              <br></br>
             </div>
           </>
         );
@@ -88,10 +90,21 @@ function PillToday() {
             memberMedicineName = pillList[element][i].memberMedicineName;
             result.push(
               <>
-                <div className={PillTodayCSS.WhiteBox}>
-                  <img className={PillTodayCSS.Img} src={imageURL} alt="pillImg"></img>
-                  <span className={PillTodayCSS.TimeText}>{medicineName}</span>
-                  <div>{memberMedicineName}</div>
+                <div
+                  className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
+                >
+                  <div className={`${style.imgsize2} ml-2`}>
+                    <img src={imageURL} className={`${style.size}`} alt="pillImg"></img>
+                  </div>
+                  <div className="flex-fill">
+                    <span>{medicineName}</span>
+                    <br></br>
+                    <span>({memberMedicineName})</span>
+                    <br></br>
+                  </div>
+                  {/* <img className={PillTodayCSS.PillImg} src={imageURL} alt="pillImg"></img>
+                  <span>{medicineName}</span>
+                  <div>{memberMedicineName}</div> */}
                 </div>
               </>
             );
@@ -109,9 +122,12 @@ function PillToday() {
               } else if (taken === false) {
                 result.push(
                   <>
-                    <br></br>
-                    <br></br>
-                    <Button className={PillTodayCSS.PictureBtn}>사진 찍기</Button>
+                    <div className={PillTodayCSS.WhiteBox}>
+                      <br></br>
+                      <br></br>
+                      <Button className={PillTodayCSS.PictureBtn}>사진 찍기</Button>
+                      <br></br>
+                    </div>
                   </>
                 );
               }
