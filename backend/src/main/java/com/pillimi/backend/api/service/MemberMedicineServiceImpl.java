@@ -41,7 +41,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
     private final DeaRepository deaRepository;
 
-    private final AlarmRepository alarmRepository;
+    private final AlarmProtegeRepository alarmRepository;
 
 
     @Override
@@ -283,7 +283,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
             LocalTime time = todayMedicineRes.getTime();
 
             if(!res.containsKey(time+" "+alarmSeq)){
-                alarmSeq = alarmRepository.findByAlarmDateAndAlarmTimeAndReceiver(LocalDate.now(),time,member).getAlarmSeq();
+                alarmSeq = alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(LocalDate.now(),time,member).getAlarmSeq();
                 res.put(time+" "+alarmSeq, new ArrayList<>());
             }
             res.get(time+" "+alarmSeq).add(todayMedicineRes);
