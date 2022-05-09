@@ -81,14 +81,42 @@ function PillToday() {
     let imageURL = "";
     let memberMedicineName = "";
     let taken = "";
+    let hour = "";
+    let min = "";
+    let resultTime = "";
 
     pillListKey.forEach((element, index) => {
       if (pillListKey.length !== 0) {
+        hour = "";
+        min = "";
+        resultTime = "";
+
+        hour = element.split(" ")[0].split(":")[0];
+        min = element.split(" ")[0].split(":")[1];
+
+        if (hour < 12) {
+          resultTime += "오전 ";
+          resultTime += hour;
+        } else {
+          resultTime += "오후 ";
+          if (hour === "12") {
+            resultTime += hour;
+          } else {
+            resultTime += hour - 12;
+          }
+          resultTime += "시 ";
+        }
+
+        if (min !== "00") {
+          resultTime += min + "분";
+        }
+
         result.push(
           <>
             <div className={PillTodayCSS.WhiteBox}>
               <br></br>
-              <h3 className={PillTodayCSS.TimeText}>{element.split(" ")[0]}</h3>
+              <h3 className={PillTodayCSS.TimeText}>{resultTime}</h3>
+              {/* <h3 className={PillTodayCSS.TimeText}>{element.split(" ")[0]}</h3> */}
               <br></br>
             </div>
           </>
