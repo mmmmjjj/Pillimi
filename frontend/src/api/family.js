@@ -11,7 +11,11 @@ function getFamilyRequest(success, fail) {
 }
 
 function addFamily(familyRequestSeq, success, fail) {
-  api.get(`/family/add?familyRequestSeq=${familyRequestSeq}`).then(success).catch(fail);
+  api.post(`/family/add?familyRequestSeq=${familyRequestSeq}`).then(success).catch(fail);
 }
 
-export { getMyFamily, getFamilyRequest, addFamily };
+function revertFamilyRequest(familyRequestSeq, success, fail) {
+  api.delete(`/family/request?familyRequestSeq=${familyRequestSeq}`).then(success).catch(fail);
+}
+
+export { getMyFamily, getFamilyRequest, addFamily, revertFamilyRequest };
