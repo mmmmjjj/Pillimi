@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import "../familycss.css";
+import { getMyFamily, getFamilyRequest } from "api/family"
 
-function MyFamily() {
+
+function MyFamily(props) {
   const [familyTab, setfamilyTab] = useState(true);
   const onFamilyTab = () => {
     setfamilyTab(true);
@@ -11,6 +13,100 @@ function MyFamily() {
     setfamilyTab(false);
   };
 
+  useEffect(() => {
+    console.log("마운트")
+    getFamilyList();
+    getFamilyRequestList();
+  },[])
+
+  const [ familyList, setFamilyList ] = useState([]);
+
+  const getFamilyList = () => {
+    getMyFamily(( success ) => {
+      setFamilyList(success.data.data);
+      console.log(success)
+      console.log(success.data.data);
+    }, ( fail ) => {
+      console.log(fail);
+    })
+  }
+
+  const [ preFamilyList, setPreFamilyList ] = useState([]);
+
+  const getFamilyRequestList = () => {
+    getFamilyRequest(( success ) => {
+      setPreFamilyList(success.data.data);
+      console.log(success);
+    }, ( fail ) => {
+      console.log(fail);
+    })
+  }
+
+  const gotoMemberDetail = (memberSeq) => {
+    window.location.href = `/member-info/member-info-detail/${memberSeq}`
+  }
+
+  const gotoFamilyResponse = (memberInfo) => {
+    // console.log(memberInfo.requestName);
+    // console.log(memberInfo.requestPhone);
+    props.history.push({
+      pathname: `/family/reply`,
+      props:{
+        memberInfo: {
+          name: memberInfo.requestName,
+          phone: memberInfo.requestPhone,
+          reqSeq: memberInfo.familyRequestSeq
+        }
+      }
+    })
+  }
+
+  const FamilyList = () => {
+    return(
+      <div>
+        {
+          familyList.map((element, idx) => {
+            return(
+              <ListGroupItem onClick={() => gotoMemberDetail(element.memberSeq)}>
+                <Row xs="4">
+                  <Col>
+                    <img className="listimg" alt="" src={element.memberImage}/>
+                  </Col>
+                  <Col xs={{ offset:1, size:8}} className="listitemtext">
+                    <h3 className="familyh3">{element.memberName}</h3>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            )
+          })
+        }
+      </div>
+    )
+  }
+
+  const PreFamilyList = () => {
+    return(
+      <div>
+        {
+          preFamilyList.map((element, idx) => {
+            return(
+              <ListGroupItem onClick={() => gotoFamilyResponse(element)}>
+                <Row xs="4">
+                  <Col>
+                    <img className="listimg" alt="" src={element.requestImage}/>
+                  </Col>
+                  <Col xs={{ offset:1, size:8}} className="listitemtext">
+                    <h3 className="familyh3">{element.requestName}</h3>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+      
+            )
+          })
+        }
+      </div>
+    )
+  }
 
   return (
     <div style={{ backgroundColor: "#EAF0F8", padding:"0px", height:"100vh", margin:"0px"}}>
@@ -23,15 +119,10 @@ function MyFamily() {
       {
         familyTab ?
         <ListGroup style={{ backgroundColor: "#EAF0F8", width: "100%", paddingBottom:"30px" }}>
-          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/1.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">엄마</h3></Col></Row></ListGroupItem>
-          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/2.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">아빠</h3></Col></Row></ListGroupItem>
-          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/3.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">할머니</h3></Col></Row></ListGroupItem>
-          <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/4.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">할아버지</h3></Col></Row></ListGroupItem>
-
+          <FamilyList></FamilyList>
         </ListGroup>
         : <ListGroup style={{ backgroundColor: "#EAF0F8", width: "100%", paddingBottom:"30px" }}>
-            <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/5.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">누구야</h3></Col></Row></ListGroupItem>
-            <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src="/img/6.jpg"/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">가족찾음</h3></Col></Row></ListGroupItem>
+            <PreFamilyList></PreFamilyList>
           </ListGroup>
         }
     </div>
