@@ -1,6 +1,5 @@
 package com.pillimi.backend.db.repository;
 
-import com.pillimi.backend.api.response.MemberMedicineRes;
 import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.db.entity.*;
 
