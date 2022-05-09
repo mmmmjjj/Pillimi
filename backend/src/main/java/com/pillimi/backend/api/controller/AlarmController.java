@@ -1,9 +1,28 @@
 package com.pillimi.backend.api.controller;
 
+import com.pillimi.backend.api.request.FamilyRegistReq;
+import com.pillimi.backend.api.response.ProtectorAlarmRes;
+import com.pillimi.backend.api.service.AlarmService;
+import com.pillimi.backend.api.service.MemberService;
+import com.pillimi.backend.common.auth.JwtUtil;
+import com.pillimi.backend.common.exception.NotFoundException;
+import com.pillimi.backend.common.exception.handler.ErrorCode;
+import com.pillimi.backend.common.exception.handler.ErrorResponse;
+import com.pillimi.backend.common.model.BaseResponseBody;
+import com.pillimi.backend.db.entity.Member;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static com.pillimi.backend.common.model.ResponseMessage.*;
+import static com.pillimi.backend.common.model.ResponseMessage.POST_FAMILY_REQUEST;
 
 @Api(value = "알림 API", tags = "Alarm")
 @RequiredArgsConstructor
@@ -11,7 +30,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/Alarm")
 public class AlarmController {
 
+    private final MemberService memberService;
 
+    private final AlarmService alarmService;
+
+    @GetMapping("/protector")
+    @ApiOperation(value = "가족등록 요청", notes = "보호자가 가족등록을 하는 api. 보호자에게 요청 시 에러 반환")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = GET_ALARM),
+            @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
+    })
+    public ResponseEntity<BaseResponseBody> getProtectorAlarmList(){
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        List<ProtectorAlarmRes> protectorAlarmRes = alarmService.getList(member);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_ALARM, protectorAlarmRes));
+    }
 
 
 }

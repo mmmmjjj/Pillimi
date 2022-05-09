@@ -41,4 +41,7 @@ public class ResponseMessage {
     public static final String DELETE_FAMILY = "가족 삭제 성공";
     public static final String REJECT_FAMILY_REQUEST = "가족 요청 거절";
 
+    //Alarm
+    public static final String GET_ALARM = "가족 요청 목록 조회 성공";
+
 }
