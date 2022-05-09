@@ -40,14 +40,20 @@ function FamilyRegisterReply(props) {
     
   };
   const onSubmitno = (event) => {
-    event.preventDefault();
-    Swal.fire({
-      icon: "warning",
-      title: "가족 등록을 거절하였습니다.",
-      confirmButtonColor: `#C4C4C4`,
-    }).then(function () {
-      history.push(`/family/myfamily`)
-    });
+    revertFamilyRequest(familyRequestSeq, (success)=>{
+     console.log(success);
+      event.preventDefault();
+      Swal.fire({
+        icon: "warning",
+        title: "가족 등록을 거절하였습니다.",
+        confirmButtonColor: `#C4C4C4`,
+      }).then(function () {
+        history.push(`/family/myfamily`)
+      });
+    }, ( fail ) => {
+      console.log(fail);
+    })
+    
   };
   return (
     <Container style={{ padding: "50px" }}>
