@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, ListGroup, ListGroupItem, Modal } from "reactstrap";
 import "../familycss.css";
+import { getMyFamily } from '../../../api/family';
 
 function FamilyProtector() {
   const [modalbool, setmodalbool] = useState(false)
   const toggle = () => {
     setmodalbool(!modalbool)
   }
+  // const [FamilyData, setFamilyData] = useState([])
+  const getFamilyData = () => {
+    getMyFamily((success)=> {
+      console.log(success)
+    },)
+  }
+
+  useEffect(()=>{
+    getFamilyData();
+  })
 
   return (
     <div
