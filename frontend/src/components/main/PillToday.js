@@ -117,6 +117,7 @@ function PillToday() {
                     <br></br>
                     <br></br>
                     <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
+                    <br></br>
                   </>
                 );
               } else if (taken === false) {
