@@ -10,8 +10,8 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "alarm")
-public class Alarm extends BaseTimeEntity {
+@Table(name = "alarm_protege")
+public class AlarmProtege extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,17 +21,10 @@ public class Alarm extends BaseTimeEntity {
     private LocalDate alarmDate;
 
     @Column
-    private String alarmPhoto;
-
-    @Column
     private LocalTime alarmTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_seq")
-    private Member sender;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_seq")
-    private Member receiver;
+    @JoinColumn(name = "protege_seq")
+    private Member protege;
 
 }
