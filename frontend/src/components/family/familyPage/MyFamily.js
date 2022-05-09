@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import "../familycss.css";
 import { getMyFamily, getFamilyRequest } from "api/family"
-import MemberReducer from "reducers/MemberReducer";
 
 
 function MyFamily(props) {
@@ -63,42 +62,50 @@ function MyFamily(props) {
   }
 
   const FamilyList = () => {
-    let result = [];
-    familyList.map((element, idx) => {
-      result.push(
-        <ListGroupItem onClick={() => gotoMemberDetail(element.memberSeq)}>
-          <Row xs="4">
-            <Col>
-              <img className="listimg" alt="" src={element.memberImage}/>
-            </Col>
-            <Col xs={{ offset:1, size:8}} className="listitemtext">
-              <h3 className="familyh3">{element.memberName}</h3>
-            </Col>
-          </Row>
-        </ListGroupItem>
-      )
-    })
-    return result;
+    return(
+      <div>
+        {
+          familyList.map((element, idx) => {
+            return(
+              <ListGroupItem onClick={() => gotoMemberDetail(element.memberSeq)}>
+                <Row xs="4">
+                  <Col>
+                    <img className="listimg" alt="" src={element.memberImage}/>
+                  </Col>
+                  <Col xs={{ offset:1, size:8}} className="listitemtext">
+                    <h3 className="familyh3">{element.memberName}</h3>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            )
+          })
+        }
+      </div>
+    )
   }
 
   const PreFamilyList = () => {
-    let result = [];
-    preFamilyList.map((element, idx) => {
-      result.push(
-        <ListGroupItem onClick={() => gotoFamilyResponse(element)}>
-          <Row xs="4">
-            <Col>
-              <img className="listimg" alt="" src={element.requestImage}/>
-            </Col>
-            <Col xs={{ offset:1, size:8}} className="listitemtext">
-              <h3 className="familyh3">{element.requestName}</h3>
-            </Col>
-          </Row>
-        </ListGroupItem>
-
-      )
-    })
-    return result;
+    return(
+      <div>
+        {
+          preFamilyList.map((element, idx) => {
+            return(
+              <ListGroupItem onClick={() => gotoFamilyResponse(element)}>
+                <Row xs="4">
+                  <Col>
+                    <img className="listimg" alt="" src={element.requestImage}/>
+                  </Col>
+                  <Col xs={{ offset:1, size:8}} className="listitemtext">
+                    <h3 className="familyh3">{element.requestName}</h3>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+      
+            )
+          })
+        }
+      </div>
+    )
   }
 
   return (
