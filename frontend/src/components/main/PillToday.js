@@ -35,7 +35,6 @@ function PillToday() {
           getPillToday(
             firstFamilySeq,
             (response) => {
-              console.log(response.data.data);
               setPillListKey(Object.getOwnPropertyNames(response.data.data));
               setPillList(response.data.data);
             },
@@ -66,7 +65,6 @@ function PillToday() {
     getPillToday(
       memberSeq,
       (response) => {
-        console.log(response.data.data);
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -222,9 +220,9 @@ function PillToday() {
         <div className={PillTodayCSS.Header}>
           {/* 로그인한 사용자가 보호자일 때 */}
           <span className={PillTodayCSS.MemberName}>{myName}</span>
-          <span className={PillTodayCSS.Icon}>
+          {/* <span className={PillTodayCSS.Icon}>
             <i className={"now-ui-icons ui-1_bell-53"}></i>
-          </span>
+          </span> */}
           {/* 로그인한 사용자가 피보호자일 때 */}
           {/* <span className={PillTodayCSS.Icon}>
             <i className={"now-ui-icons ui-1_bell-53"}></i>
