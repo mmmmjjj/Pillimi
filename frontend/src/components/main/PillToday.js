@@ -5,26 +5,170 @@ import { Button } from "reactstrap";
 import { useSelector } from "react-redux";
 import PillTodayCSS from "./css/PillToday.module.css";
 import { getMyFamily } from "../../api/family.js";
+import { getPillToday, getMyPillToday } from "../../api/pill.js";
 
 function PillToday() {
   const [familyList, setFamilyList] = useState([]);
+  const [pillList, setPillList] = useState([]);
+  const [pillListKey, setPillListKey] = useState([]);
 
   const myName = useSelector((state) => state.memberInfo.memberInfo.nickName);
+  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+
+  let firstFamilySeq = "";
 
   useEffect(() => {
-    getFamilyList();
+    if (isProtector === true) {
+      getFamilyList();
+    } else {
+      getMyPillTodayList();
+    }
   }, []);
 
   const getFamilyList = () => {
     getMyFamily(
       (response) => {
         setFamilyList(response.data.data);
+        if (familyList !== "") {
+          firstFamilySeq = response.data.data[0].memberSeq;
+          getPillToday(
+            firstFamilySeq,
+            (response) => {
+              console.log(response.data.data);
+              setPillListKey(Object.getOwnPropertyNames(response.data.data));
+              setPillList(response.data.data);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
       },
       (error) => {
         console.log(error);
       }
     );
   };
+
+  const getMyPillTodayList = () => {
+    getMyPillToday(
+      (response) => {
+        setPillList(response.data.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  const ShowPillList = () => {
+    let result = [];
+    let itemLength = 0;
+    let medicineName = "";
+    let imageURL = "";
+    let memberMedicineName = "";
+    let taken = "";
+
+    pillListKey.forEach((element, index) => {
+      if (pillListKey.length !== 0) {
+        result.push(
+          <>
+            <div className={PillTodayCSS.WhiteBox}>
+              <br></br>
+              <h3 className={PillTodayCSS.TimeText}>{element.split(" ")[0]}</h3>
+            </div>
+          </>
+        );
+        if (pillList.length !== 0) {
+          itemLength = pillList[element].length;
+
+          for (var i = 0; i < itemLength; i++) {
+            medicineName = pillList[element][i].medicineName;
+            imageURL = pillList[element][i].imageURL;
+            memberMedicineName = pillList[element][i].memberMedicineName;
+            result.push(
+              <>
+                <div className={PillTodayCSS.WhiteBox}>
+                  <img className={PillTodayCSS.Img} src={imageURL} alt="pillImg"></img>
+                  <span className={PillTodayCSS.TimeText}>{medicineName}</span>
+                  <div>{memberMedicineName}</div>
+                </div>
+              </>
+            );
+
+            if (i === itemLength - 1) {
+              taken = pillList[element][0].taken;
+              if (taken === true) {
+                result.push(
+                  <>
+                    <br></br>
+                    <br></br>
+                    <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
+                  </>
+                );
+              } else if (taken === false) {
+                result.push(
+                  <>
+                    <br></br>
+                    <br></br>
+                    <Button className={PillTodayCSS.PictureBtn}>사진 찍기</Button>
+                  </>
+                );
+              }
+            }
+          }
+        }
+      }
+
+      result.push(
+        <>
+          <br></br>
+          <div className={PillTodayCSS.Background}>&nbsp;</div>
+        </>
+      );
+    });
+
+    return result;
+  };
+
+  // const ShowPillList = () => {
+  //   let result = [];
+  //   let itemLength = 0;
+
+  //   pillListKey.forEach((element, index) => {
+  //     if (pillListKey.length !== 0) {
+  //       if (pillList.length !== 0) {
+  //         itemLength = pillList[element].length;
+
+  //         let medicineName = pillList[element][0].medicineName;
+  //         let imageURL = pillList[element][0].imageURL;
+  //         let memberMedicineName = pillList[element][0].memberMedicineName;
+  //         result.push(
+  //           <>
+  //             <div>
+  //               <div className={PillTodayCSS.WhiteBox}>
+  //                 <br></br>
+  //                 <h3 className={PillTodayCSS.TimeText}>{element.split(" ")[0]}</h3>
+  //                 <img className={PillTodayCSS.Img} src={imageURL} alt="pillImg"></img>
+  //                 <span className={PillTodayCSS.TimeText}>{medicineName}</span>
+  //                 <div>{memberMedicineName}</div>
+  //                 {/* 로그인한 사용자가 피보호자일 때 */}
+  //                 <br></br>
+  //                 <br></br>
+  //                 <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
+  //                 {/*  */}
+  //                 <br></br>
+  //               </div>
+  //               <br></br>
+  //             </div>
+  //           </>
+  //         );
+  //       }
+  //     }
+  //   });
+
+  //   return result;
+  // };
 
   const FamilyName = () => {
     let result = [];
@@ -68,31 +212,34 @@ function PillToday() {
         <br></br>
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
         <br></br>
+        <ShowPillList></ShowPillList>
+
+        {/* <div className={PillTodayCSS.WhiteBox}>
+          <br></br>
+          <h3 className={PillTodayCSS.TimeText}>시간</h3>
+          <span className={PillTodayCSS.Img}>이미지</span>
+          <span className={PillTodayCSS.TimeText}>알약이름</span> */}
+        {/* 로그인한 사용자가 피보호자일 때 */}
+        {/* <br></br>
+          <br></br>
+          <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button> */}
+        {/*  */}
+        {/* <br></br>
+        </div> */}
+
+        {/* <br></br>
         <div className={PillTodayCSS.WhiteBox}>
           <br></br>
           <h3 className={PillTodayCSS.TimeText}>시간</h3>
           <span className={PillTodayCSS.Img}>이미지</span>
-          <span className={PillTodayCSS.TimeText}>알약이름</span>
-          {/* 로그인한 사용자가 피보호자일 때 */}
+          <span className={PillTodayCSS.TimeText}>알약이름</span> */}
+        {/* 로그인한 사용자가 피보호자일 때 */}
+        {/* <br></br>
           <br></br>
-          <br></br>
-          <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
-          {/*  */}
-          <br></br>
-        </div>
-        <br></br>
-        <div className={PillTodayCSS.WhiteBox}>
-          <br></br>
-          <h3 className={PillTodayCSS.TimeText}>시간</h3>
-          <span className={PillTodayCSS.Img}>이미지</span>
-          <span className={PillTodayCSS.TimeText}>알약이름</span>
-          {/* 로그인한 사용자가 피보호자일 때 */}
-          <br></br>
-          <br></br>
-          <Button className={PillTodayCSS.PictureBtn}>사진 찍기</Button>
-          {/*  */}
-          <br></br>
-        </div>
+          <Button className={PillTodayCSS.PictureBtn}>사진 찍기</Button> */}
+        {/*  */}
+        {/* <br></br>
+        </div> */}
       </div>
     </>
   );
