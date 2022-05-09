@@ -103,8 +103,6 @@ function MemberInfoDetail({match}) {
   }
 
   function LogOut(){
-    const onSubmit = (event) => {
-      event.preventDefault();
       Swal.fire({
         icon: "success",
         title: "로그아웃 되었습니다.",
@@ -115,7 +113,6 @@ function MemberInfoDetail({match}) {
         localStorage.removeItem('ACCESS_TOKEN');
         window.location.href="/"
       });
-    };
     // dispatch(logoutAction());
     // localStorage.removeItem('ACCESS_TOKEN');
     // window.location.href="/"

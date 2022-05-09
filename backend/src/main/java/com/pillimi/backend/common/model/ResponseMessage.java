@@ -43,6 +43,6 @@ public class ResponseMessage {
     // Alarm
     public static final String GET_TAKE_ALARM = "복용 알림 조회 성공";
     public static final String POST_TAKE = "복용 인증 성공";
-
+    public static final String GET_PROTECTOR_ALARM = "보호자 알람 목록 조회 성공";
 
 }
