@@ -43,11 +43,24 @@ function MyFamily() {
     })
   }
 
+  const gotoMemberDetail = (memberSeq) => {
+    window.location.href = `/member-info/member-info-detail/${memberSeq}`;
+  }
+
   const FamilyList = () => {
     let result = [];
     familyList.map((family, idx) => {
       result.push(
-        <ListGroupItem><Row xs="4"><Col><img className="listimg" alt="" src={family.memberImage}/></Col><Col xs={{ offset:1, size:8}} className="listitemtext"><h3 className="familyh3">{family.memberName}</h3></Col></Row></ListGroupItem>
+        <ListGroupItem onClick={() => gotoMemberDetail(family.memberSeq)}>
+          <Row xs="4">
+            <Col>
+              <img className="listimg" alt="" src={family.memberImage}/>
+            </Col>
+            <Col xs={{ offset:1, size:8}} className="listitemtext">
+              <h3 className="familyh3">{family.memberName}</h3>
+            </Col>
+          </Row>
+        </ListGroupItem>
       )
     })
     return result;
