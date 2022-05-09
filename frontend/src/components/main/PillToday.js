@@ -62,6 +62,20 @@ function PillToday() {
     );
   };
 
+  const otherFamily = (memberSeq) => {
+    getPillToday(
+      memberSeq,
+      (response) => {
+        console.log(response.data.data);
+        setPillListKey(Object.getOwnPropertyNames(response.data.data));
+        setPillList(response.data.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   const ShowPillList = () => {
     let result = [];
     let itemLength = 0;
@@ -102,9 +116,6 @@ function PillToday() {
                     <span>({memberMedicineName})</span>
                     <br></br>
                   </div>
-                  {/* <img className={PillTodayCSS.PillImg} src={imageURL} alt="pillImg"></img>
-                  <span>{medicineName}</span>
-                  <div>{memberMedicineName}</div> */}
                 </div>
               </>
             );
@@ -188,18 +199,20 @@ function PillToday() {
 
   const FamilyName = () => {
     let result = [];
-    familyList.forEach((element) => {
-      result.push(
-        <>
-          <div>
-            <div>
-              <img src={element.memberImage} alt="memberImg" className={PillTodayCSS.img}></img>
+    if (familyList !== "") {
+      familyList.forEach((element) => {
+        result.push(
+          <>
+            <div style={{ cursor: "pointer" }} onClick={() => otherFamily(element.memberSeq)}>
+              <div>
+                <img src={element.memberImage} alt="memberImg" className={PillTodayCSS.img}></img>
+              </div>
+              <div>{element.memberName}</div>
             </div>
-            <div>{element.memberName}</div>
-          </div>
-        </>
-      );
-    });
+          </>
+        );
+      });
+    }
     return result;
   };
 
