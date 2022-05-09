@@ -1,11 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, ListGroup, ListGroupItem, Modal } from "reactstrap";
 import "../familycss.css";
+import { getMyFamily } from "api/family"
+import { useSelector } from 'react-redux';
 
 function FamilyProtector() {
   const [modalbool, setmodalbool] = useState(false)
   const toggle = () => {
     setmodalbool(!modalbool)
+  }
+  
+  let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
+  
+  useEffect(() => {
+    console.log("마운트")
+    getFamilyList();
+  },[])
+
+  
+  const [ familyList, setFamilyList ] = useState([]);
+
+  const getFamilyList = () => {
+    getMyFamily(( success ) => {
+      setFamilyList(success.data.data);
+      console.log(success)
+      console.log(success.data.data);
+    }, ( fail ) => {
+      console.log(fail);
+    })
+  }
+
+  const Family = () => {
+    let result = []
+    familyList.forEach( element => {
+      result.push(
+        <ListGroupItem onClick={toggle} key={element.memberSeq}>
+          <Row xs="4">
+            <Col>
+              <img className="listimg" alt="" src={element.memberImage} />
+            </Col>
+            <Col xs={{ offset: 1, size: 8 }} className="listitemtext">
+              <h3 className="familyh3">{element.memberName}</h3>
+            </Col>
+          </Row>
+        </ListGroupItem>
+      )
+    })
+    return result;
   }
 
   return (
@@ -25,7 +66,8 @@ function FamilyProtector() {
           paddingTop: "50px",
         }}
       >
-        <ListGroupItem onClick={toggle}>
+        <Family></Family>
+        {/* <ListGroupItem onClick={toggle}>
           <Row xs="4">
             <Col>
               <img className="listimg" alt="" src="/img/1.jpg" />
@@ -64,7 +106,7 @@ function FamilyProtector() {
               <h3 className="familyh3">할아버지</h3>
             </Col>
           </Row>
-        </ListGroupItem>
+        </ListGroupItem> */}
       </ListGroup>
       <Modal isOpen={modalbool} toggle={toggle} centered>
         <Row style={{ padding:"20px",borderBottom:"1px solid black"}}><h3 className="familyh3">회원 정보</h3></Row>
