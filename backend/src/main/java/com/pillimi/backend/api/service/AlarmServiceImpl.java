@@ -1,5 +1,6 @@
 package com.pillimi.backend.api.service;
 
+import com.pillimi.backend.api.response.ProtectorAlarmInfoRes;
 import com.pillimi.backend.api.response.ProtectorAlarmRes;
 import com.pillimi.backend.api.response.SearchRes;
 import com.pillimi.backend.db.entity.AlarmProtector;
@@ -39,5 +40,11 @@ public class AlarmServiceImpl implements AlarmService {
             protectorAlarmResList.add(protectorAlarmRes);
         }
         return protectorAlarmResList;
+    }
+
+    @Override
+    public ProtectorAlarmInfoRes getAlarmInfo(Long alarmSeq) {
+
+        return null;
     }
 }

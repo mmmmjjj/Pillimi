@@ -43,5 +43,6 @@ public class ResponseMessage {
 
     //Alarm
     public static final String GET_ALARM = "보호자 알람 목록 조회 성공";
+    public static final String GET_ALARM_INFO = "보호자 알람 상세 조회 성공";
 
 }
