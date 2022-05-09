@@ -1,7 +1,8 @@
 import React from "react";
 import { Badge, Button, Modal, FormGroup } from "reactstrap";
 // import moment from "moment";
-
+import Swal from "sweetalert2";
+import { useHistory  } from "react-router-dom";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import PillDetailCSS from "../css/PillDetail.module.css";
 import Header from "components/Headers/Header";
@@ -10,7 +11,30 @@ function PillTakeDetail() {
   React.useEffect(() => {}, []);
 
   const [removePillModal, setRemovePillModal] = React.useState(false);
-
+  const history = useHistory();
+  const onSubmit = (event) => {
+    event.preventDefault();
+    Swal.fire({
+      title: "에이서캡슐(아세클로페낙)을 정말 삭제하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonColor: `#0369a1`,
+      cancelButtonColor: '#d33',
+      confirmButtonText: '삭제',
+      cancelButtonText: '취소'
+    }).then((result) => {
+      if(result.isConfirmed){
+        Swal.fire(
+          '삭제 완료!',
+          '삭제가 완료 되었습니다.',
+          'success'
+        ).then((result) => {
+          //삭제할 함수 작성
+          history.push(`/member-pill-page/member-pill-list/1`)
+        });
+      }
+      
+    });
+  };
   // const [pillRegister, setPillRegister] = useState({
   //   nick: "",
   //   startDate: "",
@@ -106,7 +130,10 @@ function PillTakeDetail() {
       <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={gotoPillModify}>
         수정
       </Button>
-      <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={() => setRemovePillModal(true)}>
+      {/* <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={() => setRemovePillModal(true)}>
+        삭제
+      </Button> */}
+      <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={onSubmit}>
         삭제
       </Button>
       <br></br>
@@ -116,7 +143,7 @@ function PillTakeDetail() {
       </h3>
       <br></br>
 
-      <Modal
+      {/* <Modal
         centered
         isOpen={removePillModal}
         className="modal-sm"
@@ -145,7 +172,7 @@ function PillTakeDetail() {
           </Button>
           <br></br>
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 }
