@@ -1,16 +1,16 @@
 import React from "react";
-import { Badge, Button, Modal, FormGroup } from "reactstrap";
+import { Badge, Button, FormGroup } from "reactstrap";
 // import moment from "moment";
 import Swal from "sweetalert2";
 import { useHistory  } from "react-router-dom";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
-import PillDetailCSS from "../css/PillDetail.module.css";
+//import PillDetailCSS from "../css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 
 function PillTakeDetail() {
   React.useEffect(() => {}, []);
 
-  const [removePillModal, setRemovePillModal] = React.useState(false);
+  //const [removePillModal, setRemovePillModal] = React.useState(false);
   const history = useHistory();
   const onSubmit = (event) => {
     event.preventDefault();
