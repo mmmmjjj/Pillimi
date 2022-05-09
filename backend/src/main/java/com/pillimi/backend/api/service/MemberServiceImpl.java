@@ -49,6 +49,7 @@ public class MemberServiceImpl implements MemberService {
         member.setMemberUid(Long.toString(kakaoProfile.getId()));
         member.setMemberNickname(kakaoProfile.getKakao_account().getProfile().getNickname());
         member.setMemberImage(kakaoProfile.getKakao_account().getProfile().getProfile_image_url());
+        member.setMemberIsfirst(true);
 
         return createMember(member);
     }

@@ -26,5 +26,5 @@ public interface MemberMedicineService {
 
     CheckMedicineRes checkMemberMedicine(Long memberSeq, Long medicineSeq);
 
-    TreeMap<LocalTime, List<TodayMedicineRes>> findTodayMedicineList(Member member);
+    TreeMap<String, List<TodayMedicineRes>> findTodayMedicineList(Member member);
 }
