@@ -10,4 +10,8 @@ function getFamilyRequest(success, fail) {
   api.get(`/family/request`).then(success).catch(fail);
 }
 
-export { getMyFamily, getFamilyRequest };
+function addFamily(familyRequestSeq, success, fail) {
+  api.get(`/family/add?familyRequestSeq=${familyRequestSeq}`).then(success).catch(fail);
+}
+
+export { getMyFamily, getFamilyRequest, addFamily };
