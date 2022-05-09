@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface AlarmProtectorRepository extends JpaRepository<AlarmProtector, Long>, AlarmProtectorRepositoryCustom {
 
+    List<AlarmProtector> findByProtector(Member member);
 }

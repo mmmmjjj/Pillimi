@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface AlarmProtectorRepositoryCustom {
 
-    List<AlarmProtector> findByProtectorSeq(Member member);
-
 }

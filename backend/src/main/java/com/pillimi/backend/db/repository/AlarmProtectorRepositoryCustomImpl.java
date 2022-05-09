@@ -15,8 +15,4 @@ public class AlarmProtectorRepositoryCustomImpl implements AlarmProtectorReposit
 
     QAlarmProtector qAlarmProtector = QAlarmProtector.alarmProtector;
 
-    @Override
-    public List<AlarmProtector> findByProtectorSeq(Member member) {
-        return jpaQueryFactory.select(qAlarmProtector).from(qAlarmProtector).where(qAlarmProtector.protector.memberSeq.eq(member.getMemberSeq())).fetch();
-    }
 }

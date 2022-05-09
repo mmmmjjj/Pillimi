@@ -35,7 +35,7 @@ public class AlarmController {
     private final AlarmService alarmService;
 
     @GetMapping("/protector")
-    @ApiOperation(value = "가족등록 요청", notes = "보호자가 가족등록을 하는 api. 보호자에게 요청 시 에러 반환")
+    @ApiOperation(value = "보호자 알람 목록 확인", notes = "보호자가 받은 피보호자의 약물 섭취 목록을 반환")
     @ApiResponses({
             @ApiResponse(code = 200, message = GET_ALARM),
             @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),

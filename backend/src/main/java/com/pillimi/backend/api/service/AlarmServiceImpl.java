@@ -23,7 +23,8 @@ public class AlarmServiceImpl implements AlarmService {
 
     @Override
     public List<ProtectorAlarmRes> getList(Member member) {
-        List<AlarmProtector> alarmProtectors = alarmProtectorRepository.findByProtectorSeq(member);
+        List<AlarmProtector> alarmProtectors = alarmProtectorRepository.findByProtector(member);
+
         List<ProtectorAlarmRes> protectorAlarmResList = new LinkedList<>();
         for(AlarmProtector alarmProtector : alarmProtectors){
             ProtectorAlarmRes protectorAlarmRes = ProtectorAlarmRes.builder().alarmProtectorSeq(alarmProtector.getAlarmSeq())
