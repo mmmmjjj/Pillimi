@@ -5,7 +5,7 @@ import { getMyFamily, getFamilyRequest } from "api/family"
 import MemberReducer from "reducers/MemberReducer";
 
 
-function MyFamily() {
+function MyFamily(props) {
   const [familyTab, setfamilyTab] = useState(true);
   const onFamilyTab = () => {
     setfamilyTab(true);
@@ -47,6 +47,20 @@ function MyFamily() {
     window.location.href = `/member-info/member-info-detail/${memberSeq}`
   }
 
+  const gotoFamilyResponse = (memberInfo) => {
+    // console.log(memberInfo.requestName);
+    // console.log(memberInfo.requestPhone);
+    props.history.push({
+      pathname: `/family/reply`,
+      props:{
+        memberInfo: {
+          name: memberInfo.requestName,
+          phone: memberInfo.requestPhone,
+          reqSeq: memberInfo.familyRequestSeq
+        }
+      }
+    })
+  }
 
   const FamilyList = () => {
     let result = [];
@@ -71,13 +85,13 @@ function MyFamily() {
     let result = [];
     preFamilyList.map((element, idx) => {
       result.push(
-        <ListGroupItem>
+        <ListGroupItem onClick={() => gotoFamilyResponse(element)}>
           <Row xs="4">
             <Col>
-              <img className="listimg" alt="" src={element.memberImage}/>
+              <img className="listimg" alt="" src={element.requestImage}/>
             </Col>
             <Col xs={{ offset:1, size:8}} className="listitemtext">
-              <h3 className="familyh3">{element.memberName}</h3>
+              <h3 className="familyh3">{element.requestName}</h3>
             </Col>
           </Row>
         </ListGroupItem>
