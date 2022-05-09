@@ -1,6 +1,5 @@
 package com.pillimi.backend.db.repository;
 
-import com.pillimi.backend.api.response.MemberMedicineRes;
 import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.db.entity.*;
 import com.querydsl.core.types.Projections;
@@ -8,7 +7,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 

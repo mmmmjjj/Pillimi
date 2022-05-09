@@ -9,11 +9,13 @@ function FamilyRegisterReply(props) {
   useEffect(() => {
     props.getheader("가족 요청");
     props.getnavbar(false);
+    console.log(props.history.location)
     setpage();
   });
   const setpage = () => {
-    setname("(이름)");
-    setnumber("010-1234-5678");
+    console.log(props)
+    setname(`(${props.history.location.props.memberInfo.name})`);
+    setnumber(props.history.location.props.memberInfo.phone);
   };
   const history = useHistory();
   const onSubmityes = (event) => {
