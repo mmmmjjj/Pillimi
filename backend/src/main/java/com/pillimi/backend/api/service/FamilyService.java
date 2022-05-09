@@ -5,7 +5,6 @@ import com.pillimi.backend.api.response.FamilyRequestRes;
 import com.pillimi.backend.api.response.FamilyRes;
 import com.pillimi.backend.db.entity.Member;
 import com.pillimi.backend.db.entity.Family;
-import com.pillimi.backend.db.entity.FamilyRequest;
 
 import java.util.Optional;
 

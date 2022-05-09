@@ -9,6 +9,8 @@ import { getMemberInfoDetail } from '../../../api/member';
 import { useSelector } from 'react-redux';
 import { logoutAction } from "actions/memberAction";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import { useHistory  } from "react-router-dom";
 // core components
 
 
@@ -16,7 +18,7 @@ import { useDispatch } from "react-redux";
 function MemberInfoDetail({match}) {
   const memberSeq = match.params.memberSeq;
   const dispatch = useDispatch();
-
+  const history = useHistory();
   let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
 
   const [profile, setProfile] = useState({
@@ -101,9 +103,22 @@ function MemberInfoDetail({match}) {
   }
 
   function LogOut(){
-    dispatch(logoutAction());
-    localStorage.removeItem('ACCESS_TOKEN');
-    window.location.href="/"
+    const onSubmit = (event) => {
+      event.preventDefault();
+      Swal.fire({
+        icon: "success",
+        title: "로그아웃 되었습니다.",
+        confirmButtonColor: `#0369a1`,
+      }).then(function () {
+        //history.push(`/`)
+        dispatch(logoutAction());
+        localStorage.removeItem('ACCESS_TOKEN');
+        window.location.href="/"
+      });
+    };
+    // dispatch(logoutAction());
+    // localStorage.removeItem('ACCESS_TOKEN');
+    // window.location.href="/"
   }
 
   return (
