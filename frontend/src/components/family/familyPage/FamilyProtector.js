@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, ListGroup, ListGroupItem, Modal } from "reactstrap";
 import "../familycss.css";
 import { getMyFamily } from "api/family"
-import { useSelector } from 'react-redux';
 
 function FamilyProtector() {
   const [modalbool, setmodalbool] = useState(false)
   const toggle = () => {
     setmodalbool(!modalbool)
   }
-  
-  let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
   
   useEffect(() => {
     console.log("마운트")
@@ -32,20 +29,26 @@ function FamilyProtector() {
 
   const Family = () => {
     let result = []
-    familyList.forEach( element => {
+    if(familyList.length===0){
       result.push(
-        <ListGroupItem onClick={toggle} key={element.memberSeq}>
-          <Row xs="4">
-            <Col>
-              <img className="listimg" alt="" src={element.memberImage} />
-            </Col>
-            <Col xs={{ offset: 1, size: 8 }} className="listitemtext">
-              <h3 className="familyh3">{element.memberName}</h3>
-            </Col>
-          </Row>
-        </ListGroupItem>
+        <div>등록된 가족이 없습니다</div>
       )
-    })
+    }else{
+      familyList.forEach( element => {
+        result.push(
+          <ListGroupItem onClick={toggle} key={element.memberSeq}>
+            <Row xs="4">
+              <Col>
+                <img className="listimg" alt="" src={element.memberImage} />
+              </Col>
+              <Col xs={{ offset: 1, size: 8 }} className="listitemtext">
+                <h3 className="familyh3">{element.memberName}</h3>
+              </Col>
+            </Row>
+          </ListGroupItem>
+        )
+      })
+    }
     return result;
   }
 
