@@ -65,7 +65,7 @@ public class AlarmController {
 
 
     @GetMapping("/protector")
-    @ApiOperation(value = "보호자 알람 목록 확인", notes = "보호자가 받은 피보호자의 약물 섭취 목록을 반환")
+    @ApiOperation(value = "보호자 알람 목록 확인", notes = "보호자가 받은 피보호자의 약물 섭취 목록을 반환하는 API합니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = GET_PROTECTOR_ALARM),
             @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),
@@ -81,7 +81,7 @@ public class AlarmController {
     }
 
     @GetMapping("/protector/{alarmSeq}")
-    @ApiOperation(value = "보호자 알람 상세 확인", notes = "보호자가 받은 피보호자의 약물 섭취 알람의 상세정보를 반환")
+    @ApiOperation(value = "보호자 알람 상세 확인", notes = "보호자가 받은 피보호자의 약물 섭취 알람의 상세정보를 반환하는 API입니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = GET_PROTECTOR_ALARM_INFO),
             @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),
@@ -95,6 +95,24 @@ public class AlarmController {
 
         ProtectorAlarmInfoRes protectorAlarmInfoRes = alarmService.getAlarmInfo(alarmSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_PROTECTOR_ALARM_INFO, protectorAlarmInfoRes));
+    }
+
+    @DeleteMapping("/protector/{alarmSeq}")
+    @ApiOperation(value = "보호자 알람 삭제", notes = "보호자가 확인한 피보호자의 약물 섭취 알람을 삭제하는 API입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = GET_PROTECTOR_ALARM_INFO),
+            @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
+    })
+    public ResponseEntity<BaseResponseBody> deleteProtectorAlarmInfo(@PathVariable Long alarmSeq){
+
+        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+
+        alarmService.deleteAlarmInfo(alarmSeq);
+
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, DELETE_PROTECTOR_ALARM_INFO));
     }
 
 
