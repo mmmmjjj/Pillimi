@@ -90,7 +90,6 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     /*
-
     보호자 알람 상세정보 조회
      */
     @Override
@@ -114,7 +113,7 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     /*
-        보호자 알람 상세정보 삭제
+    보호자 알람 상세정보 삭제
     */
     @Override
     public void deleteAlarmInfo(Long alarmSeq) {

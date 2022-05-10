@@ -30,7 +30,7 @@ public class MemberMedicineCreateReq {
     @ApiModelProperty(name = "복용 요일", example = "[1,3,4]")
     private List<Integer> intakeDay;
 
-    @ApiModelProperty(name = "복약 시간", example = "[12:00, 14:00]")
+    @ApiModelProperty(name = "복약 시간", example = "09:00")
     private List<LocalTime> intakeTime;
 
     @ApiModelProperty(name = "복약 갯수", example = "2")
