@@ -34,6 +34,13 @@ function getMemberMedicineInfo(memberMedicineSeq, success, fail) {
   apiInstance().get(`/member/medicine/${memberMedicineSeq}`).then(success).catch(fail);
 }
 
+function deleteMemberMedicine(memberMedicineSeq, protegeSeq, success, fail) {
+  apiInstance()
+    .delete(`/member/medicine?memberMedicineSeq=${memberMedicineSeq}&protegeSeq=${protegeSeq}`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   getKakaoToken,
   getKakaoLogin,
@@ -42,4 +49,5 @@ export {
   modifyMemberInfo,
   getMemberMedicineList,
   getMemberMedicineInfo,
+  deleteMemberMedicine,
 };
