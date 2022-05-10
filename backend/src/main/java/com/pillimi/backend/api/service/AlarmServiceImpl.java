@@ -143,7 +143,7 @@ public class AlarmServiceImpl implements AlarmService {
                 .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
                 .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
                 .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
-                .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+                .alarmTime(alarmProtector.getCreatedTime().toLocalTime())
                 .photoURL(alarmProtector.getAlarmPhoto())
                 .medicineList(alarmMedicineResList)
                 .build();

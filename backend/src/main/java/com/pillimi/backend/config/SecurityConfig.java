@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**",
                         "/v2/api-docs",
                         "/api/v1/member/kakao/**",
-                        "/api/v1/alarm/protege/**"
+                        "/api/v1/alarm/protege/**",
+                        "/api/v1/alarm/protector/{alarmSeq}"
                 );
     }
 

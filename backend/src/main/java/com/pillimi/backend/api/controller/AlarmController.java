@@ -91,8 +91,6 @@ public class AlarmController {
     })
     public ResponseEntity<BaseResponseBody> getProtectorAlarmInfo(@PathVariable Long alarmSeq){
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-
         ProtectorAlarmInfoRes protectorAlarmInfoRes = alarmService.getAlarmInfo(alarmSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_PROTECTOR_ALARM_INFO, protectorAlarmInfoRes));
     }
