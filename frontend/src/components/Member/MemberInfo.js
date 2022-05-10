@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 // reactstrap components
 import "../../assets/css/now-ui-kit.css";
@@ -16,10 +16,19 @@ function MemberInfo(props) {
   // var basicurl = props.match.path;
   let nickName = useSelector((state) => state.memberInfo.memberInfo.nickName);
   console.log(nickName)
+  const [header, setheader] = useState(nickName);
+  const getheader = (str) => {
+    console.log(str);
+    setheader(str);
+    console.log(header)
+  };
+  const getnavbar = (bool) => {
+    setnavbar(bool);
+  };
   return (
     <>
       <BrowserRouter>
-        <Header header={nickName+`님의 정보`}></Header>
+        <Header header={header+`님의 정보`}></Header>
         <Switch>
           <Switch>
             <Route exact
@@ -31,7 +40,9 @@ function MemberInfo(props) {
             <Route exact
               path={`${props.match.path}/member-info-detail/:memberSeq`}
               render={(props) => (
-                <MemberInfoDetail {...props} />
+                <MemberInfoDetail 
+                  getheader={getheader}
+                  {...props} />
               )}
             />
             <Route exact
