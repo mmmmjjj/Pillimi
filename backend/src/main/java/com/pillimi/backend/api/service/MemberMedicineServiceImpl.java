@@ -156,7 +156,8 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
             MemberMedicineRes memberMedicineRes = MemberMedicineRes.builder()
                     .memberMedicineSeq(memberMedicine.getMemberMedicineSeq())
-                    .imageURL("")
+                    .medicineName(memberMedicine.getMedicine().getMedicineName())
+                    .imageURL(memberMedicine.getMedicine().getMedicineImage())
                     .medicineSeq(memberMedicine.getMedicine().getMedicineSeq())
                     .memberMedicineName(memberMedicine.getMemberMedicineName())
                     .startDay(memberMedicine.getMemberMedicineStart())
@@ -186,10 +187,11 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         }
         List<Integer> days = new LinkedList<>(dayset);
 
-        MemberMedicineRes memberMedicineRes = MemberMedicineRes.builder()
+        return MemberMedicineRes.builder()
                 .memberMedicineSeq(memberMedicine.getMemberMedicineSeq())
-                .imageURL("www.jcgroup.hk/wp-content/uploads/2019/08/test-img-300x194_2.png")
+                .imageURL(memberMedicine.getMedicine().getMedicineImage())
                 .medicineSeq(memberMedicine.getMedicine().getMedicineSeq())
+                .medicineName(memberMedicine.getMedicine().getMedicineName())
                 .memberMedicineName(memberMedicine.getMemberMedicineName())
                 .startDay(memberMedicine.getMemberMedicineStart())
                 .endDay(memberMedicine.getMemberMedicineEnd())
@@ -199,8 +201,6 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                 .remarkContent(memberMedicine.getMemberMedicineRemark())
                 .isNow(memberMedicine.isMemberMedicineNow())
                 .build();
-
-        return memberMedicineRes;
     }
 
     public CheckMedicineRes checkMemberMedicine(Long memberSeq, Long medicineSeq) {
