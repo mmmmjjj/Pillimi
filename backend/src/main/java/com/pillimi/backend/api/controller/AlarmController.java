@@ -73,10 +73,11 @@ public class AlarmController {
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
     })
-    public ResponseEntity<BaseResponseBody> getProtectorAlarmList(){
+    public ResponseEntity<BaseResponseBody> getProtectorAlarmList(@RequestParam Long protegeSeq){
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        List<ProtectorAlarmRes> protectorAlarmRes = alarmService.getAlarmProtectorList(member);
+        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        List<ProtectorAlarmRes> protectorAlarmRes = alarmService.getAlarmProtectorList(protector, protege);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_PROTECTOR_ALARM, protectorAlarmRes));
     }
 

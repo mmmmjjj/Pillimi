@@ -68,25 +68,25 @@ public class AlarmServiceImpl implements AlarmService {
     보호자 알림 목록 조회
      */
     @Override
-    public List<ProtectorAlarmRes> getAlarmProtectorList(Member member) {
+    public List<ProtectorAlarmRes> getAlarmProtectorList(Member protector, Member protege) {
 
-        List<AlarmProtector> alarmProtectors = alarmProtectorRepository.findByProtector(member);
+//        List<ProtectorAlarmRes> alarmProtectors = alarmProtectorRepository.findByProtectorAndProtege(protector, protege);
+//
+//        List<ProtectorAlarmRes> protectorAlarmResList = new LinkedList<>();
+//        for (AlarmProtector alarmProtector : alarmProtectors) {
+//            ProtectorAlarmRes protectorAlarmRes = ProtectorAlarmRes.builder().alarmProtectorSeq(alarmProtector.getAlarmSeq())
+//                    .protectorSeq(alarmProtector.getProtector().getMemberSeq())
+//                    .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
+//                    .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
+//                    .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
+//                    .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+//                    .photoURL(alarmProtector.getAlarmPhoto())
+//                    .build();
+//
+//            protectorAlarmResList.add(protectorAlarmRes);
+//        }
 
-        List<ProtectorAlarmRes> protectorAlarmResList = new LinkedList<>();
-        for (AlarmProtector alarmProtector : alarmProtectors) {
-            ProtectorAlarmRes protectorAlarmRes = ProtectorAlarmRes.builder().alarmProtectorSeq(alarmProtector.getAlarmSeq())
-                    .protectorSeq(alarmProtector.getProtector().getMemberSeq())
-                    .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
-                    .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
-                    .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
-                    .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
-                    .photoURL(alarmProtector.getAlarmPhoto())
-                    .build();
-
-            protectorAlarmResList.add(protectorAlarmRes);
-        }
-
-        return protectorAlarmResList;
+        return alarmProtectorRepository.findByProtectorAndProtege(protector, protege);
     }
 
     /*
