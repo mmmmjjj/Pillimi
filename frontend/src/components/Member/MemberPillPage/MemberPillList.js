@@ -7,15 +7,15 @@ import { getMemberMedicineList } from '../../../api/member'
 
 // core components
 
-function MemberPillList({match}) {
+function MemberPillList(props) {
   
-  const memberSeq = match.params.memberSeq;
+  const memberSeq = props.match.params.memberSeq;
 
   const [pills, setPills] = useState([]);
 
   useEffect(() => {
     console.log("마운트")
-    console.log(match.params.memberSeq);
+    // console.log(match.params.memberSeq);
     getMediList();
   },[])
 
@@ -29,8 +29,13 @@ function MemberPillList({match}) {
       })
   }
 
-  const gotoMedicineDetail = (memMediSeq) => {
-    window.location.href = "/pill-take/detail/"+memMediSeq;
+  const gotoMedicineDetail = (element) => {
+    props.history.push({
+      pathname: `/pill-take/detail/${element.memberMedicineSeq}`,
+      props: {
+        mediName: element.medicineName
+      }
+    })
   }
 
   const PillList =  (props) => {
@@ -38,7 +43,7 @@ function MemberPillList({match}) {
         console.log(pills)
     pills.forEach(element =>{
       if(element.now==props.isNow){
-        result.push(<div className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `} onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}> 
+        result.push(<div className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `} onClick={() => gotoMedicineDetail(element)}> 
           <div className={`${style.imgsize2} ml-2`}>
             <img src={element.imageURL} className={`${style.size}`}></img>
           </div>
