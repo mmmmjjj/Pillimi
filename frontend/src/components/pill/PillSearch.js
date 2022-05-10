@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React, { useState } from "react";
 import { Input, Button, Card } from "reactstrap";
-
+import Swal from "sweetalert2";
 import PillSearchCSS from "./css/PillSearch.module.css";
 import Header from "components/Headers/Header";
 import { getPillSearch } from "../../api/pill.js";
@@ -20,10 +20,65 @@ function PillSearch() {
     }
   };
 
+  // const goPillSearch = () => {
+  //   getPillSearch(
+  //     keyword,
+  //     async (response) => {
+  //       setPillList(response.data.data);
+  //       setKeyword("");
+  //       ShowPillList();
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // };
+
   const goPillSearch = () => {
-    getPillSearch(
+    let regex= /([가-힣ㄱ-ㅎㅏ-ㅣ\x20])/i;
+    
+    // if(keyword === ""){
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "검색할 글을 써주세요",
+    //     confirmButtonColor: `#d33`,
+    //   });
+    // }else if(keyword !== regex){
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "한글을 써주세요",
+    //     confirmButtonColor: `#d33`,
+    //   });
+    // } else if(keyword === regex){
+      
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "검색 성공",
+    //     confirmButtonColor: `#0369a1`,
+    //   });
+    // }
+    if(keyword === ""){
+      Swal.fire({
+        icon: "warning",
+        title: "검색할 글을 써주세요",
+        confirmButtonColor: `#d33`,
+      });
+    }else if(!regex.test(keyword)){
+      Swal.fire({
+        icon: "warning",
+        title: "한글을 써주세요",
+        confirmButtonColor: `#d33`,
+      });
+    } else if(regex.test(keyword)){
+      Swal.fire({
+        icon: "success",
+        title: "검색 성공",
+        confirmButtonColor: `#0369a1`,
+      });
+    }
+    getPillSearch( //엑시오스
       keyword,
-      async (response) => {
+      async (response) => { 
         setPillList(response.data.data);
         setKeyword("");
         ShowPillList();
