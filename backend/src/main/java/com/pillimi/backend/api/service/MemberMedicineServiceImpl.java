@@ -181,6 +181,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
         List<LocalTime> times = new LinkedList<>();
         HashSet<Integer> dayset = new HashSet<>();
+
         for(MedicineIntake medicineIntake : medicineIntakes) {
             times.add(medicineIntake.getIntakeTime());
             dayset.add(medicineIntake.getIntakeDay());

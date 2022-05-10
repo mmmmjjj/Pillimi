@@ -1,7 +1,6 @@
 package com.pillimi.backend.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,6 +9,9 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "alarm_protege")
 public class AlarmProtege extends BaseTimeEntity {
 
