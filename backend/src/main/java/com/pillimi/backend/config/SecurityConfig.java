@@ -4,6 +4,7 @@ import com.pillimi.backend.common.auth.JwtAccessDeniedHandler;
 import com.pillimi.backend.common.auth.JwtAuthenticationEntryPoint;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -45,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v2/api-docs",
                         "/api/v1/member/kakao/**",
                         "/api/v1/alarm/protege/**"
-                );
+                )
+                .antMatchers(HttpMethod.GET,"/api/v1/alarm/protector/{alarmSeq}");
     }
 
 

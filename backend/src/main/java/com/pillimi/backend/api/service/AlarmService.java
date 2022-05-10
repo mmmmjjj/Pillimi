@@ -19,7 +19,7 @@ public interface AlarmService {
 
     AlarmProtegeRes getAlarmProtegeRes(AlarmProtege alarm);
 
-    List<ProtectorAlarmRes> getAlarmProtectorList(Member member);
+    List<ProtectorAlarmRes> getAlarmProtectorList(Member protector, Member protege);
 
     void deleteAlarmInfo(Long alarmSeq);
 

@@ -22,7 +22,10 @@ function MemberPillPage(props) {
       <Header header="김말자"></Header>
       <Switch>
         <Switch>
-          <Route path={`${basicurl}/protector-take-alarm`} render={(props) => <ProtectorTakeAlarm {...props} />} />
+          <Route
+            path={`${basicurl}/protector-take-alarm/:protegeSeq`}
+            render={(props) => <ProtectorTakeAlarm {...props} />}
+          />
           <Route path={`${basicurl}/member-pill-list/:memberSeq`} render={(props) => <MemberPillList {...props} />} />
           <Route exact path={`${basicurl}/pill-take-picture`} render={(props) => <PillTakePicture {...props} />} />
           <Route path={`${basicurl}/pill-take-alarm`} render={(props) => <PillTakeAlarm {...props} />} />

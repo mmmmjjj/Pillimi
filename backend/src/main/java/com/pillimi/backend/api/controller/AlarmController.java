@@ -73,10 +73,11 @@ public class AlarmController {
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
     })
-    public ResponseEntity<BaseResponseBody> getProtectorAlarmList(){
+    public ResponseEntity<BaseResponseBody> getProtectorAlarmList(@RequestParam Long protegeSeq){
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-        List<ProtectorAlarmRes> protectorAlarmRes = alarmService.getAlarmProtectorList(member);
+        Member protector = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member protege = memberService.getMemberById(protegeSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        List<ProtectorAlarmRes> protectorAlarmRes = alarmService.getAlarmProtectorList(protector, protege);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_PROTECTOR_ALARM, protectorAlarmRes));
     }
 
@@ -91,8 +92,6 @@ public class AlarmController {
     })
     public ResponseEntity<BaseResponseBody> getProtectorAlarmInfo(@PathVariable Long alarmSeq){
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
-
         ProtectorAlarmInfoRes protectorAlarmInfoRes = alarmService.getAlarmInfo(alarmSeq);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_PROTECTOR_ALARM_INFO, protectorAlarmInfoRes));
     }
@@ -100,7 +99,7 @@ public class AlarmController {
     @DeleteMapping("/protector/{alarmSeq}")
     @ApiOperation(value = "보호자 알람 삭제", notes = "보호자가 확인한 피보호자의 약물 섭취 알람을 삭제하는 API입니다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = GET_PROTECTOR_ALARM_INFO),
+            @ApiResponse(code = 200, message = DELETE_PROTECTOR_ALARM_INFO),
             @ApiResponse(code = 400, message = INVALID_INPUT, response = ErrorResponse.class),
             @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),

@@ -50,6 +50,7 @@ import PillPicture from "components/pill/PillPicture.js";
 import Callback from "components/main/Callback.js";
 import MemberInfo from "components/Member/MemberInfo.js";
 import MemberPillPage from "components/Member/MemberPillPage";
+import MemberPillCheck from "components/Member/MemberPillCheck";
 
 const store = createStore(rootReducer, composeWithDevTools());
 const persistor = persistStore(store);
@@ -76,6 +77,7 @@ ReactDOM.render(
             <Route path="/pill-picture" render={(props) => <PillPicture {...props} />} />
             <Route path="/member-info" render={(props) => <MemberInfo {...props} />} />
             <Route path="/member-pill-page" render={(props) => <MemberPillPage {...props} />} />
+            <Route path="/member-pill-check" render={(props) => <MemberPillCheck {...props} />} />
             <Route exact path="/callback" render={(props) => <Callback {...props} />} />
             <Redirect to="/index" />
             {/* <Redirect from="/" to="/index" /> */}
