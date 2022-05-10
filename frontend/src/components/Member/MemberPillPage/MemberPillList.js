@@ -5,12 +5,15 @@ import React, { useState, useEffect } from "react";
 import style from "../css/MemberPillCheck.module.css"
 import { getMemberMedicineList } from '../../../api/member'
 import PillTakeAlarm from "./PillTakeAlarm";
+import { useSelector } from "react-redux";
+import ProtectorTakeAlarm from "./ProtectorTakeAlarm";
 
 // core components
 
 function MemberPillList(props) {
   
   const memberSeq = props.match.params.memberSeq;
+  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
 
   const [pills, setPills] = useState([]);
 
@@ -68,7 +71,9 @@ function MemberPillList(props) {
     <>  
     {
       rightTab ? 
-      <PillTakeAlarm onClickHandler={onClickHandler}></PillTakeAlarm>
+        isProtector? 
+          <ProtectorTakeAlarm onClickHandler={onClickHandler}></ProtectorTakeAlarm>
+          : <PillTakeAlarm onClickHandler={onClickHandler}></PillTakeAlarm>
       :
       <div className={`${style.center} ${style.whole}`}>
         <div className="d-flex">
