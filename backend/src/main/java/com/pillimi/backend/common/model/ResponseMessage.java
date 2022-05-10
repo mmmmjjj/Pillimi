@@ -46,6 +46,7 @@ public class ResponseMessage {
     public static final String POST_TAKE = "복용 인증 성공";
     public static final String GET_PROTECTOR_ALARM = "보호자 알람 목록 조회 성공";
     public static final String GET_PROTECTOR_ALARM_INFO = "보호자 알람 상세 조회 성공";
+    public static final String DELETE_PROTECTOR_ALARM_INFO = "보호자 알람 삭제 성공";
 
 
 }

@@ -21,5 +21,7 @@ public interface AlarmService {
 
     List<ProtectorAlarmRes> getAlarmProtectorList(Member member);
 
+    void deleteAlarmInfo(Long alarmSeq);
+
     void uploadTaking(UploadReq req);
 }
