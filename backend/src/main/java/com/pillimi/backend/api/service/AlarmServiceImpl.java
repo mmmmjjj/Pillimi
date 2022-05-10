@@ -1,8 +1,9 @@
 package com.pillimi.backend.api.service;
 
-import com.pillimi.backend.api.response.AlarmMedicineRes;
-import com.pillimi.backend.api.response.AlarmProtegeRes;
-import com.pillimi.backend.api.response.ProtectorAlarmRes;
+
+import com.pillimi.backend.api.response.*;
+import com.pillimi.backend.common.exception.NotFoundException;
+import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.db.entity.AlarmProtector;
 import com.pillimi.backend.db.entity.AlarmProtege;
 import com.pillimi.backend.db.entity.Member;
@@ -56,21 +57,47 @@ public class AlarmServiceImpl implements AlarmService {
      */
     @Override
     public List<ProtectorAlarmRes> getAlarmProtectorList(Member member){
-            List<AlarmProtector> alarmProtectors = alarmProtectorRepository.findByProtector(member);
 
-            List<ProtectorAlarmRes> protectorAlarmResList = new LinkedList<>();
-            for (AlarmProtector alarmProtector : alarmProtectors) {
-                ProtectorAlarmRes protectorAlarmRes = ProtectorAlarmRes.builder().alarmProtectorSeq(alarmProtector.getAlarmSeq())
-                        .protectorSeq(alarmProtector.getProtector().getMemberSeq())
-                        .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
-                        .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
-                        .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
-                        .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
-                        .photoURL(alarmProtector.getAlarmPhoto())
-                        .build();
+        List<AlarmProtector> alarmProtectors = alarmProtectorRepository.findByProtector(member);
 
-                protectorAlarmResList.add(protectorAlarmRes);
-            }
-            return protectorAlarmResList;
+        List<ProtectorAlarmRes> protectorAlarmResList = new LinkedList<>();
+        for (AlarmProtector alarmProtector : alarmProtectors) {
+            ProtectorAlarmRes protectorAlarmRes = ProtectorAlarmRes.builder().alarmProtectorSeq(alarmProtector.getAlarmSeq())
+                    .protectorSeq(alarmProtector.getProtector().getMemberSeq())
+                    .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
+                    .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
+                    .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
+                    .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+                    .photoURL(alarmProtector.getAlarmPhoto())
+                    .build();
+
+            protectorAlarmResList.add(protectorAlarmRes);
         }
+        return protectorAlarmResList;
     }
+
+    @Override
+    public ProtectorAlarmInfoRes getAlarmInfo(Long alarmSeq) {
+
+        AlarmProtector alarmProtector = alarmProtectorRepository.findById(alarmSeq).orElseThrow(()-> new NotFoundException(ErrorCode.ALARM_NOT_FOUND));
+
+        List<AlarmMedicineRes> alarmMedicineResList = memberMedicineRepository.findByAlarmProtege(alarmProtector.getAlarmProtege().getProtege()
+                , alarmProtector.getAlarmProtege().getAlarmTime());
+
+
+
+        ProtectorAlarmInfoRes protectorAlarmInfoRes = ProtectorAlarmInfoRes.builder()
+                .alarmProtectorSeq(alarmProtector.getAlarmSeq())
+                .protectorSeq(alarmProtector.getProtector().getMemberSeq())
+                .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
+                .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
+                .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
+                .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+                .photoURL(alarmProtector.getAlarmPhoto())
+                .medicineList(alarmMedicineResList)
+                .build();
+
+        return protectorAlarmInfoRes;
+    }
+}
+
