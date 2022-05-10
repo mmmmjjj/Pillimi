@@ -28,6 +28,11 @@ function PillPictureAlarm(props) {
     })
   },[])
 
+  const gotoAlarmList = () => {
+    // props.history.locaion.props.onClickHandler(false);
+    window.location.href = `/member-pill-page/member-pill-list/`+ alarm.protegeSeq;
+  }
+
 
   const PillList = () => {
     let result = [];
@@ -49,7 +54,7 @@ function PillPictureAlarm(props) {
             <span>복용할 약이 맞다면 </span><br></br>
             <span><span className={`${style.blue}`}>확인</span> 버튼을 눌러주세요</span>
           </div>
-          <Button color="sky">확인</Button>
+          <Button color="sky" onClick={gotoAlarmList}>확인</Button>
         </div>
       )
 
