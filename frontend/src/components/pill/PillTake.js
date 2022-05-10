@@ -15,7 +15,11 @@ function PillTake(props) {
           <Switch>
             <Route exact path={`${basicurl}`} render={(props) => <PillTakeRegister {...props} />} />
             <Route exact path={`${basicurl}/modify`} render={(props) => <PillTakeModify {...props} />} />
-            <Route exact path={`${basicurl}/detail`} render={(props) => <PillTakeDetail {...props} />} />
+            <Route
+              exact
+              path={`${basicurl}/detail/:memberMedicineSeq`}
+              render={(props) => <PillTakeDetail {...props} />}
+            />
           </Switch>
         </Switch>
       </BrowserRouter>
