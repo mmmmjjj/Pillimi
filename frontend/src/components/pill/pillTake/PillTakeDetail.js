@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { Badge, Button, FormGroup } from "reactstrap";
 
-// import moment from "moment";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import { getMemberMedicineInfo } from "../../../api/member.js";
 
-//import PillDetailCSS from "../css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 
 function PillTakeDetail({ match }) {
@@ -131,7 +129,6 @@ function PillTakeDetail({ match }) {
     return result;
   };
 
-  //const [removePillModal, setRemovePillModal] = React.useState(false);
   const history = useHistory();
   const onSubmit = (event) => {
     event.preventDefault();
@@ -156,34 +153,12 @@ function PillTakeDetail({ match }) {
     });
   };
 
-  // const onChangePillRegister = (e) => {
-  //   if (moment.isMoment(e)) {
-  //     setPillRegister({
-  //       ...pillRegister,
-  //       [e.name]: e._d,
-  //     });
-  //     console.log(pillRegister.time);
-  //   } else {
-  //     setPillRegister({
-  //       ...pillRegister,
-  //       [e.target.name]: e.target.value,
-  //     });
-  //   }
-  // };
-
   return (
     <>
       <Header header="복용 약 상세"></Header>
       <br></br>
       <h3 className={PillTakeRegisterCSS.PillName}>{pillInfo.medicineName}</h3>
       <div className={PillTakeRegisterCSS.Whole}>
-        {/* <Label content={"약 별칭"}></Label>
-        <DateLabel content={"복용 시작 일자"}></DateLabel>
-        <DateLabel content={"복용 종료 일자"}></DateLabel>
-        <NumberLabel content={"복용 주기"}></NumberLabel>
-        <TimeLabel content={"복용 시간"}></TimeLabel>
-        <NumberLabel content={"복용 용량"}></NumberLabel>
-        <Label content={"섭취 후 특이사항"}></Label> */}
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>약 별칭</h3>
         <h5>{pillInfo.memberMedicineName}</h5>
@@ -219,9 +194,6 @@ function PillTakeDetail({ match }) {
       <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={gotoPillModify}>
         수정
       </Button>
-      {/* <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={() => setRemovePillModal(true)}>
-        삭제
-      </Button> */}
       <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={onSubmit}>
         삭제
       </Button>
@@ -231,37 +203,6 @@ function PillTakeDetail({ match }) {
         약 상세 정보 더보기
       </h3>
       <br></br>
-
-      {/* <Modal
-        centered
-        isOpen={removePillModal}
-        className="modal-sm"
-        modalClassName="bd-example-modal-sm"
-        toggle={() => setRemovePillModal(false)}
-      >
-        <div className="modal-header">
-          <h4 className="modal-title" id="mySmallModalLabel">
-            <br></br>
-          </h4>
-          <button
-            aria-label="Close"
-            className={`${PillDetailCSS.closeBtn} close`}
-            type="button"
-            onClick={() => setRemovePillModal(false)}
-          >
-            <span aria-hidden={true}>×</span>
-          </button>
-        </div>
-        <div className={`${PillDetailCSS.modalBody_remove} modal-body`}>
-          <h4>에이서캡슐(아세클로페낙)을 정말 삭제하시겠습니까?</h4>
-          <br></br>
-          <Button className={PillTakeRegisterCSS.RealRemoveBtn}>삭제</Button>
-          <Button className={PillTakeRegisterCSS.CancelBtn} onClick={() => setRemovePillModal(false)}>
-            취소
-          </Button>
-          <br></br>
-        </div>
-      </Modal> */}
     </>
   );
 }
@@ -273,83 +214,5 @@ function gotoPillDetail(medicineSeq) {
 function gotoPillModify() {
   window.location.href = "/pill-take/modify";
 }
-
-// function Label(params) {
-//   return (
-//     <>
-//       <br></br>
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       {/* {(function () {
-//         if (`${params.content}` === "약 별칭")
-//           return (
-//             <Input
-//               onChange={PillTakeRegister.onChangePillRegister}
-//               id="nick"
-//               name="nick"
-//               className={PillTakeRegisterCSS.Input}
-//               type="text"
-//             ></Input>
-//           );
-//         else
-//           return (
-//             <Input
-//               onChange={PillTakeRegister.onChangePillRegister}
-//               id="caution"
-//               name="caution"
-//               className={PillTakeRegisterCSS.Input}
-//               type="text"
-//             ></Input>
-//           );
-//       })()} */}
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       <Input className={PillTakeRegisterCSS.Input} type="text"></Input>
-//       <Input className={PillTakeRegisterCSS.Input} type="text"></Input>
-//     </>
-//   );
-// }
-
-// function DateLabel(params) {
-//   return (
-//     <>
-//       <br></br>
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       <Datetime className={PillTakeRegisterCSS.Input} timeFormat={false} />
-//     </>
-//   );
-// }
-
-// function TimeLabel(params) {
-//   return (
-//     <>
-//       <br></br>
-//       <div className="d-flex align-items-center">
-//         <h3
-//           className={`${PillTakeRegisterCSS.Label} flex-fill
-//         `}
-//         >
-//           {params.content}
-//         </h3>
-//         <i className={`${PillTakeRegisterCSS.TimePlus} now-ui-icons ui-1_simple-add`}></i>
-//       </div>
-//       <Datetime className={PillTakeRegisterCSS.Input} dateFormat={false} />{" "}
-//     </>
-//   );
-// }
-
-// function NumberLabel(params) {
-//   const [number, setNumber] = useState("");
-
-//   const onChange = (e) => {
-//     setNumber(e.target.value);
-//   };
-
-//   return (
-//     <>
-//       <br></br>
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       <Input onChange={onChange} value={number} className={PillTakeRegisterCSS.Input} type="number"></Input>
-//     </>
-//   );
-// }
 
 export default PillTakeDetail;
