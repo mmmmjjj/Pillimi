@@ -42,15 +42,15 @@ function PillPictureAlarm(props) {
   const IsCheckedPicture = () => {
     if(alarm==null) return <div></div>
       return(
-        <>
+        <div >
           <div className={`${style.checkAlarm} ${style.bold}`}>
             <span>({alarm.protegeName})님의 ({alarm.alarmTime})</span><br></br>
             <span>약 복용 사진입니다</span><br></br>
             <span>복용할 약이 맞다면 </span><br></br>
             <span><span className={`${style.blue}`}>확인</span> 버튼을 눌러주세요</span>
           </div>
-          <Button color="sky" className="mr-5">확인</Button>
-        </>
+          <Button color="sky">확인</Button>
+        </div>
       )
 
   }
@@ -63,12 +63,10 @@ function PillPictureAlarm(props) {
           <div className="pt-3">
             <span className={`${style.bold}`}>2022-04-12</span>
           </div>
-          <div>
-            <img src={alarm!=null ? alarm.photoURL : ''}></img>
+          <div className={style.allcenter}>
+            <img src={alarm!=null ? alarm.photoURL : ''} className={style.imgsize3}></img>
           </div>
-          <div className={`${style.smaller} mt-2`}>
-            <span>복용시간 : 9시 00분</span>
-            <br></br>
+          <div className={`${style.smaller}`}>
             <PillList></PillList>
           </div>
           <div className={`mt-3`}>
