@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MedicineIntakeRepository extends JpaRepository<MedicineIntake, Long> {
+public interface MedicineIntakeRepository extends JpaRepository<MedicineIntake, Long>, MedicineIntakeRepositoryCustom {
 
     List<MedicineIntake> getByMemberMedicine(MemberMedicine memberMedicine);
 

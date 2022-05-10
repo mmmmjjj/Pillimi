@@ -22,6 +22,6 @@ public class AlarmMedicineRes {
     private String imageURL;
 
     @ApiModelProperty(name = "복약 갯수", example = "1")
-    private int memberMedicineCount;
+    private int count;
 
 }
