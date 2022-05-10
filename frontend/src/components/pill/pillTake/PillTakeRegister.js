@@ -5,9 +5,9 @@ import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
+import { regmedicine } from '../../../api/member';
 
 function PillTakeRegister() {
-
   const [pillRegister, setPillRegister] = useState({
     nick: "",
     startDate: "",
@@ -19,7 +19,16 @@ function PillTakeRegister() {
   });
 
   const [timeinput, settimeinput] = useState("");
-  const [checkday, setday] = useState([false, false, false, false, false, false, false]);
+  const [checkday, setday] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [timecheck, settimecheck] = useState(false);
   // const [sunday, setsun] = useState(false);
   // const [monday, setmon] = useState(false);
   // const [tueday, settue] = useState(false);
@@ -27,11 +36,39 @@ function PillTakeRegister() {
   // const [thuday, setthu] = useState(false);
   // const [friday, setfri] = useState(false);
   // const [satday, setsat] = useState(false);
+  const regimedicine = () => {
+    regmedicine({
+      "endDay": pillRegister.endDate,
+      "intakeCount": 2,
+      "intakeDay": [
+        1,
+        3,
+        4
+      ],
+      "intakeTime": [
+        720,
+        840
+      ],
+      "medicineSeq": 1,
+      "memberMedicineName": pillRegister.nick,
+      "memberSeq": 1,
+      "remarkContent": pillRegister.caution,
+      "startDay": pillRegister.startDate
+    },
+      (success) => {
+        console.log(success);
+      }, (fail) => {
+        console.log(fail);
+      })
+  }
 
   const changeday = (index) => {
-    setday([...checkday.slice(0,index),!checkday[index],...checkday.slice(index+1)])
-    console.log(checkday)
-  }
+    setday([
+      ...checkday.slice(0, index),
+      !checkday[index],
+      ...checkday.slice(index + 1),
+    ]);
+  };
 
   const onChangetimeinput = (e) => {
     settimeinput(e.format("hh:mm A"));
@@ -39,23 +76,25 @@ function PillTakeRegister() {
   };
 
   const pushtime = () => {
-    if (!pillRegister.time.includes(timeinput)){
+    if (!pillRegister.time.includes(timeinput)) {
       setPillRegister({
         ...pillRegister,
         time: [...pillRegister.time, timeinput],
       });
     } else {
-      //여기부터!
+      settimecheck(true);
     }
   };
-  
+
   const deletetime = (index) => {
     setPillRegister({
       ...pillRegister,
-      time: [...pillRegister.time.slice(0,index), ...pillRegister.time.slice(index+1)],
+      time: [
+        ...pillRegister.time.slice(0, index),
+        ...pillRegister.time.slice(index + 1),
+      ],
     });
   };
-  
 
   const onChangePillRegister = (e) => {
     console.log(e._i);
@@ -65,6 +104,7 @@ function PillTakeRegister() {
           ...pillRegister,
           [e.name]: e.format("hh:mm A"),
         });
+        settimecheck(false);
         console.log(pillRegister.time);
       } else {
         setPillRegister({
@@ -156,25 +196,81 @@ function PillTakeRegister() {
           <Badge className={satday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setsat(prevsatday => !prevsatday)}>
             일
           </Badge> */}
-          <Badge className={checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day} color="default" onClick={()=>{changeday(0)}}>
+          <Badge
+            className={
+              checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(0);
+            }}
+          >
             월
           </Badge>
-          <Badge className={checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day} color="default" onClick={()=>{changeday(1)}}>
+          <Badge
+            className={
+              checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(1);
+            }}
+          >
             화
           </Badge>
-          <Badge className={checkday[2] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day} color="default" onClick={()=>{changeday(2)}}>
+          <Badge
+            className={
+              checkday[2] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(2);
+            }}
+          >
             수
           </Badge>
-          <Badge className={checkday[3] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day} color="default" onClick={()=>{changeday(3)}}>
+          <Badge
+            className={
+              checkday[3] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(3);
+            }}
+          >
             목
           </Badge>
-          <Badge className={checkday[4] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day} color="default" onClick={()=>{changeday(4)}}>
+          <Badge
+            className={
+              checkday[4] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(4);
+            }}
+          >
             금
           </Badge>
-          <Badge className={checkday[5] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day} color="default" onClick={()=>{changeday(5)}}>
+          <Badge
+            className={
+              checkday[5] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(5);
+            }}
+          >
             토
           </Badge>
-          <Badge className={checkday[6] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day} color="default" onClick={()=>{changeday(6)}}>
+          <Badge
+            className={
+              checkday[6] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(6);
+            }}
+          >
             일
           </Badge>
         </FormGroup>
@@ -182,10 +278,11 @@ function PillTakeRegister() {
         <div className="d-flex align-items-center">
           <h3
             className={`${PillTakeRegisterCSS.Label} flex-fill
-        `}
+            `}
           >
             복용 시간
           </h3>
+
           <i
             onClick={() => {
               if (timeinput !== "") {
@@ -195,6 +292,17 @@ function PillTakeRegister() {
             className={`${PillTakeRegisterCSS.TimePlus} now-ui-icons ui-1_simple-add`}
           ></i>
         </div>
+        {timecheck ? (
+          <h5
+            style={{
+              width: "100%",
+              color: "red",
+            }}
+            color="danger"
+          >
+            이미 등록된 시간입니다.
+          </h5>
+        ) : null}
         <FormGroup>
           <Datetime
             onChange={(e) => {
@@ -209,7 +317,13 @@ function PillTakeRegister() {
         </FormGroup>
         <Row xs="3" sm="4" md="6" style={{ justifyContent: "start" }}>
           {pillRegister.time.map((value, index) => (
-            <Col key={index} xs="4" sm="3" md="2" style={{ padding: "0px", textAlign:"center" }}>
+            <Col
+              key={index}
+              xs="4"
+              sm="3"
+              md="2"
+              style={{ padding: "0px", textAlign: "center" }}
+            >
               <Badge
                 className={PillTakeRegisterCSS.Badge}
                 color="info"
@@ -220,7 +334,9 @@ function PillTakeRegister() {
                   className={PillTakeRegisterCSS.Badge}
                   color="danger"
                   id="timeList"
-                  onClick={()=>{deletetime(index)}}
+                  onClick={() => {
+                    deletetime(index);
+                  }}
                 >
                   X
                 </Badge>
