@@ -191,7 +191,7 @@ function PillTakeDetail({ match }) {
         {pillInfo.remarkContent ? <h5>{pillInfo.remarkContent}</h5> : <h5>없음</h5>}
       </div>
       <br></br>
-      <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={gotoPillModify}>
+      <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={() => gotoPillModify(memberMedicineSeq)}>
         수정
       </Button>
       <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={onSubmit}>
@@ -211,8 +211,8 @@ function gotoPillDetail(medicineSeq) {
   window.location.href = `/pill-detail/${medicineSeq}`;
 }
 
-function gotoPillModify() {
-  window.location.href = "/pill-take/modify";
+function gotoPillModify(memberMedicineSeq) {
+  window.location.href = `/pill-take/modify/${memberMedicineSeq}`;
 }
 
 export default PillTakeDetail;
