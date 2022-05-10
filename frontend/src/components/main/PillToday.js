@@ -101,6 +101,7 @@ function PillToday() {
           } else {
             resultTime += hour;
           }
+          resultTime += "시 ";
         } else {
           resultTime += "오후 ";
           if (hour === "12") {
