@@ -6,6 +6,8 @@ import { getMyFamily, getFamilyRequest } from "api/family"
 
 function MyFamily(props) {
   const [familyTab, setfamilyTab] = useState(true);
+  const [newAlarm, setNewAlarm] = useState(false);
+
   const onFamilyTab = () => {
     setfamilyTab(true);
   };
@@ -36,6 +38,7 @@ function MyFamily(props) {
   const getFamilyRequestList = () => {
     getFamilyRequest(( success ) => {
       setPreFamilyList(success.data.data);
+      if(success.data.data.length>0) setNewAlarm(true);
       console.log(success);
     }, ( fail ) => {
       console.log(fail);
@@ -114,7 +117,10 @@ function MyFamily(props) {
         <Col className={`${familyTab ? "onTab" : "offTab"}`} onClick={onFamilyTab}><div className="textdiv">내 가족</div></Col>
         {/* <Col className={`${familyTab ? "onTab" : "offTab"}`} onClick={onFamilyTab}><h5>내 가족</h5></Col> */}
         <Col className={`${familyTab ? "offTab" : "onTab"}`} onClick={offFamilyTab} style={{ position:"relative" }}><div className="textdiv">가족 요청</div>
-        <i className="fa fa-exclamation-circle fa-2x" size="lg"style={{ position: "absolute", color:"red", top:"-14px" , right:"7px", zIndex:"1"}}></i></Col>
+        {
+          newAlarm?
+          <i className="fa fa-exclamation-circle fa-2x" size="lg"style={{ position: "absolute", color:"red", top:"-14px" , right:"7px", zIndex:"1"}}></i> 
+          : <></>}</Col>
       </Row>
       {
         familyTab ?
