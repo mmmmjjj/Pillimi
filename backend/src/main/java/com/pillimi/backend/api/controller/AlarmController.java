@@ -51,7 +51,7 @@ public class AlarmController {
     }
 
     @PostMapping("/protege")
-    @ApiOperation(value = "복용 인증", notes = "사진 찍기를 클릭 시 요청해야 하는 API입니다.\n해당 알림 시간에 복용해야 하는 약 정보를 반환하는 API입니다.")
+    @ApiOperation(value = "복용 인증", notes = "사진을 전송하고 복용 인증 하는 API입니다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = POST_TAKE),
             @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
