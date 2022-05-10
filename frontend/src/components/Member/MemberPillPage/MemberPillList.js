@@ -4,14 +4,24 @@ import React, { useState, useEffect } from "react";
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css"
 import { getMemberMedicineList } from '../../../api/member'
+import PillTakeAlarm from "./PillTakeAlarm";
+import { useSelector } from "react-redux";
+import ProtectorTakeAlarm from "./ProtectorTakeAlarm";
 
 // core components
 
 function MemberPillList(props) {
   
   const memberSeq = props.match.params.memberSeq;
+  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
 
   const [pills, setPills] = useState([]);
+
+  const [rightTab, setRightTab] = useState(false);
+
+  const onClickHandler = (state) => {
+    setRightTab(state);
+  }
 
   useEffect(() => {
     console.log("마운트")
@@ -59,12 +69,18 @@ function MemberPillList(props) {
 
   return (
     <>  
+    {
+      rightTab ? 
+        isProtector? 
+          <ProtectorTakeAlarm onClickHandler={onClickHandler}></ProtectorTakeAlarm>
+          : <PillTakeAlarm onClickHandler={onClickHandler}></PillTakeAlarm>
+      :
       <div className={`${style.center} ${style.whole}`}>
         <div className="d-flex">
           <div className="flex-fill pt-2 pb-2 pr-4 m-0 ">
             약
           </div>
-          <div className="flex-fill pt-2 pb-2 border border-top-0 border-dark bg-white">
+          <div className="flex-fill pt-2 pb-2 border border-top-0 border-dark bg-white" onClick={() => onClickHandler(true)}>
             복용확인
           </div>
         </div>
@@ -77,6 +93,7 @@ function MemberPillList(props) {
           <PillList isNow={false}></PillList>
         </div>
       </div>
+    }
     </>
   )
 }
