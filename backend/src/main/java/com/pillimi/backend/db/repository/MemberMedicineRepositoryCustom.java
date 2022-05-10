@@ -23,4 +23,9 @@ public interface MemberMedicineRepositoryCustom {
      */
     List<AlarmMedicineRes> findByAlarmProtege(Member member,LocalTime time);
 
+    /*
+     * 복용 인증한 시간대의 약들을 복용 완료로 업데이트한다.
+     */
+    void updateMemberMedicine(Member member, LocalTime time, int day);
+
 }

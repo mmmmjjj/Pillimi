@@ -1,5 +1,6 @@
 package com.pillimi.backend.api.controller;
 
+import com.pillimi.backend.api.request.UploadReq;
 import com.pillimi.backend.api.response.ProtectorAlarmRes;
 import com.pillimi.backend.api.service.AlarmService;
 import com.pillimi.backend.api.service.MemberService;
@@ -46,6 +47,20 @@ public class AlarmController {
 
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, GET_TAKE_ALARM, alarmService.getAlarmProtegeRes(alarm)));
     }
+
+    @PostMapping("/protege")
+    @ApiOperation(value = "복용 인증", notes = "사진 찍기를 클릭 시 요청해야 하는 API입니다.\n해당 알림 시간에 복용해야 하는 약 정보를 반환하는 API입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = POST_TAKE),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class),
+    })
+    public ResponseEntity<BaseResponseBody> uploadTaking(@RequestBody UploadReq req) {
+
+        alarmService.uploadTaking(req);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, POST_TAKE));
+    }
+
 
     @GetMapping("/protector")
     @ApiOperation(value = "보호자 알람 목록 확인", notes = "보호자가 받은 피보호자의 약물 섭취 목록을 반환")

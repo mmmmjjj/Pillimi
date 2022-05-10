@@ -1,5 +1,6 @@
 package com.pillimi.backend.api.service;
 
+import com.pillimi.backend.api.request.UploadReq;
 import com.pillimi.backend.api.response.AlarmProtegeRes;
 import com.pillimi.backend.db.entity.AlarmProtege;
 import com.pillimi.backend.api.response.ProtectorAlarmRes;
@@ -15,4 +16,6 @@ public interface AlarmService {
     AlarmProtegeRes getAlarmProtegeRes(AlarmProtege alarm);
 
     List<ProtectorAlarmRes> getAlarmProtectorList(Member member);
+
+    void uploadTaking(UploadReq req);
 }

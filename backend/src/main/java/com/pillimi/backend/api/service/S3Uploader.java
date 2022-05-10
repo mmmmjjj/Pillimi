@@ -54,6 +54,7 @@ public class S3Uploader {
     // uploadFile 이미지를 file Name으로 저장
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
+        removeNewFile(uploadFile);
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
@@ -68,6 +69,14 @@ public class S3Uploader {
                 log.debug("이미지가 없습니다.");
             }
         }
+    }
+
+    // 로컬 이미지 지우기
+    private void removeNewFile(File targetFile) {
+        if (targetFile.delete()) {
+            return;
+        }
+        log.debug("이미지 삭제를 실패했습니다.");
     }
 
 }
