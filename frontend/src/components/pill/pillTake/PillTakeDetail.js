@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Badge, Button, FormGroup } from "reactstrap";
+
 // import moment from "moment";
 import Swal from "sweetalert2";
-import { useHistory  } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
+import { getMemberMedicineInfo } from "../../../api/member.js";
+
 //import PillDetailCSS from "../css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 
-function PillTakeDetail() {
-  React.useEffect(() => {}, []);
+function PillTakeDetail({ match }) {
+  const memberMedicineSeq = match.params.memberMedicineSeq;
+
+  const [pillInfo, setPillInfo] = useState({
+    nick: "",
+    startDate: "",
+    endDate: "",
+    period: "",
+    time: "",
+    volume: "",
+    caution: "",
+  });
+
+  React.useEffect(() => {
+    getMemberMedicineInfo(
+      memberMedicineSeq,
+      (response) => {
+        if (response.status === 200) {
+          console.log(response);
+          setPillInfo(response.data.data);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, [memberMedicineSeq]);
 
   //const [removePillModal, setRemovePillModal] = React.useState(false);
   const history = useHistory();
@@ -18,37 +46,22 @@ function PillTakeDetail() {
       title: "에이서캡슐(아세클로페낙)을 정말 삭제하시겠습니까?",
       showCancelButton: true,
       confirmButtonColor: `#0369a1`,
-      cancelButtonColor: '#d33',
-      confirmButtonText: '삭제',
-      cancelButtonText: '취소'
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
     }).then((result) => {
-      if(result.isConfirmed){
-        Swal.fire(
-          '삭제 완료!',
-          '삭제가 완료 되었습니다.',
-          'success'
-        ).then(function(memberSeq) {
+      if (result.isConfirmed) {
+        Swal.fire("삭제 완료!", "삭제가 완료 되었습니다.", "success").then(function (memberSeq) {
           //삭제할 함수 작성
-          history.push(`/member-pill-page/member-pill-list/${memberSeq}`)
+          history.push(`/member-pill-page/member-pill-list/${memberSeq}`);
         });
         // .then((result) => {
         //   //삭제할 함수 작성
         //   history.push(`/member-pill-page/member-pill-list/1`)
         // });
-
       }
-      
     });
   };
-  // const [pillRegister, setPillRegister] = useState({
-  //   nick: "",
-  //   startDate: "",
-  //   endDate: "",
-  //   period: "",
-  //   time: "",
-  //   volume: "",
-  //   caution: "",
-  // });
 
   // const onChangePillRegister = (e) => {
   //   if (moment.isMoment(e)) {
@@ -69,7 +82,7 @@ function PillTakeDetail() {
     <>
       <Header header="복용 약 상세"></Header>
       <br></br>
-      <h3 className={PillTakeRegisterCSS.PillName}>에이서캡슐(아세클로페낙)</h3>
+      {/* <h3 className={PillTakeRegisterCSS.PillName}>{medicineName}</h3> */}
       <div className={PillTakeRegisterCSS.Whole}>
         {/* <Label content={"약 별칭"}></Label>
         <DateLabel content={"복용 시작 일자"}></DateLabel>
