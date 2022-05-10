@@ -96,7 +96,11 @@ function PillToday() {
 
         if (hour < 12) {
           resultTime += "오전 ";
-          resultTime += hour;
+          if (hour < 10) {
+            resultTime += hour.substring(1, 2);
+          } else {
+            resultTime += hour;
+          }
         } else {
           resultTime += "오후 ";
           if (hour === "12") {
