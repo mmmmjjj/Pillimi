@@ -76,6 +76,9 @@ public class AlarmServiceImpl implements AlarmService {
         return protectorAlarmResList;
     }
 
+    /*
+    보호자 알람 상세정보 조회
+     */
     @Override
     public ProtectorAlarmInfoRes getAlarmInfo(Long alarmSeq) {
 
@@ -98,6 +101,15 @@ public class AlarmServiceImpl implements AlarmService {
                 .build();
 
         return protectorAlarmInfoRes;
+    }
+
+    /*
+        보호자 알람 상세정보 삭제
+    */
+    @Override
+    public void deleteAlarmInfo(Long alarmSeq) {
+
+        alarmProtectorRepository.deleteById(alarmSeq);
     }
 }
 
