@@ -37,9 +37,15 @@ function ProtectorTakeAlarm(props) {
     return time.substr(0,5);
   }
 
+  const gotoAlarmDetail = (alarmSeq) => {
+    console.log(alarmSeq);
+    window.location.href = `/member-pill-check/pill-picture-alarm/${alarmSeq}`;
+  }
+
   const onClickHandler = (state) => {
     props.onClickHandler(state);
   }
+
 
   const AlarmsList =  () => {
     let result = [];
@@ -48,7 +54,7 @@ function ProtectorTakeAlarm(props) {
       let time = timeFormat(element.alarmTime);
       if(element.type===false){
         console.log(true + " : "+ element.time);
-        result.push(<div className={`${style.checkAlarm2}`}>
+        result.push(<div className={`${style.checkAlarm2}`} onClick={() => gotoAlarmDetail(element.alarmProtectorSeq)}>
           <div>
             <span className={`${style.bold}`}>{element.alarmDate}</span><br></br>
           </div>
@@ -63,7 +69,7 @@ function ProtectorTakeAlarm(props) {
         </div>);
       } else {
         console.log(false + " : "+ element.alarmTime);
-        result.push(<div className={`${style.checkAlarm2}`}>
+        result.push(<div className={`${style.checkAlarm2}`} onClick={() => gotoAlarmDetail(element.alarmProtectorSeq)}>
           <div>
             <span className={`${style.bold}`}>{element.alarmDate}</span><br></br>
           </div>
