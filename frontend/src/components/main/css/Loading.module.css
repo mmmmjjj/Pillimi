@@ -1,0 +1,7 @@
+.body {
+  margin: 0 auto; 
+  display: flex;            /*내부 요소들이 차례로 배치 */
+  justify-content: center;  /*내부 요소의 좌우 정렬 상태를 가운데로 설정*/
+  align-items: center;      /*요소는 세로 중앙 배치*/
+  height: 100vh;            /*웹 크기 변화에 따라 변경되는 반응형 수치*/
+}
