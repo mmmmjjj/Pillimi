@@ -14,13 +14,14 @@ function PillTakeDetail({ match }) {
   const memberMedicineSeq = match.params.memberMedicineSeq;
 
   const [pillInfo, setPillInfo] = useState({
-    nick: "",
-    startDate: "",
-    endDate: "",
-    period: "",
-    time: "",
-    volume: "",
-    caution: "",
+    medicineName: "",
+    memberMedicineName: "",
+    startDay: "",
+    endDay: "",
+    intakeDay: [],
+    intakeTime: [],
+    intakeCount: "",
+    remarkContent: "",
   });
 
   React.useEffect(() => {
@@ -37,6 +38,98 @@ function PillTakeDetail({ match }) {
       }
     );
   }, [memberMedicineSeq]);
+
+  const TakeDay = () => {
+    let result = [];
+    pillInfo.intakeDay.forEach((element) => {
+      if (element === 1) {
+        result.push(
+          <>
+            <Badge className={PillTakeRegisterCSS.Day} color="success">
+              월
+            </Badge>
+          </>
+        );
+      }
+
+      if (element === 2) {
+        result.push(
+          <>
+            <Badge className={PillTakeRegisterCSS.Day} color="success">
+              화
+            </Badge>
+          </>
+        );
+      }
+
+      if (element === 3) {
+        result.push(
+          <>
+            <Badge className={PillTakeRegisterCSS.Day} color="success">
+              수
+            </Badge>
+          </>
+        );
+      }
+
+      if (element === 4) {
+        result.push(
+          <>
+            <Badge className={PillTakeRegisterCSS.Day} color="success">
+              목
+            </Badge>
+          </>
+        );
+      }
+
+      if (element === 5) {
+        result.push(
+          <>
+            <Badge className={PillTakeRegisterCSS.Day} color="success">
+              금
+            </Badge>
+          </>
+        );
+      }
+
+      if (element === 6) {
+        result.push(
+          <>
+            <Badge className={PillTakeRegisterCSS.Day} color="success">
+              토
+            </Badge>
+          </>
+        );
+      }
+
+      if (element === 7) {
+        result.push(
+          <>
+            <Badge className={PillTakeRegisterCSS.Day} color="success">
+              일
+            </Badge>
+          </>
+        );
+      }
+    });
+
+    return result;
+  };
+
+  const TakeTime = () => {
+    let result = [];
+    pillInfo.intakeTime.forEach((element) => {
+      result.push(
+        <>
+          <Badge className={PillTakeRegisterCSS.BadgeTime} color="info" id="timeList">
+            {element.substring(0, 5)}
+          </Badge>
+        </>
+      );
+    });
+
+    return result;
+  };
 
   //const [removePillModal, setRemovePillModal] = React.useState(false);
   const history = useHistory();
@@ -82,7 +175,7 @@ function PillTakeDetail({ match }) {
     <>
       <Header header="복용 약 상세"></Header>
       <br></br>
-      {/* <h3 className={PillTakeRegisterCSS.PillName}>{medicineName}</h3> */}
+      <h3 className={PillTakeRegisterCSS.PillName}>{pillInfo.medicineName}</h3>
       <div className={PillTakeRegisterCSS.Whole}>
         {/* <Label content={"약 별칭"}></Label>
         <DateLabel content={"복용 시작 일자"}></DateLabel>
@@ -93,37 +186,17 @@ function PillTakeDetail({ match }) {
         <Label content={"섭취 후 특이사항"}></Label> */}
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>약 별칭</h3>
-        <h5>고혈압 약</h5>
+        <h5>{pillInfo.memberMedicineName}</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 시작 일자</h3>
-        <h5>2022/04/29</h5>
+        <h5>{pillInfo.startDay}</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 종료 일자</h3>
-        <h5>2022/05/30</h5>
+        <h5>{pillInfo.endDay}</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 요일</h3>
         <FormGroup className={PillTakeRegisterCSS.DayGroup}>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
-            월
-          </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
-            화
-          </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
-            수
-          </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
-            목
-          </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
-            금
-          </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
-            토
-          </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
-            일
-          </Badge>
+          <TakeDay></TakeDay>
         </FormGroup>
         <br></br>
         <div className="d-flex align-items-center">
@@ -134,15 +207,13 @@ function PillTakeDetail({ match }) {
             복용 시간
           </h3>
         </div>
-        <Badge className={PillTakeRegisterCSS.BadgeTime} color="info" id="timeList">
-          9:00
-        </Badge>
+        <TakeTime></TakeTime>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 개수</h3>
-        <h5>2알</h5>
+        <h5>{pillInfo.intakeCount}</h5>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>섭취 후 특이사항</h3>
-        <h5>없음</h5>
+        {pillInfo.remarkContent ? <h5>{pillInfo.remarkContent}</h5> : <h5>없음</h5>}
       </div>
       <br></br>
       <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={gotoPillModify}>
