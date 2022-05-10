@@ -76,7 +76,7 @@ function MemberPillList(props) {
     <>
       {rightTab ? (
         isProtector ? (
-          <ProtectorTakeAlarm onClickHandler={onClickHandler}></ProtectorTakeAlarm>
+          <ProtectorTakeAlarm onClickHandler={onClickHandler} protegeSeq={memberSeq}></ProtectorTakeAlarm>
         ) : (
           <PillTakeAlarm onClickHandler={onClickHandler}></PillTakeAlarm>
         )
