@@ -1,13 +1,15 @@
 package com.pillimi.backend.db.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "alarm_protector")
 public class AlarmProtector extends BaseTimeEntity {
 
@@ -15,6 +17,7 @@ public class AlarmProtector extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long alarmSeq;
 
+    @Column
     private String alarmPhoto;
 
     @ManyToOne(fetch = FetchType.LAZY)

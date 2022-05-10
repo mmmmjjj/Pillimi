@@ -1,5 +1,6 @@
 package com.pillimi.backend.api.service;
 
+import com.pillimi.backend.api.request.UploadReq;
 
 import com.pillimi.backend.api.response.ProtectorAlarmInfoRes;
 import com.pillimi.backend.api.response.AlarmProtegeRes;
@@ -21,4 +22,6 @@ public interface AlarmService {
     List<ProtectorAlarmRes> getAlarmProtectorList(Member member);
 
     void deleteAlarmInfo(Long alarmSeq);
+
+    void uploadTaking(UploadReq req);
 }

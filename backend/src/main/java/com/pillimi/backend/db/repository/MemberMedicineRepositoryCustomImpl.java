@@ -4,6 +4,7 @@ import com.pillimi.backend.api.response.AlarmMedicineRes;
 import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.db.entity.*;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -80,5 +81,23 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
                         .and(qMedicineIntake.intakeDay.eq(LocalDate.now().getDayOfWeek().getValue())))
                 .fetch();
 
+    }
+
+    /*
+     * 복용 인증한 시간대의 약들을 복용 완료로 업데이트한다.
+     */
+    @Override
+    public void updateMemberMedicine(Member member, LocalTime time, int day) {
+
+        jpaQueryFactory.update(qMedicineIntake)
+                .set(qMedicineIntake.intakeIsconfirm,true)
+                .where(qMedicineIntake.memberMedicine.in(
+                        JPAExpressions.select(qMemberMedicine)
+                                .from(qMemberMedicine)
+                                .where(qMemberMedicine.member.eq(member))
+                )
+                .and(qMedicineIntake.intakeDay.eq(day))
+                .and(qMedicineIntake.intakeTime.eq(time)))
+                .execute();
     }
 }
