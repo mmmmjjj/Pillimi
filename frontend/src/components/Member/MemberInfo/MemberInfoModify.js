@@ -25,6 +25,8 @@ function MemberInfoModify({match}) {
     member_isprotector: 0
   });
 
+  const [isProtector, setIsProtector] = useState(false);
+
   const onChangeProfile = (e) => {
     if (moment.isMoment(e)){
         setProfile({...profile, [e.name]:e._d});
@@ -36,7 +38,76 @@ function MemberInfoModify({match}) {
     }
   }
 
-  const outProfile = useMemo(() => onChangeProfile, [profile]);
+  const [numberok, setnumberok] = useState(false);
+
+  const checknumber = (event) => {
+    var str = event.currentTarget.value.replace(/[^0-9]/g, "");
+    var tmp = {
+      target:{
+        name: 'member_phone',
+        value: str
+      }
+    };
+    if (str.substring(0, 2) == "02") {
+      if (str.length > 8) {
+        setnumberok(true);
+      } else {
+        setnumberok(false);
+      }
+      // 서울 전화번호일 경우 10자리까지만 나타나고 그 이상의 자리수는 자동삭제
+      if (str.length < 3) {
+        onChangeProfile(tmp);
+      } else if (str.length < 6) {
+        tmp.target.value = str.substr(0, 2);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(2);
+        onChangeProfile(tmp);
+      } else if (str.length < 10) {
+        tmp.target.value = str.substr(0, 2);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(2, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(5);
+        onChangeProfile(tmp);
+      } else {
+        tmp.target.value = str.substr(0, 2);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(2, 4);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(6, 4);
+        onChangeProfile(tmp);
+      }
+    } else {
+      if (str.length > 9) {
+        setnumberok(true);
+      } else {
+        setnumberok(false);
+      }
+      // 핸드폰 및 다른 지역 전화번호 일 경우
+      if (str.length < 4) {
+        onChangeProfile(tmp);
+      } else if (str.length < 7) {
+        tmp.target.value = str.substr(0, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(3);
+        onChangeProfile(tmp);
+      } else if (str.length < 11) {
+        tmp.target.value = str.substr(0, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(3, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(6);
+        onChangeProfile(tmp);
+      } else {
+        tmp.target.value = str.substr(0, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(3, 4);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(7);
+        onChangeProfile(tmp);
+      }
+    }
+  };
   
   useEffect(() => {
     console.log("마운트")
@@ -54,6 +125,9 @@ function MemberInfoModify({match}) {
           member_birthDate: success.data.data.birthDate,
           member_phone: success.data.data.phone,
         })
+        if(success.data.data.birthDate==null){
+          setIsProtector(true);
+        }
       }, (fail) => {
         console.log(fail);
       })
@@ -84,7 +158,7 @@ function MemberInfoModify({match}) {
   const modifyInfo = () => {
     let birthDate = dateformat(new Date(profile.member_birthDate));
     let memberInfo = {
-      birthDate: birthDate,
+      birthDate: isProtector ? null : birthDate,
       memberSeq: memberSeq,
       nickName: profile.member_nickname,
       phone: profile.member_phone
@@ -101,7 +175,7 @@ function MemberInfoModify({match}) {
     window.location.href = "/member-info/member-info-detail/"+memberSeq;
   }
 
-  if(profile.member_birthDate!==null){
+  if(!isProtector){
     return (
       <>
         <div id="pillimi" className={`${style.center}`}>
@@ -135,12 +209,13 @@ function MemberInfoModify({match}) {
             <FormGroup>
             <Label value={"전화번호"}></Label>
               <span><Input 
-              id="phone" 
-              name="member_phone" 
-              type="tel" 
+              className={`${style.datepicker}`} 
+              placeholder="전화번호"
+              type="text"
+              onChange={checknumber}
               value={profile.member_phone}
-              className={`${style.datepicker}`}
-              onChange={onChangeProfile}></Input></span>
+              pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
+              maxLength="13"></Input></span>
               <br></br>
             </FormGroup>
             <FormGroup>
@@ -179,12 +254,13 @@ function MemberInfoModify({match}) {
           <FormGroup>
           <Label value={"전화번호"}></Label>
             <span><Input 
-            id="member_phone" 
-            name="member_phone" 
-            type="tel" 
+            className={`${style.datepicker}`} 
+            placeholder="전화번호"
+            type="text"
+            onChange={checknumber}
             value={profile.member_phone}
-            className={`${style.datepicker}`}
-            onChange={onChangeProfile}></Input></span>
+            pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
+            maxLength="13"></Input></span>
             <br></br>
           </FormGroup>
         </Form>

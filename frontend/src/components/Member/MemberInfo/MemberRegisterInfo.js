@@ -17,7 +17,7 @@ function MemberRegisterInfo(props) {
     Moment: new Date(null),
     phone: "",
   })
-
+  const [numberok, setnumberok] = useState(false);
 
   const [isProtector, setIsProtector] = useState(false);
 
@@ -37,6 +37,75 @@ function MemberRegisterInfo(props) {
       }
   }
 
+  const checknumber = (event) => {
+    var str = event.currentTarget.value.replace(/[^0-9]/g, "");
+    var tmp = {
+      target:{
+        name: 'phone',
+        value: str
+      }
+    };
+    if (str.substring(0, 2) == "02") {
+      if (str.length > 8) {
+        setnumberok(true);
+      } else {
+        setnumberok(false);
+      }
+      // 서울 전화번호일 경우 10자리까지만 나타나고 그 이상의 자리수는 자동삭제
+      if (str.length < 3) {
+        onChangeProfile(tmp);
+      } else if (str.length < 6) {
+        tmp.target.value = str.substr(0, 2);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(2);
+        onChangeProfile(tmp);
+      } else if (str.length < 10) {
+        tmp.target.value = str.substr(0, 2);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(2, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(5);
+        onChangeProfile(tmp);
+      } else {
+        tmp.target.value = str.substr(0, 2);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(2, 4);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(6, 4);
+        onChangeProfile(tmp);
+      }
+    } else {
+      if (str.length > 9) {
+        setnumberok(true);
+      } else {
+        setnumberok(false);
+      }
+      // 핸드폰 및 다른 지역 전화번호 일 경우
+      if (str.length < 4) {
+        onChangeProfile(tmp);
+      } else if (str.length < 7) {
+        tmp.target.value = str.substr(0, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(3);
+        onChangeProfile(tmp);
+      } else if (str.length < 11) {
+        tmp.target.value = str.substr(0, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(3, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(6);
+        onChangeProfile(tmp);
+      } else {
+        tmp.target.value = str.substr(0, 3);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(3, 4);
+        tmp.target.value += "-";
+        tmp.target.value += str.substr(7);
+        onChangeProfile(tmp);
+      }
+    }
+  };
+
   function dateformat(bDay){
     if(moment.isMoment(bDay)) return "2022-02-13";
     else{
@@ -53,7 +122,7 @@ function MemberRegisterInfo(props) {
     // let birthDate = profile.Moment;
     if(isProtector) birthDate = null;
     let reginfo = {
-      birthDate: birthDate,
+      birthDate: isProtector === true? null : birthDate,
       isProtector: isProtector === true? 1 : 0,
       phone: profile.phone
     };
@@ -112,13 +181,17 @@ function MemberRegisterInfo(props) {
             </FormGroup>
             <FormGroup>
             <Lbl value={"전화번호"}></Lbl>
-              <span><Input 
-              id="phone" 
-              name="phone" 
-              type="tel" 
-              value={profile.phone}
-              className={`${style.datepicker}`}
-              onChange={onChangeProfile}></Input></span>
+              <span>
+                <Input
+                  className={`${style.datepicker}`} 
+                  placeholder="전화번호"
+                  type="text"
+                  onChange={checknumber}
+                  value={profile.phone}
+                  pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
+                  maxLength="13"
+                  ></Input>
+              </span>
               <br></br>
             </FormGroup>
             <FormGroup>
@@ -154,12 +227,13 @@ function MemberRegisterInfo(props) {
             <FormGroup>
             <Lbl value={"전화번호"}></Lbl>
               <span><Input 
-              id="phone" 
-              name="phone" 
-              type="tel" 
+              className={`${style.datepicker}`} 
+              placeholder="전화번호"
+              type="text"
+              onChange={checknumber}
               value={profile.phone}
-              className={`${style.datepicker}`}
-              onChange={onChangeProfile}></Input></span>
+              pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
+              maxLength="13"></Input></span>
               <br></br>
             </FormGroup>
           </Form>
