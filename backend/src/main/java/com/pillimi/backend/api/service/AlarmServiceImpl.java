@@ -90,6 +90,39 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     /*
+
+    보호자 알람 상세정보 조회
+     */
+    @Override
+    public ProtectorAlarmInfoRes getAlarmInfo(Long alarmSeq) {
+
+        AlarmProtector alarmProtector = alarmProtectorRepository.findById(alarmSeq).orElseThrow(()-> new NotFoundException(ErrorCode.ALARM_NOT_FOUND));
+
+        List<AlarmMedicineRes> alarmMedicineResList = memberMedicineRepository.findByAlarmProtege(alarmProtector.getAlarmProtege().getProtege()
+                , alarmProtector.getAlarmProtege().getAlarmTime());
+
+        return ProtectorAlarmInfoRes.builder()
+                .alarmProtectorSeq(alarmProtector.getAlarmSeq())
+                .protectorSeq(alarmProtector.getProtector().getMemberSeq())
+                .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
+                .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
+                .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
+                .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+                .photoURL(alarmProtector.getAlarmPhoto())
+                .medicineList(alarmMedicineResList)
+                .build();
+    }
+
+    /*
+        보호자 알람 상세정보 삭제
+    */
+    @Override
+    public void deleteAlarmInfo(Long alarmSeq) {
+
+        alarmProtectorRepository.deleteById(alarmSeq);
+    }
+
+    /*
     피보호자 복용 인증 사진 업로드
      */
     @Override
@@ -127,26 +160,6 @@ public class AlarmServiceImpl implements AlarmService {
                 .updateMemberMedicine(alarm.getProtege(),alarm.getAlarmTime(), LocalDate.now().getDayOfWeek().getValue());
 
         //TODO 보호자에게 push 알림보내기
-    }
-
-    @Override
-    public ProtectorAlarmInfoRes getAlarmInfo(Long alarmSeq) {
-
-        AlarmProtector alarmProtector = alarmProtectorRepository.findById(alarmSeq).orElseThrow(()-> new NotFoundException(ErrorCode.ALARM_NOT_FOUND));
-
-        List<AlarmMedicineRes> alarmMedicineResList = memberMedicineRepository.findByAlarmProtege(alarmProtector.getAlarmProtege().getProtege()
-                , alarmProtector.getAlarmProtege().getAlarmTime());
-
-        return ProtectorAlarmInfoRes.builder()
-                .alarmProtectorSeq(alarmProtector.getAlarmSeq())
-                .protectorSeq(alarmProtector.getProtector().getMemberSeq())
-                .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
-                .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
-                .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
-                .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
-                .photoURL(alarmProtector.getAlarmPhoto())
-                .medicineList(alarmMedicineResList)
-                .build();
     }
 }
 
