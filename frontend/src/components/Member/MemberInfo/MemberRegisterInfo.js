@@ -122,7 +122,7 @@ function MemberRegisterInfo(props) {
     // let birthDate = profile.Moment;
     if(isProtector) birthDate = null;
     let reginfo = {
-      birthDate: birthDate,
+      birthDate: isProtector === true? null : birthDate,
       isProtector: isProtector === true? 1 : 0,
       phone: profile.phone
     };
