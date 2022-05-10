@@ -38,7 +38,7 @@ public class ProtectorAlarmInfoRes {
     private String photoURL;
 
     @ApiModelProperty(name = "복용약 이름 리스트", example = "[{medicineName:'나제론오디정0.1mg',medicineCount:2},{medicineName:'나제론오디정0.1mg',medicineCount:3}]")
-    private List<MedicineDto> medicineList;
+    private List<AlarmMedicineDto> medicineList;
 
 
 }

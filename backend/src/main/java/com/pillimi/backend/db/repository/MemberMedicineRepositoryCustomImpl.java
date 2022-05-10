@@ -1,12 +1,15 @@
 package com.pillimi.backend.db.repository;
 
+import com.pillimi.backend.api.response.AlarmMedicineRes;
 import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.db.entity.*;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +26,11 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
     @Override
     public Optional<MemberMedicine> findByMemberAndMedicine(Member member, Medicine medicine) {
         MemberMedicine memberMedicine = jpaQueryFactory.select(qMemberMedicine)
-                .from(qMemberMedicine)
-                .where(qMemberMedicine.member.memberSeq.eq(member.getMemberSeq())
+                        .from(qMemberMedicine)
+                        .where(qMemberMedicine.member.memberSeq.eq(member.getMemberSeq())
                         .and(qMemberMedicine.medicine.medicineSeq.eq(medicine.getMedicineSeq())
-                                .and(qMemberMedicine.memberMedicineNow.eq(true))))
-                .fetchFirst();
+                        .and(qMemberMedicine.memberMedicineNow.eq(true))))
+                        .fetchFirst();
         return Optional.ofNullable(memberMedicine);
     }
 
@@ -55,5 +58,27 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
                 .where(qMember.eq(member).and(qMedicineIntake.intakeDay.eq(day)))
                 .orderBy(qMedicineIntake.intakeDay.asc())
                 .fetch();
+    }
+
+    /*
+     * 해당 알림 시간에 복용하는 약 목록을 조회한다.
+     */
+    @Override
+    public List<AlarmMedicineRes> findByAlarmProtege(Member member, LocalTime time) {
+        return jpaQueryFactory.select(Projections.constructor(AlarmMedicineRes.class,
+                qMedicine.medicineName,
+                qMemberMedicine.memberMedicineName,
+                qMedicine.medicineImage,
+                qMemberMedicine.memberMedicineCount))
+                .from(qMedicine)
+                .join(qMemberMedicine)
+                .on(qMemberMedicine.medicine.eq(qMedicine))
+                .join(qMedicineIntake)
+                .on(qMedicineIntake.memberMedicine.eq(qMemberMedicine))
+                .where(qMedicineIntake.intakeTime.eq(time)
+                        .and(qMemberMedicine.member.eq(member))
+                        .and(qMedicineIntake.intakeDay.eq(LocalDate.now().getDayOfWeek().getValue())))
+                .fetch();
+
     }
 }

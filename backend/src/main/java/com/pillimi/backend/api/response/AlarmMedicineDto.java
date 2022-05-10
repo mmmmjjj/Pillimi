@@ -1,6 +1,5 @@
 package com.pillimi.backend.api.response;
 
-import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 @Getter
@@ -8,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicineDto {
+public class AlarmMedicineDto {
 
     String medicineName;
 
