@@ -6,8 +6,7 @@ import { Button, Container } from "reactstrap";
 import MemberPillCheck from "../MemberPillCheck";
 import style from "../css/MemberPillCheck.module.css"
 import { AiOutlineCheckCircle } from 'react-icons/ai';
-import { getProtegeSeqAlarmDetail } from "api/alarm";
-
+import { getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm } from "api/alarm";
 
 // core components
 
@@ -30,7 +29,12 @@ function PillPictureAlarm(props) {
 
   const gotoAlarmList = () => {
     // props.history.locaion.props.onClickHandler(false);
-    window.location.href = `/member-pill-page/member-pill-list/`+ alarm.protegeSeq;
+    deleteProtegeSeqAlarm(alarmSeq, (success) => {
+      console.log(success);
+      window.location.href = `/member-pill-page/member-pill-list/`+ alarm.protegeSeq;
+    }, (fail) => {
+      console.log(fail);
+    })
   }
 
 
