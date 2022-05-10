@@ -162,7 +162,7 @@ function PillToday() {
                     <br></br>
                   </>
                 );
-              } else if (taken === false) {
+              } else if (taken === false && isProtector === false) {
                 result.push(
                   <>
                     <div className={PillTodayCSS.WhiteBox}>
