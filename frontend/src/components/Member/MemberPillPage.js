@@ -24,7 +24,7 @@ function MemberPillPage(props) {
         <Switch>
           <Switch>
             <Route
-              path={`${basicurl}/protector-take-alarm`}
+              path={`${basicurl}/protector-take-alarm/:protegeSeq`}
               render={(props) => (
                 <ProtectorTakeAlarm {...props} />
               )}

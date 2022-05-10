@@ -30,7 +30,7 @@ function MemberInfoModify({match}) {
   const onChangeProfile = (e) => {
     if (moment.isMoment(e)){
         setProfile({...profile, [e.name]:e._d});
-        console.log(profile.Moment)
+        console.log(profile.member_birthDate)
     }
     else{
         console.log(e.target.value);
@@ -122,7 +122,7 @@ function MemberInfoModify({match}) {
         setProfile({
           member_nickname: success.data.data.nickName,
           member_img: success.data.data.memberImage,
-          member_birthDate: success.data.data.birthDate,
+          member_birthDate: success.data.data.birthDate==null? null : new Date(success.data.data.birthDate),
           member_phone: success.data.data.phone,
         })
         if(success.data.data.birthDate==null){
@@ -198,7 +198,8 @@ function MemberInfoModify({match}) {
               <Label value={"생년월일"}></Label>
               <Datetime 
                 className={`${style.datepicker}`}
-                value={profile.Moment}
+                value={new Date(profile.member_birthDate)}
+                dateFormat='yyyy-MM-DD'
                 onChange={(e) => {
                   e.name = "member_birthDate"
                   onChangeProfile(e)

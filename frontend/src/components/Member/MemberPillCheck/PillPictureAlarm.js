@@ -67,7 +67,6 @@ function PillPictureAlarm(props) {
 
   return (
     <>
-    <MemberPillCheck></MemberPillCheck>
     <div className={`${style.whole}`}>
         
         <div  className={ `${style.center} ${style.backcolor}`}>
