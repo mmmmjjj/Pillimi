@@ -27,10 +27,15 @@ function PillTakeDetail() {
           '삭제 완료!',
           '삭제가 완료 되었습니다.',
           'success'
-        ).then((result) => {
+        ).then(function(memberSeq) {
           //삭제할 함수 작성
-          history.push(`/member-pill-page/member-pill-list/1`)
+          history.push(`/member-pill-page/member-pill-list/${memberSeq}`)
         });
+        // .then((result) => {
+        //   //삭제할 함수 작성
+        //   history.push(`/member-pill-page/member-pill-list/1`)
+        // });
+
       }
       
     });
