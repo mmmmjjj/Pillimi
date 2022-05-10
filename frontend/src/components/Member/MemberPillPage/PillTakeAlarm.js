@@ -36,6 +36,10 @@ function PillTakeAlarm(props) {
     }
   ];
 
+  const onClickHandler = (state) => {
+    props.onClickHandler(state);
+  }
+
   const PillList = (props) => {
     let result = [];
     props.pills.forEach(element => {
@@ -90,7 +94,7 @@ function PillTakeAlarm(props) {
     <>  
       <div className={`${style.center} ${style.whole}`}>
         <div className="d-flex">
-          <div className="flex-fill pt-2 pb-2 pr-4 m-0 border border-top-0 border-dark bg-white">
+          <div className="flex-fill pt-2 pb-2 pr-4 m-0 border border-top-0 border-dark bg-white" onClick={() => {onClickHandler(false)}}>
             약
           </div>
           <div className="flex-fill pt-2 pb-2">
