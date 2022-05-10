@@ -32,6 +32,11 @@ function ProtectorTakeAlarm(props) {
     })
   }
 
+  const timeFormat = (time) => {
+    console.log(time.substr(0,5));
+    return time.substr(0,5);
+  }
+
   const onClickHandler = (state) => {
     props.onClickHandler(state);
   }
@@ -40,6 +45,7 @@ function ProtectorTakeAlarm(props) {
     let result = [];
     alarmList.forEach(element =>{
       console.log(element.type);
+      let time = timeFormat(element.alarmTime);
       if(element.type===false){
         console.log(true + " : "+ element.time);
         result.push(<div className={`${style.checkAlarm2}`}>
@@ -49,7 +55,7 @@ function ProtectorTakeAlarm(props) {
           <div className="d-flex align-items-center">
             <div className={`${style.imgsize} ml-2 flex-fill`}><img src={element.photoURL} ></img></div>
             <div className="flex-fill">
-              <span>{element.protegeName}(님)의 {element.alarmTime}</span><br></br>
+              <span>{element.protegeName}(님)의 {time}</span><br></br>
               <span>약 복용 사진입니다.</span><br></br>
               <span>확인 후 인증 버튼을 눌러주세요!</span><br></br>
             </div>          
@@ -61,7 +67,7 @@ function ProtectorTakeAlarm(props) {
           <div>
             <span className={`${style.bold}`}>{element.alarmDate}</span><br></br>
           </div>
-          <span>{element.protegeName}(님)의 {element.alarmTime}</span><br></br>
+          <span>{element.protegeName}(님)의 {time}</span><br></br>
           <span>약 복용이 확인되셨습니다!</span><br></br>
         </div>);
       };
