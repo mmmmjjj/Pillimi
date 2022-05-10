@@ -84,17 +84,7 @@ public class AlarmServiceImpl implements AlarmService {
         List<AlarmMedicineRes> alarmMedicineResList = memberMedicineRepository.findByAlarmProtege(alarmProtector.getAlarmProtege().getProtege()
                 , alarmProtector.getAlarmProtege().getAlarmTime());
 
-        List<AlarmMedicineDto> alarmMedicineDtos = new LinkedList<>();
 
-        for(AlarmMedicineRes alarmMedicineRes : alarmMedicineResList){
-
-            AlarmMedicineDto alarmMedicineDto = AlarmMedicineDto.builder()
-                    .medicineName(alarmMedicineRes.getMedicineName())
-                    .medicineCount(alarmMedicineRes.getMemberMedicineCount())
-                    .build();
-
-            alarmMedicineDtos.add(alarmMedicineDto);
-        }
 
         ProtectorAlarmInfoRes protectorAlarmInfoRes = ProtectorAlarmInfoRes.builder()
                 .alarmProtectorSeq(alarmProtector.getAlarmSeq())
@@ -104,7 +94,7 @@ public class AlarmServiceImpl implements AlarmService {
                 .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
                 .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
                 .photoURL(alarmProtector.getAlarmPhoto())
-                .medicineList(alarmMedicineDtos)
+                .medicineList(alarmMedicineResList)
                 .build();
 
         return protectorAlarmInfoRes;
