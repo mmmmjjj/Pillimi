@@ -22,6 +22,7 @@ function PillTakeDetail({ match }) {
     intakeTime: [],
     intakeCount: "",
     remarkContent: "",
+    medicineSeq: "",
   });
 
   React.useEffect(() => {
@@ -29,7 +30,6 @@ function PillTakeDetail({ match }) {
       memberMedicineSeq,
       (response) => {
         if (response.status === 200) {
-          console.log(response);
           setPillInfo(response.data.data);
         }
       },
@@ -227,7 +227,7 @@ function PillTakeDetail({ match }) {
       </Button>
       <br></br>
       <br></br>
-      <h3 className={PillTakeRegisterCSS.More} onClick={gotoPillDetail}>
+      <h3 className={PillTakeRegisterCSS.More} onClick={() => gotoPillDetail(pillInfo.medicineSeq)}>
         약 상세 정보 더보기
       </h3>
       <br></br>
@@ -266,8 +266,8 @@ function PillTakeDetail({ match }) {
   );
 }
 
-function gotoPillDetail() {
-  window.location.href = "/pill-detail";
+function gotoPillDetail(medicineSeq) {
+  window.location.href = `/pill-detail/${medicineSeq}`;
 }
 
 function gotoPillModify() {
