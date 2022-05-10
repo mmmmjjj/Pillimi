@@ -69,7 +69,8 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
         return jpaQueryFactory.select(Projections.constructor(AlarmMedicineRes.class,
                 qMedicine.medicineName,
                 qMemberMedicine.memberMedicineName,
-                qMedicine.medicineImage))
+                qMedicine.medicineImage,
+                qMemberMedicine.memberMedicineCount))
                 .from(qMedicine)
                 .join(qMemberMedicine)
                 .on(qMemberMedicine.medicine.eq(qMedicine))

@@ -1,10 +1,8 @@
 package com.pillimi.backend.api.service;
 
 import com.pillimi.backend.api.request.UploadReq;
-import com.pillimi.backend.api.response.AlarmMedicineRes;
-import com.pillimi.backend.api.response.AlarmProtegeRes;
-import com.pillimi.backend.api.response.ProtectorAlarmRes;
 import com.pillimi.backend.common.exception.InvalidException;
+import com.pillimi.backend.api.response.*;
 import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.db.entity.AlarmProtector;
@@ -70,24 +68,26 @@ public class AlarmServiceImpl implements AlarmService {
     보호자 알림 목록 조회
      */
     @Override
-    public List<ProtectorAlarmRes> getAlarmProtectorList(Member member){
-            List<AlarmProtector> alarmProtectors = alarmProtectorRepository.findByProtector(member);
+    public List<ProtectorAlarmRes> getAlarmProtectorList(Member member) {
 
-            List<ProtectorAlarmRes> protectorAlarmResList = new LinkedList<>();
-            for (AlarmProtector alarmProtector : alarmProtectors) {
-                ProtectorAlarmRes protectorAlarmRes = ProtectorAlarmRes.builder().alarmProtectorSeq(alarmProtector.getAlarmSeq())
-                        .protectorSeq(alarmProtector.getProtector().getMemberSeq())
-                        .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
-                        .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
-                        .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
-                        .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
-                        .photoURL(alarmProtector.getAlarmPhoto())
-                        .build();
+        List<AlarmProtector> alarmProtectors = alarmProtectorRepository.findByProtector(member);
 
-                protectorAlarmResList.add(protectorAlarmRes);
-            }
-            return protectorAlarmResList;
+        List<ProtectorAlarmRes> protectorAlarmResList = new LinkedList<>();
+        for (AlarmProtector alarmProtector : alarmProtectors) {
+            ProtectorAlarmRes protectorAlarmRes = ProtectorAlarmRes.builder().alarmProtectorSeq(alarmProtector.getAlarmSeq())
+                    .protectorSeq(alarmProtector.getProtector().getMemberSeq())
+                    .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
+                    .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
+                    .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
+                    .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+                    .photoURL(alarmProtector.getAlarmPhoto())
+                    .build();
+
+            protectorAlarmResList.add(protectorAlarmRes);
         }
+
+        return protectorAlarmResList;
+    }
 
     /*
     피보호자 복용 인증 사진 업로드
@@ -128,4 +128,25 @@ public class AlarmServiceImpl implements AlarmService {
 
         //TODO 보호자에게 push 알림보내기
     }
+
+    @Override
+    public ProtectorAlarmInfoRes getAlarmInfo(Long alarmSeq) {
+
+        AlarmProtector alarmProtector = alarmProtectorRepository.findById(alarmSeq).orElseThrow(()-> new NotFoundException(ErrorCode.ALARM_NOT_FOUND));
+
+        List<AlarmMedicineRes> alarmMedicineResList = memberMedicineRepository.findByAlarmProtege(alarmProtector.getAlarmProtege().getProtege()
+                , alarmProtector.getAlarmProtege().getAlarmTime());
+
+        return ProtectorAlarmInfoRes.builder()
+                .alarmProtectorSeq(alarmProtector.getAlarmSeq())
+                .protectorSeq(alarmProtector.getProtector().getMemberSeq())
+                .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
+                .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
+                .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
+                .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+                .photoURL(alarmProtector.getAlarmPhoto())
+                .medicineList(alarmMedicineResList)
+                .build();
+    }
 }
+

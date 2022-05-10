@@ -77,9 +77,13 @@ function PillDetail({ match }) {
       title: "에이서캡슐(아세클로페낙)과 타이레놀은 동시 복용이 불가능합니다!",
       confirmButtonText: '확인',
       confirmButtonColor: `#d33`,
-    }).then(function () {
-      history.push(`/pill-detail/1`)
+    }).then(function (pillSeq) {
+      history.push(`/pill-detail/${pillSeq}`)
     });
+    // .then(function () {
+    //   history.push(`/pill-detail/1`)
+    // });
+
   };
   const FamilyName = () => {
     let result = [];
