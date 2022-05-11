@@ -85,7 +85,7 @@ function PillTakeModify(props) {
       ...pillRegister,
       time: stortime,
     });
-  }, []);
+  }, [pillRegister, props.location.state.info.intakeDay, props.location.state.info.intakeTime]);
 
   const regimedicine = () => {
     var saveintakeDay = [];
