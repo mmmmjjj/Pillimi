@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import FamilyRegisterRequest from "components/family/familyRegister/FamilyRegisterRequest.js";
 import FamilyRegisterReply from "components/family/familyRegister/FamilyRegisterReply.js";
 import MyFamily from "components/family/familyPage/MyFamily.js";
