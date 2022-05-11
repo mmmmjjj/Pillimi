@@ -40,13 +40,15 @@ public class ResponseMessage {
     public static final String DELETE_FAMILY = "가족 삭제 성공";
     public static final String REJECT_FAMILY_REQUEST = "가족 요청 거절";
 
-
     //Alarm
     public static final String GET_TAKE_ALARM = "복용 알림 조회 성공";
     public static final String POST_TAKE = "복용 인증 성공";
     public static final String GET_PROTECTOR_ALARM = "보호자 알람 목록 조회 성공";
     public static final String GET_PROTECTOR_ALARM_INFO = "보호자 알람 상세 조회 성공";
     public static final String DELETE_PROTECTOR_ALARM_INFO = "보호자 알람 삭제 성공";
+
+    //Firebase
+    public static final String UPDATE_FCM_TOKEN = "FCM 토큰 등록 성공";
 
 
 }

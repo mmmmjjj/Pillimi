@@ -51,5 +51,6 @@ public class Member extends BaseTimeEntity {
     @Column
     private Integer memberIsprotector;
 
-
+    @Column
+    private String memberFcmToken;
 }
