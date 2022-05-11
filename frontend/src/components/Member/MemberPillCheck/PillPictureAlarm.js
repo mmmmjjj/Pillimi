@@ -1,68 +1,67 @@
 /*eslint-disable*/
-import {React, useState} from "react";
+import {React, useEffect, useState} from "react";
 
 // reactstrap components
 import { Button, Container } from "reactstrap";
 import MemberPillCheck from "../MemberPillCheck";
 import style from "../css/MemberPillCheck.module.css"
 import { AiOutlineCheckCircle } from 'react-icons/ai';
-
+import { getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm } from "api/alarm";
 
 // core components
 
 function PillPictureAlarm(props) {
-  const pills = [
-    {
-      name: "나제론오디정0.1mg",
-      alias: "고혈압 약",
-      num: 2 
-    },
-    {
-      name: "나제론오디정0.1mg",
-      alias: "당뇨 약",
-      num: 1
-    }
-  ]
 
-  const [isChecked, setIsChecked] = useState(false);
+  const alarmSeq = props.match.params.alarmSeq;
+  const [alarm, setAlarm] = useState();
+  const [isChecked, setIsChecked] = useState(false)
 
-  const onChangeIsChecked = () => {
-    setIsChecked(!isChecked);
+  useEffect(() => {
+    console.log("마운트");
+    console.log(alarmSeq);
+    getProtegeSeqAlarmDetail(alarmSeq, (success) => {
+      console.log(success)
+      setAlarm(success.data.data);
+    }, (fail) =>{
+      console.log(fail);
+    })
+  },[])
+
+  const gotoAlarmList = () => {
+    // props.history.locaion.props.onClickHandler(false);
+    deleteProtegeSeqAlarm(alarmSeq, (success) => {
+      console.log(success);
+      window.location.href = `/member-pill-page/member-pill-list/`+ alarm.protegeSeq;
+    }, (fail) => {
+      console.log(fail);
+    })
   }
+
 
   const PillList = () => {
     let result = [];
-    pills.forEach(element => {
-      result.push(<span>{element.name}({element.alias})&nbsp;{element.num}정<br></br></span>)
-    });
+    if(alarm != null){
+      alarm.medicineList.forEach(element => {
+        result.push(<span>{element.medicineName}({element.memberMedicineName})&nbsp;{element.memberMedicineCount}정<br></br></span>)
+      });
+    }
     return result;
   }
 
   const IsCheckedPicture = () => {
-    if(isChecked){
+    if(alarm==null) return <div></div>
       return(
-        <>
+        <div >
           <div className={`${style.checkAlarm} ${style.bold}`}>
-            <span>(엄마)님께서 (9시 06분)</span><br></br>
-            <span>약 복용이 확인되셨습니다.</span>
-          </div>
-          <Button color="sky">확인</Button>
-        </>
-      )
-    }else{
-      return(
-        <>
-          <div className={`${style.checkAlarm} ${style.bold}`}>
-            <span>(엄마)님의 (19시 12분)</span><br></br>
+            <span>({alarm.protegeName})님의 ({alarm.alarmTime})</span><br></br>
             <span>약 복용 사진입니다</span><br></br>
             <span>복용할 약이 맞다면 </span><br></br>
             <span><span className={`${style.blue}`}>확인</span> 버튼을 눌러주세요</span>
           </div>
-          <Button color="sky" onClick={onChangeIsChecked} className="mr-5">확인</Button>
-          <Button>보류</Button>
-        </>
+          <Button color="sky" onClick={gotoAlarmList}>확인</Button>
+        </div>
       )
-    }
+
   }
 
   return (
@@ -73,12 +72,10 @@ function PillPictureAlarm(props) {
           <div className="pt-3">
             <span className={`${style.bold}`}>2022-04-12</span>
           </div>
-          <div>
-            <img src="http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif"></img>
+          <div className={style.allcenter}>
+            <img src={alarm!=null ? alarm.photoURL : ''} className={style.imgsize3}></img>
           </div>
-          <div className={`${style.smaller} mt-2`}>
-            <span>복용시간 : 9시 00분</span>
-            <br></br>
+          <div className={`${style.smaller}`}>
             <PillList></PillList>
           </div>
           <div className={`mt-3`}>

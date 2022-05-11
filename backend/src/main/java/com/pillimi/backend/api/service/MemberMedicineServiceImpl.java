@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -43,7 +44,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
     private final AlarmProtegeRepository alarmRepository;
 
-
+    /*
+    복용약품 등록
+     */
     @Override
     public void createMemberMedicine(MemberMedicineCreateReq req) {
 
@@ -65,6 +68,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .memberMedicineRemark(req.getRemarkContent())
                         .build());
 
+        LocalDateTime today = LocalDateTime.now();
         for(int day : req.getIntakeDay()){
             for(LocalTime time : req.getIntakeTime()){
                 medicineIntakeRepository.save(MedicineIntake.builder()
@@ -72,6 +76,20 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .intakeDay(day)
                         .intakeTime(time)
                         .build());
+
+                // 오늘 복용해야 한다면
+                if(today.getDayOfWeek().getValue()==day&&time.isAfter(today.toLocalTime())){
+                    AlarmProtege alarmProtege =
+                            alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(today.toLocalDate(),time,member).orElse(null);
+
+                    if(alarmProtege==null){
+                        alarmRepository.save(AlarmProtege.builder()
+                                .protege(member)
+                                .alarmTime(time)
+                                .alarmDate(today.toLocalDate())
+                                .build());
+                    }
+                }
             }
         }
 
@@ -86,6 +104,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         }
     }
 
+    /*
+    복용 약품 수정
+     */
     @Override
     public void updateMemberMedicine(MemberMedicineUpdateReq req) {
 
@@ -118,6 +139,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
     }
 
+    /*
+    복용 약품 삭제
+     */
     @Override
     public void deleteMemberMedicine(Long memberMedicineSeq) {
 
@@ -136,6 +160,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         memberMedicineRepository.save(memberMedicine);
     }
 
+    /*
+    멤버별 복용 약품 리스트 조회
+     */
     @Override
     public List<MemberMedicineRes> getMemberMedicine(Long memberSeq) {
 
@@ -174,6 +201,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         return memberMedicineResList;
     }
 
+    /*
+    복용 약품 상세 조회
+     */
     @Override
     public MemberMedicineRes getMemberMedicineInfo(Long memberMedicineSeq) {
         MemberMedicine memberMedicine = memberMedicineRepository.findByMemberMedicineSeq(memberMedicineSeq);
@@ -204,6 +234,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                 .build();
     }
 
+    /*
+    약품 등록 전 복용 가능 여부 체크
+     */
     public CheckMedicineRes checkMemberMedicine(Long memberSeq, Long medicineSeq) {
         Member member = memberRepository.getById(memberSeq);
         Medicine medicine = medicineRepository.findById(medicineSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode()));
@@ -281,7 +314,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
             LocalTime time = todayMedicineRes.getTime();
 
             if(!res.containsKey(time+" "+alarmSeq)){
-                alarmSeq = alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(LocalDate.now(),time,member).getAlarmSeq();
+                AlarmProtege alarm = alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(LocalDate.now(),time,member).orElse(null);
+
+                if(alarm==null) continue;
+
+                alarmSeq = alarm.getAlarmSeq();
+
                 res.put(time+" "+alarmSeq, new ArrayList<>());
             }
             res.get(time+" "+alarmSeq).add(todayMedicineRes);
