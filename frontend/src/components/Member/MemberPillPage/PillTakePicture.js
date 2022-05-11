@@ -25,6 +25,11 @@ function PillTakePicture(props) {
     })
   },[])
 
+  const gotoCamera = () => {
+    console.log("hi")
+    window.location.href = `/family/camera`
+  }
+
   const PillImageList =  (props) => {
     let result = [];
     let image = "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/150946223524600017"
@@ -48,7 +53,7 @@ function PillTakePicture(props) {
           <PillImageList></PillImageList>
         </div>
         <div className={`${style.bottom}`}>
-          <Button color="success" className={`${style.bigbnt}`}>사진 찍기</Button>
+          <Button color="success" className={`${style.bigbnt}`} onClick={gotoCamera}>사진 찍기</Button>
         </div>
       </div>
     </>
