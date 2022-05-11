@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {BackHandler} from 'react-native';
 import {WebView} from 'react-native-webview';
-const MyWebView = ({handleClose}) => {
-  const BASE_URL = 'https://k6a307.p.ssafy.io/';
+
+const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
+  const BASE_URL = 'https://k6a307.p.ssafy.io';
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -18,6 +20,7 @@ const MyWebView = ({handleClose}) => {
     return () => backHandler.remove();
   }, [goBackable]);
   useEffect(() => {
+    // setWebview(handleSetRef)
     if (webview && webview.clearCache) webview.clearCache();
   }, [webview]);
   return (
@@ -29,7 +32,8 @@ const MyWebView = ({handleClose}) => {
       mixedContentMode={'compatibility'}
       originWhitelist={['https://*', 'http://*']}
       overScrollMode={'never'}
-      ref={ref => setWebview(ref)}
+      ref={handleSetRef}
+      onLoadEnd={handleEndLoading}
       injectedJavaScript={` (function() {
               function wrap(fn) {
                  return function wrapper() {
