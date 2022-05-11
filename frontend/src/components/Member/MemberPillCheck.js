@@ -6,6 +6,7 @@ import React from "react";
 import "../../assets/css/now-ui-kit.css";
 import PillPictureAlarm from "./MemberPillCheck/PillPictureAlarm";
 import { Route, Switch } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 // core components
