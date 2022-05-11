@@ -6,27 +6,44 @@ import React from "react";
 import "../../assets/css/now-ui-kit.css";
 import PillPictureAlarm from "./MemberPillCheck/PillPictureAlarm";
 import { Route, Switch } from "react-router-dom";
+import Swal from "sweetalert2";
 
 // core components
 
 function MemberPillCheck(props) {
-  return (
-    <>
-      {/* <BrowserRouter> */}
-        <Header header={`복용 확인`}></Header>
-        <Switch>
+  let isLogin = useSelector((state) => state.memberInfo.isLogin);
+  if(!isLogin){
+    Swal.fire({
+      icon: "warning",
+      title: "로그인이 필요한 서비스입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+  }
+  if(isLogin){
+    return (
+      <>
+        {/* <BrowserRouter> */}
+          <Header header={`복용 확인`}></Header>
           <Switch>
-            <Route exact
-              path={`${props.match.path}/pill-picture-alarm/:alarmSeq`}
-              render={(props) => (
-                <PillPictureAlarm {...props} />
-              )}
-            />
+            <Switch>
+              <Route exact
+                path={`${props.match.path}/pill-picture-alarm/:alarmSeq`}
+                render={(props) => (
+                  <PillPictureAlarm {...props} />
+                )}
+              />
+            </Switch>
           </Switch>
-        </Switch>
-      {/* </BrowserRouter> */}
-    </>
-  );
+        {/* </BrowserRouter> */}
+      </>
+    );
+  } else {
+    return (
+      <div></div>
+    )
+  }
 }
 
 export default MemberPillCheck;
