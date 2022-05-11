@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
 // import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
@@ -42,7 +43,7 @@ function PillTakeRegister(props) {
     }
     var saveintakeTime = [];
     for (var j = 0; j < pillRegister.time.length; j++) {
-      if (pillRegister.time[j].slice(6, 8) === "PM") {
+      if (pillRegister.time[j].slice(6, 8) === "오후") {
         saveintakeTime.push(
           String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) +
             pillRegister.time[j].slice(2, 5)
@@ -101,6 +102,7 @@ function PillTakeRegister(props) {
   const onChangetimeinput = (e) => {
     settimeinput(e.format("hh:mm A"));
     settimecheck(false)
+    console.log(timeinput)
   };
 
   const pushtime = () => {
@@ -236,10 +238,10 @@ function PillTakeRegister(props) {
             value={pillRegister.startDate}
             name="startDate"
             className={PillTakeRegisterCSS.Input}
-            dateFormat="yyyy-MM-DD"
-            locale="ko"
             timeFormat={false}
             closeOnSelect
+            dateFormat="yyyy-MM-DD"
+            locale="ko"
             strictParsing={false}
             renderInput={(props) => {
               return (
@@ -426,12 +428,10 @@ function PillTakeRegister(props) {
               onChangetimeinput(e);
             }}
             name="time"
-            value={timeinput}
             className={PillTakeRegisterCSS.Input}
             dateFormat={false}
             closeOnSelect
             timeConstraints={{
-              hours: { min: 0, max: 11, step: 1 },
               minutes: { step: 10 },
             }}
             strictParsing={false}

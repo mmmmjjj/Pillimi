@@ -37,6 +37,10 @@ function regmedicine(medinfo,success, fail) {
   api.post(`member/medicine`, medinfo).then(success).catch(fail);
 }
 
+function modmedicine(medinfo,success, fail) {
+  api.put(`member/medicine`, medinfo).then(success).catch(fail);
+}
+
 function getMemberMedicineInfo(memberMedicineSeq, success, fail) {
   apiInstance().get(`/member/medicine/${memberMedicineSeq}`).then(success).catch(fail);
 }
@@ -63,6 +67,7 @@ export {
   modifyMemberInfo,
   getMemberMedicineList,
   regmedicine,
+  modmedicine,
   getMemberMedicineInfo,
   deleteMemberMedicine,
   getMemberMedicineCheck,
