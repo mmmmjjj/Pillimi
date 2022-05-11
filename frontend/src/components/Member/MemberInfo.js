@@ -48,9 +48,7 @@ function MemberInfo(props) {
             <Route exact
               path={`${props.match.path}/member-info-modify/:memberSeq`}
               render={(props) => (
-                <MemberInfoModify 
-                getheader={getheader}
-                {...props} />
+                <MemberInfoModify {...props} />
               )}
             />
           </Switch>
