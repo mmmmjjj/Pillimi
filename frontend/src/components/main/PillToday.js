@@ -79,9 +79,9 @@ function PillToday() {
     );
   };
 
-  const gotoPillTakePicture = (pillPicSeq) => {
+  const gotoPillTakePicture = (alarmSeq) => {
     history.push({
-      pathname: `/member-pill-page/pill-take-picture/${pillPicSeq}`,
+      pathname: `/member-pill-page/pill-take-picture/${alarmSeq}`,
     });
   };
 
