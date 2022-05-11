@@ -212,13 +212,13 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         MemberMedicine memberMedicine = memberMedicineRepository.findByMemberMedicineSeq(memberMedicineSeq);
 
         List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
-        List<LocalTime> times = new LinkedList<>();
         HashSet<Integer> dayset = new HashSet<>();
-
+        HashSet<LocalTime> timeset = new HashSet<>();
         for(MedicineIntake medicineIntake : medicineIntakes) {
-            times.add(medicineIntake.getIntakeTime());
+            timeset.add(medicineIntake.getIntakeTime());
             dayset.add(medicineIntake.getIntakeDay());
         }
+        List<LocalTime> times = new LinkedList<>(timeset);
         List<Integer> days = new LinkedList<>(dayset);
 
         return MemberMedicineRes.builder()
