@@ -88,6 +88,7 @@ function PillDetail({ match }) {
             state: {
               medicineSeq: pillSeq,
               medicineName: pillInfo.name,
+              memberSeq: memberSeq,
             },
           });
         } else {
