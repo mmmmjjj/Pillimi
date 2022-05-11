@@ -6,6 +6,7 @@ import PillSearchCSS from "./css/PillSearch.module.css";
 import Header from "components/Headers/Header";
 import { getPillSearch } from "../../api/pill.js";
 import { useInView } from 'react-intersection-observer'; 
+import { useSelector } from 'react-redux'
 
 function PillSearch() {
   const [keyword, setKeyword] = useState("");
@@ -14,6 +15,19 @@ function PillSearch() {
   const [scrollOptions, setScrollOptions] = useState(10);
   const { ref, inView } = useInView();
 
+  let isLogin = useSelector((state) => state.memberInfo.isLogin);
+  if(!isLogin){
+    Swal.fire({
+      icon: "warning",
+      title: "로그인이 필요한 서비스입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
   useEffect(() => {
     console.log(inView);
     if (inView) {
