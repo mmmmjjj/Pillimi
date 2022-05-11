@@ -62,7 +62,7 @@ function PillTakeRegister(props) {
       intakeTime: saveintakeTime,
       medicineSeq: props.location.state.medicineSeq,
       memberMedicineName: pillRegister.nick,
-      memberSeq: 1,
+      memberSeq: props.location.state.memberSeq,
       remarkContent: pillRegister.caution,
       startDay: pillRegister.startDate,
     });
@@ -74,12 +74,13 @@ function PillTakeRegister(props) {
         intakeTime: saveintakeTime,
         medicineSeq: props.location.state.medicineSeq,
         memberMedicineName: pillRegister.nick,
-        memberSeq: 1,
+        memberSeq: props.location.state.memberSeq,
         remarkContent: pillRegister.caution,
         startDay: pillRegister.startDate,
       },
       (success) => {
         console.log(success);
+        gotoMedicineList()
       },
       (fail) => {
         console.log(fail);
@@ -182,6 +183,10 @@ function PillTakeRegister(props) {
       });
     }
   };
+
+  const gotoMedicineList = () => {
+    window.location.href = `/member-pill-page/member-pill-list/` + props.location.state.memberSeq;
+  }
 
   return (
     <>
