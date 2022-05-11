@@ -30,21 +30,19 @@ const App = () => {
   };
 
   /** webview 로딩 완료시 */
-  const handleEndLoading = e => {
+  const handleEndLoading = async () => {
     console.log('handleEndLoading');
-    /** rn에서 웹뷰로 정보를 보내는 메소드 */
-    webviewRef.postMessage(checkToken());
-  };
 
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const checkToken = async () => {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
       console.log(fcmToken);
     }
-    return fcmToken;
+
+    /** rn에서 웹뷰로 정보를 보내는 메소드 */
+    webviewRef.postMessage(fcmToken);
   };
+
+  const isDarkMode = useColorScheme() === 'dark';
 
   // background, quit 상태 일 경우
   messaging().setBackgroundMessageHandler(async remoteMessage => {

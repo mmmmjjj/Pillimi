@@ -34,7 +34,6 @@ const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
       overScrollMode={'never'}
       ref={handleSetRef}
       onLoadEnd={handleEndLoading}
-      javaScriptEnabled={true}
       injectedJavaScript={` (function() {
               function wrap(fn) {
                  return function wrapper() {
