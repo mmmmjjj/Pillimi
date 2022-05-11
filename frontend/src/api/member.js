@@ -56,8 +56,8 @@ function getMemberMedicineCheck(memberMedicineSeq, memberSeq, success, fail) {
     .catch(fail);
 }
 
-function postFcmToken(fcmToken, success, fail) {
-  apiInstance().post(`/member/fcm?fcmToken=${fcmToken}`).then(success).catch(fail);
+function postFcmToken(fcmToken, memberSeq, success, fail) {
+  api2.post(`/member/fcm?fcmToken=${fcmToken}&memberSeq=${memberSeq}`).then(success).catch(fail);
 }
 
 export {
