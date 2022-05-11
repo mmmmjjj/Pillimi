@@ -159,7 +159,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
             memberIngredientRepository.deleteByMemberAndMedicineIngredient(member, medicineIngredient);
         }
 
-        //MySQL Forign Key 설정이 casecade로 되어있어서 멤버 약품 삭제시 하위 테이블인 복약주기도 함께 지워줌
+        //MySQL Foreign Key 설정이 cascade로 되어있어서 멤버 약품 삭제시 하위 테이블인 복약주기도 함께 지워줌
         memberMedicineRepository.deleteById(memberMedicine.getMemberMedicineSeq());
     }
 
