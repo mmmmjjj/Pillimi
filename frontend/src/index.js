@@ -52,6 +52,7 @@ import MemberInfo from "components/Member/MemberInfo.js";
 import MemberPillPage from "components/Member/MemberPillPage";
 import MemberPillCheck from "components/Member/MemberPillCheck";
 
+
 const store = createStore(rootReducer, composeWithDevTools());
 const persistor = persistStore(store);
 
