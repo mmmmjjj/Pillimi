@@ -79,9 +79,9 @@ function PillToday() {
     );
   };
 
-  const gotoPillTakePicture = (pillPicSeq) => {
+  const gotoPillTakePicture = (alarmSeq) => {
     history.push({
-      pathname: `/member-pill-page/pill-take-picture/${pillPicSeq}`,
+      pathname: `/member-pill-page/pill-take-picture/${alarmSeq}`,
     });
   };
 
@@ -95,11 +95,9 @@ function PillToday() {
     let hour = "";
     let min = "";
     let resultTime = "";
-    let pillPicSeq = "";
 
     pillListKey.forEach((element, index) => {
       if (pillListKey.length !== 0) {
-        pillPicSeq = element.split(" ")[1];
         hour = "";
         min = "";
         resultTime = "";
@@ -181,7 +179,10 @@ function PillToday() {
                     <div className={PillTodayCSS.WhiteBox}>
                       <br></br>
                       <br></br>
-                      <Button onClick={() => gotoPillTakePicture(pillPicSeq)} className={PillTodayCSS.PictureBtn}>
+                      <Button
+                        onClick={() => gotoPillTakePicture(element.split(" ")[1])}
+                        className={PillTodayCSS.PictureBtn}
+                      >
                         사진 찍기
                       </Button>
                       <br></br>

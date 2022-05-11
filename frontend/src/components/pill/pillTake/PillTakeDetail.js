@@ -161,6 +161,17 @@ function PillTakeDetail(props) {
     });
   };
 
+  const gotoPillModify = (memberMedicineSeq) => {
+    history.push({
+      pathname: `/pill-take/modify/${memberMedicineSeq}`,
+      state: {
+        medicineSeq: pillInfo.medicineSeq,
+        medicineName: pillInfo.medicineName,
+        memberSeq: memberSeq,
+      },
+    });
+  };
+
   return (
     <>
       <Header header="복용 약 상세"></Header>
@@ -217,10 +228,6 @@ function PillTakeDetail(props) {
 
 function gotoPillDetail(medicineSeq) {
   window.location.href = `/pill-detail/${medicineSeq}`;
-}
-
-function gotoPillModify(memberMedicineSeq) {
-  window.location.href = `/pill-take/modify/${memberMedicineSeq}`;
 }
 
 export default PillTakeDetail;
