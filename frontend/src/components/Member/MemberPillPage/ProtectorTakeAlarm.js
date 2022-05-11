@@ -12,13 +12,13 @@ import { getProtegeSeqAlarmList } from 'api/alarm'
 
 function ProtectorTakeAlarm(props) {
 
-  const protegeSeq = props.match.params.protegeSeq;
+  const protegeSeq = props.protegeSeq;
 
   const [ alarmList, setAlarmList ] = useState([]);
 
   useEffect(() =>{
     console.log("마운트")
-    console.log(props.match.params.memberSeq);
+    // console.log(props.match.params.memberSeq);
     getAlarmList();
   }, [])
 
