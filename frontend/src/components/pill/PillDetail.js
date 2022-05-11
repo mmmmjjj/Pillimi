@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "reactstrap";
-
+import Swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
 import PillDetailCSS from "./css/PillDetail.module.css";
 import Header from "components/Headers/Header";
 import { getPillInfo } from "../../api/pill.js";
@@ -68,7 +69,24 @@ function PillDetail({ match }) {
       }
     );
   };
-
+  const history = useHistory();
+  const gotoPillRegister = () => {
+    // event.preventDefault();
+    Swal.fire({
+      icon: "warning",
+      title: "에이서캡슐(아세클로페낙)과 타이레놀은 동시 복용이 불가능합니다!",
+      confirmButtonText: "확인",
+      confirmButtonColor: `#d33`,
+    }).then(function () {
+      history.push({
+        pathname: `/pill-take`,
+        state: {
+          medicineSeq: pillSeq,
+          medicineName: pillInfo.name,
+        },
+      });
+    });
+  };
   const FamilyName = () => {
     let result = [];
     familyList.forEach((element) => {
@@ -150,8 +168,8 @@ function Label(params) {
   );
 }
 
-function gotoPillRegister() {
-  window.location.href = "/pill-take";
-}
+// function gotoPillTake(pillSeq) {
+//   window.location.href = `/pill-take/${pillSeq}`;
+// }
 
 export default PillDetail;

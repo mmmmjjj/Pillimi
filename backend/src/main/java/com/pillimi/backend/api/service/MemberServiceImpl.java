@@ -48,8 +48,8 @@ public class MemberServiceImpl implements MemberService {
         //카카오에서 받은 정보들로 회원 생성
         member.setMemberUid(Long.toString(kakaoProfile.getId()));
         member.setMemberNickname(kakaoProfile.getKakao_account().getProfile().getNickname());
-        member.setMemberEmail(kakaoProfile.getKakao_account().getEmail());
         member.setMemberImage(kakaoProfile.getKakao_account().getProfile().getProfile_image_url());
+        member.setMemberIsfirst(true);
 
         return createMember(member);
     }

@@ -1,9 +1,11 @@
 package com.pillimi.backend.db.repository;
 
+import com.pillimi.backend.api.response.AlarmMedicineRes;
 import com.pillimi.backend.api.response.MemberMedicineRes;
 import com.pillimi.backend.api.response.TodayMedicineRes;
 import com.pillimi.backend.db.entity.*;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,5 +17,15 @@ public interface MemberMedicineRepositoryCustom {
      * 해당 회원의 오늘 먹을 약품을 시간순으로 조회한다.
      */
     List<TodayMedicineRes> findTodayMedicineList(Member member);
+
+    /*
+     * 해당 알림 시간에 복용하는 약 목록을 조회한다.
+     */
+    List<AlarmMedicineRes> findByAlarmProtege(Member member,LocalTime time);
+
+    /*
+     * 복용 인증한 시간대의 약들을 복용 완료로 업데이트한다.
+     */
+    void updateMemberMedicine(Member member, LocalTime time, int day);
 
 }

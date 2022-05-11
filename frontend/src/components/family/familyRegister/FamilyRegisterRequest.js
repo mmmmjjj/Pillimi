@@ -1,7 +1,8 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import "../familycss.css";
-
+import Swal from "sweetalert2";
+import { useHistory  } from "react-router-dom";
 // reactstrap components
 import {
   Input,
@@ -41,6 +42,18 @@ function FamilyRegisterRequest(props) {
       setnameok(false);
     }
   };
+  const history = useHistory();
+  const onSubmit = (event) => {
+    event.preventDefault();
+    Swal.fire({
+      icon: "success",
+      title: "가족 등록을 요청하였습니다.",
+      confirmButtonColor: `#0369a1`,
+    }).then(function () {
+      history.push(`/family/myfamily`)
+    });
+  };
+
   const checknumber = (event) => {
     var str = event.currentTarget.value.replace(/[^0-9]/g, "");
     var tmp = "";
@@ -104,6 +117,20 @@ function FamilyRegisterRequest(props) {
       }
     }
   };
+
+  const requestFamily = () => {
+    let memberInfo = {
+      memberName: membername,
+      memberPhone: phonenumber
+    }
+    requestAddFamily(memberInfo,
+      ( success ) => {
+        console.log(success)
+      }, ( fail ) => {
+        console.log(fail)
+      })
+  }
+  
   return (
     <>
       <Container style={{ padding: "50px" }}>
@@ -172,7 +199,7 @@ function FamilyRegisterRequest(props) {
         </Row>
         <Row>
           {numberok && nameok == true ? (
-            <Button className="activebtn" size="lg">
+            <Button className="activebtn" onClick={onSubmit} size="lg">
               완료
             </Button>
           ) : (

@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { getKakaoToken, getKakaoLogin } from "api/member";
 import { useSelector } from "react-redux";
 import { loginAction } from "actions/memberAction";
+import Loading from "./Loading";
 
 function Callback() {
   const dispatch = useDispatch();
-
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
   let isFirst = useSelector((state) => state.memberInfo.memberInfo.first);
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
@@ -49,7 +49,8 @@ function Callback() {
     }
   }, [dispatch, isFirst, isLogin, isProtector]);
 
-  return <>카카오 로그인 중</>;
+  // return <>카카오 로그인 중</>;
+  return <Loading></Loading>
 }
 
 function gotoRegisterInfo() {

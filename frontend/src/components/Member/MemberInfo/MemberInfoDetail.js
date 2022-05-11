@@ -9,14 +9,17 @@ import { getMemberInfoDetail } from '../../../api/member';
 import { useSelector } from 'react-redux';
 import { logoutAction } from "actions/memberAction";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import { useHistory  } from "react-router-dom";
 // core components
 
 
 
-function MemberInfoDetail({match}) {
-  const memberSeq = match.params.memberSeq;
+function MemberInfoDetail(props) {
+  console.log(props)
+  const memberSeq = props.match.params.memberSeq;
   const dispatch = useDispatch();
-
+  const history = useHistory();
   let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
 
   const [profile, setProfile] = useState({
@@ -29,7 +32,7 @@ function MemberInfoDetail({match}) {
   
   useEffect(() => {
     console.log("마운트")
-    console.log(match.params.memberSeq);
+    console.log(props.match.params.memberSeq);
     getMemberDetail(memberSeq);
   },[])
 
@@ -53,6 +56,8 @@ function MemberInfoDetail({match}) {
           member_birthDate: success.data.data.birthDate,
           member_phone: success.data.data.phone,
         })
+        console.log("여기 "+success.data.data.nickName)
+        props.getheader(String(success.data.data.nickName));
       }, (fail) => {
         console.log(fail);
       })
@@ -101,9 +106,19 @@ function MemberInfoDetail({match}) {
   }
 
   function LogOut(){
-    dispatch(logoutAction());
-    localStorage.removeItem('ACCESS_TOKEN');
-    window.location.href="/"
+      Swal.fire({
+        icon: "success",
+        title: "로그아웃 되었습니다.",
+        confirmButtonColor: `#0369a1`,
+      }).then(function () {
+        //history.push(`/`)
+        dispatch(logoutAction());
+        localStorage.removeItem('ACCESS_TOKEN');
+        window.location.href="/"
+      });
+    // dispatch(logoutAction());
+    // localStorage.removeItem('ACCESS_TOKEN');
+    // window.location.href="/"
   }
 
   return (

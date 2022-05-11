@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
-import moment from "moment";
+// import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
-import { regmedicine } from '../../../api/member';
+import { regmedicine } from "../../../api/member";
 
-function PillTakeRegister() {
+function PillTakeRegister(props) {
   const [pillRegister, setPillRegister] = useState({
     nick: "",
     startDate: "",
@@ -17,8 +17,10 @@ function PillTakeRegister() {
     volume: "",
     caution: "",
   });
-
   const [timeinput, settimeinput] = useState("");
+
+  const [smallend, setsmallend] = useState(false);
+  const [bigstart, setbigstart] = useState(false);
   const [checkday, setday] = useState([
     false,
     false,
@@ -29,38 +31,61 @@ function PillTakeRegister() {
     false,
   ]);
   const [timecheck, settimecheck] = useState(false);
-  // const [sunday, setsun] = useState(false);
-  // const [monday, setmon] = useState(false);
-  // const [tueday, settue] = useState(false);
-  // const [wedday, setwed] = useState(false);
-  // const [thuday, setthu] = useState(false);
-  // const [friday, setfri] = useState(false);
-  // const [satday, setsat] = useState(false);
+
   const regimedicine = () => {
-    regmedicine({
-      "endDay": pillRegister.endDate,
-      "intakeCount": 2,
-      "intakeDay": [
-        1,
-        3,
-        4
-      ],
-      "intakeTime": [
-        720,
-        840
-      ],
-      "medicineSeq": 1,
-      "memberMedicineName": pillRegister.nick,
-      "memberSeq": 1,
-      "remarkContent": pillRegister.caution,
-      "startDay": pillRegister.startDate
-    },
+    var saveintakeDay = [];
+    for (var i = 0; i < 7; i++) {
+      if (checkday[i] === true) {
+        saveintakeDay.push(i + 1);
+      }
+    }
+    var saveintakeTime = [];
+    for (var j = 0; j < pillRegister.time.length; j++) {
+      if (pillRegister.time[j].slice(6, 8) === "PM") {
+        saveintakeTime.push(
+          String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) +
+            pillRegister.time[j].slice(2, 5)
+        );
+      } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
+    }
+    console.log(saveintakeTime);
+    for (var k = 0; k < saveintakeTime.length; k++) {
+      if (parseInt(saveintakeTime[k].slice(0, 2)) > 23) {
+        saveintakeTime[k] = "00" + saveintakeTime[k].slice(2, 5);
+      }
+    }
+    console.log(saveintakeTime);
+    console.log({
+      endDay: pillRegister.endDate,
+      intakeCount: parseInt(pillRegister.volume),
+      intakeDay: saveintakeDay,
+      intakeTime: saveintakeTime,
+      medicineSeq: props.location.state.medicineSeq,
+      memberMedicineName: pillRegister.nick,
+      memberSeq: 1,
+      remarkContent: pillRegister.caution,
+      startDay: pillRegister.startDate,
+    });
+    regmedicine(
+      {
+        endDay: pillRegister.endDate,
+        intakeCount: parseInt(pillRegister.volume),
+        intakeDay: saveintakeDay,
+        intakeTime: saveintakeTime,
+        medicineSeq: props.location.state.medicineSeq,
+        memberMedicineName: pillRegister.nick,
+        memberSeq: 1,
+        remarkContent: pillRegister.caution,
+        startDay: pillRegister.startDate,
+      },
       (success) => {
         console.log(success);
-      }, (fail) => {
+      },
+      (fail) => {
         console.log(fail);
-      })
-  }
+      }
+    );
+  };
 
   const changeday = (index) => {
     setday([
@@ -68,11 +93,12 @@ function PillTakeRegister() {
       !checkday[index],
       ...checkday.slice(index + 1),
     ]);
+    console.log(checkday);
   };
 
   const onChangetimeinput = (e) => {
     settimeinput(e.format("hh:mm A"));
-    console.log(timeinput);
+    settimecheck(false)
   };
 
   const pushtime = () => {
@@ -84,6 +110,7 @@ function PillTakeRegister() {
     } else {
       settimecheck(true);
     }
+    console.log(pillRegister.time);
   };
 
   const deletetime = (index) => {
@@ -97,21 +124,56 @@ function PillTakeRegister() {
   };
 
   const onChangePillRegister = (e) => {
-    console.log(e._i);
-    if (moment.isMoment(e)) {
-      if (e.name === "time") {
-        setPillRegister({
-          ...pillRegister,
-          [e.name]: e.format("hh:mm A"),
-        });
-        settimecheck(false);
-        console.log(pillRegister.time);
+    // if (moment.isMoment(e)) {
+    //   if (e.name === "time") {
+    //     setPillRegister({
+    //       ...pillRegister,
+    //       [e.name]: e.format("hh:mm A"),
+    //     });
+    //     settimecheck(false);
+    //     console.log(pillRegister.time);
+    //   } else {
+    //     setPillRegister({
+    //       ...pillRegister,
+    //       [e.name]: e.format("YYYY-MM-DD"),
+    //     });
+    //     console.log(pillRegister.startDate);
+    //   }
+    // } else {
+    //   setPillRegister({
+    //     ...pillRegister,
+    //     [e.target.name]: e.target.value,
+    //   });
+    // }
+    if (e.name === "startDate") {
+      if (
+        pillRegister.endDate &&
+        e.format("YYYY-MM-DD") > pillRegister.endDate
+      ) {
+        setsmallend(true);
+        setbigstart(false);
       } else {
         setPillRegister({
           ...pillRegister,
-          [e.name]: e.format("YYYY/MM/DD"),
+          [e.name]: e.format("YYYY-MM-DD"),
         });
-        console.log(pillRegister.startDate);
+        setbigstart(false);
+        setsmallend(false);
+      }
+    } else if (e.name === "endDate") {
+      if (
+        pillRegister.startDate &&
+        e.format("YYYY-MM-DD") < pillRegister.startDate
+      ) {
+        setsmallend(false);
+        setbigstart(true);
+      } else {
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: e.format("YYYY-MM-DD"),
+        });
+        setbigstart(false);
+        setsmallend(false);
       }
     } else {
       setPillRegister({
@@ -125,7 +187,9 @@ function PillTakeRegister() {
     <>
       <Header header="복용 약 추가"></Header>
       <br></br>
-      <h3 className={PillTakeRegisterCSS.PillName}>에이서캡슐(아세클로페낙)</h3>
+      <h3 className={PillTakeRegisterCSS.PillName}>
+        {props.location.state.medicineName}
+      </h3>
       <div className={PillTakeRegisterCSS.Whole}>
         {/* <Label content={"약 별칭"}></Label>
         <DateLabel content={"복용 시작 일자"}></DateLabel>
@@ -146,6 +210,17 @@ function PillTakeRegister() {
         </FormGroup>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 시작 일자</h3>
+        {smallend ? (
+          <h5
+            style={{
+              width: "100%",
+              color: "red",
+            }}
+            color="danger"
+          >
+            종료 일자보다 작은 날짜를 입력하세요
+          </h5>
+        ) : null}
         <FormGroup>
           <Datetime
             onChange={(e) => {
@@ -156,10 +231,31 @@ function PillTakeRegister() {
             name="startDate"
             className={PillTakeRegisterCSS.Input}
             timeFormat={false}
+            closeOnSelect
+            strictParsing={false}
+            renderInput={(props) => {
+              return (
+                <input
+                  {...props}
+                  value={smallend ? "" : pillRegister.startDate}
+                />
+              );
+            }}
           />
         </FormGroup>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 종료 일자</h3>
+        {bigstart ? (
+          <h5
+            style={{
+              width: "100%",
+              color: "red",
+            }}
+            color="danger"
+          >
+            시작 일자보다 큰 날짜를 입력하세요
+          </h5>
+        ) : null}
         <FormGroup>
           <Datetime
             onChange={(e) => {
@@ -170,6 +266,16 @@ function PillTakeRegister() {
             value={pillRegister.endDate}
             className={PillTakeRegisterCSS.Input}
             timeFormat={false}
+            closeOnSelect
+            strictParsing={false}
+            renderInput={(props) => {
+              return (
+                <input
+                  {...props}
+                  value={bigstart ? "" : pillRegister.endDate}
+                />
+              );
+            }}
           />
         </FormGroup>
         <br></br>
@@ -313,6 +419,12 @@ function PillTakeRegister() {
             value={timeinput}
             className={PillTakeRegisterCSS.Input}
             dateFormat={false}
+            closeOnSelect
+            timeConstraints={{
+              hours: { min: 0, max: 11, step: 1 },
+              minutes: { step: 10 },
+            }}
+            strictParsing={false}
           />
         </FormGroup>
         <Row xs="3" sm="4" md="6" style={{ justifyContent: "start" }}>
@@ -368,7 +480,14 @@ function PillTakeRegister() {
       </div>
       <br></br>
       <br></br>
-      <Button className={PillTakeRegisterCSS.DoneBtn}>완료</Button>
+      <Button
+        className={PillTakeRegisterCSS.DoneBtn}
+        onClick={() => {
+          regimedicine();
+        }}
+      >
+        완료
+      </Button>
       <br></br>
       <br></br>
     </>

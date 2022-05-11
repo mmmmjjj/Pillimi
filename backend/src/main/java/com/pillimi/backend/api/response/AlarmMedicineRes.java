@@ -1,20 +1,16 @@
 package com.pillimi.backend.api.response;
 
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalTime;
-
-@ApiModel("TodayMedicineResponse")
+@ApiModel("AlarmMedicineResponse")
 @Getter
 @Setter
+@Builder
+@ToString
 @AllArgsConstructor
-public class TodayMedicineRes {
+public class AlarmMedicineRes {
 
     @ApiModelProperty(name = "약품 이름", example = "타이레놀")
     private String medicineName;
@@ -25,10 +21,7 @@ public class TodayMedicineRes {
     @ApiModelProperty(name = "약 이미지 주소", example = "???")
     private String imageURL;
 
-    @ApiModelProperty(name = "약 복용 시간", example = "12:00")
-    private LocalTime time;
-
-    @ApiModelProperty(name = "약 복용 여부", example = "true")
-    private boolean isTaken;
+    @ApiModelProperty(name = "복약 갯수", example = "1")
+    private int memberMedicineCount;
 
 }

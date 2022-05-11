@@ -34,8 +34,13 @@ function getMemberMedicineList(memberSeq, success, fail) {
 }
 
 function regmedicine(medinfo,success, fail) {
-  api.post(`member/medcine`, medinfo).then(success).catch(fail);
+  api.post(`member/medicine`, medinfo).then(success).catch(fail);
 }
+
+function getMemberMedicineInfo(memberMedicineSeq, success, fail) {
+  apiInstance().get(`/member/medicine/${memberMedicineSeq}`).then(success).catch(fail);
+}
+
 export {
   getKakaoToken,
   getKakaoLogin,
@@ -44,4 +49,5 @@ export {
   modifyMemberInfo,
   getMemberMedicineList,
   regmedicine,
+  getMemberMedicineInfo,
 };
