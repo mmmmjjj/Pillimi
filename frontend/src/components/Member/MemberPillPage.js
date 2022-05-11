@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import Header from "components/Headers/Header";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 
@@ -16,10 +17,26 @@ import ProtectorTakeAlarm from "./MemberPillPage/ProtectorTakeAlarm";
 
 function MemberPillPage(props) {
   var basicurl = props.match.path;
+  const [header, setHeader] = useState();
+  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  const protegeName = useSelector((state) => state.protegeInfo.protegeInfo.nickName);
+  const nickName = useSelector((state) => state.memberInfo.memberInfo.memberName);
+
+  const memberSeq = useSelector((state) => state.protegeInfo.protegeInfo)
+  
+  useEffect(()=>{
+    console.log(memberSeq);
+    console.log(protegeName);
+    if(isProtector){
+      setHeader(protegeName);
+    }else {
+      setHeader(nickName);
+    }
+  })
   return (
     <>
       {/* <BrowserRouter> */}
-      <Header header="김말자"></Header>
+      <Header header={header}></Header>
       <Switch>
         <Switch>
           <Route

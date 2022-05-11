@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, ListGroup, ListGroupItem, Modal } from "reactstrap";
 import "../familycss.css";
 import { getMyFamily } from '../../../api/family';
+import { useDispatch } from "react-redux";
+import { setProtegeInfoAction } from "actions/protegeAction";
 
 
 function FamilyProtector() {
   const [modalbool, setmodalbool] = useState(false)
   const [modalnum, setModalNum] = useState(-1);
-  const toggle = (num) => {
+  const [modalName, setModalName] = useState('');
+
+  const toggle = (num, str) => {
     console.log(num);
     setModalNum(num)
+    setModalName(str);
     setmodalbool(!modalbool)
   }
   // const [FamilyData, setFamilyData] = useState([])
@@ -52,7 +57,7 @@ function FamilyProtector() {
     }else{
       familyList.forEach( element => {
         result.push(
-          <ListGroupItem onClick={(e)=>{toggle(element.memberSeq, e)}} key={element.memberSeq}>
+          <ListGroupItem onClick={(e)=>{toggle(element.memberSeq, element.memberName, e)}} key={element.memberSeq}>
             <Row xs="4">
               <Col>
                 <img className="listimg" alt="" src={element.memberImage} />
@@ -71,18 +76,22 @@ function FamilyProtector() {
   const ProtegeModal = () => {
     console.log(modalnum)
     return(
-      <Modal isOpen={modalbool} toggle={(e) => toggle(-1, e)} centered>
+      <Modal isOpen={modalbool} toggle={(e) => toggle(-1, '', e)} centered>
         <Row style={{ padding:"20px",borderBottom:"1px solid black"}} onClick={gotoMemberInfoDetail}><h3 className="familyh3">회원 정보</h3></Row>
         <Row style={{ padding:"20px" }}><h3 className="familyh3" onClick={gotoMedicineList}>약 관리</h3></Row>
       </Modal>
     )
   }
 
+  const dispatch = useDispatch();
+
   const gotoMemberInfoDetail = () => {
     window.location.href = `/member-info/member-info-detail/` + modalnum;
   }
 
   const gotoMedicineList = () => {
+    console.log(modalName + " " + modalnum);
+    dispatch(setProtegeInfoAction({memberSeq: modalnum, nickName: modalName})); 
     window.location.href = `/member-pill-page/member-pill-list/` + modalnum;
   }
   return (

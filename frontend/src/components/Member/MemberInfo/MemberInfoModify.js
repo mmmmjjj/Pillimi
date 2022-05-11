@@ -13,9 +13,9 @@ import 'moment/locale/ko'
 // core components
 
 
-function MemberInfoModify({match}) {
+function MemberInfoModify(props) {
 
-  const memberSeq = match.params.memberSeq;
+  const memberSeq = props.match.params.memberSeq;
 
   const [profile, setProfile] = useState({
     member_nickname: "",
@@ -111,7 +111,7 @@ function MemberInfoModify({match}) {
   
   useEffect(() => {
     console.log("마운트")
-    console.log(match.params.memberSeq);
+    console.log(props.match.params.memberSeq);
     getMemberDetail(memberSeq);
   },[])
 
@@ -125,6 +125,8 @@ function MemberInfoModify({match}) {
           member_birthDate: success.data.data.birthDate==null? null : new Date(success.data.data.birthDate),
           member_phone: success.data.data.phone,
         })
+        console.log(success.data.data.nickName);
+        props.getheader(String(success.data.data.nickName));
         if(success.data.data.birthDate==null){
           setIsProtector(true);
         }

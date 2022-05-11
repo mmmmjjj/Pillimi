@@ -5,14 +5,14 @@ import React from "react";
 // reactstrap components
 import "../../assets/css/now-ui-kit.css";
 import PillPictureAlarm from "./MemberPillCheck/PillPictureAlarm";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 // core components
 
 function MemberPillCheck(props) {
   return (
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <Header header={`복용 확인`}></Header>
         <Switch>
           <Switch>
@@ -24,7 +24,7 @@ function MemberPillCheck(props) {
             />
           </Switch>
         </Switch>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </>
   );
 }
