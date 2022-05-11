@@ -1,5 +1,6 @@
 /*eslint-disable*/
-import React from "react";
+import { getAlarmPillList } from "api/alarm";
+import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 
 // reactstrap components
@@ -9,51 +10,36 @@ import style from "../css/MemberPillCheck.module.css"
 
 function PillTakePicture(props) {
 
-  const array1 = [
-    {
-      name: "나제론오디정0.1mg",
-      alias: "고혈압약",
-      routineDate: [0,1,2,3,4,5,6],
-      routineNumber: 1,
-      routineTime: "19:00",
-      img: "http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif",
-      isNow: true,
-    },
-    {
-      name: "나제론오디정0.1mg",
-      alias: "고혈압약",
-      routineDate: [0,3,6],
-      routineNumber: 2,
-      routineTime: "9:00",
-      img: "http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif",
-      isNow: true,
-    },
-    {
-      name: "타이레놀",
-      alias: "두통약",
-      routineDate: [0,1,4,5,6],
-      routineNumber: 1,
-      routineTime: "19:00",
-      img: "http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif",
-      isNow: false,
-    },
-    {
-      name: "타이레놀",
-      alias: "두통약",
-      routineDate: [0,1,4,5,6],
-      routineNumber: 1,
-      routineTime: "19:00",
-      img: "http://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040001/21/09/0400012109_168370_01.539.gif",
-      isNow: false,
-    },
-    
-  ];
+  const alarmSeq = props.match.params.alarmSeq;
+
+  const [pillList, setPillList] = useState([]);
+  const [memberName, setMemberName] = useState('');
+
+  useEffect(() => {
+    getAlarmPillList(alarmSeq, (success) => {
+      console.log(success.data.data);
+      setPillList(success.data.data.pillList);
+      setMemberName(success.data.data.nickName)
+    }, (fail) => {
+      console.log(fail);
+    })
+  },[])
+
+  const gotoCamera = () => {
+    console.log("hi")
+    window.location.href = `/family/camera/${alarmSeq}`
+  }
 
   const PillImageList =  (props) => {
     let result = [];
-    array1.forEach(element =>{
-      result.push(<div className={`${style.size2} mr-5`}>
-        <img src={element.img} className={`pt-4 ${style.imgsize3}`}></img>
+    let image = "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/150946223524600017"
+    pillList.forEach(element =>{
+      result.push(<div style={{width: `100%`}}>
+        <img src={image} alt="약 사진" className={`pt-4 mr-4`} style={{width:`80%`}}></img>
+        <div>
+          <span><h5>{element.medicineName}</h5></span>
+          <span><h5>{element.count} 개</h5></span>
+        </div>
       </div>)
       
     })
@@ -63,11 +49,11 @@ function PillTakePicture(props) {
   return (
     <>  
       <div className={`${style.center} ${style.whole}`}>
-        <div className="d-flex justify-content-center pl-4 pt-3 flex-wrap">
+        <div className="pl-4 pt-3">
           <PillImageList></PillImageList>
         </div>
         <div className={`${style.bottom}`}>
-          <Button color="success" className={`${style.bigbnt}`}>사진 찍기</Button>
+          <Button color="success" className={`${style.bigbnt}`} onClick={gotoCamera}>사진 찍기</Button>
         </div>
       </div>
     </>

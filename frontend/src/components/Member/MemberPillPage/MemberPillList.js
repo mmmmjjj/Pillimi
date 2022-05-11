@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css";
@@ -42,8 +42,15 @@ function MemberPillList(props) {
     );
   };
 
+  const history = useHistory();
+
   const gotoMedicineDetail = (memMediSeq) => {
-    window.location.href = "/pill-take/detail/" + memMediSeq;
+    history.push({
+      pathname: `/pill-take/detail/${memMediSeq}`,
+      state: {
+        memberSeq: memberSeq,
+      },
+    });
   };
 
   const PillList = (props) => {
@@ -76,7 +83,7 @@ function MemberPillList(props) {
     <>
       {rightTab ? (
         isProtector ? (
-          <ProtectorTakeAlarm onClickHandler={onClickHandler}></ProtectorTakeAlarm>
+          <ProtectorTakeAlarm onClickHandler={onClickHandler} protegeSeq={memberSeq}></ProtectorTakeAlarm>
         ) : (
           <PillTakeAlarm onClickHandler={onClickHandler}></PillTakeAlarm>
         )

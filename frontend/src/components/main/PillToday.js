@@ -1,12 +1,15 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { Button } from "reactstrap";
-
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 import PillTodayCSS from "./css/PillToday.module.css";
+import { Button } from "reactstrap";
+import style from "../Member/css/MemberPillCheck.module.css";
+
 import { getMyFamily } from "../../api/family.js";
 import { getPillToday, getMyPillToday } from "../../api/pill.js";
-import style from "../Member/css/MemberPillCheck.module.css";
 
 function PillToday() {
   const [familyList, setFamilyList] = useState([]);
@@ -17,6 +20,7 @@ function PillToday() {
   const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
 
   let firstFamilySeq = "";
+  const history = useHistory();
 
   useEffect(() => {
     if (isProtector === true) {
@@ -53,6 +57,7 @@ function PillToday() {
   const getMyPillTodayList = () => {
     getMyPillToday(
       (response) => {
+        setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
       (error) => {
@@ -72,6 +77,12 @@ function PillToday() {
         console.log(error);
       }
     );
+  };
+
+  const gotoPillTakePicture = (alarmSeq) => {
+    history.push({
+      pathname: `/member-pill-page/pill-take-picture/${alarmSeq}`,
+    });
   };
 
   const ShowPillList = () => {
@@ -168,7 +179,12 @@ function PillToday() {
                     <div className={PillTodayCSS.WhiteBox}>
                       <br></br>
                       <br></br>
-                      <Button className={PillTodayCSS.PictureBtn}>사진 찍기</Button>
+                      <Button
+                        onClick={() => gotoPillTakePicture(element.split(" ")[1])}
+                        className={PillTodayCSS.PictureBtn}
+                      >
+                        사진 찍기
+                      </Button>
                       <br></br>
                     </div>
                   </>

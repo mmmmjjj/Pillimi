@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -43,7 +44,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
     private final AlarmProtegeRepository alarmRepository;
 
-
+    /*
+    복용약품 등록
+     */
     @Override
     public void createMemberMedicine(MemberMedicineCreateReq req) {
 
@@ -63,8 +66,10 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .memberMedicineStart(req.getStartDay())
                         .memberMedicineEnd(req.getEndDay())
                         .memberMedicineRemark(req.getRemarkContent())
+                        .memberMedicineNow(true)
                         .build());
 
+        LocalDateTime today = LocalDateTime.now();
         for(int day : req.getIntakeDay()){
             for(LocalTime time : req.getIntakeTime()){
                 medicineIntakeRepository.save(MedicineIntake.builder()
@@ -72,20 +77,38 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .intakeDay(day)
                         .intakeTime(time)
                         .build());
+
+                // 오늘 복용해야 한다면
+                if(today.getDayOfWeek().getValue()==day&&time.isAfter(today.toLocalTime())){
+                    AlarmProtege alarmProtege =
+                            alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(today.toLocalDate(),time,member).orElse(null);
+
+                    if(alarmProtege==null){
+                        alarmRepository.save(AlarmProtege.builder()
+                                .protege(member)
+                                .alarmTime(time)
+                                .alarmDate(today.toLocalDate())
+                                .build());
+                    }
+                }
             }
         }
 
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(medicine);
 
 
+        // 약품들의 성분을 멤버 성분 테이블에 등록
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
             memberIngredientRepository.save(MemberIngredient.builder()
-                    .Ingredient(medicineIngredient.getIngredient())
+                    .medicineIngredient(medicineIngredient)
                     .member(member)
                     .build());
         }
     }
 
+    /*
+    복용 약품 수정
+     */
     @Override
     public void updateMemberMedicine(MemberMedicineUpdateReq req) {
 
@@ -118,6 +141,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
     }
 
+    /*
+    복용 약품 삭제
+     */
     @Override
     public void deleteMemberMedicine(Long memberMedicineSeq) {
 
@@ -128,14 +154,18 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         Member member = memberMedicine.getMember();
 
+        //멤버 성분 테이블에서 약품 성분을 삭제함
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
-            memberIngredientRepository.deleteByMemberAndIngredient(member, medicineIngredient.getIngredient());
+            memberIngredientRepository.deleteByMemberAndMedicineIngredient(member, medicineIngredient);
         }
 
-        memberMedicine.setMemberMedicineNow(false);
-        memberMedicineRepository.save(memberMedicine);
+        //MySQL Foreign Key 설정이 cascade로 되어있어서 멤버 약품 삭제시 하위 테이블인 복약주기도 함께 지워줌
+        memberMedicineRepository.deleteById(memberMedicine.getMemberMedicineSeq());
     }
 
+    /*
+    멤버별 복용 약품 리스트 조회
+     */
     @Override
     public List<MemberMedicineRes> getMemberMedicine(Long memberSeq) {
 
@@ -174,18 +204,21 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         return memberMedicineResList;
     }
 
+    /*
+    복용 약품 상세 조회
+     */
     @Override
     public MemberMedicineRes getMemberMedicineInfo(Long memberMedicineSeq) {
         MemberMedicine memberMedicine = memberMedicineRepository.findByMemberMedicineSeq(memberMedicineSeq);
 
         List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
-        List<LocalTime> times = new LinkedList<>();
         HashSet<Integer> dayset = new HashSet<>();
-
+        HashSet<LocalTime> timeset = new HashSet<>();
         for(MedicineIntake medicineIntake : medicineIntakes) {
-            times.add(medicineIntake.getIntakeTime());
+            timeset.add(medicineIntake.getIntakeTime());
             dayset.add(medicineIntake.getIntakeDay());
         }
+        List<LocalTime> times = new LinkedList<>(timeset);
         List<Integer> days = new LinkedList<>(dayset);
 
         return MemberMedicineRes.builder()
@@ -204,6 +237,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                 .build();
     }
 
+    /*
+    약품 등록 전 복용 가능 여부 체크
+     */
     public CheckMedicineRes checkMemberMedicine(Long memberSeq, Long medicineSeq) {
         Member member = memberRepository.getById(memberSeq);
         Medicine medicine = medicineRepository.findById(medicineSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEDICINE_NOT_FOUND.getCode()));
@@ -246,20 +282,22 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
             //병용 금기
             List<MemberIngredient> memberIngredients = memberIngredientRepository.findByMember(member);
-
-            for (MemberIngredient memberIngredient : memberIngredients) {
-                Optional<Dca> dcaOptional = dcaRepository.findByRelationAndAvoid(memberIngredient.getIngredient(), medicineIngredient.getIngredient());
-                if (dcaOptional.isPresent()) {
-                    Dca dca = dcaOptional.get();
-                    return CheckMedicineRes.builder()
-                            .checkType(3)
-                            .checkDesc("약품의 성분 " + medicineIngredient.getIngredient().getIngredientName()
-                                    + "은 현재 복용중인 " + memberIngredient.getIngredient().getIngredientName()
-                                    + " 성분과 병용금기 입니다. 확인해주세요.\n"
-                                    + dca.getDcaAvoidDesc())
-                            .build();
+            if(dcaRepository.existsByRelation(medicineIngredient.getIngredient())){
+                for (MemberIngredient memberIngredient : memberIngredients) {
+                    Optional<Dca> dcaOptional = dcaRepository.findByRelationAndAvoid(memberIngredient.getMedicineIngredient().getIngredient(), medicineIngredient.getIngredient());
+                    if (dcaOptional.isPresent()) {
+                        Dca dca = dcaOptional.get();
+                        return CheckMedicineRes.builder()
+                                .checkType(3)
+                                .checkDesc("약품의 성분 " + medicineIngredient.getIngredient().getIngredientName()
+                                        + "은 현재 복용중인 " + memberIngredient.getMedicineIngredient().getIngredient().getIngredientName()
+                                        + " 성분과 병용금기 입니다. 확인해주세요.\n"
+                                        + dca.getDcaAvoidDesc())
+                                .build();
+                    }
                 }
             }
+
         }
         return CheckMedicineRes.builder()
                 .checkType(0)
@@ -281,7 +319,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
             LocalTime time = todayMedicineRes.getTime();
 
             if(!res.containsKey(time+" "+alarmSeq)){
-                alarmSeq = alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(LocalDate.now(),time,member).getAlarmSeq();
+                AlarmProtege alarm = alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(LocalDate.now(),time,member).orElse(null);
+
+                if(alarm==null) continue;
+
+                alarmSeq = alarm.getAlarmSeq();
+
                 res.put(time+" "+alarmSeq, new ArrayList<>());
             }
             res.get(time+" "+alarmSeq).add(todayMedicineRes);

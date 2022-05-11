@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import { Button, Modal } from "reactstrap";
 import Swal from "sweetalert2";
-import { useHistory } from "react-router-dom";
+
 import PillDetailCSS from "./css/PillDetail.module.css";
 import Header from "components/Headers/Header";
+
 import { getPillInfo } from "../../api/pill.js";
 import { getMyFamily } from "../../api/family.js";
+import { getMemberMedicineCheck } from "../../api/member.js";
 
 function PillDetail({ match }) {
   const pillSeq = match.params.pillSeq;
@@ -69,30 +73,70 @@ function PillDetail({ match }) {
       }
     );
   };
+
   const history = useHistory();
-  const gotoPillRegister = () => {
-    // event.preventDefault();
-    Swal.fire({
-      icon: "warning",
-      title: "에이서캡슐(아세클로페낙)과 타이레놀은 동시 복용이 불가능합니다!",
-      confirmButtonText: "확인",
-      confirmButtonColor: `#d33`,
-    }).then(function () {
-      history.push({
-        pathname: `/pill-take`,
-        state: {
-          medicineSeq: pillSeq,
-          medicineName: pillInfo.name,
-        },
-      });
-    });
+  const gotoPillRegister = (memberSeq) => {
+    setRegisterPillModal(false);
+    getMemberMedicineCheck(
+      pillSeq,
+      memberSeq,
+      (response) => {
+        // event.preventDefault();
+        if (response.data.data.checkType === 0) {
+          history.push({
+            pathname: `/pill-take`,
+            state: {
+              medicineSeq: pillSeq,
+              medicineName: pillInfo.name,
+              memberSeq: memberSeq,
+            },
+          });
+        } else {
+          if (response.data.data.checkType === 1) {
+            Swal.fire({
+              icon: "warning",
+              title: "연령대 금기",
+              text: response.data.data.checkDesc,
+              confirmButtonText: "확인",
+              confirmButtonColor: `#d33`,
+            }).then(function () {
+              // setRegisterPillModal(false);
+            });
+          } else if (response.data.data.checkType === 2) {
+            Swal.fire({
+              icon: "warning",
+              title: "효능군 주의",
+              text: response.data.data.checkDesc,
+              confirmButtonText: "확인",
+              confirmButtonColor: `#d33`,
+            }).then(function () {
+              // setRegisterPillModal(false);
+            });
+          } else if (response.data.data.checkType === 3) {
+            Swal.fire({
+              icon: "warning",
+              title: "병용 금기",
+              desc: response.data.data.checkDesc,
+              confirmButtonText: "확인",
+              confirmButtonColor: `#d33`,
+            }).then(function () {
+              // setRegisterPillModal(false);
+            });
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
+
   const FamilyName = () => {
     let result = [];
     familyList.forEach((element) => {
       result.push(
         <>
-          <span onClick={gotoPillRegister}>{element.memberName}</span>
+          <span onClick={() => gotoPillRegister(element.memberSeq)}>{element.memberName}</span>
           <br></br>
         </>
       );
@@ -167,9 +211,5 @@ function Label(params) {
     </>
   );
 }
-
-// function gotoPillTake(pillSeq) {
-//   window.location.href = `/pill-take/${pillSeq}`;
-// }
 
 export default PillDetail;

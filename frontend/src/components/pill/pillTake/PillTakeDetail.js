@@ -4,12 +4,13 @@ import { Badge, Button, FormGroup } from "reactstrap";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
-import { getMemberMedicineInfo } from "../../../api/member.js";
+import { getMemberMedicineInfo, deleteMemberMedicine } from "../../../api/member.js";
 
 import Header from "components/Headers/Header";
 
-function PillTakeDetail({ match }) {
-  const memberMedicineSeq = match.params.memberMedicineSeq;
+function PillTakeDetail(props) {
+  const memberMedicineSeq = props.match.params.memberMedicineSeq;
+  const memberSeq = props.history.location.state.memberSeq;
 
   const [pillInfo, setPillInfo] = useState({
     medicineName: "",
@@ -35,7 +36,7 @@ function PillTakeDetail({ match }) {
         console.log(error);
       }
     );
-  }, [memberMedicineSeq]);
+  }, [memberMedicineSeq, props]);
 
   const TakeDay = () => {
     let result = [];
@@ -130,10 +131,10 @@ function PillTakeDetail({ match }) {
   };
 
   const history = useHistory();
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = () => {
+    // event.preventDefault();
     Swal.fire({
-      title: "에이서캡슐(아세클로페낙)을 정말 삭제하시겠습니까?",
+      title: `${pillInfo.medicineName}을 정말 삭제하시겠습니까?`,
       showCancelButton: true,
       confirmButtonColor: `#0369a1`,
       cancelButtonColor: "#d33",
@@ -141,15 +142,33 @@ function PillTakeDetail({ match }) {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("삭제 완료!", "삭제가 완료 되었습니다.", "success").then(function (memberSeq) {
-          //삭제할 함수 작성
-          history.push(`/member-pill-page/member-pill-list/${memberSeq}`);
-        });
-        // .then((result) => {
-        //   //삭제할 함수 작성
-        //   history.push(`/member-pill-page/member-pill-list/1`)
-        // });
+        console.log("isConfirmed");
+        deleteMemberMedicine(
+          memberMedicineSeq,
+          memberSeq,
+          (response) => {
+            if (response.status === 200) {
+              Swal.fire("삭제 완료!", "삭제가 완료 되었습니다.", "success").then(function () {
+                history.push(`/member-pill-page/member-pill-list/${memberSeq}`);
+              });
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
+    });
+  };
+
+  const gotoPillModify = (memberMedicineSeq) => {
+    history.push({
+      pathname: `/pill-take/modify/${memberMedicineSeq}`,
+      state: {
+        medicineSeq: pillInfo.medicineSeq,
+        medicineName: pillInfo.medicineName,
+        memberSeq: memberSeq,
+      },
     });
   };
 
@@ -209,10 +228,6 @@ function PillTakeDetail({ match }) {
 
 function gotoPillDetail(medicineSeq) {
   window.location.href = `/pill-detail/${medicineSeq}`;
-}
-
-function gotoPillModify(memberMedicineSeq) {
-  window.location.href = `/pill-take/modify/${memberMedicineSeq}`;
 }
 
 export default PillTakeDetail;

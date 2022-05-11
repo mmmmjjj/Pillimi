@@ -8,7 +8,10 @@ async function getKakaoToken(code, success, fail) {
 }
 
 async function getKakaoLogin(kakaoToken, success, fail) {
-  await api2.get(`/member/kakao/login?accessToken=${kakaoToken}`).then(success).catch(fail);
+  await api2
+    .get(`/member/kakao/login?accessToken=${kakaoToken}`)
+    .then(success)
+    .catch(fail);
 }
 
 function addRegInfo(regInfo, success, fail) {
@@ -30,8 +33,26 @@ function getMemberMedicineList(memberSeq, success, fail) {
     .catch(fail);
 }
 
+function regmedicine(medinfo,success, fail) {
+  api.post(`member/medicine`, medinfo).then(success).catch(fail);
+}
+
 function getMemberMedicineInfo(memberMedicineSeq, success, fail) {
   apiInstance().get(`/member/medicine/${memberMedicineSeq}`).then(success).catch(fail);
+}
+
+function deleteMemberMedicine(memberMedicineSeq, protegeSeq, success, fail) {
+  apiInstance()
+    .delete(`/member/medicine?memberMedicineSeq=${memberMedicineSeq}&protegeSeq=${protegeSeq}`)
+    .then(success)
+    .catch(fail);
+}
+
+function getMemberMedicineCheck(memberMedicineSeq, memberSeq, success, fail) {
+  apiInstance()
+    .get(`/member/medicine/check?medicineSeq=${memberMedicineSeq}&memberSeq=${memberSeq}`)
+    .then(success)
+    .catch(fail);
 }
 
 export {
@@ -41,5 +62,8 @@ export {
   getMemberInfoDetail,
   modifyMemberInfo,
   getMemberMedicineList,
+  regmedicine,
   getMemberMedicineInfo,
+  deleteMemberMedicine,
+  getMemberMedicineCheck,
 };
