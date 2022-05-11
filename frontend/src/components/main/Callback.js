@@ -55,7 +55,7 @@ function Callback() {
         }
       }
     }
-  }, [dispatch, isFirst, isLogin, isProtector]);
+  }, [dispatch, isFirst, isLogin, isProtector, fcmToken]);
 
   // return <>카카오 로그인 중</>;
   return <Loading></Loading>;
