@@ -8,6 +8,7 @@ import MemberRegisterInfo from "./MemberInfo/MemberRegisterInfo";
 import MemberInfoDetail from "./MemberInfo/MemberInfoDetail";
 import MemberInfoModify from "./MemberInfo/MemberInfoModify";
 import { useSelector } from 'react-redux';
+import Swal from "sweetalert2";
 
 // core components
 
@@ -15,6 +16,16 @@ function MemberInfo(props) {
 
   // var basicurl = props.match.path;
   let nickName = useSelector((state) => state.memberInfo.memberInfo.nickName);
+  let isLogin = useSelector((state) => state.memberInfo.isLogin);
+  if(!isLogin){
+    Swal.fire({
+      icon: "warning",
+      title: "로그인이 필요한 서비스입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+  }
   console.log(nickName)
   const [header, setheader] = useState(nickName);
   const getheader = (str) => {
@@ -25,9 +36,10 @@ function MemberInfo(props) {
   const getnavbar = (bool) => {
     setnavbar(bool);
   };
+  if(isLogin){
   return (
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <Header header={header+`님의 정보`}></Header>
         <Switch>
           <Switch>
@@ -55,9 +67,13 @@ function MemberInfo(props) {
             />
           </Switch>
         </Switch>
-      </BrowserRouter>
+      {/* </BrowserRouter> */}
     </>
-  );
+    );
+  } else {
+    return <div></div>
+  }
+  
 }
 
 export default MemberInfo;
