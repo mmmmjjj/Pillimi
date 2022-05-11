@@ -1,14 +1,30 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Button, Card } from "reactstrap";
 import Swal from "sweetalert2";
 import PillSearchCSS from "./css/PillSearch.module.css";
 import Header from "components/Headers/Header";
 import { getPillSearch } from "../../api/pill.js";
+import { useInView } from 'react-intersection-observer'; 
 
 function PillSearch() {
   const [keyword, setKeyword] = useState("");
   const [pillList, setPillList] = useState([]);
+  const [datas, setDatas] = useState([]);
+  const [scrollOptions, setScrollOptions] = useState(10);
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    console.log(inView);
+    if (inView) {
+      setScrollOptions(scrollOptions+20);
+      // fetchMore({page});
+    }
+  }, [inView]);
+
+  useEffect(() => {
+    setDatas(pillList.slice(0, scrollOptions));
+  }, [pillList, scrollOptions]);
 
   const onChangeKeyword = (e) => {
     setKeyword(e.target.value);
@@ -51,8 +67,8 @@ function PillSearch() {
 
   const ShowPillList = () => {
     let result = [];
-    if (pillList.length !== 0) {
-      pillList.forEach((element) => {
+    if (datas.length !== 0) {
+      datas.forEach((element) => {
         result.push(
           <Card id="pillListDiv" className={PillSearchCSS.PillList} onClick={() => gotoPillDetail(element.medicineSeq)}>
             <div className="d-flex align-items-center">
@@ -63,6 +79,7 @@ function PillSearch() {
           </Card>
         );
       });
+      result.push(<div ref={ref} style={{color:`white`}}>.</div>)
     }
 
     return result;
@@ -71,6 +88,7 @@ function PillSearch() {
   React.useEffect(() => {
     ShowPillList();
   }, []);
+
 
   return (
     <>
