@@ -7,24 +7,32 @@ import Loading from "./Loading";
 
 function Callback() {
   const dispatch = useDispatch();
+  const [fcmToken, setFcmToken] = React.useState("");
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
   let isFirst = useSelector((state) => state.memberInfo.memberInfo.first);
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
 
   React.useEffect(() => {
+    // 앱에서 fcmToken 가져오기
+    document.addEventListener("message", ({ data }) => {
+      setFcmToken(data);
+    });
+
     if (!isLogin) {
       let code = new URL(window.location.href).searchParams.get("code");
       getKakaoToken(
         code,
-        (response) => {
+        async (response) => {
           const TOKEN = response.data.data;
-          getKakaoLogin(
+          await getKakaoLogin(
             TOKEN,
             async (response) => {
               if (response.data.statusCode === 200) {
                 await dispatch(loginAction(response.data.data));
                 const ACCESS_TOKEN = response.data.data.accessToken;
                 localStorage.setItem("ACCESS_TOKEN", ACCESS_TOKEN);
+                // await fcmToken 보내기 요청
+                console.log(fcmToken);
               }
             },
             (error) => {
@@ -47,10 +55,10 @@ function Callback() {
         }
       }
     }
-  }, [dispatch, isFirst, isLogin, isProtector]);
+  }, [dispatch, isFirst, isLogin, isProtector, fcmToken]);
 
   // return <>카카오 로그인 중</>;
-  return <Loading></Loading>
+  return <Loading></Loading>;
 }
 
 function gotoRegisterInfo() {

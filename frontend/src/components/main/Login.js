@@ -35,6 +35,7 @@ function Login() {
             </a>
             <br></br>
             <br></br>
+
             {/* <Link to="/pill-today">
           <img src={naver_login} className={LoginCSS.LoginBtn} alt="naver_login" />
         </Link> */}
