@@ -8,10 +8,7 @@ async function getKakaoToken(code, success, fail) {
 }
 
 async function getKakaoLogin(kakaoToken, success, fail) {
-  await api2
-    .get(`/member/kakao/login?accessToken=${kakaoToken}`)
-    .then(success)
-    .catch(fail);
+  await api2.get(`/member/kakao/login?accessToken=${kakaoToken}`).then(success).catch(fail);
 }
 
 function addRegInfo(regInfo, success, fail) {
@@ -33,7 +30,7 @@ function getMemberMedicineList(memberSeq, success, fail) {
     .catch(fail);
 }
 
-function regmedicine(medinfo,success, fail) {
+function regmedicine(medinfo, success, fail) {
   api.post(`member/medicine`, medinfo).then(success).catch(fail);
 }
 
@@ -55,6 +52,10 @@ function getMemberMedicineCheck(memberMedicineSeq, memberSeq, success, fail) {
     .catch(fail);
 }
 
+function postFcmToken(fcmToken, success, fail) {
+  apiInstance().post(`/member/fcm?fcmToken=${fcmToken}`).then(success).catch(fail);
+}
+
 export {
   getKakaoToken,
   getKakaoLogin,
@@ -66,4 +67,5 @@ export {
   getMemberMedicineInfo,
   deleteMemberMedicine,
   getMemberMedicineCheck,
+  postFcmToken,
 };

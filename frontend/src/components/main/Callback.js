@@ -4,6 +4,7 @@ import { getKakaoToken, getKakaoLogin } from "api/member";
 import { useSelector } from "react-redux";
 import { loginAction } from "actions/memberAction";
 import Loading from "./Loading";
+import { postFcmToken } from "../../api/member.js";
 
 function Callback() {
   const dispatch = useDispatch();
@@ -32,7 +33,19 @@ function Callback() {
                 const ACCESS_TOKEN = response.data.data.accessToken;
                 localStorage.setItem("ACCESS_TOKEN", ACCESS_TOKEN);
                 // await fcmToken 보내기 요청
-                console.log(fcmToken);
+                if (fcmToken !== "") {
+                  postFcmToken(
+                    fcmToken,
+                    async (response) => {
+                      if (response.status === 200) {
+                        console.log(fcmToken);
+                      }
+                    },
+                    (error) => {
+                      console.log(error);
+                    }
+                  );
+                }
               }
             },
             (error) => {
