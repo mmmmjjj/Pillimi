@@ -1,7 +1,7 @@
 import { apiInstance, apiInstance2 } from "./index.js";
 
 const api2 = apiInstance2();
-const api = apiInstance();
+// const api = apiInstance();
 
 async function getKakaoToken(code, success, fail) {
   await api2.get(`/member/kakao/token?code=${code}`).then(success).catch(fail);
@@ -12,30 +12,30 @@ async function getKakaoLogin(kakaoToken, success, fail) {
 }
 
 function addRegInfo(regInfo, success, fail) {
-  api.post(`/member/register`, regInfo).then(success).catch(fail);
+  apiInstance().post(`/member/register`, regInfo).then(success).catch(fail);
 }
 
 function getMemberInfoDetail(memberSeq, success, fail) {
-  api.get(`/member?memberSeq=${memberSeq}`).then(success).catch(fail);
+  apiInstance().get(`/member?memberSeq=${memberSeq}`).then(success).catch(fail);
 }
 
 function modifyMemberInfo(memberInfo, success, fail) {
-  api.put(`/member`, memberInfo).then(success).catch(fail);
+  apiInstance().put(`/member`, memberInfo).then(success).catch(fail);
 }
 
 function getMemberMedicineList(memberSeq, success, fail) {
-  api
+  apiInstance()
     .get(`/member/medicine?protegeSeq=` + memberSeq)
     .then(success)
     .catch(fail);
 }
 
 function regmedicine(medinfo, success, fail) {
-  api.post(`member/medicine`, medinfo).then(success).catch(fail);
+  apiInstance().post(`member/medicine`, medinfo).then(success).catch(fail);
 }
 
-function modmedicine(medinfo,success, fail) {
-  api.put(`member/medicine`, medinfo).then(success).catch(fail);
+function modmedicine(medinfo, success, fail) {
+  apiInstance().put(`member/medicine`, medinfo).then(success).catch(fail);
 }
 
 function getMemberMedicineInfo(memberMedicineSeq, success, fail) {
