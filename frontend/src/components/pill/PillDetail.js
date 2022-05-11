@@ -11,6 +11,7 @@ import Header from "components/Headers/Header";
 import { getPillInfo } from "../../api/pill.js";
 import { getMyFamily } from "../../api/family.js";
 import { getMemberMedicineCheck } from "../../api/member.js";
+import Navbar from "layout/Navbar.js";
 
 function PillDetail({ match }) {
   const pillSeq = match.params.pillSeq;
@@ -169,6 +170,7 @@ function PillDetail({ match }) {
         <Label value={"유통기한"} content={pillInfo.validity}></Label>
         <Label value={"성분표"} content={pillInfo.ingredient}></Label>
       </div>
+      <Navbar />
 
       <Modal
         centered
