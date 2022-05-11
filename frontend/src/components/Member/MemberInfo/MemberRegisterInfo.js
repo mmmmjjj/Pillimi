@@ -7,6 +7,7 @@ import { Button, FormGroup, Form, Input } from "reactstrap";
 import style from "../css/MemberInfo.module.css";
 import Datetime from 'react-datetime';
 import moment from "moment";
+import 'moment/locale/ko'
 import { addRegInfo } from "../../../api/member"
 
 // core components
@@ -172,6 +173,8 @@ function MemberRegisterInfo(props) {
               <Datetime 
                 className={`${style.datepicker}`}
                 // inputProps={inputprops}
+                locale="ko"
+                dateFormat="yyyy-MM-DD"
                 value={profile.Moment}
                 onChange={(e) => {
                   e.name = "Moment"

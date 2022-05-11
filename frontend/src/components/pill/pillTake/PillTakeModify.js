@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Input, Badge, Button, FormGroup } from "reactstrap";
 import Datetime from "react-datetime";
 import moment from "moment";
+import 'moment/locale/ko'
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
@@ -68,8 +69,11 @@ function PillTakeModify() {
               e.name = "startDate";
               onChangePillRegister(e);
             }}
+
             value={pillRegister.startDate}
             name="startDate"
+            dateFormat="yyyy-MM-DD"
+            locale="ko"
             className={PillTakeRegisterCSS.Input}
             timeFormat={false}
           />
@@ -83,6 +87,8 @@ function PillTakeModify() {
               onChangePillRegister(e);
             }}
             name="endDate"
+            dateFormat="yyyy-MM-DD"
+            locale="ko"
             value={pillRegister.endDate}
             className={PillTakeRegisterCSS.Input}
             timeFormat={false}
