@@ -91,14 +91,37 @@ function PillDetail({ match }) {
             },
           });
         } else {
-          Swal.fire({
-            icon: "warning",
-            title: response.data.data.checkDesc,
-            confirmButtonText: "확인",
-            confirmButtonColor: `#d33`,
-          }).then(function () {
-            // setRegisterPillModal(false);
-          });
+          if (response.data.data.checkType === 1) {
+            Swal.fire({
+              icon: "warning",
+              title: "연령대 금기",
+              text: response.data.data.checkDesc,
+              confirmButtonText: "확인",
+              confirmButtonColor: `#d33`,
+            }).then(function () {
+              // setRegisterPillModal(false);
+            });
+          } else if (response.data.data.checkType === 2) {
+            Swal.fire({
+              icon: "warning",
+              title: "효능군 주의",
+              text: response.data.data.checkDesc,
+              confirmButtonText: "확인",
+              confirmButtonColor: `#d33`,
+            }).then(function () {
+              // setRegisterPillModal(false);
+            });
+          } else if (response.data.data.checkType === 3) {
+            Swal.fire({
+              icon: "warning",
+              title: "병용 금기",
+              desc: response.data.data.checkDesc,
+              confirmButtonText: "확인",
+              confirmButtonColor: `#d33`,
+            }).then(function () {
+              // setRegisterPillModal(false);
+            });
+          }
         }
       },
       (error) => {
