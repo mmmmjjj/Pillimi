@@ -29,7 +29,7 @@ import java.util.List;
 
 import static com.pillimi.backend.common.model.ResponseMessage.*;
 
-@Api(value = "회원 API", tags = "Member")
+@Api(value = "회원약품 API", tags = "MemberMedicine")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/member/medicine")
