@@ -27,7 +27,7 @@ function PillTakePicture(props) {
 
   const gotoCamera = () => {
     console.log("hi")
-    window.location.href = `/family/camera`
+    window.location.href = `/family/camera/${alarmSeq}`
   }
 
   const PillImageList =  (props) => {

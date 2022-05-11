@@ -20,7 +20,7 @@ function Family(props) {
   };
   var basicurl = props.match.path;
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <div id="outsidecon">
         <Row style={{paddingTop:"30px", paddingBottom:"5px"}}>
           <Col xs="2" className="familypagecol1">
@@ -67,7 +67,7 @@ function Family(props) {
             )}
           />
           <Route
-            path={`${basicurl}/camera`}
+            path={`${basicurl}/camera/:alarmSeq`}
             render={(props) => (
               <Cameratest getheader={getheader} getnavbar={getnavbar} {...props} />
             )}
@@ -81,7 +81,7 @@ function Family(props) {
         </Switch>
         {navbar ? <Navbar /> : null}
       </div>
-    </BrowserRouter>
+    // </BrowserRouter>
   );
 }
 

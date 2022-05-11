@@ -18,4 +18,8 @@ function getAlarmPillList(alarmSeq, success, fail) {
   api.get(`/alarm/protege/${alarmSeq}`).then(success).catch(fail);
 }
 
-export { getProtegeSeqAlarmList, getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm, getAlarmPillList };
+function addPillTakePicture(imgInfo, success, fail) {
+  api.post(`/alarm/protege`, imgInfo).then(success).catch(fail);
+}
+
+export { getProtegeSeqAlarmList, getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm, getAlarmPillList, addPillTakePicture };
