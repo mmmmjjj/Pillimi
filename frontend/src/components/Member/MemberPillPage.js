@@ -27,7 +27,7 @@ function MemberPillPage(props) {
             render={(props) => <ProtectorTakeAlarm {...props} />}
           />
           <Route path={`${basicurl}/member-pill-list/:memberSeq`} render={(props) => <MemberPillList {...props} />} />
-          <Route exact path={`${basicurl}/pill-take-picture`} render={(props) => <PillTakePicture {...props} />} />
+          <Route exact path={`${basicurl}/pill-take-picture/:alarmSeq`} render={(props) => <PillTakePicture {...props} />} />
           <Route path={`${basicurl}/pill-take-alarm`} render={(props) => <PillTakeAlarm {...props} />} />
           {/* <Redirect to={`${basicurl}/protector-take-alarm`}></Redirect> */}
         </Switch>
