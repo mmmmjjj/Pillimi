@@ -32,6 +32,7 @@ function Callback() {
                 const ACCESS_TOKEN = response.data.data.accessToken;
                 localStorage.setItem("ACCESS_TOKEN", ACCESS_TOKEN);
                 // await fcmToken 보내기 요청
+                console.log(fcmToken);
               }
             },
             (error) => {
