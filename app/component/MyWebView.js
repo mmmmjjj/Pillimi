@@ -3,7 +3,7 @@ import {BackHandler} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
-  const BASE_URL = 'http://k6a3071.p.ssafy.io:3000';
+  const BASE_URL = 'https://k6a307.p.ssafy.io';
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
 
