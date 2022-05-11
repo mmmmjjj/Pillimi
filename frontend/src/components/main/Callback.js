@@ -80,7 +80,7 @@ function Callback() {
         }
       }
     }
-  }, [dispatch, isFirst, isLogin, isProtector, fcmToken]);
+  }, [dispatch, isFirst, isLogin, isProtector, fcmToken, memberSeq]);
 
   // return <>카카오 로그인 중</>;
   return <Loading></Loading>;
