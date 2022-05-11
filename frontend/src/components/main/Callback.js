@@ -32,20 +32,6 @@ function Callback() {
                 await dispatch(loginAction(response.data.data));
                 const ACCESS_TOKEN = response.data.data.accessToken;
                 localStorage.setItem("ACCESS_TOKEN", ACCESS_TOKEN);
-                // await fcmToken 보내기 요청
-                if (fcmToken !== "") {
-                  postFcmToken(
-                    fcmToken,
-                    async (response) => {
-                      if (response.status === 200) {
-                        console.log(fcmToken);
-                      }
-                    },
-                    (error) => {
-                      console.log(error);
-                    }
-                  );
-                }
               }
             },
             (error) => {
@@ -58,13 +44,37 @@ function Callback() {
         }
       );
     } else {
-      if (isFirst) {
-        gotoRegisterInfo();
+      // await fcmToken 보내기 요청
+      if (fcmToken !== "") {
+        postFcmToken(
+          fcmToken,
+          async (response) => {
+            if (response.status === 200) {
+              console.log(fcmToken);
+              if (isFirst) {
+                gotoRegisterInfo();
+              } else {
+                if (isProtector) {
+                  gotoPillToday();
+                } else {
+                  gotoElderMain();
+                }
+              }
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       } else {
-        if (isProtector) {
-          gotoPillToday();
+        if (isFirst) {
+          gotoRegisterInfo();
         } else {
-          gotoElderMain();
+          if (isProtector) {
+            gotoPillToday();
+          } else {
+            gotoElderMain();
+          }
         }
       }
     }
