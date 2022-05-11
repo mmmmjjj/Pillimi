@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import kakao_login from "../../assets/img/kakao_login.png";
 // import naver_login from "../../assets/img/naver_login.png";
@@ -7,7 +7,13 @@ import LoginCSS from "./css/Login.module.css";
 import Header from "components/Headers/Header";
 
 function Login() {
-  React.useEffect(() => {}, []);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    document.addEventListener("message", ({ data }) => {
+      setMessage(data);
+    });
+  }, []);
   return (
     <>
       <Header header="로그인"></Header>
@@ -21,6 +27,10 @@ function Login() {
         </a>
         <br></br>
         <br></br>
+
+        <div>
+          <h3>Receive Message : {message}</h3>
+        </div>
         {/* <Link to="/pill-today">
           <img src={naver_login} className={LoginCSS.LoginBtn} alt="naver_login" />
         </Link> */}

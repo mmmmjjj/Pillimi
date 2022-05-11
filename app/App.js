@@ -23,29 +23,28 @@ import MyWebView from './component/MyWebView';
 import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  let webviewRef = useRef();
 
-  const ref = useRef();
-
-  useEffect(() => {
-    console.log('마운트');
-  }, [ref]);
-
-  const handleClick = () => {
-    ref.current.postMessage('hi');
-    console.log('전송');
+  const handleSetRef = _ref => {
+    webviewRef = _ref;
   };
+
+  /** webview 로딩 완료시 */
+  const handleEndLoading = e => {
+    console.log('handleEndLoading');
+    /** rn에서 웹뷰로 정보를 보내는 메소드 */
+    webviewRef.postMessage(checkToken());
+  };
+
+  const isDarkMode = useColorScheme() === 'dark';
 
   const checkToken = async () => {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
       console.log(fcmToken);
     }
+    return fcmToken;
   };
-
-  checkToken();
-
-  handleClick();
 
   // background, quit 상태 일 경우
   messaging().setBackgroundMessageHandler(async remoteMessage => {
@@ -72,7 +71,9 @@ const App = () => {
               {text: '예', onPress: () => BackHandler.exitApp()},
             ]);
           }}
-          ref={ref}
+          webviewRef={webviewRef}
+          handleSetRef={handleSetRef}
+          handleEndLoading={handleEndLoading}
         />
       </SafeAreaView>
     </>

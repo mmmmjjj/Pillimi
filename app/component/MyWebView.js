@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {BackHandler} from 'react-native';
 import {WebView} from 'react-native-webview';
 
-const MyWebView = ({handleClose}) => {
-  const BASE_URL = 'https://k6a307.p.ssafy.io/';
+const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
+  const BASE_URL = 'http://k6a3071.p.ssafy.io:3000';
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -19,20 +20,22 @@ const MyWebView = ({handleClose}) => {
     return () => backHandler.remove();
   }, [goBackable]);
   useEffect(() => {
+    // setWebview(handleSetRef)
     if (webview && webview.clearCache) webview.clearCache();
   }, [webview]);
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <WebView
-        pullToRefreshEnabled={true}
-        startInLoadingState={true}
-        allowsBackForwardNavigationGestures={true}
-        source={{uri: BASE_URL}}
-        mixedContentMode={'compatibility'}
-        originWhitelist={['https://*', 'http://*']}
-        overScrollMode={'never'}
-        ref={ref => setWebview(ref)}
-        injectedJavaScript={` (function() {
+    <WebView
+      pullToRefreshEnabled={true}
+      startInLoadingState={true}
+      allowsBackForwardNavigationGestures={true}
+      source={{uri: BASE_URL}}
+      mixedContentMode={'compatibility'}
+      originWhitelist={['https://*', 'http://*']}
+      overScrollMode={'never'}
+      ref={handleSetRef}
+      onLoadEnd={handleEndLoading}
+      javaScriptEnabled={true}
+      injectedJavaScript={` (function() {
               function wrap(fn) {
                  return function wrapper() {
                     var res = fn.apply(this, arguments); 
@@ -47,13 +50,12 @@ const MyWebView = ({handleClose}) => {
                   }); 
                 })(); 
                 true; `}
-        onMessage={event => {
-          const url = event.nativeEvent.data;
-          setGoBackable(url !== BASE_URL);
-          console.log('onMessage', event.nativeEvent.data);
-        }}
-      />
-    </SafeAreaView>
+      onMessage={event => {
+        const url = event.nativeEvent.data;
+        setGoBackable(url !== BASE_URL);
+        console.log('onMessage', event.nativeEvent.data);
+      }}
+    />
   );
 };
 export default MyWebView;
