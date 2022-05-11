@@ -1,8 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import ElderMainCSS from "./css/ElderMain.module.css";
 
 function ElderMain() {
+  const memberSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
+
   React.useEffect(() => {}, []);
   return (
     <>
@@ -15,9 +19,15 @@ function ElderMain() {
             <h3 className={ElderMainCSS.MainText}>오늘 먹을 약</h3>
             <div className={ElderMainCSS.WhiteBoxHeight}></div>
           </div>
-          <Menu content={"내 약"}></Menu>
-          <Menu content={"가족"}></Menu>
-          <Menu content={"내 정보"}></Menu>
+          <Link to={`/member-pill-page/member-pill-list/${memberSeq}`}>
+            <Menu content={"내 약"}></Menu>
+          </Link>
+          <Link to={`/family/myfamily`}>
+            <Menu content={"가족"}></Menu>
+          </Link>
+          <Link to={`/member-info/member-info-detail/${memberSeq}`}>
+            <Menu content={"내 정보"}></Menu>
+          </Link>
         </div>
       </div>
     </>

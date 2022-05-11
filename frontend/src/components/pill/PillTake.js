@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import PillTakeRegister from "components/pill/pillTake/PillTakeRegister.js";
 import PillTakeModify from "components/pill/pillTake/PillTakeModify.js";
@@ -10,23 +10,23 @@ function PillTake(props) {
 
   return (
     <>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
+      <Switch>
         <Switch>
-          <Switch>
-            <Route exact path={`${basicurl}`} render={(props) => <PillTakeRegister {...props} />} />
-            <Route
-              exact
-              path={`${basicurl}/modify/:memberMedicineSeq`}
-              render={(props) => <PillTakeModify {...props} />}
-            />
-            <Route
-              exact
-              path={`${basicurl}/detail/:memberMedicineSeq`}
-              render={(props) => <PillTakeDetail {...props} />}
-            />
-          </Switch>
+          <Route exact path={`${basicurl}`} render={(props) => <PillTakeRegister {...props} />} />
+          <Route
+            exact
+            path={`${basicurl}/modify/:memberMedicineSeq`}
+            render={(props) => <PillTakeModify {...props} />}
+          />
+          <Route
+            exact
+            path={`${basicurl}/detail/:memberMedicineSeq`}
+            render={(props) => <PillTakeDetail {...props} />}
+          />
         </Switch>
-      </BrowserRouter>
+      </Switch>
+      {/* </BrowserRouter> */}
     </>
   );
 }
