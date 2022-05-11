@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {BackHandler} from 'react-native';
 import {WebView} from 'react-native-webview';
+
 const MyWebView = ({handleClose}) => {
   const BASE_URL = 'https://k6a307.p.ssafy.io/';
   const [webview, setWebview] = useState();
@@ -21,16 +22,17 @@ const MyWebView = ({handleClose}) => {
     if (webview && webview.clearCache) webview.clearCache();
   }, [webview]);
   return (
-    <WebView
-      pullToRefreshEnabled={true}
-      startInLoadingState={true}
-      allowsBackForwardNavigationGestures={true}
-      source={{uri: BASE_URL}}
-      mixedContentMode={'compatibility'}
-      originWhitelist={['https://*', 'http://*']}
-      overScrollMode={'never'}
-      ref={ref => setWebview(ref)}
-      injectedJavaScript={` (function() {
+    <SafeAreaView style={{flex: 1}}>
+      <WebView
+        pullToRefreshEnabled={true}
+        startInLoadingState={true}
+        allowsBackForwardNavigationGestures={true}
+        source={{uri: BASE_URL}}
+        mixedContentMode={'compatibility'}
+        originWhitelist={['https://*', 'http://*']}
+        overScrollMode={'never'}
+        ref={ref => setWebview(ref)}
+        injectedJavaScript={` (function() {
               function wrap(fn) {
                  return function wrapper() {
                     var res = fn.apply(this, arguments); 
@@ -45,12 +47,13 @@ const MyWebView = ({handleClose}) => {
                   }); 
                 })(); 
                 true; `}
-      onMessage={event => {
-        const url = event.nativeEvent.data;
-        setGoBackable(url !== BASE_URL);
-        console.log('onMessage', event.nativeEvent.data);
-      }}
-    />
+        onMessage={event => {
+          const url = event.nativeEvent.data;
+          setGoBackable(url !== BASE_URL);
+          console.log('onMessage', event.nativeEvent.data);
+        }}
+      />
+    </SafeAreaView>
   );
 };
 export default MyWebView;

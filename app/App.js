@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -24,6 +24,28 @@ import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const ref = useRef();
+
+  useEffect(() => {
+    console.log('마운트');
+  }, [ref]);
+
+  const handleClick = () => {
+    ref.current.postMessage('hi');
+    console.log('전송');
+  };
+
+  const checkToken = async () => {
+    const fcmToken = await messaging().getToken();
+    if (fcmToken) {
+      console.log(fcmToken);
+    }
+  };
+
+  checkToken();
+
+  handleClick();
 
   // background, quit 상태 일 경우
   messaging().setBackgroundMessageHandler(async remoteMessage => {
@@ -50,6 +72,7 @@ const App = () => {
               {text: '예', onPress: () => BackHandler.exitApp()},
             ]);
           }}
+          ref={ref}
         />
       </SafeAreaView>
     </>
