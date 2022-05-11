@@ -97,6 +97,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(medicine);
 
 
+        // 약품들의 성분을 멤버 성분 테이블에 등록
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
             memberIngredientRepository.save(MemberIngredient.builder()
                     .medicineIngredient(medicineIngredient)
@@ -153,10 +154,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         Member member = memberMedicine.getMember();
 
+        //멤버 성분 테이블에서 약품 성분을 삭제함
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
             memberIngredientRepository.deleteByMemberAndMedicineIngredient(member, medicineIngredient);
         }
 
+        //MySQL Forign Key 설정이 casecade로 되어있어서 멤버 약품 삭제시 하위 테이블인 복약주기도 함께 지워줌
         memberMedicineRepository.deleteById(memberMedicine.getMemberMedicineSeq());
     }
 
