@@ -17,13 +17,13 @@ public class MemberIngredientRepositoryCustomImpl implements MemberIngredientRep
         return jpaQueryFactory.select(qMemberIngredient)
                 .from(qMemberIngredient)
                 .where(qMemberIngredient.member.eq(member)
-                        .and(qMemberIngredient.Ingredient.eq(ingredient)))
+                        .and(qMemberIngredient.medicineIngredient.ingredient.eq(ingredient)))
                 .fetchOne();
 
     }
 
     @Override
-    public void deleteByMemberAndIngredient(Member member, Ingredient ingredient) {
-        jpaQueryFactory.delete(qMemberIngredient).where(qMemberIngredient.member.eq(member).and(qMemberIngredient.Ingredient.eq(ingredient))).execute();
+    public void deleteByMemberAndMedicineIngredient(Member member, MedicineIngredient medicineingredient) {
+        jpaQueryFactory.delete(qMemberIngredient).where(qMemberIngredient.member.eq(member).and(qMemberIngredient.medicineIngredient.eq(medicineingredient))).execute();
     }
 }

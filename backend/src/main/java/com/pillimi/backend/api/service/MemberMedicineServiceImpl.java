@@ -66,6 +66,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .memberMedicineStart(req.getStartDay())
                         .memberMedicineEnd(req.getEndDay())
                         .memberMedicineRemark(req.getRemarkContent())
+                        .memberMedicineNow(true)
                         .build());
 
         LocalDateTime today = LocalDateTime.now();
@@ -98,7 +99,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
             memberIngredientRepository.save(MemberIngredient.builder()
-                    .Ingredient(medicineIngredient.getIngredient())
+                    .medicineIngredient(medicineIngredient)
                     .member(member)
                     .build());
         }
@@ -153,11 +154,10 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         Member member = memberMedicine.getMember();
 
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
-            memberIngredientRepository.deleteByMemberAndIngredient(member, medicineIngredient.getIngredient());
+            memberIngredientRepository.deleteByMemberAndMedicineIngredient(member, medicineIngredient);
         }
 
-        memberMedicine.setMemberMedicineNow(false);
-        memberMedicineRepository.save(memberMedicine);
+        memberMedicineRepository.deleteById(memberMedicine.getMemberMedicineSeq());
     }
 
     /*
@@ -279,20 +279,22 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
             //병용 금기
             List<MemberIngredient> memberIngredients = memberIngredientRepository.findByMember(member);
-
-            for (MemberIngredient memberIngredient : memberIngredients) {
-                Optional<Dca> dcaOptional = dcaRepository.findByRelationAndAvoid(memberIngredient.getIngredient(), medicineIngredient.getIngredient());
-                if (dcaOptional.isPresent()) {
-                    Dca dca = dcaOptional.get();
-                    return CheckMedicineRes.builder()
-                            .checkType(3)
-                            .checkDesc("약품의 성분 " + medicineIngredient.getIngredient().getIngredientName()
-                                    + "은 현재 복용중인 " + memberIngredient.getIngredient().getIngredientName()
-                                    + " 성분과 병용금기 입니다. 확인해주세요.\n"
-                                    + dca.getDcaAvoidDesc())
-                            .build();
+            if(dcaRepository.existsByRelation(medicineIngredient.getIngredient())){
+                for (MemberIngredient memberIngredient : memberIngredients) {
+                    Optional<Dca> dcaOptional = dcaRepository.findByRelationAndAvoid(memberIngredient.getMedicineIngredient().getIngredient(), medicineIngredient.getIngredient());
+                    if (dcaOptional.isPresent()) {
+                        Dca dca = dcaOptional.get();
+                        return CheckMedicineRes.builder()
+                                .checkType(3)
+                                .checkDesc("약품의 성분 " + medicineIngredient.getIngredient().getIngredientName()
+                                        + "은 현재 복용중인 " + memberIngredient.getMedicineIngredient().getIngredient().getIngredientName()
+                                        + " 성분과 병용금기 입니다. 확인해주세요.\n"
+                                        + dca.getDcaAvoidDesc())
+                                .build();
+                    }
                 }
             }
+
         }
         return CheckMedicineRes.builder()
                 .checkType(0)
