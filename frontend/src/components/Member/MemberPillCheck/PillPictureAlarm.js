@@ -7,6 +7,7 @@ import MemberPillCheck from "../MemberPillCheck";
 import style from "../css/MemberPillCheck.module.css"
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm } from "api/alarm";
+import Swal from "sweetalert2";
 
 // core components
 
@@ -27,11 +28,18 @@ function PillPictureAlarm(props) {
     })
   },[])
 
-  const gotoAlarmList = () => {
+  const gotoAlarmList = (event) => {
     // props.history.locaion.props.onClickHandler(false);
     deleteProtegeSeqAlarm(alarmSeq, (success) => {
       console.log(success);
-      window.location.href = `/member-pill-page/member-pill-list/`+ alarm.protegeSeq;
+      event.preventDefault();
+      Swal.fire({
+        icon: "success",
+        title: "약 복용을 확인하셨습니다",
+        confirmButtonColor: `#0369a1`,
+      }).then(function () {
+        props.history.push(`/member-pill-page/member-pill-list/`+ alarm.protegeSeq)
+      });
     }, (fail) => {
       console.log(fail);
     })
@@ -70,7 +78,7 @@ function PillPictureAlarm(props) {
         
         <div  className={ `${style.center} ${style.backcolor}`}>
           <div className="pt-3">
-            <span className={`${style.bold}`}>2022-04-12</span>
+            <span className={`${style.bold}`}>{alarm != null ? alarm.alarmDate : null}</span>
           </div>
           <div className={style.allcenter}>
             <img src={alarm!=null ? alarm.photoURL : ''} className={style.imgsize3}></img>
