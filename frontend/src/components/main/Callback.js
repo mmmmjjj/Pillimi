@@ -12,6 +12,7 @@ function Callback() {
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
   let isFirst = useSelector((state) => state.memberInfo.memberInfo.first);
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  let memberSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
 
   React.useEffect(() => {
     // 앱에서 fcmToken 가져오기
@@ -48,6 +49,7 @@ function Callback() {
       if (fcmToken !== "") {
         postFcmToken(
           fcmToken,
+          memberSeq,
           async (response) => {
             if (response.status === 200) {
               console.log(fcmToken);

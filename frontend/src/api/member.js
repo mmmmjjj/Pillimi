@@ -34,7 +34,7 @@ function regmedicine(medinfo, success, fail) {
   api.post(`member/medicine`, medinfo).then(success).catch(fail);
 }
 
-function modmedicine(medinfo,success, fail) {
+function modmedicine(medinfo, success, fail) {
   api.put(`member/medicine`, medinfo).then(success).catch(fail);
 }
 
@@ -56,8 +56,8 @@ function getMemberMedicineCheck(memberMedicineSeq, memberSeq, success, fail) {
     .catch(fail);
 }
 
-function postFcmToken(fcmToken, success, fail) {
-  apiInstance().post(`/member/fcm?fcmToken=${fcmToken}`).then(success).catch(fail);
+function postFcmToken(fcmToken, memberSeq, success, fail) {
+  api2.post(`/member/fcm?fcmToken=${fcmToken}&memberSeq=${memberSeq}`).then(success).catch(fail);
 }
 
 export {
