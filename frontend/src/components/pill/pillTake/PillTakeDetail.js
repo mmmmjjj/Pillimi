@@ -165,8 +165,7 @@ function PillTakeDetail(props) {
     history.push({
       pathname: `/pill-take/modify/${memberMedicineSeq}`,
       state: {
-        medicineSeq: pillInfo.medicineSeq,
-        medicineName: pillInfo.medicineName,
+        info:pillInfo,
         memberSeq: memberSeq,
       },
     });
