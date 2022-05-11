@@ -6,6 +6,7 @@ import Datetime from "react-datetime";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
 import { regmedicine } from "../../../api/member";
+import 'moment/locale/ko';
 
 function PillTakeRegister(props) {
   const [pillRegister, setPillRegister] = useState({
@@ -235,6 +236,8 @@ function PillTakeRegister(props) {
             value={pillRegister.startDate}
             name="startDate"
             className={PillTakeRegisterCSS.Input}
+            dateFormat="yyyy-MM-DD"
+            locale="ko"
             timeFormat={false}
             closeOnSelect
             strictParsing={false}
@@ -271,6 +274,8 @@ function PillTakeRegister(props) {
             value={pillRegister.endDate}
             className={PillTakeRegisterCSS.Input}
             timeFormat={false}
+            dateFormat="yyyy-MM-DD"
+            locale="ko"
             closeOnSelect
             strictParsing={false}
             renderInput={(props) => {
