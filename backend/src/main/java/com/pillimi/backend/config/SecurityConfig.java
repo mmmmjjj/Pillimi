@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**",
                         "/v2/api-docs",
                         "/api/v1/member/kakao/**",
+                        "/api/v1/member/fcm",
                         "/api/v1/alarm/protege/**"
                 )
                 .antMatchers(HttpMethod.GET,"/api/v1/alarm/protector/{alarmSeq}");
@@ -71,7 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .anyRequest()
-//                .permitAll()  // security 해제 
                 .authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));

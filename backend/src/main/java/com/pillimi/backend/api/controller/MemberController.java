@@ -139,9 +139,9 @@ public class MemberController {
             @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
     })
     @PostMapping(value = "/fcm")
-    public ResponseEntity<BaseResponseBody> updateFcmToken(@RequestParam String fcmToken) {
+    public ResponseEntity<BaseResponseBody> updateFcmToken(@RequestParam Long memberSeq, @RequestParam String fcmToken) {
 
-        Member member = memberService.getMemberById(JwtUtil.getCurrentId()).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        Member member = memberService.getMemberById(memberSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
         memberService.updateFcmToken(member,fcmToken);
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, UPDATE_FCM_TOKEN));
     }

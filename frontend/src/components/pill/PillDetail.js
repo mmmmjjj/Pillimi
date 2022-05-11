@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { Button, Modal } from "reactstrap";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 import PillDetailCSS from "./css/PillDetail.module.css";
 import Header from "components/Headers/Header";
@@ -12,9 +13,10 @@ import { getPillInfo } from "../../api/pill.js";
 import { getMyFamily } from "../../api/family.js";
 import { getMemberMedicineCheck } from "../../api/member.js";
 
-function PillDetail({ match }) {
-  const pillSeq = match.params.pillSeq;
+function PillDetail(props) {
 
+  const pillSeq = props.match.params.pillSeq;
+  
   var temp = "";
 
   const [pillInfo, setPillInfo] = useState({
@@ -29,12 +31,16 @@ function PillDetail({ match }) {
   });
 
   const [familyList, setFamilyList] = useState([]);
+  const [registerPillModal, setRegisterPillModal] = React.useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     getPillDetail(pillSeq);
     getFamilyList();
   }, [pillSeq]);
 
+  
   const getPillDetail = (pillSeq) => {
     getPillInfo(
       pillSeq,
@@ -74,7 +80,6 @@ function PillDetail({ match }) {
     );
   };
 
-  const history = useHistory();
   const gotoPillRegister = (memberSeq) => {
     setRegisterPillModal(false);
     getMemberMedicineCheck(
@@ -144,8 +149,19 @@ function PillDetail({ match }) {
     return result;
   };
 
-  const [registerPillModal, setRegisterPillModal] = React.useState(false);
-
+  let isLogin = useSelector((state) => state.memberInfo.isLogin);
+  if(!isLogin){
+    Swal.fire({
+      icon: "warning",
+      title: "로그인이 필요한 서비스입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
   return (
     <>
       <Header header="알약 정보"></Header>
