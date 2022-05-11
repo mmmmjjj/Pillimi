@@ -1,38 +1,180 @@
 import React, { useState } from "react";
-import { Input, Badge, Button, FormGroup } from "reactstrap";
+import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
-import moment from "moment";
+// import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
+import { regmedicine } from "../../../api/member";
 
-function PillTakeRegister() {
-  React.useEffect(() => {}, []);
-
+function PillTakeRegister(props) {
   const [pillRegister, setPillRegister] = useState({
     nick: "",
     startDate: "",
     endDate: "",
     period: "",
-    time: "",
+    time: [],
     volume: "",
     caution: "",
   });
+  const [timeinput, settimeinput] = useState("");
+
+  const [smallend, setsmallend] = useState(false);
+  const [bigstart, setbigstart] = useState(false);
+  const [checkday, setday] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [timecheck, settimecheck] = useState(false);
+
+  const regimedicine = () => {
+    var saveintakeDay = [];
+    for (var i = 0; i < 7; i++) {
+      if (checkday[i] === true) {
+        saveintakeDay.push(i + 1);
+      }
+    }
+    var saveintakeTime = [];
+    for (var j = 0; j < pillRegister.time.length; j++) {
+      if (pillRegister.time[j].slice(6, 8) === "PM") {
+        saveintakeTime.push(
+          String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) +
+            pillRegister.time[j].slice(2, 5)
+        );
+      } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
+    }
+    console.log(saveintakeTime);
+    for (var k = 0; k < saveintakeTime.length; k++) {
+      if (parseInt(saveintakeTime[k].slice(0, 2)) > 23) {
+        saveintakeTime[k] = "00" + saveintakeTime[k].slice(2, 5);
+      }
+    }
+    console.log(saveintakeTime);
+    console.log({
+      endDay: pillRegister.endDate,
+      intakeCount: parseInt(pillRegister.volume),
+      intakeDay: saveintakeDay,
+      intakeTime: saveintakeTime,
+      medicineSeq: props.location.state.medicineSeq,
+      memberMedicineName: pillRegister.nick,
+      memberSeq: props.location.state.memberSeq,
+      remarkContent: pillRegister.caution,
+      startDay: pillRegister.startDate,
+    });
+    regmedicine(
+      {
+        endDay: pillRegister.endDate,
+        intakeCount: parseInt(pillRegister.volume),
+        intakeDay: saveintakeDay,
+        intakeTime: saveintakeTime,
+        medicineSeq: props.location.state.medicineSeq,
+        memberMedicineName: pillRegister.nick,
+        memberSeq: props.location.state.memberSeq,
+        remarkContent: pillRegister.caution,
+        startDay: pillRegister.startDate,
+      },
+      (success) => {
+        console.log(success);
+        gotoMedicineList()
+      },
+      (fail) => {
+        console.log(fail);
+      }
+    );
+  };
+
+  const changeday = (index) => {
+    setday([
+      ...checkday.slice(0, index),
+      !checkday[index],
+      ...checkday.slice(index + 1),
+    ]);
+    console.log(checkday);
+  };
+
+  const onChangetimeinput = (e) => {
+    settimeinput(e.format("hh:mm A"));
+    settimecheck(false)
+  };
+
+  const pushtime = () => {
+    if (!pillRegister.time.includes(timeinput)) {
+      setPillRegister({
+        ...pillRegister,
+        time: [...pillRegister.time, timeinput],
+      });
+    } else {
+      settimecheck(true);
+    }
+    console.log(pillRegister.time);
+  };
+
+  const deletetime = (index) => {
+    setPillRegister({
+      ...pillRegister,
+      time: [
+        ...pillRegister.time.slice(0, index),
+        ...pillRegister.time.slice(index + 1),
+      ],
+    });
+  };
 
   const onChangePillRegister = (e) => {
-    if (moment.isMoment(e)) {
-      if (e.name === "time") {
-        setPillRegister({
-          ...pillRegister,
-          [e.name]: e.format("HH:mm a"),
-        });
-        console.log(pillRegister.time);
+    // if (moment.isMoment(e)) {
+    //   if (e.name === "time") {
+    //     setPillRegister({
+    //       ...pillRegister,
+    //       [e.name]: e.format("hh:mm A"),
+    //     });
+    //     settimecheck(false);
+    //     console.log(pillRegister.time);
+    //   } else {
+    //     setPillRegister({
+    //       ...pillRegister,
+    //       [e.name]: e.format("YYYY-MM-DD"),
+    //     });
+    //     console.log(pillRegister.startDate);
+    //   }
+    // } else {
+    //   setPillRegister({
+    //     ...pillRegister,
+    //     [e.target.name]: e.target.value,
+    //   });
+    // }
+    if (e.name === "startDate") {
+      if (
+        pillRegister.endDate &&
+        e.format("YYYY-MM-DD") > pillRegister.endDate
+      ) {
+        setsmallend(true);
+        setbigstart(false);
       } else {
         setPillRegister({
           ...pillRegister,
-          [e.name]: e.format("YYYY/MM/DD"),
+          [e.name]: e.format("YYYY-MM-DD"),
         });
-        console.log(pillRegister.startDate);
+        setbigstart(false);
+        setsmallend(false);
+      }
+    } else if (e.name === "endDate") {
+      if (
+        pillRegister.startDate &&
+        e.format("YYYY-MM-DD") < pillRegister.startDate
+      ) {
+        setsmallend(false);
+        setbigstart(true);
+      } else {
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: e.format("YYYY-MM-DD"),
+        });
+        setbigstart(false);
+        setsmallend(false);
       }
     } else {
       setPillRegister({
@@ -42,11 +184,17 @@ function PillTakeRegister() {
     }
   };
 
+  const gotoMedicineList = () => {
+    window.location.href = `/member-pill-page/member-pill-list/` + props.location.state.memberSeq;
+  }
+
   return (
     <>
       <Header header="복용 약 추가"></Header>
       <br></br>
-      <h3 className={PillTakeRegisterCSS.PillName}>에이서캡슐(아세클로페낙)</h3>
+      <h3 className={PillTakeRegisterCSS.PillName}>
+        {props.location.state.medicineName}
+      </h3>
       <div className={PillTakeRegisterCSS.Whole}>
         {/* <Label content={"약 별칭"}></Label>
         <DateLabel content={"복용 시작 일자"}></DateLabel>
@@ -58,10 +206,26 @@ function PillTakeRegister() {
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>약 별칭</h3>
         <FormGroup>
-          <Input onChange={onChangePillRegister} name="nick" className={PillTakeRegisterCSS.Input} type="text"></Input>
+          <Input
+            onChange={onChangePillRegister}
+            name="nick"
+            className={PillTakeRegisterCSS.Input}
+            type="text"
+          ></Input>
         </FormGroup>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 시작 일자</h3>
+        {smallend ? (
+          <h5
+            style={{
+              width: "100%",
+              color: "red",
+            }}
+            color="danger"
+          >
+            종료 일자보다 작은 날짜를 입력하세요
+          </h5>
+        ) : null}
         <FormGroup>
           <Datetime
             onChange={(e) => {
@@ -72,10 +236,31 @@ function PillTakeRegister() {
             name="startDate"
             className={PillTakeRegisterCSS.Input}
             timeFormat={false}
+            closeOnSelect
+            strictParsing={false}
+            renderInput={(props) => {
+              return (
+                <input
+                  {...props}
+                  value={smallend ? "" : pillRegister.startDate}
+                />
+              );
+            }}
           />
         </FormGroup>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 종료 일자</h3>
+        {bigstart ? (
+          <h5
+            style={{
+              width: "100%",
+              color: "red",
+            }}
+            color="danger"
+          >
+            시작 일자보다 큰 날짜를 입력하세요
+          </h5>
+        ) : null}
         <FormGroup>
           <Datetime
             onChange={(e) => {
@@ -86,30 +271,117 @@ function PillTakeRegister() {
             value={pillRegister.endDate}
             className={PillTakeRegisterCSS.Input}
             timeFormat={false}
+            closeOnSelect
+            strictParsing={false}
+            renderInput={(props) => {
+              return (
+                <input
+                  {...props}
+                  value={bigstart ? "" : pillRegister.endDate}
+                />
+              );
+            }}
           />
         </FormGroup>
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 요일</h3>
         <FormGroup className={PillTakeRegisterCSS.DayGroup}>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
+          {/* <Badge className={sunday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setsun(prevsunday => !prevsunday)}>
             월
           </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
+          <Badge className={monday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setmon(prevmonday => !prevmonday)}>
             화
           </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
+          <Badge className={tueday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={settue(prevtueday => !prevtueday)}>
             수
           </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
+          <Badge className={wedday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setwed(prevwedday => !prevwedday)}>
             목
           </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
+          <Badge className={thuday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setthu(prevthuday => !prevthuday)}>
             금
           </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
+          <Badge className={friday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setfri(prevfriday => !prevfriday)}>
             토
           </Badge>
-          <Badge className={PillTakeRegisterCSS.Day} color="default">
+          <Badge className={satday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setsat(prevsatday => !prevsatday)}>
+            일
+          </Badge> */}
+          <Badge
+            className={
+              checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(0);
+            }}
+          >
+            월
+          </Badge>
+          <Badge
+            className={
+              checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(1);
+            }}
+          >
+            화
+          </Badge>
+          <Badge
+            className={
+              checkday[2] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(2);
+            }}
+          >
+            수
+          </Badge>
+          <Badge
+            className={
+              checkday[3] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(3);
+            }}
+          >
+            목
+          </Badge>
+          <Badge
+            className={
+              checkday[4] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(4);
+            }}
+          >
+            금
+          </Badge>
+          <Badge
+            className={
+              checkday[5] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(5);
+            }}
+          >
+            토
+          </Badge>
+          <Badge
+            className={
+              checkday[6] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
+            }
+            color="default"
+            onClick={() => {
+              changeday(6);
+            }}
+          >
             일
           </Badge>
         </FormGroup>
@@ -117,35 +389,79 @@ function PillTakeRegister() {
         <div className="d-flex align-items-center">
           <h3
             className={`${PillTakeRegisterCSS.Label} flex-fill
-        `}
+            `}
           >
             복용 시간
           </h3>
+
           <i
             onClick={() => {
-              if (pillRegister.time !== "") {
-                var print = document.getElementById("timeList");
-                var value = "";
-                value += `<Badge className={PillTakeRegisterCSS.Badge} color="info">${pillRegister.time}</Badge>`;
-                print.innerHTML = value;
+              if (timeinput !== "") {
+                pushtime();
               }
             }}
             className={`${PillTakeRegisterCSS.TimePlus} now-ui-icons ui-1_simple-add`}
           ></i>
         </div>
+        {timecheck ? (
+          <h5
+            style={{
+              width: "100%",
+              color: "red",
+            }}
+            color="danger"
+          >
+            이미 등록된 시간입니다.
+          </h5>
+        ) : null}
         <FormGroup>
           <Datetime
             onChange={(e) => {
               e.name = "time";
-              onChangePillRegister(e);
+              onChangetimeinput(e);
             }}
             name="time"
-            value={pillRegister.time}
+            value={timeinput}
             className={PillTakeRegisterCSS.Input}
             dateFormat={false}
+            closeOnSelect
+            timeConstraints={{
+              hours: { min: 0, max: 11, step: 1 },
+              minutes: { step: 10 },
+            }}
+            strictParsing={false}
           />
         </FormGroup>
-        <Badge className={PillTakeRegisterCSS.Badge} color="info" id="timeList"></Badge>
+        <Row xs="3" sm="4" md="6" style={{ justifyContent: "start" }}>
+          {pillRegister.time.map((value, index) => (
+            <Col
+              key={index}
+              xs="4"
+              sm="3"
+              md="2"
+              style={{ padding: "0px", textAlign: "center" }}
+            >
+              <Badge
+                className={PillTakeRegisterCSS.Badge}
+                color="info"
+                id="timeList"
+              >
+                {value}&nbsp;&nbsp;
+                <Badge
+                  className={PillTakeRegisterCSS.Badge}
+                  color="danger"
+                  id="timeList"
+                  onClick={() => {
+                    deletetime(index);
+                  }}
+                >
+                  X
+                </Badge>
+              </Badge>
+            </Col>
+          ))}
+        </Row>
+
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 개수</h3>
         <FormGroup>
@@ -169,7 +485,14 @@ function PillTakeRegister() {
       </div>
       <br></br>
       <br></br>
-      <Button className={PillTakeRegisterCSS.DoneBtn}>완료</Button>
+      <Button
+        className={PillTakeRegisterCSS.DoneBtn}
+        onClick={() => {
+          regimedicine();
+        }}
+      >
+        완료
+      </Button>
       <br></br>
       <br></br>
     </>
