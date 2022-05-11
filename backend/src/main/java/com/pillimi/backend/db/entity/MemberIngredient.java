@@ -27,6 +27,6 @@ public class MemberIngredient {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ingredient_seq")
-    private Ingredient Ingredient;
+    @JoinColumn(name = "medicine_ingredient_seq")
+    private MedicineIngredient medicineIngredient;
 }
