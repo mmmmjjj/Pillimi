@@ -27,4 +27,6 @@ public interface MemberService {
 
     void updateInfo(Member member, UpdateMemberReq req);
 
+    void updateFcmToken(Member member,String token);
+
 }
