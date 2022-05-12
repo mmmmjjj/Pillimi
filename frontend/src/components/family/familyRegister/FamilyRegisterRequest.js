@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../familycss.css";
 import Swal from "sweetalert2";
 import { useHistory  } from "react-router-dom";
+import { useSelector } from "react-redux";
 // reactstrap components
 import {
   Input,
@@ -22,7 +23,7 @@ function FamilyRegisterRequest(props) {
   useEffect(() => {
     props.getheader("가족 등록");
     props.getnavbar(false);
-  });
+  },[]);
   const [phonenumber, setphonenumber] = useState("");
   const [membername, setmembername] = useState("");
   const [nameok, setnameok] = useState(false);
@@ -130,7 +131,19 @@ function FamilyRegisterRequest(props) {
         console.log(fail)
       })
   }
-  
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if(!isProtector){
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
   return (
     <>
       <Container style={{ padding: "50px" }}>

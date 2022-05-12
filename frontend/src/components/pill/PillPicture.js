@@ -3,6 +3,7 @@ import { Button } from "reactstrap";
 
 import PillPictureCSS from "./css/PillPicture.module.css";
 import Header from "components/Headers/Header";
+import Navbar from "layout/Navbar.js";
 
 function PillPicture() {
   React.useEffect(() => {}, []);
@@ -27,6 +28,7 @@ function PillPicture() {
       <div>
         <Button className={PillPictureCSS.SendBtn}>전송</Button>
       </div>
+      <Navbar />
     </>
   );
 }

@@ -1,8 +1,10 @@
+/*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 // import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
@@ -34,15 +36,7 @@ function PillTakeModify(props) {
 
   const [smallend, setsmallend] = useState(false);
   const [bigstart, setbigstart] = useState(false);
-  const [checkday, setday] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [checkday, setday] = useState([false, false, false, false, false, false, false]);
   const [timecheck, settimecheck] = useState(false);
   useEffect(() => {
     var storday = [false, false, false, false, false, false, false];
@@ -56,24 +50,16 @@ function PillTakeModify(props) {
     for (var j = 0; j < props.location.state.info.intakeTime.length; j++) {
       if (parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) < 12) {
         if (parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) === 0) {
-          stortime.push(
-            "12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오전"
-          );
+          stortime.push("12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오전");
         } else {
-          stortime.push(
-            props.location.state.info.intakeTime[j].slice(0, 5) + " 오전"
-          );
+          stortime.push(props.location.state.info.intakeTime[j].slice(0, 5) + " 오전");
         }
       } else {
         if (parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) === 12) {
-          stortime.push(
-            "12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오후"
-          );
+          stortime.push("12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오후");
         } else {
           stortime.push(
-            String(
-              parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) - 12
-            ) +
+            String(parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) - 12) +
               props.location.state.info.intakeTime[j].slice(2, 5) +
               " 오후"
           );
@@ -85,7 +71,7 @@ function PillTakeModify(props) {
       ...pillRegister,
       time: stortime,
     });
-  }, [pillRegister, props.location.state.info.intakeDay, props.location.state.info.intakeTime]);
+  }, []);
 
   const regimedicine = () => {
     var saveintakeDay = [];
@@ -97,10 +83,7 @@ function PillTakeModify(props) {
     var saveintakeTime = [];
     for (var j = 0; j < pillRegister.time.length; j++) {
       if (pillRegister.time[j].slice(6, 8) === "오후") {
-        saveintakeTime.push(
-          String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) +
-            pillRegister.time[j].slice(2, 5)
-        );
+        saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) + pillRegister.time[j].slice(2, 5));
       } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
     }
     console.log(saveintakeTime);
@@ -122,35 +105,73 @@ function PillTakeModify(props) {
       remarkContent: pillRegister.caution,
       startDay: pillRegister.startDate,
     });
-    modmedicine(
-      {
-        endDay: pillRegister.endDate,
-        intakeCount: parseInt(pillRegister.volume),
-        intakeDay: saveintakeDay,
-        intakeTime: saveintakeTime,
-        medicineSeq: props.location.state.info.medicineSeq,
-        memberMedicineName: pillRegister.nick,
-        memberMedicineSeq: parseInt(memberMedicineSeq),
-        memberSeq: parseInt(props.location.state.memberSeq),
-        remarkContent: pillRegister.caution,
-        startDay: pillRegister.startDate,
-      },
-      (success) => {
-        console.log(success);
-        gotoMedicineDetail(memberMedicineSeq);
-      },
-      (fail) => {
-        console.log(fail);
-      }
-    );
+    if (!pillRegister.nick) {
+      Swal.fire({
+        icon: "error",
+        title: "별칭을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.startDate) {
+      Swal.fire({
+        icon: "error",
+        title: "시작 일자를 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.endDate) {
+      Swal.fire({
+        icon: "error",
+        title: "종료 일자를 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (saveintakeDay.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 요일을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (saveintakeTime.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 시간을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.volume) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 개수을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else {
+      modmedicine(
+        {
+          endDay: pillRegister.endDate,
+          intakeCount: parseInt(pillRegister.volume),
+          intakeDay: saveintakeDay,
+          intakeTime: saveintakeTime,
+          medicineSeq: props.location.state.info.medicineSeq,
+          memberMedicineName: pillRegister.nick,
+          memberMedicineSeq: parseInt(memberMedicineSeq),
+          memberSeq: parseInt(props.location.state.memberSeq),
+          remarkContent: pillRegister.caution,
+          startDay: pillRegister.startDate,
+        },
+        (success) => {
+          console.log(success);
+          Swal.fire({
+            icon: "success",
+            title: "수정하였습니다.",
+            confirmButtonColor: `#0369a1`,
+          }).then(gotoMedicineDetail(memberMedicineSeq));
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    }
   };
 
   const changeday = (index) => {
-    setday([
-      ...checkday.slice(0, index),
-      !checkday[index],
-      ...checkday.slice(index + 1),
-    ]);
+    setday([...checkday.slice(0, index), !checkday[index], ...checkday.slice(index + 1)]);
     console.log(checkday);
   };
 
@@ -175,10 +196,7 @@ function PillTakeModify(props) {
   const deletetime = (index) => {
     setPillRegister({
       ...pillRegister,
-      time: [
-        ...pillRegister.time.slice(0, index),
-        ...pillRegister.time.slice(index + 1),
-      ],
+      time: [...pillRegister.time.slice(0, index), ...pillRegister.time.slice(index + 1)],
     });
   };
 
@@ -205,12 +223,13 @@ function PillTakeModify(props) {
     //   });
     // }
     if (e.name === "startDate") {
-      if (
-        pillRegister.endDate &&
-        e.format("YYYY-MM-DD") > pillRegister.endDate
-      ) {
+      if (pillRegister.endDate && e.format("YYYY-MM-DD") > pillRegister.endDate) {
         setsmallend(true);
         setbigstart(false);
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: "",
+        });
       } else {
         setPillRegister({
           ...pillRegister,
@@ -220,12 +239,13 @@ function PillTakeModify(props) {
         setsmallend(false);
       }
     } else if (e.name === "endDate") {
-      if (
-        pillRegister.startDate &&
-        e.format("YYYY-MM-DD") < pillRegister.startDate
-      ) {
+      if (pillRegister.startDate && e.format("YYYY-MM-DD") < pillRegister.startDate) {
         setsmallend(false);
         setbigstart(true);
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: "",
+        });
       } else {
         setPillRegister({
           ...pillRegister,
@@ -239,7 +259,7 @@ function PillTakeModify(props) {
         ...pillRegister,
         [e.target.name]: e.target.value,
       });
-      console.log(checkday)
+      console.log(checkday);
     }
   };
 
@@ -256,9 +276,7 @@ function PillTakeModify(props) {
     <>
       <Header header="복용 약 추가"></Header>
       <br></br>
-      <h3 className={PillTakeRegisterCSS.PillName}>
-        {props.location.state.info.medicineName}
-      </h3>
+      <h3 className={PillTakeRegisterCSS.PillName}>{props.location.state.info.medicineName}</h3>
       <div className={PillTakeRegisterCSS.Whole}>
         {/* <Label content={"약 별칭"}></Label>
         <DateLabel content={"복용 시작 일자"}></DateLabel>
@@ -306,12 +324,7 @@ function PillTakeModify(props) {
             locale="ko"
             strictParsing={false}
             renderInput={(props) => {
-              return (
-                <input
-                  {...props}
-                  value={smallend ? "" : pillRegister.startDate}
-                />
-              );
+              return <input {...props} value={smallend ? "" : pillRegister.startDate} />;
             }}
           />
         </FormGroup>
@@ -343,12 +356,7 @@ function PillTakeModify(props) {
             closeOnSelect
             strictParsing={false}
             renderInput={(props) => {
-              return (
-                <input
-                  {...props}
-                  value={bigstart ? "" : pillRegister.endDate}
-                />
-              );
+              return <input {...props} value={bigstart ? "" : pillRegister.endDate} />;
             }}
           />
         </FormGroup>
@@ -377,9 +385,7 @@ function PillTakeModify(props) {
             일
           </Badge> */}
           <Badge
-            className={
-              checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(0);
@@ -388,9 +394,7 @@ function PillTakeModify(props) {
             월
           </Badge>
           <Badge
-            className={
-              checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(1);
@@ -399,9 +403,7 @@ function PillTakeModify(props) {
             화
           </Badge>
           <Badge
-            className={
-              checkday[2] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[2] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(2);
@@ -410,9 +412,7 @@ function PillTakeModify(props) {
             수
           </Badge>
           <Badge
-            className={
-              checkday[3] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[3] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(3);
@@ -421,9 +421,7 @@ function PillTakeModify(props) {
             목
           </Badge>
           <Badge
-            className={
-              checkday[4] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[4] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(4);
@@ -432,9 +430,7 @@ function PillTakeModify(props) {
             금
           </Badge>
           <Badge
-            className={
-              checkday[5] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[5] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(5);
@@ -443,9 +439,7 @@ function PillTakeModify(props) {
             토
           </Badge>
           <Badge
-            className={
-              checkday[6] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[6] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(6);
@@ -501,18 +495,8 @@ function PillTakeModify(props) {
         </FormGroup>
         <Row xs="3" sm="4" md="6" style={{ justifyContent: "start" }}>
           {pillRegister.time.map((value, index) => (
-            <Col
-              key={index}
-              xs="4"
-              sm="3"
-              md="2"
-              style={{ padding: "0px", textAlign: "center" }}
-            >
-              <Badge
-                className={PillTakeRegisterCSS.Badge}
-                color="info"
-                id="timeList"
-              >
+            <Col key={index} xs="4" sm="3" md="2" style={{ padding: "0px", textAlign: "center" }}>
+              <Badge className={PillTakeRegisterCSS.Badge} color="info" id="timeList">
                 {value}&nbsp;&nbsp;
                 <Badge
                   className={PillTakeRegisterCSS.Badge}

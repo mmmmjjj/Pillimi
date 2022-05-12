@@ -51,7 +51,7 @@ import Callback from "components/main/Callback.js";
 import MemberInfo from "components/Member/MemberInfo.js";
 import MemberPillPage from "components/Member/MemberPillPage";
 import MemberPillCheck from "components/Member/MemberPillCheck";
-
+import "components/family/familycss.css";
 
 const store = createStore(rootReducer, composeWithDevTools());
 const persistor = persistStore(store);
