@@ -49,7 +49,7 @@ public class JwtTokenProvider implements InitializingBean {
         Claims claims = Jwts.claims().setSubject(id);
         claims.put(AUTHORITIES_KEY, roleType);
         long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds*6);
+        Date validity = new Date(now + this.tokenValidityInMilliseconds*24*30);
 
         return Jwts.builder()
                 .setClaims(claims)

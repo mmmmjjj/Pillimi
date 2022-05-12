@@ -35,16 +35,6 @@ function MemberInfoDetail(props) {
     getMemberDetail(memberSeq);
   },[])
 
-  const array1 = ["고혈압", "당뇨"];
-  const disease = () => {
-    const result = [];
-    for (let i = 0; i < array1.length; i++) {
-      result.push(<span key={{i}}>{array1[i]}</span>);
-      result.push(<br></br>)
-    }
-    return result;
-  }
-
   const getMemberDetail = (memberSeq) => {
     getMemberInfoDetail(memberSeq,
       (success) => {
@@ -73,10 +63,6 @@ function MemberInfoDetail(props) {
           <Label value={"닉네임"} content={profile.member_nickname} ></Label>
           <Label value={"생년월일"} content={profile.member_birthDate}></Label>
           <Label value={"전화번호"} content={profile.member_phone}></Label>
-          <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
-          <div>
-            {disease()}
-          </div>
         </div>
       )
     }else{
@@ -113,7 +99,7 @@ function MemberInfoDetail(props) {
         //history.push(`/`)
         dispatch(logoutAction());
         localStorage.removeItem('ACCESS_TOKEN');
-        window.location.href="/"
+        props.history.replace(`/`)
       });
     // dispatch(logoutAction());
     // localStorage.removeItem('ACCESS_TOKEN');
