@@ -28,9 +28,8 @@ function PillSearch(props) {
     return <div></div>;
   }
 
-  let isProtector = useSelector(
-    (state) => state.memberInfo.memberInfo.protector
-  );
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  
   if (!isProtector) {
     Swal.fire({
       icon: "warning",
@@ -43,7 +42,6 @@ function PillSearch(props) {
   }
 
   useEffect(() => {
-    console.log(inView);
     if (inView) {
       setScrollOptions(scrollOptions + 20);
       // fetchMore({page});
@@ -65,6 +63,8 @@ function PillSearch(props) {
   };
 
   const goPillSearch = () => {
+    setPillList([]);
+
     let regex = /([가-힣ㄱ-ㅎㅏ-ㅣ\x20])/i;
     if (keyword === "") {
       Swal.fire({
@@ -84,7 +84,15 @@ function PillSearch(props) {
         async (response) => {
           setPillList(response.data.data);
           setKeyword("");
-          ShowPillList();
+          if (response.data.data.length === 0) {
+            Swal.fire({
+              icon: "warning",
+              title: "검색어에 해당하는 약이 없습니다",
+              confirmButtonColor: `#d33`,
+            });
+          } else {
+            ShowPillList();
+          }
         },
         (error) => {
           console.log(error);
@@ -100,7 +108,7 @@ function PillSearch(props) {
         result.push(
           <Card
             id="pillListDiv"
-            className={PillSearchCSS.PillList}
+            className={`${PillSearchCSS.PillList}`}
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
             <div className="d-flex align-items-center">
@@ -119,9 +127,11 @@ function PillSearch(props) {
       });
       result.push(
         <div ref={ref} style={{ color: `white` }}>
-          .
+          &nbsp;
         </div>
       );
+    } else {
+      result.push();
     }
 
     return result;
