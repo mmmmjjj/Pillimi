@@ -10,6 +10,7 @@ import style from "../Member/css/MemberPillCheck.module.css";
 
 import { getMyFamily } from "../../api/family.js";
 import { getPillToday, getMyPillToday } from "../../api/pill.js";
+import Navbar from "layout/Navbar.js";
 
 function PillToday() {
   const [familyList, setFamilyList] = useState([]);
@@ -254,6 +255,7 @@ function PillToday() {
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
         <br></br>
         <ShowPillList></ShowPillList>
+        <Navbar/>
       </div>
     </>
   );
