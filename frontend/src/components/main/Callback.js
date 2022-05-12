@@ -12,6 +12,7 @@ function Callback() {
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
   let isFirst = useSelector((state) => state.memberInfo.memberInfo.first);
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  let memberSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
 
   React.useEffect(() => {
     // 앱에서 fcmToken 가져오기
@@ -32,20 +33,6 @@ function Callback() {
                 await dispatch(loginAction(response.data.data));
                 const ACCESS_TOKEN = response.data.data.accessToken;
                 localStorage.setItem("ACCESS_TOKEN", ACCESS_TOKEN);
-                // await fcmToken 보내기 요청
-                if (fcmToken !== "") {
-                  postFcmToken(
-                    fcmToken,
-                    async (response) => {
-                      if (response.status === 200) {
-                        console.log(fcmToken);
-                      }
-                    },
-                    (error) => {
-                      console.log(error);
-                    }
-                  );
-                }
               }
             },
             (error) => {
@@ -58,17 +45,42 @@ function Callback() {
         }
       );
     } else {
-      if (isFirst) {
-        gotoRegisterInfo();
+      // await fcmToken 보내기 요청
+      if (fcmToken !== "") {
+        postFcmToken(
+          fcmToken,
+          memberSeq,
+          async (response) => {
+            if (response.status === 200) {
+              console.log(fcmToken);
+              if (isFirst) {
+                gotoRegisterInfo();
+              } else {
+                if (isProtector) {
+                  gotoPillToday();
+                } else {
+                  gotoElderMain();
+                }
+              }
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       } else {
-        if (isProtector) {
-          gotoPillToday();
+        if (isFirst) {
+          gotoRegisterInfo();
         } else {
-          gotoElderMain();
+          if (isProtector) {
+            gotoPillToday();
+          } else {
+            gotoElderMain();
+          }
         }
       }
     }
-  }, [dispatch, isFirst, isLogin, isProtector, fcmToken]);
+  }, [dispatch, isFirst, isLogin, isProtector, fcmToken, memberSeq]);
 
   // return <>카카오 로그인 중</>;
   return <Loading></Loading>;
