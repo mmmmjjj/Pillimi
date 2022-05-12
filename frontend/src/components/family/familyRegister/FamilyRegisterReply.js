@@ -14,7 +14,7 @@ function FamilyRegisterReply(props) {
   useEffect(() => {
     props.getheader("가족 요청");
     props.getnavbar(false);
-    if(props.history.location.state==undefined){
+    if(props.history.location.state===undefined){
       Swal.fire({
         icon: "warning",
         title: "비정상적인 접근입니다.",
@@ -28,7 +28,7 @@ function FamilyRegisterReply(props) {
       setpage();
     }
     console.log(props.history.location)
-  });
+  },[props, history, setpage]);
   const setpage = () => {
     console.log(props)
     setname(`(${props.history.location.state.memberInfo.name})`);
