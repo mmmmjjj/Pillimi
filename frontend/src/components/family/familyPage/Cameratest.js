@@ -2,17 +2,49 @@ import React, { useState, useRef, useEffect } from "react";
 import { Camera } from "react-camera-pro";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { addPillTakePicture } from "api/alarm";
+import Swal from "sweetalert2";
+import { useHistory  } from "react-router-dom";
 
 function Cameratest(props) {
   const cam = useRef();
   const [picimg, setImage] = useState();
   const [pic, setPicture] = useState(false);
+  const alarmSeq = props.match.params.alarmSeq;
+
   const takepic = () => {
     setPicture(true);
   };
   const retry = () => {
+    console.log(picimg.split(','));
     setPicture(false);
   };
+
+  const history = useHistory();
+
+  const sendImage = (event) => {
+    console.log(picimg);
+    let picimgData = picimg.split(',');
+    let imgInfo = {
+      alarmSeq: Number(alarmSeq),
+      image: picimgData[1]
+    }
+    console.log(imgInfo)
+    addPillTakePicture(imgInfo, (success) => {
+      console.log(success)
+      event.preventDefault();
+      Swal.fire({
+        icon: "success",
+        title: "사진이 전송되었습니다.",
+        confirmButtonColor: `#0369a1`,
+      }).then(function () {
+        history.push(`/pill-today`)
+      });
+    }, (fail) => {
+      console.log(fail);
+    })
+  }
+
   useEffect(() => {
     props.getnavbar(false);
     props.getheader("사진 찍기");
@@ -28,7 +60,7 @@ function Cameratest(props) {
             alt="다시찍기를 눌러주세요"
           />
           <br />
-          <Button className="activebtn" size="lg" onClick={retry}>
+          <Button className="activebtn" size="lg" onClick={sendImage}>
             전송하기
           </Button>
           <Button className="unactivebtn" size="lg" onClick={retry}>

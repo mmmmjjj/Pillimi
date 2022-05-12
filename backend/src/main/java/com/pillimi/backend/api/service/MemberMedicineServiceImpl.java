@@ -66,6 +66,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .memberMedicineStart(req.getStartDay())
                         .memberMedicineEnd(req.getEndDay())
                         .memberMedicineRemark(req.getRemarkContent())
+                        .memberMedicineNow(true)
                         .build());
 
         LocalDateTime today = LocalDateTime.now();
@@ -96,9 +97,10 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(medicine);
 
 
+        // 약품들의 성분을 멤버 성분 테이블에 등록
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
             memberIngredientRepository.save(MemberIngredient.builder()
-                    .Ingredient(medicineIngredient.getIngredient())
+                    .medicineIngredient(medicineIngredient)
                     .member(member)
                     .build());
         }
@@ -152,12 +154,13 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         Member member = memberMedicine.getMember();
 
+        //멤버 성분 테이블에서 약품 성분을 삭제함
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
-            memberIngredientRepository.deleteByMemberAndIngredient(member, medicineIngredient.getIngredient());
+            memberIngredientRepository.deleteByMemberAndMedicineIngredient(member, medicineIngredient);
         }
 
-        memberMedicine.setMemberMedicineNow(false);
-        memberMedicineRepository.save(memberMedicine);
+        //MySQL Foreign Key 설정이 cascade로 되어있어서 멤버 약품 삭제시 하위 테이블인 복약주기도 함께 지워줌
+        memberMedicineRepository.deleteById(memberMedicine.getMemberMedicineSeq());
     }
 
     /*
@@ -209,13 +212,13 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         MemberMedicine memberMedicine = memberMedicineRepository.findByMemberMedicineSeq(memberMedicineSeq);
 
         List<MedicineIntake> medicineIntakes = medicineIntakeRepository.getByMemberMedicine(memberMedicine);
-        List<LocalTime> times = new LinkedList<>();
         HashSet<Integer> dayset = new HashSet<>();
-
+        HashSet<LocalTime> timeset = new HashSet<>();
         for(MedicineIntake medicineIntake : medicineIntakes) {
-            times.add(medicineIntake.getIntakeTime());
+            timeset.add(medicineIntake.getIntakeTime());
             dayset.add(medicineIntake.getIntakeDay());
         }
+        List<LocalTime> times = new LinkedList<>(timeset);
         List<Integer> days = new LinkedList<>(dayset);
 
         return MemberMedicineRes.builder()
@@ -279,20 +282,22 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
             //병용 금기
             List<MemberIngredient> memberIngredients = memberIngredientRepository.findByMember(member);
-
-            for (MemberIngredient memberIngredient : memberIngredients) {
-                Optional<Dca> dcaOptional = dcaRepository.findByRelationAndAvoid(memberIngredient.getIngredient(), medicineIngredient.getIngredient());
-                if (dcaOptional.isPresent()) {
-                    Dca dca = dcaOptional.get();
-                    return CheckMedicineRes.builder()
-                            .checkType(3)
-                            .checkDesc("약품의 성분 " + medicineIngredient.getIngredient().getIngredientName()
-                                    + "은 현재 복용중인 " + memberIngredient.getIngredient().getIngredientName()
-                                    + " 성분과 병용금기 입니다. 확인해주세요.\n"
-                                    + dca.getDcaAvoidDesc())
-                            .build();
+            if(dcaRepository.existsByRelation(medicineIngredient.getIngredient())){
+                for (MemberIngredient memberIngredient : memberIngredients) {
+                    Optional<Dca> dcaOptional = dcaRepository.findByRelationAndAvoid(memberIngredient.getMedicineIngredient().getIngredient(), medicineIngredient.getIngredient());
+                    if (dcaOptional.isPresent()) {
+                        Dca dca = dcaOptional.get();
+                        return CheckMedicineRes.builder()
+                                .checkType(3)
+                                .checkDesc("약품의 성분 " + medicineIngredient.getIngredient().getIngredientName()
+                                        + "은 현재 복용중인 " + memberIngredient.getMedicineIngredient().getIngredient().getIngredientName()
+                                        + " 성분과 병용금기 입니다. 확인해주세요.\n"
+                                        + dca.getDcaAvoidDesc())
+                                .build();
+                    }
                 }
             }
+
         }
         return CheckMedicineRes.builder()
                 .checkType(0)

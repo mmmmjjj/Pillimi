@@ -131,4 +131,19 @@ public class MemberController {
         return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.CREATED, UPDATE_MEMBER_INFO));
     }
 
+    @ApiOperation(value = "FCM 토큰 등록", notes = "로그인한 기기의 FCM 토큰을 회원 정보에 등록하는 API입니다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = UPDATE_FCM_TOKEN),
+            @ApiResponse(code = 401, message = UNAUTHORIZED, response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = NOT_FOUND, response = ErrorResponse.class),
+            @ApiResponse(code = 500, message = SERVER_ERROR, response = ErrorResponse.class)
+    })
+    @PostMapping(value = "/fcm")
+    public ResponseEntity<BaseResponseBody> updateFcmToken(@RequestParam Long memberSeq, @RequestParam String fcmToken) {
+
+        Member member = memberService.getMemberById(memberSeq).orElseThrow(() -> new NotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        memberService.updateFcmToken(member,fcmToken);
+        return ResponseEntity.ok(BaseResponseBody.of(HttpStatus.OK, UPDATE_FCM_TOKEN));
+    }
+
 }

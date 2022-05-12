@@ -14,4 +14,12 @@ function deleteProtegeSeqAlarm(alarmSeq, success, fail) {
   api.delete(`/alarm/protector/${alarmSeq}`).then(success).catch(fail);
 }
 
-export { getProtegeSeqAlarmList, getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm };
+function getAlarmPillList(alarmSeq, success, fail) {
+  api.get(`/alarm/protege/${alarmSeq}`).then(success).catch(fail);
+}
+
+function addPillTakePicture(imgInfo, success, fail) {
+  api.post(`/alarm/protege`, imgInfo).then(success).catch(fail);
+}
+
+export { getProtegeSeqAlarmList, getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm, getAlarmPillList, addPillTakePicture };

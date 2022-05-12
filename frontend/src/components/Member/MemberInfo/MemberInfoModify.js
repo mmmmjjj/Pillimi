@@ -1,21 +1,21 @@
 /*eslint-disable*/
-import React, { useMemo } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 
 // reactstrap components
 import { Button, Container, FormGroup, Form, Input } from "reactstrap";
 import style from "../css/MemberInfo.module.css";
-import MemberInfo from "../MemberInfo";
 import Datetime from 'react-datetime';
 import { getMemberInfoDetail, modifyMemberInfo } from '../../../api/member'
 import moment from "moment";
+import 'moment/locale/ko'
 
 // core components
 
 
-function MemberInfoModify({match}) {
+function MemberInfoModify(props) {
 
-  const memberSeq = match.params.memberSeq;
+  const memberSeq = props.match.params.memberSeq;
 
   const [profile, setProfile] = useState({
     member_nickname: "",
@@ -111,7 +111,7 @@ function MemberInfoModify({match}) {
   
   useEffect(() => {
     console.log("마운트")
-    console.log(match.params.memberSeq);
+    console.log(props.match.params.memberSeq);
     getMemberDetail(memberSeq);
   },[])
 
@@ -125,6 +125,8 @@ function MemberInfoModify({match}) {
           member_birthDate: success.data.data.birthDate==null? null : new Date(success.data.data.birthDate),
           member_phone: success.data.data.phone,
         })
+        console.log(success.data.data.nickName);
+        props.getheader(String(success.data.data.nickName));
         if(success.data.data.birthDate==null){
           setIsProtector(true);
         }
@@ -200,6 +202,7 @@ function MemberInfoModify({match}) {
                 className={`${style.datepicker}`}
                 value={new Date(profile.member_birthDate)}
                 dateFormat='yyyy-MM-DD'
+                locale="ko"
                 onChange={(e) => {
                   e.name = "member_birthDate"
                   onChangeProfile(e)

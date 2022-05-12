@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -23,6 +23,25 @@ import MyWebView from './component/MyWebView';
 import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
+  let webviewRef = useRef();
+
+  const handleSetRef = _ref => {
+    webviewRef = _ref;
+  };
+
+  /** webview 로딩 완료시 */
+  const handleEndLoading = async () => {
+    console.log('handleEndLoading');
+
+    const fcmToken = await messaging().getToken();
+    if (fcmToken) {
+      console.log(fcmToken);
+    }
+
+    /** rn에서 웹뷰로 정보를 보내는 메소드 */
+    webviewRef.postMessage(fcmToken);
+  };
+
   const isDarkMode = useColorScheme() === 'dark';
 
   // background, quit 상태 일 경우
@@ -50,6 +69,9 @@ const App = () => {
               {text: '예', onPress: () => BackHandler.exitApp()},
             ]);
           }}
+          webviewRef={webviewRef}
+          handleSetRef={handleSetRef}
+          handleEndLoading={handleEndLoading}
         />
       </SafeAreaView>
     </>

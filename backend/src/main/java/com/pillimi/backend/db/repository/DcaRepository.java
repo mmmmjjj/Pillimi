@@ -10,4 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface DcaRepository extends JpaRepository<Dca, Long>, DcaRepositoryCustom {
+    boolean existsByRelation(Ingredient ingredient);
+
 }

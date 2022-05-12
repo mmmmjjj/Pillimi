@@ -132,5 +132,12 @@ public class MemberServiceImpl implements MemberService {
         target.setMemberNickname(req.getNickName());
     }
 
+    /*
+    로그인한 기기의 FCM 토큰을 DB에 저장
+     */
+    @Override
+    public void updateFcmToken(Member member, String token) {
+        member.setMemberFcmToken(token);
+    }
 
 }
