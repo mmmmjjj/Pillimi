@@ -21,7 +21,6 @@ const MyWebView = ({handleClose, handleSetRef, handleEndLoading, pushUrl}) => {
   }, [goBackable]);
   useEffect(() => {
     // setWebview(handleSetRef)
-    console.log('여기는 webview' + pushUrl);
     if (webview && webview.clearCache) webview.clearCache();
   }, [webview]);
   return (
