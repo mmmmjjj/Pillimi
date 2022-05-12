@@ -4,25 +4,35 @@ import "../familycss.css";
 import Swal from "sweetalert2";
 import { useHistory  } from "react-router-dom";
 import { addFamily, revertFamilyRequest } from 'api/family';
+import { useSelector } from 'react-redux';
 
 function FamilyRegisterReply(props) {
   const [name, setname] = useState("");
   const [number, setnumber] = useState("");
+  const [familyRequestSeq, setFamilyRequestSeq] = useState(-1);
+  const history = useHistory();
+  
   useEffect(() => {
     props.getheader("가족 요청");
     props.getnavbar(false);
+    if(props.history.location.state===undefined){
+      Swal.fire({
+        icon: "warning",
+        title: "비정상적인 접근입니다.",
+        confirmButtonColor: `#ff0000`,
+      }).then(function () {
+        history.push(`/`)
+      });
+    } else {
+      console.log("정상 접근")
+      setFamilyRequestSeq(props.history.location.state.memberInfo.reqSeq)
+      setname(`(${props.history.location.state.memberInfo.name})`);
+      setnumber(props.history.location.state.memberInfo.phone);
+    }
     console.log(props.history.location)
-    setpage();
-  });
-  const setpage = () => {
-    console.log(props)
-    setname(`(${props.history.location.props.memberInfo.name})`);
-    setnumber(props.history.location.props.memberInfo.phone);
-  };
-  const history = useHistory();
+  },[props, history]);
   
-  const familyRequestSeq = props.history.location.props.memberInfo.reqSeq;
-
+  
   const onSubmityes = (event) => {
     addFamily(familyRequestSeq, (success) => {
       console.log(success);
@@ -55,6 +65,20 @@ function FamilyRegisterReply(props) {
     })
     
   };
+
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if(isProtector){
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
   return (
     <Container style={{ padding: "50px" }}>
       <Row style={{ marginBottom: "40px"}}>
