@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -29,6 +29,8 @@ const App = () => {
     webviewRef = _ref;
   };
 
+  const [pushUrl, setPushUrl] = useState('https://k6a307.p.ssafy.io');
+
   /** webview 로딩 완료시 */
   const handleEndLoading = async () => {
     console.log('handleEndLoading');
@@ -40,6 +42,8 @@ const App = () => {
 
     /** rn에서 웹뷰로 정보를 보내는 메소드 */
     webviewRef.postMessage(fcmToken);
+
+    console.log('handleEndLoading: pushUrl' + pushUrl);
   };
 
   const isDarkMode = useColorScheme() === 'dark';
@@ -62,7 +66,8 @@ const App = () => {
         remoteMessage.notification,
       );
 
-      console.log(remoteMessage.data);
+      setPushUrl(remoteMessage.data.url);
+      console.log(pushUrl);
     });
 
     // 앱이 종료된 상태에서 push 알림을 클릭 했을 경우
@@ -70,10 +75,13 @@ const App = () => {
       .getInitialNotification()
       .then(initialMessage => {
         console.log('Initial Message: ', initialMessage);
+
+        setPushUrl(initialMessage.data.url);
+        console.log(pushUrl);
       });
 
     return unsubscribe;
-  });
+  }, [pushUrl]);
 
   return (
     <>
@@ -89,6 +97,7 @@ const App = () => {
           webviewRef={webviewRef}
           handleSetRef={handleSetRef}
           handleEndLoading={handleEndLoading}
+          pushUrl={pushUrl}
         />
       </SafeAreaView>
     </>

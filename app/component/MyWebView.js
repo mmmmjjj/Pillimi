@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {BackHandler} from 'react-native';
 import {WebView} from 'react-native-webview';
 
-const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
+const MyWebView = ({handleClose, handleSetRef, handleEndLoading, pushUrl}) => {
   const BASE_URL = 'https://k6a307.p.ssafy.io';
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
@@ -21,6 +21,7 @@ const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
   }, [goBackable]);
   useEffect(() => {
     // setWebview(handleSetRef)
+    console.log('여기는 webview' + pushUrl);
     if (webview && webview.clearCache) webview.clearCache();
   }, [webview]);
   return (
@@ -28,7 +29,7 @@ const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
       pullToRefreshEnabled={true}
       startInLoadingState={true}
       allowsBackForwardNavigationGestures={true}
-      source={{uri: BASE_URL}}
+      source={{uri: pushUrl}}
       mixedContentMode={'compatibility'}
       originWhitelist={['https://*', 'http://*']}
       overScrollMode={'never'}
@@ -52,7 +53,7 @@ const MyWebView = ({handleClose, handleSetRef, handleEndLoading}) => {
       onMessage={event => {
         const url = event.nativeEvent.data;
         setGoBackable(url !== BASE_URL);
-        console.log('onMessage', event.nativeEvent.data);
+        console.log('onMessage : 페이지 이동', event.nativeEvent.data);
       }}
     />
   );
