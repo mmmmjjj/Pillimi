@@ -7,10 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface AlarmProtegeRepository extends JpaRepository<AlarmProtege, Long> {
 
     Optional<AlarmProtege> findByAlarmDateAndAlarmTimeAndProtege(LocalDate now, LocalTime time, Member member);
+
+    List<AlarmProtege> findByAlarmDateAndAlarmTime(LocalDate date,LocalTime time);
 }
