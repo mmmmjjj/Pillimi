@@ -4,6 +4,7 @@ import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 // import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
@@ -123,27 +124,69 @@ function PillTakeModify(props) {
       remarkContent: pillRegister.caution,
       startDay: pillRegister.startDate,
     });
-    modmedicine(
-      {
-        endDay: pillRegister.endDate,
-        intakeCount: parseInt(pillRegister.volume),
-        intakeDay: saveintakeDay,
-        intakeTime: saveintakeTime,
-        medicineSeq: props.location.state.info.medicineSeq,
-        memberMedicineName: pillRegister.nick,
-        memberMedicineSeq: parseInt(memberMedicineSeq),
-        memberSeq: parseInt(props.location.state.memberSeq),
-        remarkContent: pillRegister.caution,
-        startDay: pillRegister.startDate,
-      },
-      (success) => {
-        console.log(success);
-        gotoMedicineDetail(memberMedicineSeq);
-      },
-      (fail) => {
-        console.log(fail);
-      }
-    );
+    if (!pillRegister.nick) {
+      Swal.fire({
+        icon: "error",
+        title: "별칭을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.startDate) {
+      Swal.fire({
+        icon: "error",
+        title: "시작 일자를 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.endDate) {
+      Swal.fire({
+        icon: "error",
+        title: "종료 일자를 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (saveintakeDay.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 요일을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (saveintakeTime.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 시간을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.volume) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 개수을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else {
+      modmedicine(
+        {
+          endDay: pillRegister.endDate,
+          intakeCount: parseInt(pillRegister.volume),
+          intakeDay: saveintakeDay,
+          intakeTime: saveintakeTime,
+          medicineSeq: props.location.state.info.medicineSeq,
+          memberMedicineName: pillRegister.nick,
+          memberMedicineSeq: parseInt(memberMedicineSeq),
+          memberSeq: parseInt(props.location.state.memberSeq),
+          remarkContent: pillRegister.caution,
+          startDay: pillRegister.startDate,
+        },
+        (success) => {
+          console.log(success);
+          Swal.fire({
+            icon: "success",
+            title: "수정하였습니다.",
+            confirmButtonColor: `#0369a1`,
+          }).then(gotoMedicineDetail(memberMedicineSeq));
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    }
   };
 
   const changeday = (index) => {
@@ -212,6 +255,10 @@ function PillTakeModify(props) {
       ) {
         setsmallend(true);
         setbigstart(false);
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: "",
+        });
       } else {
         setPillRegister({
           ...pillRegister,
@@ -227,6 +274,10 @@ function PillTakeModify(props) {
       ) {
         setsmallend(false);
         setbigstart(true);
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: "",
+        });
       } else {
         setPillRegister({
           ...pillRegister,

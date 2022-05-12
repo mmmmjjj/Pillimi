@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
+import Swal from "sweetalert2";
 // import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
 import { regmedicine } from "../../../api/member";
-import 'moment/locale/ko';
+import "moment/locale/ko";
 
 function PillTakeRegister(props) {
   const [pillRegister, setPillRegister] = useState({
@@ -68,26 +69,68 @@ function PillTakeRegister(props) {
       remarkContent: pillRegister.caution,
       startDay: pillRegister.startDate,
     });
-    regmedicine(
-      {
-        endDay: pillRegister.endDate,
-        intakeCount: parseInt(pillRegister.volume),
-        intakeDay: saveintakeDay,
-        intakeTime: saveintakeTime,
-        medicineSeq: props.location.state.medicineSeq,
-        memberMedicineName: pillRegister.nick,
-        memberSeq: props.location.state.memberSeq,
-        remarkContent: pillRegister.caution,
-        startDay: pillRegister.startDate,
-      },
-      (success) => {
-        console.log(success);
-        gotoMedicineList()
-      },
-      (fail) => {
-        console.log(fail);
-      }
-    );
+    if (!pillRegister.nick) {
+      Swal.fire({
+        icon: "error",
+        title: "별칭을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.startDate) {
+      Swal.fire({
+        icon: "error",
+        title: "시작 일자를 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.endDate) {
+      Swal.fire({
+        icon: "error",
+        title: "종료 일자를 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (saveintakeDay.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 요일을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (saveintakeTime.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 시간을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if (!pillRegister.volume) {
+      Swal.fire({
+        icon: "error",
+        title: "복용 개수을 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else {
+      regmedicine(
+        {
+          endDay: pillRegister.endDate,
+          intakeCount: parseInt(pillRegister.volume),
+          intakeDay: saveintakeDay,
+          intakeTime: saveintakeTime,
+          medicineSeq: props.location.state.medicineSeq,
+          memberMedicineName: pillRegister.nick,
+          memberSeq: props.location.state.memberSeq,
+          remarkContent: pillRegister.caution,
+          startDay: pillRegister.startDate,
+        },
+        (success) => {
+          console.log(success);
+          Swal.fire({
+            icon: "success",
+            title: `${props.location.state.medicineName}을(를) 등록했습니다.`,
+            confirmButtonColor: `#0369a1`,
+          }).then(gotoMedicineList());
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    }
   };
 
   const changeday = (index) => {
@@ -101,8 +144,8 @@ function PillTakeRegister(props) {
 
   const onChangetimeinput = (e) => {
     settimeinput(e.format("hh:mm A"));
-    settimecheck(false)
-    console.log(timeinput)
+    settimecheck(false);
+    console.log(timeinput);
   };
 
   const pushtime = () => {
@@ -156,6 +199,10 @@ function PillTakeRegister(props) {
       ) {
         setsmallend(true);
         setbigstart(false);
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: "",
+        });
       } else {
         setPillRegister({
           ...pillRegister,
@@ -171,6 +218,10 @@ function PillTakeRegister(props) {
       ) {
         setsmallend(false);
         setbigstart(true);
+        setPillRegister({
+          ...pillRegister,
+          [e.name]: "",
+        });
       } else {
         setPillRegister({
           ...pillRegister,
@@ -188,8 +239,9 @@ function PillTakeRegister(props) {
   };
 
   const gotoMedicineList = () => {
-    window.location.href = `/member-pill-page/member-pill-list/` + props.location.state.memberSeq;
-  }
+    window.location.href =
+      `/member-pill-page/member-pill-list/` + props.location.state.memberSeq;
+  };
 
   return (
     <>
