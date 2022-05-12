@@ -98,7 +98,7 @@ function MemberInfoDetail(props) {
         //history.push(`/`)
         dispatch(logoutAction());
         localStorage.removeItem('ACCESS_TOKEN');
-        window.location.href="/"
+        props.history.replace(`/`)
       });
     // dispatch(logoutAction());
     // localStorage.removeItem('ACCESS_TOKEN');
