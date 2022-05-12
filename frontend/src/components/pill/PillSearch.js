@@ -6,9 +6,10 @@ import PillSearchCSS from "./css/PillSearch.module.css";
 import Header from "components/Headers/Header";
 import { getPillSearch } from "../../api/pill.js";
 import { useInView } from "react-intersection-observer";
+import Navbar from "layout/Navbar.js";
 import { useSelector } from "react-redux";
 
-function PillSearch() {
+function PillSearch(props) {
   const [keyword, setKeyword] = useState("");
   const [pillList, setPillList] = useState([]);
   const [datas, setDatas] = useState([]);
@@ -21,6 +22,18 @@ function PillSearch() {
     Swal.fire({
       icon: "warning",
       title: "로그인이 필요한 서비스입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`);
+    });
+    return <div></div>;
+  }
+
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if (!isProtector) {
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
       props.history.push(`/`);
@@ -142,6 +155,7 @@ function PillSearch() {
         <br></br>
         <ShowPillList></ShowPillList>
       </div>
+      <Navbar />
     </>
   );
 }

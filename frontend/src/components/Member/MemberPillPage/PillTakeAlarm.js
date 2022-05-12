@@ -3,6 +3,7 @@ import React from "react";
 
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css"
+import Navbar from "layout/Navbar.js";
 
 // core components
 function PillTakeAlarm(props) {
@@ -108,6 +109,7 @@ function PillTakeAlarm(props) {
           <AlarmsList />
         </div>
       </div>
+      <Navbar />
     </>
   )
 }

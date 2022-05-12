@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
