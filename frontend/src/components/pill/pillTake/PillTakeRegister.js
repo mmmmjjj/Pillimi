@@ -7,6 +7,8 @@ import "react-datetime/css/react-datetime.css";
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
 import { regmedicine } from "../../../api/member";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 import 'moment/locale/ko';
 
 function PillTakeRegister(props) {
@@ -190,7 +192,19 @@ function PillTakeRegister(props) {
   const gotoMedicineList = () => {
     window.location.href = `/member-pill-page/member-pill-list/` + props.location.state.memberSeq;
   }
-
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if(!isProtector){
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
   return (
     <>
       <Header header="복용 약 추가"></Header>

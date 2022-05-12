@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import "../familycss.css";
 import { getMyFamily, getFamilyRequest } from "api/family"
-
+import { useSelector } from 'react-redux';
+import Swal from "sweetalert2";
 
 function MyFamily(props) {
   const [familyTab, setfamilyTab] = useState(true);
@@ -54,7 +55,7 @@ function MyFamily(props) {
     // console.log(memberInfo.requestPhone);
     props.history.push({
       pathname: `/family/reply`,
-      props:{
+      state:{
         memberInfo: {
           name: memberInfo.requestName,
           phone: memberInfo.requestPhone,
@@ -111,6 +112,19 @@ function MyFamily(props) {
     )
   }
 
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if(isProtector){
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
   return (
     <div style={{ backgroundColor: "#EAF0F8", padding:"0px", height:"100vh", margin:"0px"}}>
       <Row xs="2">
