@@ -16,8 +16,8 @@ function Header(props) {
           <Col xs="2" className="familypagecol1">
             { props.canBack ?
             <i
-              className="fa fa-solid fa-arrow-left"
-              style={{ fontSize: "xx-large", margin:"auto", float:"left" }}
+              className="fa fa-solid fa-arrow-left ml-2"
+              style={{ fontSize: "xx-large", margin:"auto", float:"left", color: "#514A4A" }}
               onClick={ () => {
                 history.goBack();
               } }
@@ -25,7 +25,7 @@ function Header(props) {
           }
           </Col>
           <Col xs="8" className="familypagecol2">
-            <h4 style={{margin:"0px"}}>{props.header}</h4>
+            <h4 style={{margin:"0px", fontWeight:"bold"}}>{props.header}</h4>
           </Col>
           <Col xs="2" className="familypagecol2"></Col>
         </Row>
