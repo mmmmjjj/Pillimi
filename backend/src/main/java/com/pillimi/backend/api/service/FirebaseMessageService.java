@@ -7,7 +7,7 @@ public interface FirebaseMessageService {
     /*
      피보호자 targetToken에 해당하는 기기에 push 알림 전송
      */
-    void sendMessageToProtege(String targetToken, String title, String body) throws IOException;
+    void sendMessageToProtege(String targetToken, String title, String body, String URL) throws IOException;
 
     /*
      보호자 targetToken에 해당하는 기기에 push 알림 전송

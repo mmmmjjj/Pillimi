@@ -66,8 +66,9 @@ public class DailyScheduler {
             String title = "약 드실 시간입니다.💙";
             String body = now.format(DateTimeFormatter.ofPattern("HH시 mm분"))
                     + " 알림을 눌러 약을 복용해주세요.";
+            String url = "https://k6a307.p.ssafy.io/family/camera/"+alarm.getAlarmSeq();
             try {
-                firebaseMessageService.sendMessageToProtege(token,title,body);
+                firebaseMessageService.sendMessageToProtege(token,title,body,url);
             } catch (IOException e) {
                 log.info(now+" : "+alarm.getProtege().getMemberNickname()+" 님에게 알림 전송을 실패하였습니다.");
             }

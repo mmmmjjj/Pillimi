@@ -21,7 +21,7 @@ public class FirebaseMessageServiceImpl implements FirebaseMessageService {
 
     // 피보호자 Fcm 전송
     @Override
-    public void sendMessageToProtege(String targetToken, String title, String body) throws IOException {
+    public void sendMessageToProtege(String targetToken, String title, String body, String URL) throws IOException {
         String message = makeMessage(targetToken, title, body);
 
         sendToFirebase(message);
@@ -75,8 +75,11 @@ public class FirebaseMessageServiceImpl implements FirebaseMessageService {
                                 .title(title)
                                 .body(body)
                                 .image(image)
-                                .build()
-                        ).build()).validateOnly(false).build();
+                                .build())
+                        .data(FcmMessage.Data.builder()
+                                .url(URL)
+                                .build())
+                        .build()).validateOnly(false).build();
 
         return objectMapper.writeValueAsString(fcmMessage);
     }
