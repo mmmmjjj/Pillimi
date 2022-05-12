@@ -11,7 +11,8 @@ export default (state = initialProtegeInfo, action) => {
     case SETINFO:
       return {
         ...state,
-        protegeInfo: action.protegeInfo,
+        memberSeq: action.protegeInfo.memberSeq,
+        nickName: action.protegeInfo.nickName,
       };
     default:
       return state;
