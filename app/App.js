@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -44,16 +44,33 @@ const App = () => {
 
   const isDarkMode = useColorScheme() === 'dark';
 
-  // background, quit 상태 일 경우
+  // background, quit 상태 일 경우 FCM 핸들링
   messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Message handled in the background', remoteMessage);
   });
 
-  // foreground일 경우
+  // foreground일 경우 FCM 핸들링
   React.useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('a new FCM message arrived!', JSON.stringify(remoteMessage));
     });
+
+    // background에서 push 알림을 클릭 했을 경우
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state',
+        remoteMessage.notification,
+      );
+
+      console.log(remoteMessage.data);
+    });
+
+    // 앱이 종료된 상태에서 push 알림을 클릭 했을 경우
+    messaging()
+      .getInitialNotification()
+      .then(initialMessage => {
+        console.log('Initial Message: ', initialMessage);
+      });
 
     return unsubscribe;
   });
