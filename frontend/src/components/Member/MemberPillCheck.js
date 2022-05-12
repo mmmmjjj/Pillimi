@@ -22,6 +22,19 @@ function MemberPillCheck(props) {
       props.history.push(`/`)
     });
   }
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if(!isProtector){
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
   if(isLogin){
     return (
       <>
