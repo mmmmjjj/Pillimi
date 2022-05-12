@@ -55,7 +55,7 @@ function MyFamily(props) {
     // console.log(memberInfo.requestPhone);
     props.history.push({
       pathname: `/family/reply`,
-      props:{
+      state:{
         memberInfo: {
           name: memberInfo.requestName,
           phone: memberInfo.requestPhone,
