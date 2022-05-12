@@ -10,6 +10,7 @@ import com.pillimi.backend.db.entity.AlarmProtege;
 import com.pillimi.backend.db.entity.Member;
 import com.pillimi.backend.db.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +22,12 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -39,6 +42,8 @@ public class AlarmServiceImpl implements AlarmService {
     private final FamilyRepository familyRepository;
 
     private final S3Uploader s3Uploader;
+
+    private final FirebaseMessageService firebaseMessageService;
 
     /*
     id로 알림 조회
@@ -152,13 +157,24 @@ public class AlarmServiceImpl implements AlarmService {
                     .alarmProtege(alarm)
                     .alarmPhoto(imgURL)
                     .build());
+
+            String token = protector.getMemberFcmToken();
+            String title = "복용 완료 알림";
+            String body = alarm.getProtege().getMemberNickname()+"님이 약을 복용하였습니다.";
+
+            if(token!=null) {
+                try {
+                    firebaseMessageService.sendMessageTo(token, title, body);
+                } catch (IOException e) {
+                    log.info(protector.getMemberNickname() + " 님에게 보호자 알림 전송을 실패하였습니다.");
+                }
+            }
         }
 
         // 해당 시간 복용 완료 처리
         memberMedicineRepository
                 .updateMemberMedicine(alarm.getProtege(),alarm.getAlarmTime(), LocalDate.now().getDayOfWeek().getValue());
 
-        //TODO 보호자에게 push 알림보내기
     }
 }
 

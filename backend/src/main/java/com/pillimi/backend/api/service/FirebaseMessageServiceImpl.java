@@ -36,7 +36,6 @@ public class FirebaseMessageServiceImpl implements FirebaseMessageService {
 
         Response response = client.newCall(request).execute();
 
-        System.out.println(response.body().string());
     }
 
     // fcm 메시지 생성
