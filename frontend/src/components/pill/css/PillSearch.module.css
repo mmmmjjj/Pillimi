@@ -79,3 +79,7 @@ i {
 .AlertText {
   margin-left: 10% !important;
 }
+
+.Background {
+  background-color: #eaf0f8;
+}
