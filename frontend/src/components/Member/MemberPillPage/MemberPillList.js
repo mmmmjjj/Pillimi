@@ -272,6 +272,7 @@ function MemberPillList(props) {
         <div
           className={`${style.center}`}
           style={{
+            minHeight:"100vh",
             width: "100vw",
             backgroundColor: "#EAF0F8",
             margin: "0 auto",

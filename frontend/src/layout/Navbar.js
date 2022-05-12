@@ -79,6 +79,7 @@ function Navbar() {
           </Row>
         </div>
       )}
+      
       {isProtector ? (
         <div
           style={{

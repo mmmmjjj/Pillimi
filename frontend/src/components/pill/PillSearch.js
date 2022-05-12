@@ -5,9 +5,9 @@ import Swal from "sweetalert2";
 import PillSearchCSS from "./css/PillSearch.module.css";
 import Header from "components/Headers/Header";
 import { getPillSearch } from "../../api/pill.js";
-import { useInView } from 'react-intersection-observer'; 
+import { useInView } from "react-intersection-observer";
 import Navbar from "layout/Navbar.js";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 
 function PillSearch(props) {
   const [keyword, setKeyword] = useState("");
@@ -17,37 +17,35 @@ function PillSearch(props) {
   const { ref, inView } = useInView();
 
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
-  if(!isLogin){
+  if (!isLogin) {
     Swal.fire({
       icon: "warning",
       title: "로그인이 필요한 서비스입니다.",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
-  
-  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
-  if(!isProtector){
+
+  let isProtector = useSelector(
+    (state) => state.memberInfo.memberInfo.protector
+  );
+  if (!isProtector) {
     Swal.fire({
       icon: "warning",
       title: "권한이 없는 페이지입니다.",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
 
   useEffect(() => {
     console.log(inView);
     if (inView) {
-      setScrollOptions(scrollOptions+20);
+      setScrollOptions(scrollOptions + 20);
       // fetchMore({page});
     }
   }, [inView]);
@@ -100,16 +98,30 @@ function PillSearch(props) {
     if (datas.length !== 0) {
       datas.forEach((element) => {
         result.push(
-          <Card id="pillListDiv" className={PillSearchCSS.PillList} onClick={() => gotoPillDetail(element.medicineSeq)}>
+          <Card
+            id="pillListDiv"
+            className={PillSearchCSS.PillList}
+            onClick={() => gotoPillDetail(element.medicineSeq)}
+          >
             <div className="d-flex align-items-center">
-              <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
-              <span className={`${PillSearchCSS.PillName} flex-fill`}>{element.medicineName}</span>
+              <img
+                className={`${PillSearchCSS.Img}`}
+                alt="pillImg"
+                src={element.medicineImage}
+              ></img>
+              <span className={`${PillSearchCSS.PillName} flex-fill`}>
+                {element.medicineName}
+              </span>
               <i className={`now-ui-icons arrows-1_minimal-right`}></i>
             </div>
           </Card>
         );
       });
-      result.push(<div ref={ref} style={{color:`white`}}>.</div>)
+      result.push(
+        <div ref={ref} style={{ color: `white` }}>
+          .
+        </div>
+      );
     }
 
     return result;
@@ -119,11 +131,17 @@ function PillSearch(props) {
     ShowPillList();
   }, []);
 
-
   return (
     <>
       <Header header="검색"></Header>
-      <div className={PillSearchCSS.Whole}>
+      <div
+        style={{
+          backgroundColor: "#eaf0f8",
+          width: "100vw",
+          minHeight: "100vh",
+          margin: "0 auto",
+        }}
+      >
         <br></br>
         <Input
           className={PillSearchCSS.SearchInput}
@@ -133,14 +151,17 @@ function PillSearch(props) {
           value={keyword}
           type="text"
         ></Input>
-        <Button className={PillSearchCSS.SearchBtn} onClick={() => goPillSearch()}>
+        <Button
+          className={PillSearchCSS.SearchBtn}
+          onClick={() => goPillSearch()}
+        >
           {" "}
           검색
         </Button>
         <br></br>
         <ShowPillList></ShowPillList>
       </div>
-      <Navbar/>
+      <Navbar />
     </>
   );
 }
