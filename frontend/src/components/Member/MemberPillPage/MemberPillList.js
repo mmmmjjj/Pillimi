@@ -159,7 +159,8 @@ function MemberPillList(props) {
     console.log("마운트");
     // console.log(match.params.memberSeq);
     getMediList();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
 
   const onsubmitTbutton= () => {
     setTDropOptions(tdropOptions+10);
