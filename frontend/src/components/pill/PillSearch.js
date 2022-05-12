@@ -105,9 +105,11 @@ function PillSearch(props) {
     let result = [];
     if (datas.length !== 0) {
       datas.forEach((element) => {
+        console.log(element.medicineSeq);
         result.push(
           <Card
-            id="pillListDiv"
+            key={element.medicineSeq}
+            id={element.medicineSeq}
             className={`${PillSearchCSS.PillList}`}
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
@@ -143,7 +145,7 @@ function PillSearch(props) {
 
   return (
     <>
-      <Header header="검색"></Header>
+      <Header header="검색"  canBack={true}></Header>
       <div
         style={{
           backgroundColor: "#eaf0f8",

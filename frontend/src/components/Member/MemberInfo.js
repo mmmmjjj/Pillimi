@@ -40,7 +40,7 @@ function MemberInfo(props) {
   return (
     <>
       {/* <BrowserRouter> */}
-        <Header header={header+`님의 정보`}></Header>
+        <Header header={header+`님의 정보`} canBack={true}></Header>
         <Switch>
           <Switch>
             <Route exact

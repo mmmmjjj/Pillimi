@@ -274,7 +274,7 @@ function PillTakeModify(props) {
 
   return (
     <>
-      <Header header="복용 약 추가"></Header>
+      <Header header="복용 약 추가" canBack={true}></Header>
       <br></br>
       <h3 className={PillTakeRegisterCSS.PillName}>{props.location.state.info.medicineName}</h3>
       <div className={PillTakeRegisterCSS.Whole}>

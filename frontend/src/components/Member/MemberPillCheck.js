@@ -39,7 +39,7 @@ function MemberPillCheck(props) {
     return (
       <>
         {/* <BrowserRouter> */}
-          <Header header={`복용 확인`}></Header>
+          <Header header={`복용 확인`} canBack={true}></Header>
           <Switch>
             <Switch>
               <Route exact
