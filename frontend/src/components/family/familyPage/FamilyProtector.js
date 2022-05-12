@@ -26,7 +26,7 @@ function FamilyProtector() {
 
   useEffect(()=>{
     getFamilyData();
-  })
+  },)
 
   
   

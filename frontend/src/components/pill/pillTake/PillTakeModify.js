@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { Input, Badge, Button, FormGroup, Row, Col } from "reactstrap";
 import Datetime from "react-datetime";
@@ -85,7 +86,7 @@ function PillTakeModify(props) {
       ...pillRegister,
       time: stortime,
     });
-  }, [pillRegister, props.location.state.info.intakeDay, props.location.state.info.intakeTime]);
+  }, []);
 
   const regimedicine = () => {
     var saveintakeDay = [];
