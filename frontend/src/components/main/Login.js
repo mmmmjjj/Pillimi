@@ -24,7 +24,7 @@ function Login() {
     <>
       {!isLogin ? (
         <>
-          <Header header="로그인"></Header>
+          <Header header="로그인" canBack={false}></Header>
           <div className={LoginCSS.LoginBtnDiv}>
             <br></br>
             <a
