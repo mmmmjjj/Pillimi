@@ -159,7 +159,7 @@ function MemberPillList(props) {
     console.log("마운트");
     // console.log(match.params.memberSeq);
     getMediList();
-  }, []);
+  });
 
   const onsubmitTbutton= () => {
     setTDropOptions(tdropOptions+10);
@@ -216,7 +216,7 @@ function MemberPillList(props) {
             onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
           >
             <div className={`${style.imgsize2} ml-2`}>
-              <img src={element.imageURL} className={`${style.size}`}></img>
+              <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
             </div>
             <div className="flex-fill">
               <span>{element.medicineName}</span>
@@ -236,7 +236,7 @@ function MemberPillList(props) {
             onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
           >
             <div className={`${style.imgsize2} ml-2`}>
-              <img src={element.imageURL} className={`${style.size}`}></img>
+              <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
             </div>
             <div className="flex-fill">
               <span>{element.medicineName}</span>
