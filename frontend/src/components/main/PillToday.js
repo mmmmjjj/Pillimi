@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PillTodayCSS from "./css/PillToday.module.css";
-import { Button, Col } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 import style from "../Member/css/MemberPillCheck.module.css";
 
 import { getMyFamily } from "../../api/family.js";
@@ -67,6 +67,8 @@ function PillToday() {
   };
 
   const otherFamily = (memberSeq) => {
+    setPillListKey([]);
+    setPillList([]);
     getPillToday(
       memberSeq,
       (response) => {
@@ -220,15 +222,17 @@ function PillToday() {
       familyList.forEach((element) => {
         result.push(
           <>
-            <Col sm="3" style={{ padding: "0px" }}>
-              <span style={{ cursor: "pointer" }} onClick={() => otherFamily(element.memberSeq)}>
-                <span>
-                  <img src={element.memberImage} alt="memberImg" className={PillTodayCSS.img}></img>
-                </span>
-                <br></br>
-                <span>{element.memberName}</span>
-              </span>
-            </Col>
+            <div style={{ cursor: "pointer", display: "inline" }} onClick={() => otherFamily(element.memberSeq)}>
+              <div>
+                <img
+                  style={{ display: "block" }}
+                  src={element.memberImage}
+                  alt="memberImg"
+                  className={PillTodayCSS.img}
+                ></img>
+              </div>
+              <div>{element.memberName}</div>
+            </div>
           </>
         );
       });
