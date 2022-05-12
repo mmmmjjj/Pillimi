@@ -38,3 +38,4 @@ out/
 
 ### properties file ###
 application-aws.properties
+firebase_service_key.json
