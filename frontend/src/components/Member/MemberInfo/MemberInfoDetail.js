@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import { Button } from "reactstrap";
-import { useRouteMatch } from 'react-router-dom'
 import style from "../css/MemberInfo.module.css";
 import { getMemberInfoDetail } from '../../../api/member';
 import { useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import { logoutAction } from "actions/memberAction";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { useHistory  } from "react-router-dom";
+
 // core components
 
 
@@ -19,9 +19,8 @@ function MemberInfoDetail(props) {
   console.log(props)
   const memberSeq = props.match.params.memberSeq;
   const dispatch = useDispatch();
-  const history = useHistory();
   let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
-
+  let isLogin = useSelector((state) => state.memberInfo.isLogin);
   const [profile, setProfile] = useState({
     member_nickname: "",
     member_img: "",
@@ -29,7 +28,6 @@ function MemberInfoDetail(props) {
     member_phone: "",
     member_isprotector: 0
   });
-  
   useEffect(() => {
     console.log("마운트")
     console.log(props.match.params.memberSeq);
@@ -121,20 +119,26 @@ function MemberInfoDetail(props) {
     // window.location.href="/"
   }
 
-  return (
-    <>
-      <div className={`${style.center}`}>
-        <div className={`${style.top}`}>
-          <img src={profile.member_img} alt="프로필 사진" className={`mt-5 ${style.imgsize}`}></img>
-          <br></br>
-          <Content></Content>
-          <br></br>
+  if(isLogin){
+    return (
+      <>
+        <div className={`${style.center}`}>
+          <div className={`${style.top}`}>
+            <img src={profile.member_img} alt="프로필 사진" className={`mt-5 ${style.imgsize}`}></img>
+            <br></br>
+            <Content></Content>
+            <br></br>
+          </div>
+          <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>수정</Button>
+          <LogOutBtn></LogOutBtn>
         </div>
-        <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>수정</Button>
-        <LogOutBtn></LogOutBtn>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return(
+      <div></div>
+    )
+  }
 }
 
 function Label(params) {
