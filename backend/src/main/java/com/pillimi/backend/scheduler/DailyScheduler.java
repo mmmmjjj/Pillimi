@@ -67,7 +67,7 @@ public class DailyScheduler {
             String body = now.format(DateTimeFormatter.ofPattern("HH시 mm분"))
                     + " 알림을 눌러 약을 복용해주세요.";
             try {
-                firebaseMessageService.sendMessageTo(token,title,body);
+                firebaseMessageService.sendMessageToProtege(token,title,body);
             } catch (IOException e) {
                 log.info(now+" : "+alarm.getProtege().getMemberNickname()+" 님에게 알림 전송을 실패하였습니다.");
             }

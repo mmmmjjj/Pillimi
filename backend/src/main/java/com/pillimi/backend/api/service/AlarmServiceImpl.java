@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -164,7 +162,8 @@ public class AlarmServiceImpl implements AlarmService {
 
             if(token!=null) {
                 try {
-                    firebaseMessageService.sendMessageTo(token, title, body);
+                    //TODO url 추가
+                    firebaseMessageService.sendMessageToProtector(token, title, body,imgURL,"");
                 } catch (IOException e) {
                     log.info(protector.getMemberNickname() + " 님에게 보호자 알림 전송을 실패하였습니다.");
                 }

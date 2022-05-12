@@ -19,11 +19,25 @@ public class FirebaseMessageServiceImpl implements FirebaseMessageService {
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/pillimi/messages:send";
     private final ObjectMapper objectMapper;
 
-    // Fcm 전송
+    // 피보호자 Fcm 전송
     @Override
-    public void sendMessageTo(String targetToken, String title, String body) throws IOException {
+    public void sendMessageToProtege(String targetToken, String title, String body) throws IOException {
         String message = makeMessage(targetToken, title, body);
 
+        sendToFirebase(message);
+
+    }
+
+    // 보호자 Fcm 전송
+    @Override
+    public void sendMessageToProtector(String targetToken, String title, String body, String image, String URL) throws IOException {
+        String message = makeImgMessage(targetToken, title, body, image, URL);
+
+        sendToFirebase(message);
+
+    }
+
+    private void sendToFirebase(String message) throws IOException {
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message,
                 MediaType.get("application/json; charset=utf-8"));
@@ -35,7 +49,6 @@ public class FirebaseMessageServiceImpl implements FirebaseMessageService {
                 .build();
 
         Response response = client.newCall(request).execute();
-
     }
 
     // fcm 메시지 생성
@@ -47,6 +60,21 @@ public class FirebaseMessageServiceImpl implements FirebaseMessageService {
                                 .title(title)
                                 .body(body)
                                 .image(null)
+                                .build()
+                        ).build()).validateOnly(false).build();
+
+        return objectMapper.writeValueAsString(fcmMessage);
+    }
+
+    // 이미지, url 포함 fcm 메시지 생성
+    private String makeImgMessage(String targetToken, String title, String body, String image, String URL) throws JsonProcessingException {
+        FcmMessage fcmMessage = FcmMessage.builder()
+                .message(FcmMessage.Message.builder()
+                        .token(targetToken)
+                        .notification(FcmMessage.Notification.builder()
+                                .title(title)
+                                .body(body)
+                                .image(image)
                                 .build()
                         ).build()).validateOnly(false).build();
 
