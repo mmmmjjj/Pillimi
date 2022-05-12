@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useState, useRef, useEffect } from "react";
 import { Camera } from "react-camera-pro";
 import { Button } from "reactstrap";
@@ -46,9 +47,9 @@ function Cameratest(props) {
   }
 
   useEffect(() => {
-    props.getnavbar(false);
     props.getheader("사진 찍기");
-  });
+    props.getnavbar(false);
+  },[]);
 
   return (
     <>
