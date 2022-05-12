@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PillTodayCSS from "./css/PillToday.module.css";
-import { Button } from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 import style from "../Member/css/MemberPillCheck.module.css";
 
 import { getMyFamily } from "../../api/family.js";
@@ -222,17 +222,17 @@ function PillToday() {
       familyList.forEach((element) => {
         result.push(
           <>
-            <div style={{ cursor: "pointer", display: "inline" }} onClick={() => otherFamily(element.memberSeq)}>
-              <div>
+            <Col xs="3" style={{ cursor: "pointer", padding: "0" }} onClick={() => otherFamily(element.memberSeq)}>
+              <div style={{ display: "inlineBlock", justifyContent: "center" }}>
                 <img
-                  style={{ display: "block" }}
+                  style={{ margin: "0px" }}
                   src={element.memberImage}
                   alt="memberImg"
                   className={PillTodayCSS.img}
                 ></img>
               </div>
-              <div>{element.memberName}</div>
-            </div>
+              <span>{element.memberName}</span>
+            </Col>
           </>
         );
       });
@@ -246,9 +246,9 @@ function PillToday() {
         <div className={PillTodayCSS.Header}>
           <span className={PillTodayCSS.MemberName}>{myName}</span>
         </div>
-        <div className={PillTodayCSS.Family}>
+        <Row style={{ justifyContent: "start" }} className={PillTodayCSS.Family}>
           <FamilyName></FamilyName>
-        </div>
+        </Row>
         <br></br>
         <br></br>
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
