@@ -4,13 +4,14 @@ import "../familycss.css";
 import { getMyFamily } from '../../../api/family';
 import { useDispatch } from "react-redux";
 import { setProtegeInfoAction } from "actions/protegeAction";
+import { useSelector } from 'react-redux';
+import Swal from "sweetalert2";
 
-
-function FamilyProtector() {
+function FamilyProtector(props) {
   const [modalbool, setmodalbool] = useState(false)
   const [modalnum, setModalNum] = useState(-1);
   const [modalName, setModalName] = useState('');
-
+  
   const toggle = (num, str) => {
     console.log(num);
     setModalNum(num)
@@ -26,7 +27,7 @@ function FamilyProtector() {
 
   useEffect(()=>{
     getFamilyData();
-  })
+  },)
 
   
   
@@ -94,6 +95,21 @@ function FamilyProtector() {
     dispatch(setProtegeInfoAction({memberSeq: modalnum, nickName: modalName})); 
     window.location.href = `/member-pill-page/member-pill-list/` + modalnum;
   }
+
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if(!isProtector){
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
+
   return (
     <div
       style={{

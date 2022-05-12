@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useState, useRef, useEffect } from "react";
 import { Camera } from "react-camera-pro";
 import { Button } from "reactstrap";
@@ -5,13 +6,14 @@ import { Link } from "react-router-dom";
 import { addPillTakePicture } from "api/alarm";
 import Swal from "sweetalert2";
 import { useHistory  } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Cameratest(props) {
   const cam = useRef();
   const [picimg, setImage] = useState();
   const [pic, setPicture] = useState(false);
   const alarmSeq = props.match.params.alarmSeq;
-
+  
   const takepic = () => {
     setPicture(true);
   };
@@ -46,10 +48,24 @@ function Cameratest(props) {
   }
 
   useEffect(() => {
-    props.getnavbar(false);
     props.getheader("사진 찍기");
-  });
+    props.getnavbar(false);
+  },[]);
 
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  if(isProtector){
+    Swal.fire({
+      icon: "warning",
+      title: "권한이 없는 페이지입니다.",
+      confirmButtonColor: `#ff0000`,
+    }).then(function () {
+      props.history.push(`/`)
+    });
+    return(
+      <div></div>
+    )
+  }
+  
   return (
     <>
       <div style={{ height: "40px" }}></div>

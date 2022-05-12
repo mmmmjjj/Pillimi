@@ -1,6 +1,5 @@
 const SETINFO = "setInfo";
 
-
 const initialProtegeInfo = {
   memberSeq: 0,
   nickName: "",
