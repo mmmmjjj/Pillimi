@@ -7,7 +7,7 @@ import FamilyProtector from "components/family/familyPage/FamilyProtector.js";
 import Cameratest from "components/family/familyPage/Cameratest.js";
 import Cameratest2 from "components/family/familyPage/Cameratest2.js";
 import Navbar from "layout/Navbar.js";
-import { Row, Col } from "reactstrap";
+import Header from "components/Headers/Header";
 import "../family/familycss.css";
 function Family(props) {
   const [header, setheader] = useState("가족");
@@ -22,18 +22,7 @@ function Family(props) {
   return (
     // <BrowserRouter>
       <div id="outsidecon">
-        <Row style={{paddingTop:"30px", paddingBottom:"5px"}}>
-          <Col xs="2" className="familypagecol1">
-            <i
-              className="fa fa-solid fa-arrow-left"
-              style={{ fontSize: "xx-large", margin:"auto", float:"left" }}
-            ></i>
-          </Col>
-          <Col xs="8" className="familypagecol2">
-            <h2 style={{margin:"0px"}}>{header}</h2>
-          </Col>
-          <Col xs="2" className="familypagecol2"></Col>
-        </Row>
+        <Header header={header}></Header>
         <hr style={{margin:"0px"}}></hr>
         <Switch>
           <Route

@@ -8,7 +8,7 @@ import { getMemberMedicineList } from "../../../api/member";
 import PillTakeAlarm from "./PillTakeAlarm";
 import { useSelector } from "react-redux";
 import ProtectorTakeAlarm from "./ProtectorTakeAlarm";
-
+import Navbar from "layout/Navbar.js";
 // core components
 
 function MemberPillList(props) {
@@ -108,6 +108,7 @@ function MemberPillList(props) {
           </div>
         </div>
       )}
+      <Navbar />
     </>
   );
 }

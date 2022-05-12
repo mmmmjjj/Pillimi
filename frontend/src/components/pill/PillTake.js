@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import PillTakeRegister from "components/pill/pillTake/PillTakeRegister.js";
 import PillTakeModify from "components/pill/pillTake/PillTakeModify.js";
 import PillTakeDetail from "components/pill/pillTake/PillTakeDetail.js";
+import Navbar from "layout/Navbar.js";
 
 function PillTake(props) {
   var basicurl = props.match.path;
@@ -26,6 +27,7 @@ function PillTake(props) {
           />
         </Switch>
       </Switch>
+      <Navbar/>
       {/* </BrowserRouter> */}
     </>
   );

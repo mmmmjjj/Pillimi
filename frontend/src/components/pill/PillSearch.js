@@ -6,6 +6,7 @@ import PillSearchCSS from "./css/PillSearch.module.css";
 import Header from "components/Headers/Header";
 import { getPillSearch } from "../../api/pill.js";
 import { useInView } from 'react-intersection-observer'; 
+import Navbar from "layout/Navbar.js";
 
 function PillSearch() {
   const [keyword, setKeyword] = useState("");
@@ -110,6 +111,7 @@ function PillSearch() {
         <br></br>
         <ShowPillList></ShowPillList>
       </div>
+      <Navbar/>
     </>
   );
 }
