@@ -9,6 +9,7 @@ import Datetime from 'react-datetime';
 import { getMemberInfoDetail, modifyMemberInfo } from '../../../api/member'
 import moment from "moment";
 import 'moment/locale/ko'
+import Swal from "sweetalert2";
 
 // core components
 
@@ -135,15 +136,6 @@ function MemberInfoModify(props) {
       })
   }
 
-  const array1 = [1, "당뇨"];
-  const Disease = () => {
-    const result = [];
-    for (let i = 0; i < array1.length; i++) {
-      result.push(<span key={{i}}>{array1[i]}</span>);
-      result.push(<br></br>)
-    }
-    return result;
-  }
   
   function dateformat(bDay){
     if(moment.isMoment(bDay)) return "2022-02-13";
@@ -168,6 +160,13 @@ function MemberInfoModify(props) {
     modifyMemberInfo(memberInfo,
       ( success ) => {
         console.log(success)
+        Swal.fire({
+          icon: "success",
+          title: "수정되었습니다.",
+          confirmButtonColor: `#0369a1`,
+        }).then(function () {
+          props.history.push(`/member-info/member-info-detail/` + memberSeq);
+        });
       }, ( fail ) => {
         console.log(fail)
       })
@@ -221,12 +220,6 @@ function MemberInfoModify(props) {
               pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
               maxLength="13"></Input></span>
               <br></br>
-            </FormGroup>
-            <FormGroup>
-              <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
-              <div>
-                <Disease arr={array1}></Disease>
-              </div>
             </FormGroup>
           </Form>
         </div>
@@ -295,47 +288,5 @@ function Label(params) {
   )  
 }
 
-const DiseaseList = (params) => {
-  const issues = [...Array(10).keys()];
-
-  return(
-    <>
-      <span>
-        {issues.map((issue, index) => (
-          <span> <input type="checkbox"/>&nbsp;{issue}<Space index={index}></Space></span>
-        ))}
-      </span>
-    </>
-  )
-}
-
-function check(issue, array){
-  console.log("issue" + issue);
-  array.forEach(element => {
-    console.log(element);
-    console.log(issue===element)
-    if(element===issue) {
-      console.log("true 리턴할 거임") 
-      return true;
-    }
-  });
-  return false;
-}
-
-function Space(props) {
-  if(props.index%2===1) {
-    return(
-      <>
-        <br></br>
-      </>
-    )
-  }else{
-    return(
-      <>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-      </>
-    )
-  }
-}
 
 export default MemberInfoModify;
