@@ -10,7 +10,8 @@ function FamilyRegisterReply(props) {
   const [name, setname] = useState("");
   const [number, setnumber] = useState("");
   const [familyRequestSeq, setFamilyRequestSeq] = useState(-1);
-
+  const history = useHistory();
+  
   useEffect(() => {
     props.getheader("가족 요청");
     props.getnavbar(false);
@@ -25,16 +26,12 @@ function FamilyRegisterReply(props) {
     } else {
       console.log("정상 접근")
       setFamilyRequestSeq(props.history.location.state.memberInfo.reqSeq)
-      setpage();
+      setname(`(${props.history.location.state.memberInfo.name})`);
+      setnumber(props.history.location.state.memberInfo.phone);
     }
     console.log(props.history.location)
-  },[props, history, setpage]);
-  const setpage = () => {
-    console.log(props)
-    setname(`(${props.history.location.state.memberInfo.name})`);
-    setnumber(props.history.location.state.memberInfo.phone);
-  };
-  const history = useHistory();
+  },[props, history]);
+  
   
   const onSubmityes = (event) => {
     addFamily(familyRequestSeq, (success) => {
