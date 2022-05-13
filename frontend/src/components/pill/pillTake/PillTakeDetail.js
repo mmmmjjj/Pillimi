@@ -43,71 +43,57 @@ function PillTakeDetail(props) {
     pillInfo.intakeDay.forEach((element) => {
       if (element === 1) {
         result.push(
-          <>
-            <Badge className={PillTakeRegisterCSS.Day} color="success">
+            <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
               월
             </Badge>
-          </>
         );
       }
 
       if (element === 2) {
         result.push(
-          <>
-            <Badge className={PillTakeRegisterCSS.Day} color="success">
+            <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
               화
             </Badge>
-          </>
         );
       }
 
       if (element === 3) {
         result.push(
-          <>
-            <Badge className={PillTakeRegisterCSS.Day} color="success">
+            <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
               수
             </Badge>
-          </>
         );
       }
 
       if (element === 4) {
         result.push(
-          <>
-            <Badge className={PillTakeRegisterCSS.Day} color="success">
+            <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
               목
             </Badge>
-          </>
         );
       }
 
       if (element === 5) {
         result.push(
-          <>
-            <Badge className={PillTakeRegisterCSS.Day} color="success">
+            <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
               금
             </Badge>
-          </>
         );
       }
 
       if (element === 6) {
         result.push(
-          <>
-            <Badge className={PillTakeRegisterCSS.Day} color="success">
+            <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
               토
             </Badge>
-          </>
         );
       }
 
       if (element === 7) {
         result.push(
-          <>
-            <Badge className={PillTakeRegisterCSS.Day} color="success">
+            <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
               일
             </Badge>
-          </>
         );
       }
     });
@@ -119,11 +105,13 @@ function PillTakeDetail(props) {
     let result = [];
     pillInfo.intakeTime.forEach((element) => {
       result.push(
-        <>
-          <Badge className={PillTakeRegisterCSS.BadgeTime} color="info" id="timeList">
+          <Badge 
+            key={element}
+            className={PillTakeRegisterCSS.BadgeTime} 
+            color="info" 
+            id="timeList">
             {element.substring(0, 5)}
           </Badge>
-        </>
       );
     });
 
@@ -173,7 +161,7 @@ function PillTakeDetail(props) {
 
   return (
     <>
-      <Header header="복용 약 상세"></Header>
+      <Header header="복용 약 상세" canBack={true}></Header>
       <br></br>
       <h3 className={PillTakeRegisterCSS.PillName}>{pillInfo.medicineName}</h3>
       <div className={PillTakeRegisterCSS.Whole}>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 // reactstrap components
 import "../../assets/css/now-ui-kit.css";
 import style from "./css/MemberPillCheck.module.css";
@@ -19,44 +19,71 @@ import Swal from "sweetalert2";
 function MemberPillPage(props) {
   var basicurl = props.match.path;
   const [header, setHeader] = useState();
-  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
-  const protegeName = useSelector((state) => state.protegeInfo.protegeInfo.nickName);
-  const nickName = useSelector((state) => state.memberInfo.memberInfo.memberName);
+  const isProtector = useSelector(
+    (state) => state.memberInfo.memberInfo.protector
+  );
+  const protegeName = useSelector((state) => state.protegeInfo.nickName);
+  const nickName = useSelector((state) => state.memberInfo.memberInfo.nickName);
 
-  const memberSeq = useSelector((state) => state.protegeInfo.protegeInfo)
+  const memberSeq = useSelector((state) => state.protegeInfo.memberSeq);
+  const history = useHistory();
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
-  if(!isLogin){
+  if (!isLogin) {
     Swal.fire({
       icon: "warning",
       title: "로그인이 필요한 서비스입니다.",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
   }
-  useEffect(()=>{
+  useEffect(() => {
     console.log(memberSeq);
     console.log(protegeName);
-    if(isProtector){
+    if (isProtector) {
       setHeader(protegeName);
-    }else {
+    } else {
       setHeader(nickName);
     }
-  })
-  if(isLogin){
+  });
+  if (isLogin) {
     return (
       <>
         {/* <BrowserRouter> */}
-        <Header header={header}></Header>
+        <Header header={header} canBack={true}></Header>
         <Switch>
           <Switch>
             <Route
               path={`${basicurl}/protector-take-alarm/:protegeSeq`}
               render={(props) => <ProtectorTakeAlarm {...props} />}
             />
-            <Route path={`${basicurl}/member-pill-list/:memberSeq`} render={(props) => <MemberPillList {...props} />} />
-            <Route exact path={`${basicurl}/pill-take-picture/:alarmSeq`} render={(props) => <PillTakePicture {...props} />} />
-            <Route path={`${basicurl}/pill-take-alarm`} render={(props) => <PillTakeAlarm {...props} />} />
+            <Route
+              exact
+              path={`${basicurl}/member-pill-list`}
+              render={(props) => {
+                if (isProtector) {
+                  return props.history.push(`/pill-today`);
+                } else if (!isProtector) {
+                  return props.history.push(`/main`);
+                }
+              }}
+            />
+
+            <Route
+              exact
+              path={`${basicurl}/member-pill-list/:memberSeq`}
+              render={(props) => <MemberPillList {...props} />}
+            />
+
+            <Route
+              exact
+              path={`${basicurl}/pill-take-picture/:alarmSeq`}
+              render={(props) => <PillTakePicture {...props} />}
+            />
+            <Route
+              path={`${basicurl}/pill-take-alarm`}
+              render={(props) => <PillTakeAlarm {...props} />}
+            />
             {/* <Redirect to={`${basicurl}/protector-take-alarm`}></Redirect> */}
           </Switch>
         </Switch>
@@ -64,9 +91,7 @@ function MemberPillPage(props) {
       </>
     );
   } else {
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
 }
 

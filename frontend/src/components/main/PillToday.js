@@ -1,11 +1,11 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PillTodayCSS from "./css/PillToday.module.css";
-import { Button, Row, Col } from "reactstrap";
+import { Button } from "reactstrap";
 import style from "../Member/css/MemberPillCheck.module.css";
 
 import { getMyFamily } from "../../api/family.js";
@@ -58,6 +58,7 @@ function PillToday() {
   const getMyPillTodayList = () => {
     getMyPillToday(
       (response) => {
+        console.log(response);
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -73,6 +74,7 @@ function PillToday() {
     getPillToday(
       memberSeq,
       (response) => {
+        console.log(response.data.data);
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -131,54 +133,53 @@ function PillToday() {
         }
 
         result.push(
-          <>
-            <div className={PillTodayCSS.WhiteBox}>
-              <br></br>
-              <h3 className={PillTodayCSS.TimeText}>{resultTime}</h3>
-              <br></br>
-            </div>
-          </>
+          <div key={`nothing${element}`} className={PillTodayCSS.WhiteBox}>
+            <br></br>
+            <h3 className={PillTodayCSS.TimeText}>{resultTime}</h3>
+            <br></br>
+          </div>
         );
         if (pillList.length !== 0) {
           itemLength = pillList[element].length;
-
+          console.log(pillList[element]);
           for (var i = 0; i < itemLength; i++) {
             medicineName = pillList[element][i].medicineName;
             imageURL = pillList[element][i].imageURL;
             memberMedicineName = pillList[element][i].memberMedicineName;
             result.push(
-              <>
-                <div
-                  className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
-                >
-                  <div className={`${style.imgsize2} ml-2`}>
-                    <img src={imageURL} className={`${style.size}`} alt="pillImg"></img>
-                  </div>
-                  <div className="flex-fill">
-                    <span>{medicineName}</span>
-                    <br></br>
-                    <span>({memberMedicineName})</span>
-                    <br></br>
-                  </div>
+              <div
+                key={medicineName + pillList[element][i].time}
+                className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
+              >
+                <div className={`${style.imgsize2} ml-2`}>
+                  <img src={imageURL} className={`${style.size}`} alt="pillImg"></img>
                 </div>
-              </>
+                <div className="flex-fill">
+                  <span>{medicineName}</span>
+                  <br></br>
+                  <span>({memberMedicineName})</span>
+                  <br></br>
+                </div>
+              </div>
             );
 
             if (i === itemLength - 1) {
               taken = pillList[element][0].taken;
               if (taken === true) {
                 result.push(
-                  <>
-                    <br></br>
-                    <br></br>
-                    <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
-                    <br></br>
-                  </>
+                  <Fragment key={pillList[element]}>
+                    <div className={PillTodayCSS.WhiteBox}>
+                      <br></br>
+                      <br></br>
+                      <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
+                      <br></br>
+                    </div>
+                  </Fragment>
                 );
               } else if (taken === false) {
                 if (isProtector === false) {
                   result.push(
-                    <>
+                    <Fragment key={element}>
                       <div className={PillTodayCSS.WhiteBox}>
                         <br></br>
                         <br></br>
@@ -190,15 +191,13 @@ function PillToday() {
                         </Button>
                         <br></br>
                       </div>
-                    </>
+                    </Fragment>
                   );
                 } else {
                   result.push(
-                    <>
-                      <div className={PillTodayCSS.WhiteBox}>
-                        <br></br>
-                      </div>
-                    </>
+                    <div className={PillTodayCSS.WhiteBox} key={element}>
+                      <br></br>
+                    </div>
                   );
                 }
               }
@@ -208,9 +207,9 @@ function PillToday() {
       }
 
       result.push(
-        <>
-          <div className={PillTodayCSS.Background}>&nbsp;</div>
-        </>
+        <div className={PillTodayCSS.Background} key={`space${element}`}>
+          &nbsp;
+        </div>
       );
     });
 
@@ -222,41 +221,70 @@ function PillToday() {
     if (familyList !== "") {
       familyList.forEach((element) => {
         result.push(
-          <>
-            <Col xs="3" style={{ cursor: "pointer", padding: "0" }} onClick={() => otherFamily(element.memberSeq)}>
-              <div style={{ display: "inlineBlock", justifyContent: "center" }}>
-                <img
-                  style={{ margin: "0px" }}
-                  src={element.memberImage}
-                  alt="memberImg"
-                  className={PillTodayCSS.img}
-                ></img>
-              </div>
-              <span>{element.memberName}</span>
-            </Col>
-          </>
+          <div
+            key={element.memberSeq}
+            style={{ cursor: "pointer", display: "inline" }}
+            onClick={() => otherFamily(element.memberSeq)}
+          >
+            <div>
+              <img
+                style={{ margin: "0px" }}
+                src={element.memberImage}
+                alt="memberImg"
+                className={PillTodayCSS.img}
+              ></img>
+            </div>
+            <div>{element.memberName}</div>
+          </div>
         );
       });
     }
     return result;
   };
 
+  const [showFamily, setShowFamily] = useState(false);
+  const showFamilyList = () => {
+    setShowFamily(!showFamily);
+  };
   return (
     <>
-      <div className={PillTodayCSS.Whole}>
+      <div
+        style={{
+          backgroundColor: "#eaf0f8",
+          width: "100vw",
+          minHeight: "100vh",
+          margin: "0 auto",
+        }}
+      >
         <div className={PillTodayCSS.Header}>
           <span className={PillTodayCSS.MemberName}>{myName}</span>
+          {isProtector ? (
+            !showFamily ? (
+              <i
+                onClick={showFamilyList}
+                className={`fa fa-thin fa-angle-down ml-2 pt-1 ${PillTodayCSS.MemberName}`}
+              ></i>
+            ) : (
+              <i onClick={showFamilyList} className={`fa fa-thin fa-angle-up ml-2 pt-1 ${PillTodayCSS.MemberName}`}></i>
+            )
+          ) : (
+            <></>
+          )}
         </div>
-        <Row style={{ justifyContent: "start" }} className={PillTodayCSS.Family}>
-          <FamilyName></FamilyName>
-        </Row>
+        {showFamily ? (
+          <div className={PillTodayCSS.Family}>
+            <FamilyName></FamilyName>
+          </div>
+        ) : (
+          <></>
+        )}
         <br></br>
         <br></br>
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
         <br></br>
         <ShowPillList></ShowPillList>
-        <Navbar/>
       </div>
+      <Navbar />
     </>
   );
 }

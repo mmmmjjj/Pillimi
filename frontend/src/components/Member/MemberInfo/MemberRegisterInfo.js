@@ -197,12 +197,6 @@ function MemberRegisterInfo(props) {
               </span>
               <br></br>
             </FormGroup>
-            <FormGroup>
-              <label className={`mt-3 ${style.infolabel}`}>기저 질환</label><br></br>
-              <div>
-                <DiseaseList></DiseaseList>
-              </div>
-            </FormGroup>
           </Form>
           <br></br>
           <Button color="sky" className={`${style.bigbnt}`} onClick={addRegisterInfo}>완료</Button>
@@ -262,36 +256,5 @@ function Lbl(params) {
     </>
   )  
 }
-
-const DiseaseList = (params) => {
-  const issues = [...Array(10).keys()];
-
-  return(
-    <>
-      <span>
-        {issues.map((issue, index) => (
-          <span> <input type="checkbox"/>&nbsp;{issue}<Space index={index}></Space></span>
-        ))}
-      </span>
-    </>
-  )
-}
-
-function Space(props) {
-  if(props.index%2===1) {
-    return(
-      <>
-        <br></br>
-      </>
-    )
-  }else{
-    return(
-      <>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-      </>
-    )
-  }
-}
-
 
 export default MemberRegisterInfo;
