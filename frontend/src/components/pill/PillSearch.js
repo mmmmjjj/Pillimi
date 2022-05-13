@@ -105,20 +105,27 @@ function PillSearch(props) {
     let result = [];
     if (datas.length !== 0) {
       datas.forEach((element) => {
-        console.log(element.medicineSeq);
         result.push(
           <Card
-            key={element.medicineSeq}
+            key={`pills${element.medicineSeq}`}
             id={element.medicineSeq}
             className={`${PillSearchCSS.PillList}`}
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
             <div className="d-flex align-items-center">
-              <img
-                className={`${PillSearchCSS.Img}`}
-                alt="pillImg"
-                src={element.medicineImage}
-              ></img>
+              {element.medicineImage === null ?
+                <img
+                  className={`${PillSearchCSS.Img}`}
+                  alt= "basic"
+                  src="img/basic.png"
+                ></img>
+                :
+                <img
+                  className={`${PillSearchCSS.Img}`}
+                  alt= "pillImg"
+                  src={element.medicineImage}
+                ></img>
+              }
               <span className={`${PillSearchCSS.PillName} flex-fill`}>
                 {element.medicineName}
               </span>
@@ -128,12 +135,14 @@ function PillSearch(props) {
         );
       });
       result.push(
-        <div ref={ref} style={{ color: `white` }}>
+        <div key={`ref`} ref={ref} style={{ color: `white` }}>
           &nbsp;
         </div>
       );
     } else {
-      result.push();
+      result.push(
+        <div key={`nothing`}></div>
+      );
     }
 
     return result;
