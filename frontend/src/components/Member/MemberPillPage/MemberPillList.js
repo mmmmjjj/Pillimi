@@ -132,9 +132,7 @@ function MemberPillList(props) {
   const isProtector = useSelector(
     (state) => state.memberInfo.memberInfo.protector
   );
-
   const [pills, setPills] = useState([]);
-
   const [rightTab, setRightTab] = useState(false);
   // const [datas, setDatas] = useState([]);
   const [tdatas, setTDatas] = useState([]); //getMediList에서 엑시오스 연결을 할 때 tdatas에는 now가 true인 데이터만 뽑아서 넣는다.
@@ -194,7 +192,6 @@ function MemberPillList(props) {
   };
 
   const history = useHistory();
-
   const gotoMedicineDetail = (memMediSeq) => {
     history.push({
       pathname: `/pill-take/detail/${memMediSeq}`,

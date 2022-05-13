@@ -2,14 +2,14 @@
 import { getAlarmPillList } from "api/alarm";
 import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
-
+import { useHistory  } from "react-router-dom";
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css"
 
 // core components
 
 function PillTakePicture(props) {
-
+  const history = useHistory();
   const alarmSeq = props.match.params.alarmSeq;
 
   const [pillList, setPillList] = useState([]);
@@ -27,7 +27,8 @@ function PillTakePicture(props) {
 
   const gotoCamera = () => {
     console.log("hi")
-    window.location.href = `/family/camera/${alarmSeq}`
+    props.history.push(`/family/camera/${alarmSeq}`)
+    // window.location.href = `/family/camera/${alarmSeq}`
   }
 
   const PillImageList =  (props) => {

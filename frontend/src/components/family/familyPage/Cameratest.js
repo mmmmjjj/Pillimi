@@ -98,11 +98,6 @@ function Cameratest(props) {
           </Button>
         </div>
       )}
-      <Link to="/family/reply">
-        <Button>
-          <p>Click Me!</p>
-        </Button>
-      </Link>
     </>
   );
 }

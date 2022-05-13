@@ -39,7 +39,7 @@ function modmedicine(medinfo, success, fail) {
 }
 
 function getMemberMedicineInfo(memberMedicineSeq, success, fail) {
-  apiInstance().get(`/member/medicine/${memberMedicineSeq}`).then(success).catch(fail);
+  apiInstance().get(`/member/medicine/${memberMedicineSeq}`).then(success).catch(fail); 
 }
 
 function deleteMemberMedicine(memberMedicineSeq, protegeSeq, success, fail) {

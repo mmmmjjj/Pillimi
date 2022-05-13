@@ -6,7 +6,6 @@ import ElderMainCSS from "./css/ElderMain.module.css";
 
 function ElderMain() {
   const memberSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
-
   React.useEffect(() => {}, []);
   return (
     <>
