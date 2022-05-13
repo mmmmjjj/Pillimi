@@ -103,10 +103,23 @@ function PillTakeDetail(props) {
 
   const TakeTime = () => {
     let result = [];
+    let intakeTimeList = [];
+    let i = 0;
+    let showTime = "";
+
     pillInfo.intakeTime.forEach((element) => {
+      intakeTimeList[i] = element.split(":")[0] + element.split(":")[1];
+
+      i = i + 1;
+    });
+
+    intakeTimeList.sort();
+
+    intakeTimeList.forEach((element) => {
+      showTime = element.substring(0, 2) + ":" + element.substring(2, 4);
       result.push(
         <Badge key={element} className={PillTakeRegisterCSS.BadgeTime} color="info" id="timeList">
-          {element.substring(0, 5)}
+          {showTime}
         </Badge>
       );
     });
