@@ -177,10 +177,12 @@ function PillToday() {
               if (taken === true) {
                 result.push(
                   <Fragment key={pillList[element]}>
-                    <br></br>
-                    <br></br>
-                    <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
-                    <br></br>
+                    <div className={PillTodayCSS.WhiteBox}>
+                      <br></br>
+                      <br></br>
+                      <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
+                      <br></br>
+                    </div>
                   </Fragment>
                 );
               } else if (taken === false) {
