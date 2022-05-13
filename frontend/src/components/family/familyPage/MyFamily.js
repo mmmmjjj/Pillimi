@@ -71,7 +71,9 @@ function MyFamily(props) {
         {
           familyList.map((element, idx) => {
             return(
-              <ListGroupItem onClick={() => gotoMemberDetail(element.memberSeq)}>
+              <ListGroupItem 
+                key={element.memberSeq}
+                onClick={() => gotoMemberDetail(element.memberSeq)}>
                 <Row xs="4">
                   <Col>
                     <img className="listimg" alt="" src={element.memberImage}/>
@@ -94,7 +96,9 @@ function MyFamily(props) {
         {
           preFamilyList.map((element, idx) => {
             return(
-              <ListGroupItem onClick={() => gotoFamilyResponse(element)}>
+              <ListGroupItem
+                key={element.memberSeq} 
+                onClick={() => gotoFamilyResponse(element)}>
                 <Row xs="4">
                   <Col>
                     <img className="listimg" alt="" src={element.requestImage}/>

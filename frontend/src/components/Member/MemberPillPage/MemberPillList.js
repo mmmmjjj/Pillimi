@@ -209,51 +209,65 @@ function MemberPillList(props) {
     console.log(pills);
     // if (element.now == props.isNow) {
     if (props.isNow === true) {
-      ttdatas.forEach((element) => {
+      if(ttdatas.length === 0){
         result.push(
-          <div
-            className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `}
-            onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
-          >
-            <div className={`${style.imgsize2} ml-2`}>
-              <img
-                src={element.imageURL}
-                className={`${style.size}`}
-                alt="이미지"
-              ></img>
+          <div key={`nothing`}>현재 복용 중인 약이 없습니다.</div>
+        )
+      } else {
+        ttdatas.forEach((element) => {
+          result.push(
+            <div
+              key={`ttd${element.memberMedicineSeq}`}
+              className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `}
+              onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
+            >
+              <div className={`${style.imgsize2} ml-2`}>
+                <img
+                  src={element.imageURL}
+                  className={`${style.size}`}
+                  alt="이미지"
+                ></img>
+              </div>
+              <div className="flex-fill">
+                <span>{element.medicineName}</span>
+                <br></br>
+                <span>({element.memberMedicineName})</span>
+                <br></br>
+              </div>
             </div>
-            <div className="flex-fill">
-              <span>{element.medicineName}</span>
-              <br></br>
-              <span>({element.memberMedicineName})</span>
-              <br></br>
-            </div>
-          </div>
-        );
-      });
+          );
+        });
+      }
     } else if (props.isNow === false) {
-      ffdatas.forEach((element) => {
-        result.push(
-          <div
-            className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `}
-            onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
-          >
-            <div className={`${style.imgsize2} ml-2`}>
-              <img
-                src={element.imageURL}
-                className={`${style.size}`}
-                alt="이미지"
-              ></img>
+      if(ffdatas.length === 0) {
+        return(
+          <div key={`nothing2`}>복용했던 약이 없습니다.</div>
+        )
+      } else {
+        ffdatas.forEach((element) => {
+          result.push(
+            <div
+              key={`ffd${element.memberMedicineSeq}`}
+              className={`d-flex align-items-center flex-row pl-3 pr-2 ${style.checkAlarm2} `}
+              onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
+            >
+              <div className={`${style.imgsize2} ml-2`}>
+                <img
+                  src={element.imageURL}
+                  className={`${style.size}`}
+                  alt="이미지"
+                ></img>
+              </div>
+              <div className="flex-fill">
+                <span>{element.medicineName}</span>
+                <br></br>
+                <span>({element.memberMedicineName})</span>
+                <br></br>
+              </div>
             </div>
-            <div className="flex-fill">
-              <span>{element.medicineName}</span>
-              <br></br>
-              <span>({element.memberMedicineName})</span>
-              <br></br>
-            </div>
-          </div>
-        );
-      });
+          );
+        });
+      }
     }
     return result;
   };

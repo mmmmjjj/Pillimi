@@ -44,9 +44,9 @@ function PillTakeAlarm(props) {
   const PillList = (props) => {
     let result = [];
     props.pills.forEach(element => {
-      result.push(<span>{element}</span>)
-      result.push(',');
-      result.push(<span>&nbsp;</span>)
+      result.push(<span key={element}>{element}</span>)
+      result.push(<span key={`,${element}`}>, </span>);
+      result.push(<span key={`nbsp${element}`}>&nbsp;</span>)
     })
     let spliceResult = result.splice(0,result.length-2)
     return spliceResult;
@@ -58,7 +58,7 @@ function PillTakeAlarm(props) {
       console.log(element.type);
       if(element.type===false){
         console.log(true + " : "+ element.time);
-        result.push(<div className={`${style.checkAlarm2}`}>
+        result.push(<div className={`${style.checkAlarm2}`} key={element.date+element.img}>
           <div>
             <span className={`${style.bold}`}>{element.date}</span><br></br>
           </div>
@@ -73,7 +73,7 @@ function PillTakeAlarm(props) {
         </div>);
       } else {
         console.log(false + " : "+ element.time);
-        result.push(<div className={`${style.checkAlarm2}`}>
+        result.push(<div className={`${style.checkAlarm2}`} key={element.time+element.img}>
           <div>
             <span className={`${style.bold}`}>{element.date}</span><br></br>
           </div>
