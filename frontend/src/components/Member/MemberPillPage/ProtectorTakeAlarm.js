@@ -49,12 +49,20 @@ function ProtectorTakeAlarm(props) {
 
   const AlarmsList =  () => {
     let result = [];
+    if(alarmList.length === 0){
+      <div key={`nothing`}></div>
+    }
     alarmList.forEach(element =>{
       console.log(element.type);
       let time = timeFormat(element.alarmTime);
       if(element.type===false){
         console.log(true + " : "+ element.time);
-        result.push(<div className={`${style.checkAlarm2}`} onClick={() => gotoAlarmDetail(element.alarmProtectorSeq)}>
+        result.push(
+        <div 
+          key={element.alarmProtectorSeq}
+          className={`${style.checkAlarm2}`} 
+          onClick={() => gotoAlarmDetail(element.alarmProtectorSeq)}
+        >
           <div>
             <span className={`${style.bold}`}>{element.alarmDate}</span><br></br>
           </div>
@@ -69,7 +77,12 @@ function ProtectorTakeAlarm(props) {
         </div>);
       } else {
         console.log(false + " : "+ element.alarmTime);
-        result.push(<div className={`${style.checkAlarm2}`} onClick={() => gotoAlarmDetail(element.alarmProtectorSeq)}>
+        result.push(
+        <div
+          key={element.alarmProtectorSeq}
+          className={`${style.checkAlarm2}`} 
+          onClick={() => gotoAlarmDetail(element.alarmProtectorSeq)}
+          >
           <div>
             <span className={`${style.bold}`}>{element.alarmDate}</span><br></br>
           </div>
