@@ -123,8 +123,12 @@ function PillSearch(props) {
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
             <div className="d-flex align-items-center">
-              <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
-              <span className={`${PillSearchCSS.PillName} flex-fill`}>{tempPillName}</span>
+              {element.medicineImage === null ? (
+                <img className={`${PillSearchCSS.Img}`} alt="basic"></img>
+              ) : (
+                <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
+              )}
+              <div className={`${PillSearchCSS.PillName} flex-fill`}>{element.medicineName}</div>
               <i className={`now-ui-icons arrows-1_minimal-right`}></i>
             </div>
           </Card>
