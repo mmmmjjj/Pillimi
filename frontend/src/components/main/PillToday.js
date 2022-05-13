@@ -251,6 +251,10 @@ function PillToday() {
     return result;
   };
 
+  const [showFamily, setShowFamily] = useState(false);
+  const showFamilyList = () => {
+    setShowFamily(!showFamily);
+  }
   return (
     <>
       <div
@@ -263,10 +267,25 @@ function PillToday() {
       >
         <div className={PillTodayCSS.Header}>
           <span className={PillTodayCSS.MemberName}>{myName}</span>
+          { isProtector ?
+             !showFamily ? 
+              <i
+                onClick={showFamilyList} 
+                className={`fa fa-thin fa-angle-down ml-2 pt-1 ${PillTodayCSS.MemberName}`}></i> 
+              : <i 
+                  onClick={showFamilyList}
+                  className={`fa fa-thin fa-angle-up ml-2 pt-1 ${PillTodayCSS.MemberName}`}
+                  ></i>            
+            : <></> 
+          }
         </div>
-        <div className={PillTodayCSS.Family}>
-          <FamilyName></FamilyName>
-        </div>
+        {
+          showFamily ?
+          <div className={PillTodayCSS.Family}>
+            <FamilyName></FamilyName>
+          </div>
+          : <></>
+        }
         <br></br>
         <br></br>
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
