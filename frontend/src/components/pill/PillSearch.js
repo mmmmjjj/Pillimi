@@ -113,11 +113,19 @@ function PillSearch(props) {
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
             <div className="d-flex align-items-center">
-              <img
-                className={`${PillSearchCSS.Img}`}
-                alt="pillImg"
-                src={element.medicineImage}
-              ></img>
+              {element.medicineImage === null ?
+                <img
+                  className={`${PillSearchCSS.Img}`}
+                  alt= "basic"
+                  src="img/basic.png"
+                ></img>
+                :
+                <img
+                  className={`${PillSearchCSS.Img}`}
+                  alt= "pillImg"
+                  src={element.medicineImage}
+                ></img>
+              }
               <span className={`${PillSearchCSS.PillName} flex-fill`}>
                 {element.medicineName}
               </span>
