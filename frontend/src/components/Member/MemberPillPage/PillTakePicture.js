@@ -34,7 +34,8 @@ function PillTakePicture(props) {
     let result = [];
     let image = "https://nedrug.mfds.go.kr/pbp/cmn/itemImageDownload/150946223524600017"
     pillList.forEach(element =>{
-      result.push(<div style={{width: `100%`}}>
+      result.push(
+      <div style={{width: `100%`}} key={element}>
         <img src={image} alt="약 사진" className={`pt-4 mr-4`} style={{width:`80%`}}></img>
         <div>
           <span><h5>{element.medicineName}</h5></span>
