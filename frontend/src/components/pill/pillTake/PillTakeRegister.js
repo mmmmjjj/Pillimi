@@ -9,7 +9,7 @@ import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
 import { regmedicine } from "../../../api/member";
 import { useSelector } from "react-redux";
-import 'moment/locale/ko';
+import "moment/locale/ko";
 
 function PillTakeRegister(props) {
   const [pillRegister, setPillRegister] = useState({
@@ -155,7 +155,7 @@ function PillTakeRegister(props) {
         ...pillRegister,
         time: [...pillRegister.time, timeinput],
       });
-      settimeinput("")
+      settimeinput("");
     } else {
       settimecheck(true);
     }
@@ -241,24 +241,25 @@ function PillTakeRegister(props) {
   };
 
   const gotoMedicineList = () => {
-    window.location.href = `/member-pill-page/member-pill-list/` + props.location.state.memberSeq;
-  }
-  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
-  if(!isProtector){
+    window.location.href =
+      `/member-pill-page/member-pill-list/` + props.location.state.memberSeq;
+  };
+  let isProtector = useSelector(
+    (state) => state.memberInfo.memberInfo.protector
+  );
+  if (!isProtector) {
     Swal.fire({
       icon: "warning",
       title: "권한이 없는 페이지입니다.",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
   return (
     <>
-      <Header header="복용 약 추가"  canBack={true}></Header>
+      <Header header="복용 약 추가" canBack={true}></Header>
       <br></br>
       <h3 className={PillTakeRegisterCSS.PillName}>
         {props.location.state.medicineName}
@@ -310,7 +311,9 @@ function PillTakeRegister(props) {
             strictParsing={false}
             renderInput={(props) => {
               return (
-                <input readOnly style={{backgroundColor:"white"}}
+                <input
+                  readOnly
+                  style={{ backgroundColor: "white" }}
                   {...props}
                   value={smallend ? "" : pillRegister.startDate}
                 />
@@ -347,7 +350,9 @@ function PillTakeRegister(props) {
             strictParsing={false}
             renderInput={(props) => {
               return (
-                <input readOnly style={{backgroundColor:"white"}}
+                <input
+                  readOnly
+                  style={{ backgroundColor: "white" }}
                   {...props}
                   value={bigstart ? "" : pillRegister.endDate}
                 />
@@ -379,6 +384,8 @@ function PillTakeRegister(props) {
           <Badge className={satday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setsat(prevsatday => !prevsatday)}>
             일
           </Badge> */}
+          <h4>
+
           <Badge
             className={
               checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
@@ -387,9 +394,10 @@ function PillTakeRegister(props) {
             onClick={() => {
               changeday(0);
             }}
-          >
+            >
             월
           </Badge>
+            </h4>
           <Badge
             className={
               checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
@@ -501,7 +509,9 @@ function PillTakeRegister(props) {
             strictParsing={false}
             renderInput={(props) => {
               return (
-                <input readOnly style={{backgroundColor:"white"}}
+                <input
+                  readOnly
+                  style={{ backgroundColor: "white" }}
                   {...props}
                   value={timeinput}
                 />
