@@ -22,14 +22,14 @@ public class AlarmProtectorRepositoryCustomImpl implements AlarmProtectorReposit
 
         return jpaQueryFactory.select(Projections.constructor(ProtectorAlarmRes.class,
                         qAlarmProtector.alarmSeq,
-                        qAlarmProtector.protector.memberSeq,
-                        qAlarmProtector.alarmProtege.protege.memberSeq,
-                        qAlarmProtector.alarmProtege.protege.memberNickname,
+                        qAlarmProtector.protector.memberNickname,
                         qAlarmProtector.alarmProtege.alarmDate,
                         qAlarmProtector.alarmProtege.alarmTime,
+                        qAlarmProtector.createdTime,
                         qAlarmProtector.alarmPhoto))
                 .from(qAlarmProtector)
-                .where(qAlarmProtector.alarmProtege.protege.memberSeq.eq(protege.getMemberSeq()))
+                .where(qAlarmProtector.alarmProtege.protege.memberSeq.eq(protege.getMemberSeq())
+                        .and(qAlarmProtector.protector.eq(protector)))
                 .fetch();
     }
 }
