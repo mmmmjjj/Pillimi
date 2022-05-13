@@ -269,19 +269,37 @@ function MemberPillList(props) {
     return result;
   };
 
+  const PillListPage = () => {
+    return(
+      <div>
+        <div className="pt-4">
+          <h5>현재 복용 중인 약</h5>
+          <PillList isNow={true}></PillList>
+          <button onClick={onsubmitTbutton} className={style.buttoncolor}>
+            더보기
+          </button>
+        </div>
+        <div className="pt-4">
+          <h5>이전에 복용한 약</h5>
+          <PillList isNow={false}></PillList>
+          <button onClick={onsubmitFbutton} className={style.buttoncolor}>
+            더보기
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
-      {rightTab ? (
-        isProtector ? (
+      {isProtector ? (
+        rightTab ? (
           <ProtectorTakeAlarm
             onClickHandler={onClickHandler}
             protegeSeq={memberSeq}
           ></ProtectorTakeAlarm>
         ) : (
-          <PillTakeAlarm onClickHandler={onClickHandler}></PillTakeAlarm>
-        )
-      ) : (
-        <div
+          <div
           className={`${style.center}`}
           style={{
             minHeight:"100vh",
@@ -299,20 +317,19 @@ function MemberPillList(props) {
               복용확인
             </div>
           </div>
-          <div className="pt-4">
-            <h5>현재 복용 중인 약</h5>
-            <PillList isNow={true}></PillList>
-            <button onClick={onsubmitTbutton} className={style.buttoncolor}>
-              더보기
-            </button>
-          </div>
-          <div className="pt-4">
-            <h5>이전에 복용한 약</h5>
-            <PillList isNow={false}></PillList>
-            <button onClick={onsubmitFbutton} className={style.buttoncolor}>
-              더보기
-            </button>
-          </div>
+          <PillListPage></PillListPage>
+        </div>
+        )
+      ) : (
+        <div
+          className={`${style.center}`}
+          style={{
+            minHeight:"100vh",
+            width: "100vw",
+            backgroundColor: "#EAF0F8",
+            margin: "0 auto",
+          }}>
+          <PillListPage></PillListPage>
         </div>
       )}
       <Navbar />
