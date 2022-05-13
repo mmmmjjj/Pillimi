@@ -255,8 +255,8 @@ function PillToday() {
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
         <br></br>
         <ShowPillList></ShowPillList>
-        <Navbar/>
       </div>
+      <Navbar/>
     </>
   );
 }
