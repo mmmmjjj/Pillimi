@@ -43,7 +43,7 @@ function PillTakeDetail(props) {
     pillInfo.intakeDay.forEach((element) => {
       if (element === 1) {
         result.push(
-          <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
+          <Badge className={PillTakeRegisterCSS.DayDetail} color="success" key={element}>
             월
           </Badge>
         );
@@ -51,7 +51,7 @@ function PillTakeDetail(props) {
 
       if (element === 2) {
         result.push(
-          <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
+          <Badge className={PillTakeRegisterCSS.DayDetail} color="success" key={element}>
             화
           </Badge>
         );
@@ -59,7 +59,7 @@ function PillTakeDetail(props) {
 
       if (element === 3) {
         result.push(
-          <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
+          <Badge className={PillTakeRegisterCSS.DayDetail} color="success" key={element}>
             수
           </Badge>
         );
@@ -67,7 +67,7 @@ function PillTakeDetail(props) {
 
       if (element === 4) {
         result.push(
-          <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
+          <Badge className={PillTakeRegisterCSS.DayDetail} color="success" key={element}>
             목
           </Badge>
         );
@@ -75,7 +75,7 @@ function PillTakeDetail(props) {
 
       if (element === 5) {
         result.push(
-          <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
+          <Badge className={PillTakeRegisterCSS.DayDetail} color="success" key={element}>
             금
           </Badge>
         );
@@ -83,7 +83,7 @@ function PillTakeDetail(props) {
 
       if (element === 6) {
         result.push(
-          <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
+          <Badge className={PillTakeRegisterCSS.DayDetail} color="success" key={element}>
             토
           </Badge>
         );
@@ -91,7 +91,7 @@ function PillTakeDetail(props) {
 
       if (element === 7) {
         result.push(
-          <Badge className={PillTakeRegisterCSS.Day} color="success" key={element}>
+          <Badge className={PillTakeRegisterCSS.DayDetail} color="success" key={element}>
             일
           </Badge>
         );

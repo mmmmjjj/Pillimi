@@ -158,6 +158,10 @@ h5 {
 
 .Day {
   border-radius: 50px !important;
+}
+
+.DayDetail {
+  border-radius: 50px !important;
   margin-right: 10px;
 }
 
