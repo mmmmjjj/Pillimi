@@ -12,6 +12,7 @@ import MemberPillList from "./MemberPillPage/MemberPillList";
 import PillTakeAlarm from "./MemberPillPage/PillTakeAlarm";
 import PillTakePicture from "./MemberPillPage/PillTakePicture";
 import ProtectorTakeAlarm from "./MemberPillPage/ProtectorTakeAlarm";
+import Swal from "sweetalert2";
 
 // core components
 
