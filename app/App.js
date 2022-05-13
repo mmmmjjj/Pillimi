@@ -56,7 +56,22 @@ const App = () => {
   // foreground일 경우 FCM 핸들링
   React.useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('a new FCM message arrived!', JSON.stringify(remoteMessage));
+      Alert.alert(
+        remoteMessage.notification.title,
+        '\n' + remoteMessage.notification.body,
+        [
+          {
+            text: '확인',
+            onPress: () => {
+              setPushUrl(remoteMessage.data.url);
+            },
+          },
+          {
+            text: '닫기',
+            style: 'cancel',
+          },
+        ],
+      );
     });
 
     // background에서 push 알림을 클릭 했을 경우
