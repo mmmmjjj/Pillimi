@@ -38,7 +38,7 @@ function PillPictureAlarm(props) {
         title: "약 복용을 확인하셨습니다",
         confirmButtonColor: `#0369a1`,
       }).then(function () {
-        props.history.push(`/member-pill-page/member-pill-list/`+ alarm.protegeSeq)
+        props.history.replace(`/member-pill-page/member-pill-list/`+ alarm.protegeSeq)
       });
     }, (fail) => {
       console.log(fail);
