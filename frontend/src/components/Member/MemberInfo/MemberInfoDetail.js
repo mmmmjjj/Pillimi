@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { logoutAction } from "actions/memberAction";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import Navbar from "layout/Navbar.js";
 import { useHistory  } from "react-router-dom";
 
 // core components
@@ -118,6 +119,7 @@ function MemberInfoDetail(props) {
           <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>수정</Button>
           <LogOutBtn></LogOutBtn>
         </div>
+        <Navbar/>
       </>
     );
   } else {
