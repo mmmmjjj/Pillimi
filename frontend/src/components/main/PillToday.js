@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PillTodayCSS from "./css/PillToday.module.css";
-import { Button } from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 import style from "../Member/css/MemberPillCheck.module.css";
 
 import { getMyFamily } from "../../api/family.js";
@@ -18,9 +18,7 @@ function PillToday() {
   const [pillListKey, setPillListKey] = useState([]);
 
   const myName = useSelector((state) => state.memberInfo.memberInfo.nickName);
-  const isProtector = useSelector(
-    (state) => state.memberInfo.memberInfo.protector
-  );
+  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
 
   let firstFamilySeq = "";
   const history = useHistory();
@@ -60,7 +58,6 @@ function PillToday() {
   const getMyPillTodayList = () => {
     getMyPillToday(
       (response) => {
-        console.log(response)
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -76,7 +73,6 @@ function PillToday() {
     getPillToday(
       memberSeq,
       (response) => {
-        console.log(response.data.data)
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -135,41 +131,33 @@ function PillToday() {
         }
 
         result.push(
-            <div 
-              key={`nothing${element}`}
-              className={PillTodayCSS.WhiteBox}
-            >
-              <br></br>
-              <h3 className={PillTodayCSS.TimeText}>{resultTime}</h3>
-              <br></br>
-            </div>
+          <div key={`nothing${element}`} className={PillTodayCSS.WhiteBox}>
+            <br></br>
+            <h3 className={PillTodayCSS.TimeText}>{resultTime}</h3>
+            <br></br>
+          </div>
         );
         if (pillList.length !== 0) {
           itemLength = pillList[element].length;
-          console.log(pillList[element])
           for (var i = 0; i < itemLength; i++) {
             medicineName = pillList[element][i].medicineName;
             imageURL = pillList[element][i].imageURL;
             memberMedicineName = pillList[element][i].memberMedicineName;
             result.push(
-                <div
-                  key={medicineName+ pillList[element][i].time}
-                  className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
-                >
-                  <div className={`${style.imgsize2} ml-2`}>
-                    <img
-                      src={imageURL}
-                      className={`${style.size}`}
-                      alt="pillImg"
-                    ></img>
-                  </div>
-                  <div className="flex-fill">
-                    <span>{medicineName}</span>
-                    <br></br>
-                    <span>({memberMedicineName})</span>
-                    <br></br>
-                  </div>
+              <div
+                key={medicineName + pillList[element][i].time}
+                className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
+              >
+                <div className={`${style.imgsize2} ml-2`}>
+                  <img src={imageURL} className={`${style.size}`} alt="pillImg"></img>
                 </div>
+                <div className="flex-fill">
+                  <span>{medicineName}</span>
+                  <br></br>
+                  <span>({memberMedicineName})</span>
+                  <br></br>
+                </div>
+              </div>
             );
 
             if (i === itemLength - 1) {
@@ -193,9 +181,7 @@ function PillToday() {
                         <br></br>
                         <br></br>
                         <Button
-                          onClick={() =>
-                            gotoPillTakePicture(element.split(" ")[1])
-                          }
+                          onClick={() => gotoPillTakePicture(element.split(" ")[1])}
                           className={PillTodayCSS.PictureBtn}
                         >
                           사진 찍기
@@ -206,9 +192,9 @@ function PillToday() {
                   );
                 } else {
                   result.push(
-                      <div className={PillTodayCSS.WhiteBox} key={element}>
-                        <br></br>
-                      </div>
+                    <div className={PillTodayCSS.WhiteBox} key={element}>
+                      <br></br>
+                    </div>
                   );
                 }
               }
@@ -218,7 +204,9 @@ function PillToday() {
       }
 
       result.push(
-          <div className={PillTodayCSS.Background} key={`space${element}`}>&nbsp;</div>
+        <div className={PillTodayCSS.Background} key={`space${element}`}>
+          &nbsp;
+        </div>
       );
     });
 
@@ -230,21 +218,24 @@ function PillToday() {
     if (familyList !== "") {
       familyList.forEach((element) => {
         result.push(
-            <div
+          <>
+            <Col
+              xs="3"
               key={element.memberSeq}
-              style={{ cursor: "pointer", display: "inline" }}
+              style={{ cursor: "pointer", display: "inline", padding: "0" }}
               onClick={() => otherFamily(element.memberSeq)}
             >
-              <div>
+              <div style={{ display: "inlineBlock", justifyContent: "center" }}>
                 <img
-                  style={{ display: "block" }}
+                  style={{ margin: "0px" }}
                   src={element.memberImage}
                   alt="memberImg"
                   className={PillTodayCSS.img}
                 ></img>
               </div>
-              <div>{element.memberName}</div>
-            </div>
+              <span>{element.memberName}</span>
+            </Col>
+          </>
         );
       });
     }
@@ -254,7 +245,7 @@ function PillToday() {
   const [showFamily, setShowFamily] = useState(false);
   const showFamilyList = () => {
     setShowFamily(!showFamily);
-  }
+  };
   return (
     <>
       <div
@@ -267,25 +258,26 @@ function PillToday() {
       >
         <div className={PillTodayCSS.Header}>
           <span className={PillTodayCSS.MemberName}>{myName}</span>
-          { isProtector ?
-             !showFamily ? 
+          {isProtector ? (
+            !showFamily ? (
               <i
-                onClick={showFamilyList} 
-                className={`fa fa-thin fa-angle-down ml-2 pt-1 ${PillTodayCSS.MemberName}`}></i> 
-              : <i 
-                  onClick={showFamilyList}
-                  className={`fa fa-thin fa-angle-up ml-2 pt-1 ${PillTodayCSS.MemberName}`}
-                  ></i>            
-            : <></> 
-          }
+                onClick={showFamilyList}
+                className={`fa fa-thin fa-angle-down ml-2 pt-1 ${PillTodayCSS.MemberName}`}
+              ></i>
+            ) : (
+              <i onClick={showFamilyList} className={`fa fa-thin fa-angle-up ml-2 pt-1 ${PillTodayCSS.MemberName}`}></i>
+            )
+          ) : (
+            <></>
+          )}
         </div>
-        {
-          showFamily ?
-          <div className={PillTodayCSS.Family}>
+        {showFamily ? (
+          <Row style={{ justifyContent: "start" }} className={PillTodayCSS.Family}>
             <FamilyName></FamilyName>
-          </div>
-          : <></>
-        }
+          </Row>
+        ) : (
+          <></>
+        )}
         <br></br>
         <br></br>
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
