@@ -22,7 +22,7 @@ public class AlarmProtectorRepositoryCustomImpl implements AlarmProtectorReposit
 
         return jpaQueryFactory.select(Projections.constructor(ProtectorAlarmRes.class,
                         qAlarmProtector.alarmSeq,
-                        qAlarmProtector.protector.memberNickname,
+                        qAlarmProtector.alarmProtege.protege.memberNickname,
                         qAlarmProtector.alarmProtege.alarmDate,
                         qAlarmProtector.alarmProtege.alarmTime,
                         qAlarmProtector.createdTime,
