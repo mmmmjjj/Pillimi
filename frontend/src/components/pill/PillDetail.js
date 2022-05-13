@@ -165,7 +165,7 @@ function PillDetail(props) {
   }
   return (
     <>
-      <Header header="알약 정보"></Header>
+      <Header header="알약 정보" canBack={true}></Header>
       <br></br>
       <Button className={PillDetailCSS.AddBtn} onClick={() => setRegisterPillModal(true)}>
         추가

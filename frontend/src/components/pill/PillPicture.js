@@ -9,7 +9,7 @@ function PillPicture() {
   React.useEffect(() => {}, []);
   return (
     <>
-      <Header header="사진 찍기"></Header>
+      <Header header="사진 찍기"  canBack={true}></Header>
       <div className={PillPictureCSS.Whole}>
         <br></br>
         <div className={PillPictureCSS.CameraArea}>

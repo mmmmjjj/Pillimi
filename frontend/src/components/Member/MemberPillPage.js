@@ -47,7 +47,7 @@ function MemberPillPage(props) {
     return (
       <>
         {/* <BrowserRouter> */}
-        <Header header={header}></Header>
+        <Header header={header} canBack={true}></Header>
         <Switch>
           <Switch>
             <Route

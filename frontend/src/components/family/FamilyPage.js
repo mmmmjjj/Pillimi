@@ -36,7 +36,7 @@ function Family(props) {
   return (
     // <BrowserRouter>
       <div id="outsidecon">
-        <Header header={header}></Header>
+        <Header header={header} canBack={true}></Header>
         <hr style={{margin:"0px"}}></hr>
         <Switch>
           <Route
