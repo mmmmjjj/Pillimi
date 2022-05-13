@@ -105,10 +105,9 @@ function PillSearch(props) {
     let result = [];
     if (datas.length !== 0) {
       datas.forEach((element) => {
-        console.log(element.medicineSeq);
         result.push(
           <Card
-            key={element.medicineSeq}
+            key={`pills${element.medicineSeq}`}
             id={element.medicineSeq}
             className={`${PillSearchCSS.PillList}`}
             onClick={() => gotoPillDetail(element.medicineSeq)}
@@ -128,12 +127,14 @@ function PillSearch(props) {
         );
       });
       result.push(
-        <div ref={ref} style={{ color: `white` }}>
+        <div key={`ref`} ref={ref} style={{ color: `white` }}>
           &nbsp;
         </div>
       );
     } else {
-      result.push();
+      result.push(
+        <div key={`nothing`}></div>
+      );
     }
 
     return result;

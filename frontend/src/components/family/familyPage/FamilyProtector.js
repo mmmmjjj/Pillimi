@@ -53,12 +53,12 @@ function FamilyProtector(props) {
     let result = []
     if(familyList.length===0){
       result.push(
-        <div>등록된 가족이 없습니다</div>
+        <div key={`nothing`}>등록된 가족이 없습니다</div>
       )
     }else{
       familyList.forEach( element => {
         result.push(
-          <ListGroupItem onClick={(e)=>{toggle(element.memberSeq, element.memberName, e)}} key={element.memberSeq}>
+          <ListGroupItem onClick={(e)=>{toggle(element.memberSeq, element.memberName, e)}} key={`fapro${element.memberSeq}`}>
             <Row xs="4">
               <Col>
                 <img className="listimg" alt="" src={element.memberImage} />

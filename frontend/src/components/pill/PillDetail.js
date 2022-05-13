@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Button, Modal } from "reactstrap";
@@ -141,10 +141,10 @@ function PillDetail(props) {
     let result = [];
     familyList.forEach((element) => {
       result.push(
-        <>
+        <Fragment key={element.memberSeq}>
           <span onClick={() => gotoPillRegister(element.memberSeq)}>{element.memberName}</span>
           <br></br>
-        </>
+        </Fragment>
       );
     });
     return result;
