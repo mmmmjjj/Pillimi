@@ -256,7 +256,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                 return CheckMedicineRes.builder()
                         .checkType(1)
                         .checkDesc("약품 중  " + medicineIngredient.getIngredient().getIngredientName()
-                                + "성분은 노인 금기 성분입니다.\\<br>" + daa.getDaaDesc())
+                                + "성분은 노인 금기 성분입니다.<br>" + daa.getDaaDesc())
                         .build();
             }
 
@@ -271,9 +271,9 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                     if (memberIngredientOptional.isPresent()) {
                         return CheckMedicineRes.builder()
                                 .checkType(2)
-                                .checkDesc(dea.getDeaName() + "성분은 현재 복용중입니다.\\<br>"
+                                .checkDesc(dea.getDeaName() + "성분은 현재 복용중입니다.<br>"
                                         + "악품의 " + medicineIngredient.getIngredient().getIngredientName()
-                                        + "성분을 확인해주세요.\\<br>"
+                                        + "성분을 확인해주세요.<br>"
                                         + dea.getDeaEffectName())
                                 .build();
                     }
@@ -291,7 +291,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                                 .checkType(3)
                                 .checkDesc("약품의 성분 " + medicineIngredient.getIngredient().getIngredientName()
                                         + "은 현재 복용중인 " + memberIngredient.getMedicineIngredient().getIngredient().getIngredientName()
-                                        + " 성분과 병용금기 입니다.\\<br> 확인해주세요."
+                                        + " 성분과 병용금기 입니다.<br> 확인해주세요."
                                         + dca.getDcaAvoidDesc())
                                 .build();
                     }
