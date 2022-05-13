@@ -1,6 +1,6 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -60,6 +60,7 @@ function PillToday() {
   const getMyPillTodayList = () => {
     getMyPillToday(
       (response) => {
+        console.log(response)
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -75,6 +76,7 @@ function PillToday() {
     getPillToday(
       memberSeq,
       (response) => {
+        console.log(response.data.data)
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -133,24 +135,25 @@ function PillToday() {
         }
 
         result.push(
-          <>
-            <div className={PillTodayCSS.WhiteBox}>
+            <div 
+              key={`nothing${element}`}
+              className={PillTodayCSS.WhiteBox}
+            >
               <br></br>
               <h3 className={PillTodayCSS.TimeText}>{resultTime}</h3>
               <br></br>
             </div>
-          </>
         );
         if (pillList.length !== 0) {
           itemLength = pillList[element].length;
-
+          console.log(pillList[element])
           for (var i = 0; i < itemLength; i++) {
             medicineName = pillList[element][i].medicineName;
             imageURL = pillList[element][i].imageURL;
             memberMedicineName = pillList[element][i].memberMedicineName;
             result.push(
-              <>
                 <div
+                  key={medicineName+ pillList[element][i].time}
                   className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
                 >
                   <div className={`${style.imgsize2} ml-2`}>
@@ -167,24 +170,23 @@ function PillToday() {
                     <br></br>
                   </div>
                 </div>
-              </>
             );
 
             if (i === itemLength - 1) {
               taken = pillList[element][0].taken;
               if (taken === true) {
                 result.push(
-                  <>
+                  <Fragment key={pillList[element]}>
                     <br></br>
                     <br></br>
                     <Button className={PillTodayCSS.DoneBtn}>복용 완료</Button>
                     <br></br>
-                  </>
+                  </Fragment>
                 );
               } else if (taken === false) {
                 if (isProtector === false) {
                   result.push(
-                    <>
+                    <Fragment key={element}>
                       <div className={PillTodayCSS.WhiteBox}>
                         <br></br>
                         <br></br>
@@ -198,15 +200,13 @@ function PillToday() {
                         </Button>
                         <br></br>
                       </div>
-                    </>
+                    </Fragment>
                   );
                 } else {
                   result.push(
-                    <>
-                      <div className={PillTodayCSS.WhiteBox}>
+                      <div className={PillTodayCSS.WhiteBox} key={element}>
                         <br></br>
                       </div>
-                    </>
                   );
                 }
               }
@@ -216,9 +216,7 @@ function PillToday() {
       }
 
       result.push(
-        <>
-          <div className={PillTodayCSS.Background}>&nbsp;</div>
-        </>
+          <div className={PillTodayCSS.Background} key={`space${element}`}>&nbsp;</div>
       );
     });
 
@@ -230,8 +228,8 @@ function PillToday() {
     if (familyList !== "") {
       familyList.forEach((element) => {
         result.push(
-          <>
             <div
+              key={element.memberSeq}
               style={{ cursor: "pointer", display: "inline" }}
               onClick={() => otherFamily(element.memberSeq)}
             >
@@ -245,7 +243,6 @@ function PillToday() {
               </div>
               <div>{element.memberName}</div>
             </div>
-          </>
         );
       });
     }
