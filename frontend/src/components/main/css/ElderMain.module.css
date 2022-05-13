@@ -5,6 +5,7 @@
   font-size: 40px;
   font-weight: bold;
   color: black;
+  cursor: pointer;
 }
 .Header {
   height: 35px;
