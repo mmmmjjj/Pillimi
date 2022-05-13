@@ -80,7 +80,7 @@ ReactDOM.render(
             <Route path="/member-pill-page" render={(props) => <MemberPillPage {...props} />} />
             <Route path="/member-pill-check" render={(props) => <MemberPillCheck {...props} />} />
             <Route exact path="/callback" render={(props) => <Callback {...props} />} />
-            <Redirect to="/index" />
+            <Redirect to="/" />
             {/* <Redirect from="/" to="/index" /> */}
           </Switch>
         </Switch>
