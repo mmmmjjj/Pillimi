@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PillTodayCSS from "./css/PillToday.module.css";
-import { Button } from "reactstrap";
+import { Button, Row, Col } from "reactstrap";
 import style from "../Member/css/MemberPillCheck.module.css";
 
 import { getMyFamily } from "../../api/family.js";
@@ -58,7 +58,6 @@ function PillToday() {
   const getMyPillTodayList = () => {
     getMyPillToday(
       (response) => {
-        console.log(response);
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -74,7 +73,6 @@ function PillToday() {
     getPillToday(
       memberSeq,
       (response) => {
-        console.log(response.data.data);
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
       },
@@ -141,7 +139,6 @@ function PillToday() {
         );
         if (pillList.length !== 0) {
           itemLength = pillList[element].length;
-          console.log(pillList[element]);
           for (var i = 0; i < itemLength; i++) {
             medicineName = pillList[element][i].medicineName;
             imageURL = pillList[element][i].imageURL;
@@ -221,21 +218,24 @@ function PillToday() {
     if (familyList !== "") {
       familyList.forEach((element) => {
         result.push(
-          <div
-            key={element.memberSeq}
-            style={{ cursor: "pointer", display: "inline" }}
-            onClick={() => otherFamily(element.memberSeq)}
-          >
-            <div>
-              <img
-                style={{ margin: "0px" }}
-                src={element.memberImage}
-                alt="memberImg"
-                className={PillTodayCSS.img}
-              ></img>
-            </div>
-            <div>{element.memberName}</div>
-          </div>
+          <>
+            <Col
+              xs="3"
+              key={element.memberSeq}
+              style={{ cursor: "pointer", display: "inline", padding: "0" }}
+              onClick={() => otherFamily(element.memberSeq)}
+            >
+              <div style={{ display: "inlineBlock", justifyContent: "center" }}>
+                <img
+                  style={{ margin: "0px" }}
+                  src={element.memberImage}
+                  alt="memberImg"
+                  className={PillTodayCSS.img}
+                ></img>
+              </div>
+              <span>{element.memberName}</span>
+            </Col>
+          </>
         );
       });
     }
@@ -272,9 +272,9 @@ function PillToday() {
           )}
         </div>
         {showFamily ? (
-          <div className={PillTodayCSS.Family}>
+          <Row style={{ justifyContent: "start" }} className={PillTodayCSS.Family}>
             <FamilyName></FamilyName>
-          </div>
+          </Row>
         ) : (
           <></>
         )}
