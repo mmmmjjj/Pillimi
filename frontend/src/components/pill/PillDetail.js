@@ -100,7 +100,7 @@ function PillDetail(props) {
             Swal.fire({
               icon: "warning",
               title: "연령대 금기",
-              text: response.data.data.checkDesc,
+              html: response.data.data.checkDesc,
               confirmButtonText: "확인",
               confirmButtonColor: `#d33`,
             }).then(function () {
@@ -111,7 +111,6 @@ function PillDetail(props) {
               icon: "warning",
               title: "효능군 주의",
               html: response.data.data.checkDesc,
-              text: response.data.data.checkDesc,
               confirmButtonText: "확인",
               confirmButtonColor: `#d33`,
             }).then(function () {
@@ -121,7 +120,7 @@ function PillDetail(props) {
             Swal.fire({
               icon: "warning",
               title: "병용 금기",
-              desc: response.data.data.checkDesc,
+              html: response.data.data.checkDesc,
               confirmButtonText: "확인",
               confirmButtonColor: `#d33`,
             }).then(function () {
