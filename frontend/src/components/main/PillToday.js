@@ -99,6 +99,21 @@ function PillToday() {
     let min = "";
     let resultTime = "";
 
+    if (pillListKey.length !== 0) {
+      result.push(
+        <>
+          <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
+          <br></br>
+        </>
+      );
+    } else {
+      result.push(
+        <>
+          <h3 className={PillTodayCSS.MainText}>오늘 먹을 약이 없습니다</h3>
+        </>
+      );
+    }
+
     pillListKey.forEach((element, index) => {
       if (pillListKey.length !== 0) {
         hour = "";
@@ -211,13 +226,14 @@ function PillToday() {
             }
           }
         }
+        result.push(
+          <div className={PillTodayCSS.Background} key={`space${element}`}>
+            &nbsp;
+          </div>
+        );
+      } else {
+        result.push();
       }
-
-      result.push(
-        <div className={PillTodayCSS.Background} key={`space${element}`}>
-          &nbsp;
-        </div>
-      );
     });
 
     return result;
@@ -290,9 +306,8 @@ function PillToday() {
           <></>
         )}
         <br></br>
-        {/* <br></br> */}
-        <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
-        <br></br>
+        {/* <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
+        <br></br> */}
         <ShowPillList></ShowPillList>
       </div>
       <Navbar />
