@@ -33,11 +33,11 @@ public class DailyScheduler {
 
 
     /*
-    매일 서버시간 23:59에 피보호자 알림 생성 및 복용 기간 지난 약품 만료 처리
+    매일 서버시간 23:59에 복용 기간 지난 약품 만료 처리
     */
     @Scheduled(cron = "0 59 23 * * ?")
     @Transactional
-    public void DailyCreateAlarm() {
+    public void DailyNowFalse() {
 
         // now false 처리
         List<MemberMedicine> memberMedicines = memberMedicineRepository.findByMemberMedicineEndBeforeAndMemberMedicineNow(LocalDate.now().plusDays(1),true);
@@ -56,20 +56,30 @@ public class DailyScheduler {
             }
         }
 
+
+
+        log.info(LocalDate.now()+" now 스케줄러 작업 완료");
+    }
+
+    /*
+    매일 서버시간 00:00에 피보호자 알림 생성
+    */
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Transactional
+    public void DailyCreateAlarm() {
+
         LocalDate today = LocalDate.now();
         // 내일 피보호자 알림 생성
-        List<SchedulerDTO> todayAlarm = medicineIntakeRepository.findAlarmByDate(today.plusDays(1));
+        List<SchedulerDTO> todayAlarm = medicineIntakeRepository.findAlarmByDate(today);
 
         for (SchedulerDTO item : todayAlarm) {
             alarmProtegeRepository.save(AlarmProtege.builder()
-                    .alarmDate(today.plusDays(1))
+                    .alarmDate(today)
                     .alarmTime(item.getTime())
                     .protege(item.getMember())
                     .build());
         }
 
-
-        log.info(LocalDate.now()+" 알림 생성 스케줄러 작업 완료");
     }
 
     /*
