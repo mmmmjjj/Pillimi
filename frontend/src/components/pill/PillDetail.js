@@ -169,7 +169,16 @@ function PillDetail(props) {
       <br></br>
       <br></br>
       <h3 style={{ textAlign: "center" }}>
-        <img alt="pillImg" src={pillInfo.image}></img>
+        {
+          pillInfo.image !== null ?
+          <img alt="pillImg" src={pillInfo.image}></img>
+          :<div>
+            <div>
+              <img alt="basic" src="../../../img/basic.png" style={{width:`60%`, borderRadius:`10px`}}></img>
+            </div>
+            <span style={{fontSize: `60%`}}>이미지 준비 중입니다.</span>
+          </div> 
+        }
       </h3>
       <br></br>
       <div className={PillDetailCSS.Content}>

@@ -8,6 +8,7 @@ import { getPillSearch } from "../../api/pill.js";
 import { useInView } from "react-intersection-observer";
 import Navbar from "layout/Navbar.js";
 import { useSelector } from "react-redux";
+import cn from 'classnames';
 
 function PillSearch(props) {
   const [keyword, setKeyword] = useState("");
@@ -113,13 +114,23 @@ function PillSearch(props) {
             className={`${PillSearchCSS.PillList}`}
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
-            <div className="d-flex align-items-center">
-              {element.medicineImage === null ? (
-                <img className={`${PillSearchCSS.Img}`} alt="basic"></img>
-              ) : (
-                <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
-              )}
-              <div className={`${PillSearchCSS.PillName} flex-fill`}>{element.medicineName}</div>
+            <div className={cn("d-flex align-items-center", PillSearchCSS.PillText)}>
+              {element.medicineImage === null ?
+                <img
+                  className={`${PillSearchCSS.Img}`}
+                  alt= "basic"
+                  src="img/basic.png"
+                ></img>
+                :
+                <img
+                  className={`${PillSearchCSS.Img}`}
+                  alt= "pillImg"
+                  src={element.medicineImage}
+                ></img>
+              }
+              <span className={`${PillSearchCSS.PillName} flex-fill`}>
+                {element.medicineName}
+              </span>
               <i className={`now-ui-icons arrows-1_minimal-right`}></i>
             </div>
           </Card>
