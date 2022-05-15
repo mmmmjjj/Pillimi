@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "../familycss.css";
 import Swal from "sweetalert2";
-import { useHistory  } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 // reactstrap components
 import {
@@ -23,7 +23,7 @@ function FamilyRegisterRequest(props) {
   useEffect(() => {
     props.getheader("가족 등록");
     props.getnavbar(false);
-  },[]);
+  }, []);
   const [phonenumber, setphonenumber] = useState("");
   const [membername, setmembername] = useState("");
   const [nameok, setnameok] = useState(false);
@@ -48,10 +48,11 @@ function FamilyRegisterRequest(props) {
     event.preventDefault();
     Swal.fire({
       icon: "success",
-      title: "가족 등록을 요청하였습니다.",
+      text: "가족 등록을 요청하였습니다.",
+      width: "80%",
       confirmButtonColor: `#0369a1`,
     }).then(function () {
-      history.push(`/family/myfamily`)
+      history.push(`/family/myfamily`);
     });
   };
 
@@ -122,27 +123,29 @@ function FamilyRegisterRequest(props) {
   const requestFamily = () => {
     let memberInfo = {
       memberName: membername,
-      memberPhone: phonenumber
-    }
-    requestAddFamily(memberInfo,
-      ( success ) => {
-        console.log(success)
-      }, ( fail ) => {
-        console.log(fail)
-      })
-  }
+      memberPhone: phonenumber,
+    };
+    requestAddFamily(
+      memberInfo,
+      (success) => {
+        console.log(success);
+      },
+      (fail) => {
+        console.log(fail);
+      }
+    );
+  };
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
-  if(!isProtector){
+  if (!isProtector) {
     Swal.fire({
       icon: "warning",
       title: "권한이 없는 페이지입니다.",
+      width: "80%",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
   return (
     <>
