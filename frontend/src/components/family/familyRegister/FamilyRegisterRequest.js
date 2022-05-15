@@ -52,7 +52,7 @@ function FamilyRegisterRequest(props) {
       width: "80%",
       confirmButtonColor: `#0369a1`,
     }).then(function () {
-      history.push(`/family/myfamily`);
+      history.replace(`/family/myfamily`)
     });
   };
 
