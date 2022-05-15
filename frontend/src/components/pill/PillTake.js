@@ -11,17 +11,16 @@ import Swal from "sweetalert2";
 function PillTake(props) {
   var basicurl = props.match.path;
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
-  if(!isLogin){
+  if (!isLogin) {
     Swal.fire({
       icon: "warning",
       title: "로그인이 필요한 서비스입니다.",
+      width: "80%",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
   return (
     <>
@@ -41,7 +40,7 @@ function PillTake(props) {
           />
         </Switch>
       </Switch>
-      <Navbar/>
+      <Navbar />
       {/* </BrowserRouter> */}
     </>
   );

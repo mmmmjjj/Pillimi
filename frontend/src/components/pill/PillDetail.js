@@ -140,7 +140,9 @@ function PillDetail(props) {
     familyList.forEach((element) => {
       result.push(
         <Fragment key={element.memberSeq}>
-          <span onClick={() => gotoPillRegister(element.memberSeq)}>{element.memberName}</span>
+          <h4 style={{ margin: "0" }} onClick={() => gotoPillRegister(element.memberSeq)}>
+            {element.memberName}
+          </h4>
           <br></br>
         </Fragment>
       );
@@ -169,16 +171,16 @@ function PillDetail(props) {
       <br></br>
       <br></br>
       <h3 style={{ textAlign: "center" }}>
-        {
-          pillInfo.image !== null ?
+        {pillInfo.image !== null ? (
           <img alt="pillImg" src={pillInfo.image}></img>
-          :<div>
+        ) : (
+          <div>
             <div>
-              <img alt="basic" src="../../../img/basic.png" style={{width:`60%`, borderRadius:`10px`}}></img>
+              <img alt="basic" src="../../../img/basic.png" style={{ width: `60%`, borderRadius: `10px` }}></img>
             </div>
-            <span style={{fontSize: `60%`}}>이미지 준비 중입니다.</span>
-          </div> 
-        }
+            <span style={{ fontSize: `60%` }}>이미지 준비 중입니다.</span>
+          </div>
+        )}
       </h3>
       <br></br>
       <div className={PillDetailCSS.Content}>
@@ -214,7 +216,7 @@ function PillDetail(props) {
           </button>
         </div>
         <div className={`${PillDetailCSS.modalBody} modal-body`}>
-          <h3>누구의 약인가요?</h3>
+          <h3 style={{ fontWeight: "bold" }}>누구의 약인가요?</h3>
           <FamilyName></FamilyName>
           <br></br>
           <br></br>

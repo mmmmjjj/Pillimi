@@ -22,6 +22,7 @@ function PillSearch(props) {
     Swal.fire({
       icon: "warning",
       title: "로그인이 필요한 서비스입니다.",
+      width: "80%",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
       props.history.push(`/`);
@@ -35,6 +36,7 @@ function PillSearch(props) {
     Swal.fire({
       icon: "warning",
       title: "권한이 없는 페이지입니다.",
+      width: "80%",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
       props.history.push(`/`);
@@ -70,13 +72,15 @@ function PillSearch(props) {
     if (keyword === "") {
       Swal.fire({
         icon: "warning",
-        title: "검색어를 입력해주세요.",
+        text: "검색어를 입력해주세요.",
+        width: "80%",
         confirmButtonColor: `#d33`,
       });
     } else if (!regex.test(keyword)) {
       Swal.fire({
         icon: "warning",
-        title: "한글을 한 글자 이상 입력해주세요.",
+        text: "한글을 입력해주세요.",
+        width: "80%",
         confirmButtonColor: `#d33`,
       });
     } else if (regex.test(keyword)) {
@@ -88,7 +92,8 @@ function PillSearch(props) {
           if (response.data.data.length === 0) {
             Swal.fire({
               icon: "warning",
-              title: "검색어에 해당하는 약이 없습니다.",
+              text: "검색어에 해당하는 약이 없습니다.",
+              width: "80%",
               confirmButtonColor: `#d33`,
             });
           } else {
