@@ -4,6 +4,7 @@ import com.pillimi.backend.api.request.RegisterReq;
 import com.pillimi.backend.api.request.UpdateMemberReq;
 import com.pillimi.backend.api.response.MemberInfoRes;
 import com.pillimi.backend.common.auth.JwtTokenProvider;
+import com.pillimi.backend.common.exception.InvalidException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
 import com.pillimi.backend.common.model.KakaoProfile;
 import com.pillimi.backend.common.model.RoleType;
@@ -127,6 +128,9 @@ public class MemberServiceImpl implements MemberService {
                 throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getCode());
 
         }
+
+        if(Objects.equals(req.getNickName(), "")||Objects.equals(req.getBirthDate(), null)||Objects.equals(req.getPhone(), ""))
+            throw new InvalidException(ErrorCode.INVALID_INPUT_VALUE);
 
         target.setMemberPhone(req.getPhone());
         target.setMemberBirthdate(req.getBirthDate());
