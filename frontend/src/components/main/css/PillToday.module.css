@@ -76,7 +76,8 @@
   background-color: #0284c7 !important;
 }
 
-.PictureBtn:hover .PictureBtn:active,
+.PictureBtn:hover,
+.PictureBtn:active,
 .PictureBtn:focus {
   background-color: #31a7e2 !important;
   color: whitesmoke !important;

@@ -42,7 +42,8 @@ hr {
   padding-left: 10px !important;
 }
 
-.SearchBtn:hover .SearchBtn:active,
+.SearchBtn:hover,
+.SearchBtn:active,
 .SearchBtn:focus {
   background-color: #1f96d1 !important;
   color: whitesmoke !important;
