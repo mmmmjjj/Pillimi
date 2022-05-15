@@ -5,7 +5,6 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-// import moment from "moment";
 
 import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import Header from "components/Headers/Header";
@@ -26,25 +25,11 @@ function PillTakeModify(props) {
     caution: props.location.state.info.remarkContent,
   });
 
-  // const [pillRegister, setPillRegister] = useState({
-  //   medicineName: "",
-  //   intakeDay: [],
-  //   medicineSeq: "",
-  // });
-
   const [timeinput, settimeinput] = useState("");
 
   const [smallend, setsmallend] = useState(false);
   const [bigstart, setbigstart] = useState(false);
-  const [checkday, setday] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [checkday, setday] = useState([false, false, false, false, false, false, false]);
   const [timecheck, settimecheck] = useState(false);
   useEffect(() => {
     var storday = [false, false, false, false, false, false, false];
@@ -57,41 +42,24 @@ function PillTakeModify(props) {
     var stortime = [];
     for (var j = 0; j < props.location.state.info.intakeTime.length; j++) {
       if (parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) < 12) {
-        if (
-          parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) === 0
-        ) {
-          stortime.push(
-            "12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오전"
-          );
+        if (parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) === 0) {
+          stortime.push("12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오전");
         } else {
-          stortime.push(
-            props.location.state.info.intakeTime[j].slice(0, 5) + " 오전"
-          );
+          stortime.push(props.location.state.info.intakeTime[j].slice(0, 5) + " 오전");
         }
       } else {
-        if (
-          parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) === 12
-        ) {
-          stortime.push(
-            "12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오후"
-          );
-        } else if (
-          parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) < 22
-        ) {
+        if (parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) === 12) {
+          stortime.push("12" + props.location.state.info.intakeTime[j].slice(2, 5) + " 오후");
+        } else if (parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) < 22) {
           stortime.push(
             "0" +
-              String(
-                parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) -
-                  12
-              ) +
+              String(parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) - 12) +
               props.location.state.info.intakeTime[j].slice(2, 5) +
               " 오후"
           );
         } else {
           stortime.push(
-            String(
-              parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) - 12
-            ) +
+            String(parseInt(props.location.state.info.intakeTime[j].slice(0, 2)) - 12) +
               props.location.state.info.intakeTime[j].slice(2, 5) +
               " 오후"
           );
@@ -115,10 +83,7 @@ function PillTakeModify(props) {
     var saveintakeTime = [];
     for (var j = 0; j < pillRegister.time.length; j++) {
       if (pillRegister.time[j].slice(6, 8) === "오후") {
-        saveintakeTime.push(
-          String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) +
-            pillRegister.time[j].slice(2, 5)
-        );
+        saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) + pillRegister.time[j].slice(2, 5));
       } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
     }
     console.log(saveintakeTime);
@@ -176,7 +141,7 @@ function PillTakeModify(props) {
         title: "복용 개수를 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
-    } else if(Number(pillRegister.volume)<0){
+    } else if (Number(pillRegister.volume) < 0) {
       Swal.fire({
         icon: "error",
         title: "복용 개수를 정확히 입력해주세요.",
@@ -212,11 +177,7 @@ function PillTakeModify(props) {
   };
 
   const changeday = (index) => {
-    setday([
-      ...checkday.slice(0, index),
-      !checkday[index],
-      ...checkday.slice(index + 1),
-    ]);
+    setday([...checkday.slice(0, index), !checkday[index], ...checkday.slice(index + 1)]);
     console.log(checkday);
   };
 
@@ -242,40 +203,13 @@ function PillTakeModify(props) {
   const deletetime = (index) => {
     setPillRegister({
       ...pillRegister,
-      time: [
-        ...pillRegister.time.slice(0, index),
-        ...pillRegister.time.slice(index + 1),
-      ],
+      time: [...pillRegister.time.slice(0, index), ...pillRegister.time.slice(index + 1)],
     });
   };
 
   const onChangePillRegister = (e) => {
-    // if (moment.isMoment(e)) {
-    //   if (e.name === "time") {
-    //     setPillRegister({
-    //       ...pillRegister,
-    //       [e.name]: e.format("hh:mm A"),
-    //     });
-    //     settimecheck(false);
-    //     console.log(pillRegister.time);
-    //   } else {
-    //     setPillRegister({
-    //       ...pillRegister,
-    //       [e.name]: e.format("YYYY-MM-DD"),
-    //     });
-    //     console.log(pillRegister.startDate);
-    //   }
-    // } else {
-    //   setPillRegister({
-    //     ...pillRegister,
-    //     [e.target.name]: e.target.value,
-    //   });
-    // }
     if (e.name === "startDate") {
-      if (
-        pillRegister.endDate &&
-        e.format("YYYY-MM-DD") > pillRegister.endDate
-      ) {
+      if (pillRegister.endDate && e.format("YYYY-MM-DD") > pillRegister.endDate) {
         setsmallend(true);
         setbigstart(false);
         setPillRegister({
@@ -291,10 +225,7 @@ function PillTakeModify(props) {
         setsmallend(false);
       }
     } else if (e.name === "endDate") {
-      if (
-        pillRegister.startDate &&
-        e.format("YYYY-MM-DD") < pillRegister.startDate
-      ) {
+      if (pillRegister.startDate && e.format("YYYY-MM-DD") < pillRegister.startDate) {
         setsmallend(false);
         setbigstart(true);
         setPillRegister({
@@ -331,17 +262,8 @@ function PillTakeModify(props) {
     <>
       <Header header="복용 약 추가" canBack={true}></Header>
       <br></br>
-      <h3 className={PillTakeRegisterCSS.PillName}>
-        {props.location.state.info.medicineName}
-      </h3>
+      <h3 className={PillTakeRegisterCSS.PillName}>{props.location.state.info.medicineName}</h3>
       <div className={PillTakeRegisterCSS.Whole}>
-        {/* <Label content={"약 별칭"}></Label>
-        <DateLabel content={"복용 시작 일자"}></DateLabel>
-        <DateLabel content={"복용 종료 일자"}></DateLabel>
-        <NumberLabel content={"복용 주기"}></NumberLabel>
-        <TimeLabel content={"복용 시간"}></TimeLabel>
-        <NumberLabel content={"복용 용량"}></NumberLabel>
-        <Label content={"섭취 후 특이사항"}></Label> */}
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>약 별칭</h3>
         <FormGroup>
@@ -434,31 +356,8 @@ function PillTakeModify(props) {
         <br></br>
         <h3 className={PillTakeRegisterCSS.Label}>복용 요일</h3>
         <FormGroup className={PillTakeRegisterCSS.DayGroup}>
-          {/* <Badge className={sunday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setsun(prevsunday => !prevsunday)}>
-            월
-          </Badge>
-          <Badge className={monday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setmon(prevmonday => !prevmonday)}>
-            화
-          </Badge>
-          <Badge className={tueday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={settue(prevtueday => !prevtueday)}>
-            수
-          </Badge>
-          <Badge className={wedday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setwed(prevwedday => !prevwedday)}>
-            목
-          </Badge>
-          <Badge className={thuday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setthu(prevthuday => !prevthuday)}>
-            금
-          </Badge>
-          <Badge className={friday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setfri(prevfriday => !prevfriday)}>
-            토
-          </Badge>
-          <Badge className={satday ?"PillTakeRegisterCSS.selDay" :"PillTakeRegisterCSS.Day"} color="default" onClick={setsat(prevsatday => !prevsatday)}>
-            일
-          </Badge> */}
           <Badge
-            className={
-              checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[0] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(0);
@@ -467,9 +366,7 @@ function PillTakeModify(props) {
             월
           </Badge>
           <Badge
-            className={
-              checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[1] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(1);
@@ -478,9 +375,7 @@ function PillTakeModify(props) {
             화
           </Badge>
           <Badge
-            className={
-              checkday[2] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[2] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(2);
@@ -489,9 +384,7 @@ function PillTakeModify(props) {
             수
           </Badge>
           <Badge
-            className={
-              checkday[3] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[3] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(3);
@@ -500,9 +393,7 @@ function PillTakeModify(props) {
             목
           </Badge>
           <Badge
-            className={
-              checkday[4] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[4] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(4);
@@ -511,9 +402,7 @@ function PillTakeModify(props) {
             금
           </Badge>
           <Badge
-            className={
-              checkday[5] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[5] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(5);
@@ -522,9 +411,7 @@ function PillTakeModify(props) {
             토
           </Badge>
           <Badge
-            className={
-              checkday[6] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day
-            }
+            className={checkday[6] ? PillTakeRegisterCSS.selDay : PillTakeRegisterCSS.Day}
             color="default"
             onClick={() => {
               changeday(6);
@@ -577,31 +464,14 @@ function PillTakeModify(props) {
             }}
             strictParsing={false}
             renderInput={(props) => {
-              return (
-                <input
-                  readOnly
-                  style={{ backgroundColor: "white" }}
-                  {...props}
-                  value={timeinput}
-                />
-              );
+              return <input readOnly style={{ backgroundColor: "white" }} {...props} value={timeinput} />;
             }}
           />
         </FormGroup>
         <Row xs="3" sm="4" md="6" style={{ justifyContent: "start" }}>
           {pillRegister.time.map((value, index) => (
-            <Col
-              key={index}
-              xs="4"
-              sm="3"
-              md="2"
-              style={{ padding: "0px", textAlign: "center" }}
-            >
-              <Badge
-                className={PillTakeRegisterCSS.Badge}
-                color="info"
-                id="timeList"
-              >
+            <Col key={index} xs="4" sm="3" md="2" style={{ padding: "0px", textAlign: "center" }}>
+              <Badge className={PillTakeRegisterCSS.Badge} color="info" id="timeList">
                 {value}&nbsp;&nbsp;
                 <Badge
                   className={PillTakeRegisterCSS.Badge}
@@ -656,83 +526,5 @@ function PillTakeModify(props) {
     </>
   );
 }
-
-// function Label(params) {
-//   return (
-//     <>
-//       <br></br>
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       {/* {(function () {
-//         if (`${params.content}` === "약 별칭")
-//           return (
-//             <Input
-//               onChange={PillTakeRegister.onChangePillRegister}
-//               id="nick"
-//               name="nick"
-//               className={PillTakeRegisterCSS.Input}
-//               type="text"
-//             ></Input>
-//           );
-//         else
-//           return (
-//             <Input
-//               onChange={PillTakeRegister.onChangePillRegister}
-//               id="caution"
-//               name="caution"
-//               className={PillTakeRegisterCSS.Input}
-//               type="text"
-//             ></Input>
-//           );
-//       })()} */}
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       <Input className={PillTakeRegisterCSS.Input} type="text"></Input>
-//       <Input className={PillTakeRegisterCSS.Input} type="text"></Input>
-//     </>
-//   );
-// }
-
-// function DateLabel(params) {
-//   return (
-//     <>
-//       <br></br>
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       <Datetime className={PillTakeRegisterCSS.Input} timeFormat={false} />
-//     </>
-//   );
-// }
-
-// function TimeLabel(params) {
-//   return (
-//     <>
-//       <br></br>
-//       <div className="d-flex align-items-center">
-//         <h3
-//           className={`${PillTakeRegisterCSS.Label} flex-fill
-//         `}
-//         >
-//           {params.content}
-//         </h3>
-//         <i className={`${PillTakeRegisterCSS.TimePlus} now-ui-icons ui-1_simple-add`}></i>
-//       </div>
-//       <Datetime className={PillTakeRegisterCSS.Input} dateFormat={false} />{" "}
-//     </>
-//   );
-// }
-
-// function NumberLabel(params) {
-//   const [number, setNumber] = useState("");
-
-//   const onChange = (e) => {
-//     setNumber(e.target.value);
-//   };
-
-//   return (
-//     <>
-//       <br></br>
-//       <h3 className={PillTakeRegisterCSS.Label}>{params.content}</h3>
-//       <Input onChange={onChange} value={number} className={PillTakeRegisterCSS.Input} type="number"></Input>
-//     </>
-//   );
-// }
 
 export default PillTakeModify;
