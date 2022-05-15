@@ -8,6 +8,7 @@
   text-align: center;
   margin-left: 10%;
   margin-right: 10%;
+  word-break: break-all;
 }
 
 .Label {
@@ -28,6 +29,13 @@
   margin-top: 4% !important;
   margin-bottom: 4% !important;
   color: black !important;
+}
+
+.RemoveBadge {
+  margin-top: 4% !important;
+  margin-bottom: 4% !important;
+  background-color: rgb(246, 183, 67) !important;
+  border-color: rgb(246, 183, 67) !important;
 }
 
 .BadgeTime {

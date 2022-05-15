@@ -1,64 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, ListGroup, ListGroupItem, Modal } from "reactstrap";
 import "../familycss.css";
-import { getMyFamily } from '../../../api/family';
+import { getMyFamily } from "../../../api/family";
 import { useDispatch } from "react-redux";
 import { setProtegeInfoAction } from "actions/protegeAction";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 function FamilyProtector(props) {
-  const [modalbool, setmodalbool] = useState(false)
+  const [modalbool, setmodalbool] = useState(false);
   const [modalnum, setModalNum] = useState(-1);
-  const [modalName, setModalName] = useState('');
-  
+  const [modalName, setModalName] = useState("");
+
   const toggle = (num, str) => {
     console.log(num);
-    setModalNum(num)
+    setModalNum(num);
     setModalName(str);
-    setmodalbool(!modalbool)
-  }
+    setmodalbool(!modalbool);
+  };
   // const [FamilyData, setFamilyData] = useState([])
   const getFamilyData = () => {
-    getMyFamily((success)=> {
-      console.log(success)
-    },)
-  }
+    getMyFamily((success) => {
+      console.log(success);
+    });
+  };
 
-  useEffect(()=>{
-    getFamilyData();
-  },)
-
-  
-  
   useEffect(() => {
-    console.log("마운트")
-    getFamilyList();
-  },[])
+    getFamilyData();
+  });
 
-  
-  const [ familyList, setFamilyList ] = useState([]);
+  useEffect(() => {
+    console.log("마운트");
+    getFamilyList();
+  }, []);
+
+  const [familyList, setFamilyList] = useState([]);
 
   const getFamilyList = () => {
-    getMyFamily(( success ) => {
-      setFamilyList(success.data.data);
-      console.log(success)
-      console.log(success.data.data);
-    }, ( fail ) => {
-      console.log(fail);
-    })
-  }
+    getMyFamily(
+      (success) => {
+        setFamilyList(success.data.data);
+        console.log(success);
+        console.log(success.data.data);
+      },
+      (fail) => {
+        console.log(fail);
+      }
+    );
+  };
 
   const Family = () => {
-    let result = []
-    if(familyList.length===0){
-      result.push(
-        <div key={`nothing`}>등록된 가족이 없습니다</div>
-      )
-    }else{
-      familyList.forEach( element => {
+    let result = [];
+    if (familyList.length === 0) {
+      result.push(<div key={`nothing`}>등록된 가족이 없습니다</div>);
+    } else {
+      familyList.forEach((element) => {
         result.push(
-          <ListGroupItem onClick={(e)=>{toggle(element.memberSeq, element.memberName, e)}} key={`fapro${element.memberSeq}`}>
+          <ListGroupItem
+            onClick={(e) => {
+              toggle(element.memberSeq, element.memberName, e);
+            }}
+            key={`fapro${element.memberSeq}`}
+          >
             <Row xs="4">
               <Col>
                 <img className="listimg" alt="" src={element.memberImage} />
@@ -68,46 +71,51 @@ function FamilyProtector(props) {
               </Col>
             </Row>
           </ListGroupItem>
-        )
-      })
+        );
+      });
     }
     return result;
-  }
+  };
 
   const ProtegeModal = () => {
-    console.log(modalnum)
-    return(
-      <Modal isOpen={modalbool} toggle={(e) => toggle(-1, '', e)} centered>
-        <Row style={{ padding:"20px",borderBottom:"1px solid black"}} onClick={gotoMemberInfoDetail}><h3 className="familyh3">회원 정보</h3></Row>
-        <Row style={{ padding:"20px" }}><h3 className="familyh3" onClick={gotoMedicineList}>약 관리</h3></Row>
+    console.log(modalnum);
+    return (
+      <Modal isOpen={modalbool} toggle={(e) => toggle(-1, "", e)} centered>
+        <Row style={{ padding: "20px", borderBottom: "1px solid black" }} onClick={gotoMemberInfoDetail}>
+          <h3 className="familyh3">회원 정보</h3>
+        </Row>
+        <Row style={{ padding: "20px" }}>
+          <h3 className="familyh3" onClick={gotoMedicineList}>
+            약 관리
+          </h3>
+        </Row>
       </Modal>
-    )
-  }
+    );
+  };
 
   const dispatch = useDispatch();
 
   const gotoMemberInfoDetail = () => {
     window.location.href = `/member-info/member-info-detail/` + modalnum;
-  }
+  };
 
   const gotoMedicineList = () => {
     console.log(modalName + " " + modalnum);
-    dispatch(setProtegeInfoAction({memberSeq: modalnum, nickName: modalName})); 
+    dispatch(setProtegeInfoAction({ memberSeq: modalnum, nickName: modalName }));
     window.location.href = `/member-pill-page/member-pill-list/` + modalnum;
-  }
+  };
 
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
-  if(!isProtector){
+  if (!isProtector) {
     Swal.fire({
       icon: "warning",
       title: "권한이 없는 페이지입니다.",
+      width: "80%",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
       props.history.push(`/`);
     });
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
 
   const gotoFamilyRequest = () => {
@@ -130,7 +138,7 @@ function FamilyProtector(props) {
           paddingTop: "50px",
         }}
       >
-      <Family></Family>
+        <Family></Family>
       </ListGroup>
       <ProtegeModal></ProtegeModal>
       {/* <i class="fa fa-light fa-circle-plus"></i>

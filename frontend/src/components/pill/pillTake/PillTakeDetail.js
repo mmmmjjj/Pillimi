@@ -31,7 +31,7 @@ function PillTakeDetail(props) {
         if (response.status === 200) {
           setPillInfo(response.data.data);
         }
-        console.log(response.data.data)
+        console.log(response.data.data);
       },
       (error) => {
         console.log(error);
@@ -132,7 +132,9 @@ function PillTakeDetail(props) {
   const onSubmit = () => {
     // event.preventDefault();
     Swal.fire({
-      title: `${pillInfo.medicineName}을 정말 삭제하시겠습니까?`,
+      icon: "warning",
+      text: `${pillInfo.medicineName}을 정말 삭제하시겠습니까?`,
+      width: "80%",
       showCancelButton: true,
       confirmButtonColor: `#0369a1`,
       cancelButtonColor: "#d33",
@@ -146,7 +148,11 @@ function PillTakeDetail(props) {
           memberSeq,
           (response) => {
             if (response.status === 200) {
-              Swal.fire("삭제 완료!", "삭제가 완료 되었습니다.", "success").then(function () {
+              Swal.fire({
+                icon: "success",
+                text: `삭제 완료`,
+                width: "80%",
+              }).then(function () {
                 history.push(`/member-pill-page/member-pill-list/${memberSeq}`);
               });
             }
