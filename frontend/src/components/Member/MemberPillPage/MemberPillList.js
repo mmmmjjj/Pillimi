@@ -275,16 +275,24 @@ function MemberPillList(props) {
         <div className="pt-4">
           <h5>현재 복용 중인 약</h5>
           <PillList isNow={true}></PillList>
-          <button onClick={onsubmitTbutton} className={style.buttoncolor}>
-            더보기
-          </button>
+          {
+            tdropOptions < tdatas.length ?
+            <button onClick={onsubmitTbutton} className={style.buttoncolor}>
+              더보기
+            </button> 
+            : <></>
+          }
         </div>
         <div className="pt-4">
           <h5>이전에 복용한 약</h5>
           <PillList isNow={false}></PillList>
-          <button onClick={onsubmitFbutton} className={style.buttoncolor}>
-            더보기
-          </button>
+          {
+            fdropOptions < fdatas.length ?
+            <button onClick={onsubmitFbutton} className={style.buttoncolor}>
+              더보기
+            </button>
+            : <></>
+          }
         </div>
       </div>
     )
