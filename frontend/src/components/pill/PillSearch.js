@@ -8,7 +8,7 @@ import { getPillSearch } from "../../api/pill.js";
 import { useInView } from "react-intersection-observer";
 import Navbar from "layout/Navbar.js";
 import { useSelector } from "react-redux";
-import cn from 'classnames';
+import cn from "classnames";
 
 function PillSearch(props) {
   const [keyword, setKeyword] = useState("");
@@ -70,13 +70,13 @@ function PillSearch(props) {
     if (keyword === "") {
       Swal.fire({
         icon: "warning",
-        title: "검색할 글을 써주세요",
+        title: "검색어를 입력해주세요.",
         confirmButtonColor: `#d33`,
       });
     } else if (!regex.test(keyword)) {
       Swal.fire({
         icon: "warning",
-        title: "한글을 써주세요",
+        title: "한글을 한 글자 이상 입력해주세요.",
         confirmButtonColor: `#d33`,
       });
     } else if (regex.test(keyword)) {
@@ -88,7 +88,7 @@ function PillSearch(props) {
           if (response.data.data.length === 0) {
             Swal.fire({
               icon: "warning",
-              title: "검색어에 해당하는 약이 없습니다",
+              title: "검색어에 해당하는 약이 없습니다.",
               confirmButtonColor: `#d33`,
             });
           } else {
@@ -115,22 +115,12 @@ function PillSearch(props) {
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
             <div className={cn("d-flex align-items-center", PillSearchCSS.PillText)}>
-              {element.medicineImage === null ?
-                <img
-                  className={`${PillSearchCSS.Img}`}
-                  alt= "basic"
-                  src="img/basic.png"
-                ></img>
-                :
-                <img
-                  className={`${PillSearchCSS.Img}`}
-                  alt= "pillImg"
-                  src={element.medicineImage}
-                ></img>
-              }
-              <span className={`${PillSearchCSS.PillName} flex-fill`}>
-                {element.medicineName}
-              </span>
+              {element.medicineImage === null ? (
+                <img className={`${PillSearchCSS.Img}`} alt="basic" src="img/basic.png"></img>
+              ) : (
+                <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
+              )}
+              <span className={`${PillSearchCSS.PillName} flex-fill`}>{element.medicineName.split("(")[0]}</span>
               <i className={`now-ui-icons arrows-1_minimal-right`}></i>
             </div>
           </Card>
