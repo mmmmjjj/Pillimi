@@ -198,6 +198,12 @@ function PillToday() {
                   );
                 }
               }
+            } else if (itemLength > 1) {
+              result.push(
+                <div className={PillTodayCSS.WhiteBackground} key={`white${element}`}>
+                  <br></br>
+                </div>
+              );
             }
           }
         }

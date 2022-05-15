@@ -29,7 +29,7 @@ function PillSearch(props) {
   }
 
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
-  
+
   if (!isProtector) {
     Swal.fire({
       icon: "warning",
@@ -103,6 +103,7 @@ function PillSearch(props) {
 
   const ShowPillList = () => {
     let result = [];
+
     if (datas.length !== 0) {
       datas.forEach((element) => {
         result.push(
@@ -113,22 +114,12 @@ function PillSearch(props) {
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
             <div className="d-flex align-items-center">
-              {element.medicineImage === null ?
-                <img
-                  className={`${PillSearchCSS.Img}`}
-                  alt= "basic"
-                  src="img/basic.png"
-                ></img>
-                :
-                <img
-                  className={`${PillSearchCSS.Img}`}
-                  alt= "pillImg"
-                  src={element.medicineImage}
-                ></img>
-              }
-              <span className={`${PillSearchCSS.PillName} flex-fill`}>
-                {element.medicineName}
-              </span>
+              {element.medicineImage === null ? (
+                <img className={`${PillSearchCSS.Img}`} alt="basic"></img>
+              ) : (
+                <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
+              )}
+              <div className={`${PillSearchCSS.PillName} flex-fill`}>{element.medicineName}</div>
               <i className={`now-ui-icons arrows-1_minimal-right`}></i>
             </div>
           </Card>
@@ -140,9 +131,7 @@ function PillSearch(props) {
         </div>
       );
     } else {
-      result.push(
-        <div key={`nothing`}></div>
-      );
+      result.push(<div key={`nothing`}></div>);
     }
 
     return result;
@@ -154,7 +143,7 @@ function PillSearch(props) {
 
   return (
     <>
-      <Header header="검색"  canBack={true}></Header>
+      <Header header="검색" canBack={true}></Header>
       <div
         style={{
           backgroundColor: "#eaf0f8",
@@ -174,10 +163,7 @@ function PillSearch(props) {
               value={keyword}
               type="text"
             ></Input>
-            <Button
-              className={PillSearchCSS.SearchBtn}
-              onClick={() => goPillSearch()}
-            >
+            <Button className={PillSearchCSS.SearchBtn} onClick={() => goPillSearch()}>
               {" "}
               검색
             </Button>

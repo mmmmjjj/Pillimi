@@ -45,9 +45,8 @@ hr {
 .SearchBtn:hover,
 .SearchBtn:active,
 .SearchBtn:focus {
-  color: black !important;
-  background-color: #0284c7 !important;
-  box-shadow: none !important;
+  background-color: #1f96d1 !important;
+  color: whitesmoke !important;
 }
 
 .PillList {
@@ -57,6 +56,7 @@ hr {
   cursor: pointer !important;
   word-break: break-all;
   min-height: 9vh;
+  height: 70px;
 }
 
 .Img {
@@ -67,9 +67,13 @@ hr {
 }
 
 .PillName {
-  margin-top: 3%;
+  margin-top: 4%;
   margin-left: 5%;
   font-size: 17px;
+  overflow: hidden; 
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 i {
