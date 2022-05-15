@@ -474,7 +474,7 @@ function PillTakeModify(props) {
               <Badge className={PillTakeRegisterCSS.Badge} color="info" id="timeList">
                 {value}&nbsp;&nbsp;
                 <Badge
-                  className={PillTakeRegisterCSS.Badge}
+                  className={PillTakeRegisterCSS.RemoveBadge}
                   color="danger"
                   id="timeList"
                   onClick={() => {
