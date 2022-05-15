@@ -79,9 +79,8 @@
 .PictureBtn:hover,
 .PictureBtn:active,
 .PictureBtn:focus {
-  color: black !important;
-  background-color: #0284c7 !important;
-  box-shadow: none !important;
+  background-color: #31a7e2 !important;
+  color: whitesmoke !important;
 }
 
 .Icon {
@@ -101,11 +100,21 @@
 
 .Family {
   font-weight: bold;
-  margin-left: 10%;
+  /* margin-left: 4%; */
+  padding: 0px;
   /* margin-left: 60px; */
 }
 
 .img {
   width: 40%;
   border-radius: 50%;
+}
+
+.FamilyName {
+  text-align: center;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+.WhiteBackground {
+  background-color: white;
 }
