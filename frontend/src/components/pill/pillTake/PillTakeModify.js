@@ -108,43 +108,50 @@ function PillTakeModify(props) {
     if (!pillRegister.nick) {
       Swal.fire({
         icon: "error",
-        title: "별칭을 입력해주세요.",
+        width: "80%",
+        text: "별칭을 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else if (!pillRegister.startDate) {
       Swal.fire({
         icon: "error",
-        title: "시작 일자를 입력해주세요.",
+        width: "80%",
+        text: "시작 일자를 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else if (!pillRegister.endDate) {
       Swal.fire({
         icon: "error",
-        title: "종료 일자를 입력해주세요.",
+        width: "80%",
+        text: "종료 일자를 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else if (saveintakeDay.length === 0) {
       Swal.fire({
         icon: "error",
-        title: "복용 요일을 입력해주세요.",
+        width: "80%",
+        text: "복용 요일을 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else if (saveintakeTime.length === 0) {
       Swal.fire({
         icon: "error",
-        title: "복용 시간을 입력해주세요.",
+        width: "80%",
+        text: "복용 시간을 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else if (!pillRegister.volume) {
       Swal.fire({
         icon: "error",
-        title: "복용 개수를 입력해주세요.",
+        width: "80%",
+        text: "복용 개수를 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else if (Number(pillRegister.volume) < 0) {
       Swal.fire({
         icon: "error",
-        title: "복용 개수를 정확히 입력해주세요.",
+        width: "80%",
+        text: "복용 개수를 정확히 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else {
@@ -166,6 +173,7 @@ function PillTakeModify(props) {
           Swal.fire({
             icon: "success",
             text: "수정하였습니다.",
+            width: "80%",
             confirmButtonColor: `#0369a1`,
           }).then(gotoMedicineDetail(memberMedicineSeq));
         },

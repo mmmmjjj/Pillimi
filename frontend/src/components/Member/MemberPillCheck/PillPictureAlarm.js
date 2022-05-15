@@ -36,7 +36,8 @@ function PillPictureAlarm(props) {
         event.preventDefault();
         Swal.fire({
           icon: "success",
-          title: "약 복용을 확인하셨습니다",
+          text: "약 복용을 확인하셨습니다",
+          width: "80%",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
           props.history.replace(`/member-pill-page/member-pill-list/` + alarm.protegeSeq);
