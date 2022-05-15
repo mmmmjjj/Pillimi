@@ -15,7 +15,6 @@ public class AlarmProtectorRepositoryCustomImpl implements AlarmProtectorReposit
 
     QAlarmProtector qAlarmProtector = QAlarmProtector.alarmProtector;
 
-    QAlarmProtege qAlarmProtege = QAlarmProtege.alarmProtege;
 
     @Override
     public List<ProtectorAlarmRes> findByProtectorAndProtege(Member protector, Member protege) {
@@ -30,6 +29,7 @@ public class AlarmProtectorRepositoryCustomImpl implements AlarmProtectorReposit
                 .from(qAlarmProtector)
                 .where(qAlarmProtector.alarmProtege.protege.memberSeq.eq(protege.getMemberSeq())
                         .and(qAlarmProtector.protector.eq(protector)))
+                .orderBy(qAlarmProtector.createdTime.desc())
                 .fetch();
     }
 }
