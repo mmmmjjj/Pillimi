@@ -138,7 +138,13 @@ function PillTakeModify(props) {
     } else if (!pillRegister.volume) {
       Swal.fire({
         icon: "error",
-        title: "복용 개수을 입력해주세요.",
+        title: "복용 개수를 입력해주세요.",
+        confirmButtonColor: `#ff3636`,
+      });
+    } else if(Number(pillRegister.volume)<0){
+      Swal.fire({
+        icon: "error",
+        title: "복용 개수를 정확히 입력해주세요.",
         confirmButtonColor: `#ff3636`,
       });
     } else {

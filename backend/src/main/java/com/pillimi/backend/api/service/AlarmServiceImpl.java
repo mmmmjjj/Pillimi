@@ -89,11 +89,10 @@ public class AlarmServiceImpl implements AlarmService {
 
         return ProtectorAlarmInfoRes.builder()
                 .alarmProtectorSeq(alarmProtector.getAlarmSeq())
-                .protectorSeq(alarmProtector.getProtector().getMemberSeq())
-                .protegeSeq(alarmProtector.getAlarmProtege().getProtege().getMemberSeq())
                 .protegeName(alarmProtector.getAlarmProtege().getProtege().getMemberNickname())
                 .alarmDate(alarmProtector.getAlarmProtege().getAlarmDate())
                 .alarmTime(alarmProtector.getAlarmProtege().getAlarmTime())
+                .takeTime(alarmProtector.getCreatedTime().toLocalTime())
                 .photoURL(alarmProtector.getAlarmPhoto())
                 .medicineList(alarmMedicineResList)
                 .build();
