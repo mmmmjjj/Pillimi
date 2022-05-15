@@ -56,7 +56,8 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
                 .on(qMedicine.eq(qMemberMedicine.medicine))
                 .join(qMedicineIntake)
                 .on(qMedicineIntake.memberMedicine.eq(qMemberMedicine))
-                .where(qMember.eq(member).and(qMedicineIntake.intakeDay.eq(day)))
+                .where(qMember.eq(member).and(qMedicineIntake.intakeDay.eq(day))
+                        .and(qMemberMedicine.memberMedicineNow.eq(true)))
                 .orderBy(qMedicineIntake.intakeDay.asc())
                 .fetch();
     }
@@ -78,7 +79,8 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
                 .on(qMedicineIntake.memberMedicine.eq(qMemberMedicine))
                 .where(qMedicineIntake.intakeTime.eq(time)
                         .and(qMemberMedicine.member.eq(member))
-                        .and(qMedicineIntake.intakeDay.eq(LocalDate.now().getDayOfWeek().getValue())))
+                        .and(qMedicineIntake.intakeDay.eq(LocalDate.now().getDayOfWeek().getValue()))
+                        .and(qMemberMedicine.memberMedicineNow.eq(true)))
                 .fetch();
 
     }
@@ -94,7 +96,8 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
                 .where(qMedicineIntake.memberMedicine.in(
                         JPAExpressions.select(qMemberMedicine)
                                 .from(qMemberMedicine)
-                                .where(qMemberMedicine.member.eq(member))
+                                .where(qMemberMedicine.member.eq(member)
+                                        .and(qMemberMedicine.memberMedicineNow.eq(true)))
                 )
                 .and(qMedicineIntake.intakeDay.eq(day))
                 .and(qMedicineIntake.intakeTime.eq(time)))
