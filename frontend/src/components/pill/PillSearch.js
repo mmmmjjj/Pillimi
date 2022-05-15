@@ -115,7 +115,7 @@ function PillSearch(props) {
           >
             <div className="d-flex align-items-center">
               {element.medicineImage === null ? (
-                <img className={`${PillSearchCSS.Img}`} alt="basic" src="img/basic.png"></img>
+                <img className={`${PillSearchCSS.Img}`} alt="basic" src="../../../img/basic.png"></img>
               ) : (
                 <img className={`${PillSearchCSS.Img}`} alt="pillImg" src={element.medicineImage}></img>
               )}
