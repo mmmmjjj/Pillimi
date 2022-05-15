@@ -9,6 +9,8 @@ import Datetime from 'react-datetime';
 import moment from "moment";
 import 'moment/locale/ko'
 import { addRegInfo } from "../../../api/member"
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction } from "actions/memberAction"
 
 // core components
 
@@ -18,6 +20,8 @@ function MemberRegisterInfo(props) {
     Moment: new Date(null),
     phone: "",
   })
+  const dispatch = useDispatch();
+  const memberInfo = useSelector((state) => state.memberInfo.memberInfo);
   const [numberok, setnumberok] = useState(false);
 
   const [isProtector, setIsProtector] = useState(false);
@@ -130,6 +134,14 @@ function MemberRegisterInfo(props) {
     console.log(reginfo);
     addRegInfo(reginfo, (success) =>{
       console.log(success)
+      let info = {
+        first: false,
+        memberImage: memberInfo.memberImage,
+        memberSeq: memberInfo.memberSeq,
+        nickName: memberInfo.nickName,
+        protector: isProtector,
+      }
+      dispatch(loginAction(info));
       gotoMain();
     },
     (fail)=>{
