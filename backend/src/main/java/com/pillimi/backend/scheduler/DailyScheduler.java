@@ -56,8 +56,6 @@ public class DailyScheduler {
             }
         }
 
-
-
         log.info(LocalDate.now()+" now 스케줄러 작업 완료");
     }
 
@@ -80,6 +78,7 @@ public class DailyScheduler {
                     .build());
         }
 
+        log.info(LocalDate.now()+" 알림 생성 스케줄러 작업 완료");
     }
 
     /*
