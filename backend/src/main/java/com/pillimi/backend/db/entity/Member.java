@@ -49,7 +49,7 @@ public class Member extends BaseTimeEntity {
     private Boolean memberIsfirst;
 
     @Column
-    private Integer memberIsprotector;
+    private int memberIsprotector;
 
     @Column
     private String memberFcmToken;
