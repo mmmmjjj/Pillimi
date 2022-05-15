@@ -159,7 +159,7 @@ function PillTakeModify(props) {
           console.log(success);
           Swal.fire({
             icon: "success",
-            title: "수정하였습니다.",
+            text: "수정하였습니다.",
             confirmButtonColor: `#0369a1`,
           }).then(gotoMedicineDetail(memberMedicineSeq));
         },

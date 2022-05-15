@@ -15,9 +15,8 @@ import { getMemberMedicineCheck } from "../../api/member.js";
 import Navbar from "layout/Navbar.js";
 
 function PillDetail(props) {
-
   const pillSeq = props.match.params.pillSeq;
-  
+
   var temp = "";
 
   const [pillInfo, setPillInfo] = useState({
@@ -41,7 +40,6 @@ function PillDetail(props) {
     getFamilyList();
   }, [pillSeq]);
 
-  
   const getPillDetail = (pillSeq) => {
     getPillInfo(
       pillSeq,
@@ -112,6 +110,7 @@ function PillDetail(props) {
             Swal.fire({
               icon: "warning",
               title: "효능군 주의",
+              html: response.data.data.checkDesc,
               text: response.data.data.checkDesc,
               confirmButtonText: "확인",
               confirmButtonColor: `#d33`,
@@ -151,17 +150,15 @@ function PillDetail(props) {
   };
 
   let isLogin = useSelector((state) => state.memberInfo.isLogin);
-  if(!isLogin){
+  if (!isLogin) {
     Swal.fire({
       icon: "warning",
       title: "로그인이 필요한 서비스입니다.",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
-    return(
-      <div></div>
-    )
+    return <div></div>;
   }
   return (
     <>
