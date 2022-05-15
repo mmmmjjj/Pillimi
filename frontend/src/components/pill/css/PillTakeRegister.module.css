@@ -32,6 +32,7 @@
 
 .BadgeTime {
   color: black !important;
+  margin-right: 5px;
   margin-bottom: 20px !important;
 }
 
@@ -151,10 +152,26 @@ h5 {
   justify-content: space-between;
 }
 
+.DayGroupDetail {
+  font-size: 14px;
+}
+
 .Day {
+  font-size: 14px !important;
   border-radius: 50px !important;
 }
-.selDay{
+
+.DayDetail {
+  border-radius: 50px !important;
+  font-size: 14px !important;
+  margin-right: 5px;
+  background-color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+.selDay {
+  font-size: 14px !important;
   border-radius: 50px !important;
   background-color: #0284c7 !important;
+  border-color: #0284c7 !important;
 }

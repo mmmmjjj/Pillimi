@@ -10,11 +10,11 @@
 }
 
 .circle {
-  color: #2BC228;
+  color: #2bc228;
 }
 
 .blue {
-  color: #0369A1;
+  color: #0369a1;
 }
 
 .bigfont {
@@ -42,7 +42,7 @@
 }
 
 .checkAlarm2 {
-   clear: both;
+  clear: both;
   font-size: medium;
   line-height: 1.8;
   margin-bottom: 8px;
@@ -65,14 +65,14 @@
 }
 
 .backcolor {
-  background-color: #EAF0F8;
+  background-color: #eaf0f8;
   margin: 0;
   /* width: 100vw; */
   /* height: 200vw; */
 }
 
 hr {
-  margin-bottom : 0;
+  margin-bottom: 0;
   background-color: #676767;
 }
 
@@ -83,7 +83,7 @@ hr {
 .whole {
   width: 100vw;
   height: 100vh;
-  background-color: #EAF0F8;
+  background-color: #eaf0f8;
   margin: 0 auto;
 }
 
@@ -92,11 +92,11 @@ hr {
 }
 
 .imgsize2 {
-  width: 60px
+  width: 60px;
 }
 
 .imgsize3 {
-  width: 200px
+  width: 200px;
 }
 
 .size {
@@ -116,14 +116,15 @@ hr {
 }
 
 .bottom {
-  position: fixed;
-  width: 100%;
+  margin: auto !important;
+  display: block !important;
+  width: 80%;
   bottom: 20%;
 }
 
-.buttoncolor{
+.buttoncolor {
   background-color: #0369a1;
   border-radius: 5px;
   color: white;
-  border-color: #0369A1;
+  border-color: #0369a1;
 }
