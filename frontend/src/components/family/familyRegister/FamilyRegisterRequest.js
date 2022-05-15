@@ -51,7 +51,7 @@ function FamilyRegisterRequest(props) {
       title: "가족 등록을 요청하였습니다.",
       confirmButtonColor: `#0369a1`,
     }).then(function () {
-      history.push(`/family/myfamily`)
+      history.replace(`/family/myfamily`)
     });
   };
 

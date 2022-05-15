@@ -103,13 +103,16 @@ function FamilyProtector(props) {
       title: "권한이 없는 페이지입니다.",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
-      props.history.push(`/`)
+      props.history.push(`/`);
     });
     return(
       <div></div>
     )
   }
 
+  const gotoFamilyRequest = () => {
+    window.location.href = `/family/request`;
+  }
   return (
     <div
       style={{
@@ -130,6 +133,29 @@ function FamilyProtector(props) {
       <Family></Family>
       </ListGroup>
       <ProtegeModal></ProtegeModal>
+      {/* <i class="fa fa-light fa-circle-plus"></i>
+      <i class="fa fa-regular fa-user-plus"></i>
+      <i class="fa fa-solid fa-plus"></i> */}
+      <div 
+        style={{
+          position: "absolute",
+          // bottom: "17",
+          color: "#0284C7",
+          width: "100%"
+        }}>
+        <i 
+          class="fa fa-solid fa-plus fa-3x" 
+          style={{
+            position: "absolute",
+            left: "45%",
+            clear:"both",
+            padding: "0px",
+            margin: "0px",
+            cursor: "pointer",
+          }}
+          onClick={gotoFamilyRequest}
+        ></i>
+      </div>
     </div>
   );
 }
