@@ -220,7 +220,15 @@ function Label(params) {
     <>
       <div className={PillDetailCSS.Label}>{params.value}</div>
       <br></br>
-      <div className={PillDetailCSS.LabelContent}>{params.content}</div>
+      <div className={PillDetailCSS.LabelContent}>
+        {params.value !== "유통기한" && params.value !== "성분표" ? (
+          <a style={{ textDecoration: "none", color: "black", cursor: "pointer" }} href={params.content}>
+            {params.content}
+          </a>
+        ) : (
+          <div>{params.content}</div>
+        )}
+      </div>
       <br></br>
     </>
   );
