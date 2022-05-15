@@ -106,15 +106,6 @@ function PillSearch(props) {
 
     if (datas.length !== 0) {
       datas.forEach((element) => {
-        let tempPillName = "";
-
-        if (element.medicineName.length > 21) {
-          tempPillName = element.medicineName.substring(0, 22);
-          tempPillName += " ...";
-        } else {
-          tempPillName = element.medicineName;
-        }
-
         result.push(
           <Card
             key={`pills${element.medicineSeq}`}
