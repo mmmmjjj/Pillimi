@@ -19,12 +19,6 @@ public class ProtectorAlarmInfoRes {
     @ApiModelProperty(name = "보호자 알람 번호", example = "1")
     private Long alarmProtectorSeq;
 
-    @ApiModelProperty(name = "보호자 번호", example = "1")
-    private Long protectorSeq;
-
-    @ApiModelProperty(name = "피보호자 번호", example = "1")
-    private Long protegeSeq;
-
     @ApiModelProperty(name = "피보호자 이름", example = "김싸피")
     private String protegeName;
 
@@ -33,6 +27,9 @@ public class ProtectorAlarmInfoRes {
 
     @ApiModelProperty(name = "알람 시간", example = "19:21")
     private LocalTime alarmTime;
+
+    @ApiModelProperty(name = "복용 시간", example = "19:21")
+    private LocalTime takeTime;
 
     @ApiModelProperty(name = "복용약 이미지 주소", example = "???")
     private String photoURL;
