@@ -8,6 +8,7 @@ import { getPillSearch } from "../../api/pill.js";
 import { useInView } from "react-intersection-observer";
 import Navbar from "layout/Navbar.js";
 import { useSelector } from "react-redux";
+import cn from 'classnames';
 
 function PillSearch(props) {
   const [keyword, setKeyword] = useState("");
@@ -112,7 +113,7 @@ function PillSearch(props) {
             className={`${PillSearchCSS.PillList}`}
             onClick={() => gotoPillDetail(element.medicineSeq)}
           >
-            <div className="d-flex align-items-center">
+            <div className={cn("d-flex align-items-center", PillSearchCSS.PillText)}>
               {element.medicineImage === null ?
                 <img
                   className={`${PillSearchCSS.Img}`}
