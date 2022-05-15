@@ -216,7 +216,11 @@ function MemberPillList(props) {
               onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
             >
               <div className={`${style.imgsize2} ml-2`}>
-                <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
+                {
+                  element.imageURL !== null ?
+                  <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
+                  : <img src="../../../img/basic.png" style={{width:`70%`, borderRadius:`10px`}}></img>
+                }
               </div>
               <div className="flex-fill">
                 <span>{element.medicineName}</span>
@@ -240,7 +244,11 @@ function MemberPillList(props) {
               onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
             >
               <div className={`${style.imgsize2} ml-2`}>
-                <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
+                {
+                  element.imageURL !== null ?
+                  <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
+                  : <img src="../../../img/basic.png" style={{width:`70%`, borderRadius:`10px`}}></img>
+                }
               </div>
               <div className="flex-fill">
                 <span>{element.medicineName}</span>
