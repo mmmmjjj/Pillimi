@@ -41,7 +41,7 @@ public class DailyScheduler {
         // 반복문 돌면서 알림 전송
         for (AlarmProtege alarm : list) {
             String token = alarm.getProtege().getMemberFcmToken();
-            String title = "약 드실 시간입니다.💙";
+            String title = "약 드실 시간입니다.💙(테스트서버)";
             String body = now.format(DateTimeFormatter.ofPattern("HH시 mm분"))
                     + " 알림을 눌러 약을 복용해주세요.";
             String url = "https://k6a3071.p.ssafy.io/family/camera/"+alarm.getAlarmSeq();
