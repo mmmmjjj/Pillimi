@@ -11,13 +11,14 @@ import 'moment/locale/ko'
 import { addRegInfo } from "../../../api/member"
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "actions/memberAction"
+import Swal from "sweetalert2";
 
 // core components
 
 function MemberRegisterInfo(props) {
 
   const [profile, setProfile] = useState({
-    Moment: new Date(null),
+    Moment: "",
     phone: "",
   })
   const dispatch = useDispatch();
@@ -131,28 +132,50 @@ function MemberRegisterInfo(props) {
       isProtector: isProtector === true? 1 : 0,
       phone: profile.phone
     };
-    console.log(reginfo);
-    addRegInfo(reginfo, (success) =>{
-      console.log(success)
-      let info = {
-        first: false,
-        memberImage: memberInfo.memberImage,
-        memberSeq: memberInfo.memberSeq,
-        nickName: memberInfo.nickName,
-        protector: isProtector,
-      }
-      dispatch(loginAction(info));
-      gotoMain();
-    },
-    (fail)=>{
-      console.log(fail)
-      setProfile({
-        phone: "",
-      })
-      if(isProtector){
-        setIsProtector();
-      }
-    });
+    if(profile.phone===""){
+      Swal.fire({
+        icon: "warning",
+        title: "전화번호를 입력해주세요",
+        confirmButtonColor: `#ff0000`,
+      }).then(function () {
+      });
+    } else if(!isProtector && profile.Moment==="") {
+      Swal.fire({
+        icon: "warning",
+        title: "생년월일을 입력해주세요",
+        confirmButtonColor: `#ff0000`,
+      }).then(function () {
+      });
+    } else {
+      console.log(reginfo);
+      addRegInfo(reginfo, (success) =>{
+        console.log(success)
+        Swal.fire({
+          icon: "success",
+          title: "정보가 입력되었습니다!",
+          confirmButtonColor: `#0369a1`,
+        }).then(function () {
+        });
+        let info = {
+          first: false,
+          memberImage: memberInfo.memberImage,
+          memberSeq: memberInfo.memberSeq,
+          nickName: memberInfo.nickName,
+          protector: isProtector,
+        }
+        dispatch(loginAction(info));
+        gotoMain();
+      },
+      (fail)=>{
+        console.log(fail)
+        setProfile({
+          phone: "",
+        })
+        if(isProtector){
+          setIsProtector();
+        }
+      });
+    }
     
     console.log(profile.phone)
   }
