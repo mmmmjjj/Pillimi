@@ -263,10 +263,12 @@ function MemberPillList(props) {
           <h5>현재 복용 중인 약</h5>
           <PillList isNow={true}></PillList>
           {
-            (tdropOptions < tdatas.length) || (tdatas.length !== 0) ?
-            <button onClick={onsubmitTbutton} className={style.buttoncolor}>
-              더보기
-            </button> 
+            (tdatas.length !== 0) ?
+              (tdropOptions < tdatas.length) ? 
+              <button onClick={onsubmitTbutton} className={style.buttoncolor}>
+                더보기
+              </button> 
+              : <></>
             : <></>
           }
         </div>
@@ -274,11 +276,13 @@ function MemberPillList(props) {
           <h5>이전에 복용한 약</h5>
           <PillList isNow={false}></PillList>
           {
-            fdropOptions < fdatas.length || (fdatas.length !== 0) ?
-            <button onClick={onsubmitFbutton} className={style.buttoncolor}>
-              더보기
-            </button>
-            : <></>
+            (fdatas.length !== 0) ?
+              (fdropOptions < fdatas.length) ?
+              <button onClick={onsubmitFbutton} className={style.buttoncolor}>
+                더보기
+              </button>
+              : <></>
+            :<></>
           }
         </div>
       </div>

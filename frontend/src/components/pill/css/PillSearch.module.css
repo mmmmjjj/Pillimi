@@ -56,6 +56,7 @@ hr {
   cursor: pointer !important;
   word-break: break-all;
   min-height: 9vh;
+  height: 70px;
 }
 
 .Img {
@@ -66,9 +67,13 @@ hr {
 }
 
 .PillName {
-  margin-top: 3%;
+  margin-top: 4%;
   margin-left: 5%;
   font-size: 17px;
+  overflow: hidden; 
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 i {

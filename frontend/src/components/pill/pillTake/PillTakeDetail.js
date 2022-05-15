@@ -31,6 +31,7 @@ function PillTakeDetail(props) {
         if (response.status === 200) {
           setPillInfo(response.data.data);
         }
+        console.log(response.data.data)
       },
       (error) => {
         console.log(error);
