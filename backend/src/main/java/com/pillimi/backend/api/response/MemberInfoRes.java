@@ -31,5 +31,4 @@ public class MemberInfoRes {
     @ApiModelProperty(name = "전화번호", example = "010-1111-1111")
     private String phone;
 
-    //TODO 기저질환 추가
 }

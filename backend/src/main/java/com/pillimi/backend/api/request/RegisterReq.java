@@ -20,5 +20,4 @@ public class RegisterReq {
     @ApiModelProperty(name = "보호자 여부", example = "보호자일 시 1, 아닐 시 0")
     private int isProtector;
 
-    //TODO 기저질환 추가
 }
