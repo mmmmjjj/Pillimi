@@ -228,6 +228,7 @@ function PillToday() {
             <Col
               xs="3"
               key={element.memberSeq}
+              className={`${PillTodayCSS.FamilyName} mb-3`}
               style={{ cursor: "pointer", display: "inline", padding: "0" }}
               onClick={() => otherFamily(element.memberSeq)}
             >
@@ -278,14 +279,14 @@ function PillToday() {
           )}
         </div>
         {showFamily ? (
-          <Row style={{ justifyContent: "start" }} className={PillTodayCSS.Family}>
+          <Row style={{ justifyContent: "start" }} className={`${PillTodayCSS.Family} pl-3 pr-2`}>
             <FamilyName></FamilyName>
           </Row>
         ) : (
           <></>
         )}
         <br></br>
-        <br></br>
+        {/* <br></br> */}
         <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
         <br></br>
         <ShowPillList></ShowPillList>
