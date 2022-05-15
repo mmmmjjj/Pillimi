@@ -51,6 +51,7 @@ import Callback from "components/main/Callback.js";
 import MemberInfo from "components/Member/MemberInfo.js";
 import MemberPillPage from "components/Member/MemberPillPage";
 import MemberPillCheck from "components/Member/MemberPillCheck";
+import ScrollRestoration from "layout/ScrollRestoration";
 import "components/family/familycss.css";
 
 const store = createStore(rootReducer, composeWithDevTools());
@@ -60,6 +61,7 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <BrowserRouter>
+        <ScrollRestoration></ScrollRestoration>
         <Switch>
           <Switch>
             <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
