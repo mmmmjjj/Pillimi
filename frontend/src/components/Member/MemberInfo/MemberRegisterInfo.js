@@ -155,16 +155,16 @@ function MemberRegisterInfo(props) {
           title: "정보가 입력되었습니다!",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
+          let info = {
+            first: false,
+            memberImage: memberInfo.memberImage,
+            memberSeq: memberInfo.memberSeq,
+            nickName: memberInfo.nickName,
+            protector: isProtector,
+          }
+          dispatch(loginAction(info));
+          gotoMain();
         });
-        let info = {
-          first: false,
-          memberImage: memberInfo.memberImage,
-          memberSeq: memberInfo.memberSeq,
-          nickName: memberInfo.nickName,
-          protector: isProtector,
-        }
-        dispatch(loginAction(info));
-        gotoMain();
       },
       (fail)=>{
         console.log(fail)
@@ -270,7 +270,7 @@ function MemberRegisterInfo(props) {
             </FormGroup>
           </Form>
           <br></br>
-          <Button color="sky" onClick={addRegisterInfo}>완료</Button>
+          <Button color="sky" className={`${style.bigbnt}`} onClick={addRegisterInfo}>완료</Button>
         </div>
       </>
     );
