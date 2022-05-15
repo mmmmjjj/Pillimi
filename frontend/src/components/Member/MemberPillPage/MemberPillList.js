@@ -125,13 +125,12 @@ import PillTakeAlarm from "./PillTakeAlarm";
 import { useSelector } from "react-redux";
 import ProtectorTakeAlarm from "./ProtectorTakeAlarm";
 import Navbar from "layout/Navbar.js";
+import { Row, Col } from "reactstrap";
 // core components
 
 function MemberPillList(props) {
   const memberSeq = props.match.params.memberSeq;
-  const isProtector = useSelector(
-    (state) => state.memberInfo.memberInfo.protector
-  );
+  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
   const [pills, setPills] = useState([]);
   const [rightTab, setRightTab] = useState(false);
   // const [datas, setDatas] = useState([]);
@@ -157,7 +156,7 @@ function MemberPillList(props) {
     // console.log(match.params.memberSeq);
     getMediList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, []);
 
   const onsubmitTbutton = () => {
     setTDropOptions(tdropOptions + 10);
@@ -206,10 +205,8 @@ function MemberPillList(props) {
     console.log(pills);
     // if (element.now == props.isNow) {
     if (props.isNow === true) {
-      if(ttdatas.length === 0){
-        result.push(
-          <div key={`nothing`}>현재 복용 중인 약이 없습니다.</div>
-        )
+      if (ttdatas.length === 0) {
+        result.push(<div key={`nothing`}>현재 복용 중인 약이 없습니다.</div>);
       } else {
         ttdatas.forEach((element) => {
           result.push(
@@ -219,11 +216,7 @@ function MemberPillList(props) {
               onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
             >
               <div className={`${style.imgsize2} ml-2`}>
-                <img
-                  src={element.imageURL}
-                  className={`${style.size}`}
-                  alt="이미지"
-                ></img>
+                <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
               </div>
               <div className="flex-fill">
                 <span>{element.medicineName}</span>
@@ -236,10 +229,8 @@ function MemberPillList(props) {
         });
       }
     } else if (props.isNow === false) {
-      if(ffdatas.length === 0) {
-        return(
-          <div key={`nothing2`}>복용했던 약이 없습니다.</div>
-        )
+      if (ffdatas.length === 0) {
+        return <div key={`nothing2`}>복용했던 약이 없습니다.</div>;
       } else {
         ffdatas.forEach((element) => {
           result.push(
@@ -249,11 +240,7 @@ function MemberPillList(props) {
               onClick={() => gotoMedicineDetail(element.memberMedicineSeq)}
             >
               <div className={`${style.imgsize2} ml-2`}>
-                <img
-                  src={element.imageURL}
-                  className={`${style.size}`}
-                  alt="이미지"
-                ></img>
+                <img src={element.imageURL} className={`${style.size}`} alt="이미지"></img>
               </div>
               <div className="flex-fill">
                 <span>{element.medicineName}</span>
@@ -270,65 +257,72 @@ function MemberPillList(props) {
   };
 
   const PillListPage = () => {
-    return(
+    return (
       <div>
         <div className="pt-4">
           <h5>현재 복용 중인 약</h5>
           <PillList isNow={true}></PillList>
-          <button onClick={onsubmitTbutton} className={style.buttoncolor}>
-            더보기
-          </button>
+          {
+            (tdatas.length !== 0) ?
+              (tdropOptions < tdatas.length) ? 
+              <button onClick={onsubmitTbutton} className={style.buttoncolor}>
+                더보기
+              </button> 
+              : <></>
+            : <></>
+          }
         </div>
         <div className="pt-4">
           <h5>이전에 복용한 약</h5>
           <PillList isNow={false}></PillList>
-          <button onClick={onsubmitFbutton} className={style.buttoncolor}>
-            더보기
-          </button>
+          {
+            (fdatas.length !== 0) ?
+              (fdropOptions < fdatas.length) ?
+              <button onClick={onsubmitFbutton} className={style.buttoncolor}>
+                더보기
+              </button>
+              : <></>
+            :<></>
+          }
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <>
       {isProtector ? (
         rightTab ? (
-          <ProtectorTakeAlarm
-            onClickHandler={onClickHandler}
-            protegeSeq={memberSeq}
-          ></ProtectorTakeAlarm>
+          <ProtectorTakeAlarm onClickHandler={onClickHandler} protegeSeq={memberSeq}></ProtectorTakeAlarm>
         ) : (
           <div
-          className={`${style.center}`}
-          style={{
-            minHeight:"100vh",
-            width: "100vw",
-            backgroundColor: "#EAF0F8",
-            margin: "0 auto",
-          }}
-        >
-          <div className="d-flex">
-            <div className="flex-fill pt-2 pb-2 pr-4 m-0 ">약</div>
-            <div
-              className="flex-fill pt-2 pb-2 border border-top-0 border-dark bg-white"
-              onClick={() => onClickHandler(true)}
-            >
-              복용확인
-            </div>
+            className={`${style.center}`}
+            style={{
+              minHeight: "100vh",
+              width: "100vw",
+              backgroundColor: "#EAF0F8",
+              margin: "0 auto",
+            }}
+          >
+            <Row xs="2">
+              <Col className="pt-2 pb-2 m-0 ">약</Col>
+              <Col className="pt-2 pb-2 border border-top-0 border-dark bg-white" onClick={() => onClickHandler(true)}>
+                복용확인
+              </Col>
+            </Row>
+            <PillListPage></PillListPage>
           </div>
-          <PillListPage></PillListPage>
-        </div>
         )
       ) : (
         <div
           className={`${style.center}`}
           style={{
-            minHeight:"100vh",
+            minHeight: "100vh",
             width: "100vw",
             backgroundColor: "#EAF0F8",
             margin: "0 auto",
-          }}>
+          }}
+        >
           <PillListPage></PillListPage>
         </div>
       )}

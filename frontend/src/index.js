@@ -51,6 +51,7 @@ import Callback from "components/main/Callback.js";
 import MemberInfo from "components/Member/MemberInfo.js";
 import MemberPillPage from "components/Member/MemberPillPage";
 import MemberPillCheck from "components/Member/MemberPillCheck";
+import ScrollRestoration from "layout/ScrollRestoration";
 import "components/family/familycss.css";
 
 const store = createStore(rootReducer, composeWithDevTools());
@@ -60,6 +61,7 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <BrowserRouter>
+        <ScrollRestoration></ScrollRestoration>
         <Switch>
           <Switch>
             <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
@@ -80,7 +82,7 @@ ReactDOM.render(
             <Route path="/member-pill-page" render={(props) => <MemberPillPage {...props} />} />
             <Route path="/member-pill-check" render={(props) => <MemberPillCheck {...props} />} />
             <Route exact path="/callback" render={(props) => <Callback {...props} />} />
-            <Redirect to="/index" />
+            <Redirect to="/" />
             {/* <Redirect from="/" to="/index" /> */}
           </Switch>
         </Switch>
