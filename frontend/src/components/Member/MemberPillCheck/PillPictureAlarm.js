@@ -55,7 +55,7 @@ function PillPictureAlarm(props) {
       alarm.medicineList.forEach((element) => {
         result.push(
           <span key={element.medicineSeq}>
-            {element.medicineName}({element.memberMedicineName})&nbsp;{element.memberMedicineCount}정<br></br>
+            {element.medicineName}({element.memberMedicineName})&nbsp;{element.count}정<br></br>
           </span>
         );
       });
