@@ -101,11 +101,18 @@
 
 .Family {
   font-weight: bold;
-  margin-left: 10%;
+  /* margin-left: 4%; */
+  padding: 0px;
   /* margin-left: 60px; */
 }
 
 .img {
   width: 40%;
   border-radius: 50%;
+}
+
+.FamilyName {
+  text-align: center;
+  margin-left: 0px;
+  padding-left: 0px;
 }
