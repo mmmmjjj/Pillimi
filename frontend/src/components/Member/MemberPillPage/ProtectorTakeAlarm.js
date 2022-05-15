@@ -16,8 +16,6 @@ function ProtectorTakeAlarm(props) {
   const [alarmList, setAlarmList] = useState([]);
 
   useEffect(() => {
-    console.log("마운트");
-    // console.log(props.match.params.memberSeq);
     getAlarmList();
   }, []);
 
@@ -26,8 +24,6 @@ function ProtectorTakeAlarm(props) {
       protegeSeq,
       (success) => {
         setAlarmList(success.data.data);
-        console.log(success);
-        console.log(success.data.data);
       },
       (fail) => {
         console.log(fail);
@@ -36,12 +32,24 @@ function ProtectorTakeAlarm(props) {
   };
 
   const timeFormat = (time) => {
-    console.log(time.substr(0, 5));
-    return time.substr(0, 5);
+    let temp = "";
+
+    if (time.substring(0, 1) === "0") {
+      temp = time.substring(1, 2);
+    } else {
+      temp = time.split(":")[0];
+    }
+    temp += "시 ";
+
+    if (time.split(":")[1] !== 0) {
+      temp += time.split(":")[1];
+      temp += "분";
+    }
+
+    return temp;
   };
 
   const gotoAlarmDetail = (alarmSeq) => {
-    console.log(alarmSeq);
     window.location.href = `/member-pill-check/pill-picture-alarm/${alarmSeq}`;
   };
 
@@ -57,8 +65,9 @@ function ProtectorTakeAlarm(props) {
     alarmList.forEach((element) => {
       console.log(element.type);
       let time = timeFormat(element.alarmTime);
+      let titleTime = "";
+
       if (element.type === false) {
-        console.log(true + " : " + element.time);
         result.push(
           <div
             key={element.alarmProtectorSeq}
@@ -87,7 +96,6 @@ function ProtectorTakeAlarm(props) {
           </div>
         );
       } else {
-        console.log(false + " : " + element.alarmTime);
         result.push(
           <div
             key={element.alarmProtectorSeq}
@@ -95,7 +103,9 @@ function ProtectorTakeAlarm(props) {
             onClick={() => gotoAlarmDetail(element.alarmProtectorSeq)}
           >
             <div>
-              <span className={`${style.bold}`}>{element.alarmDate}</span>
+              <span className={`${style.bold}`}>
+                {element.alarmDate}&nbsp;{titleTime}
+              </span>
               <br></br>
             </div>
             <span>

@@ -144,7 +144,6 @@ function MemberPillList(props) {
   useEffect(() => {
     setTtDatas(tdatas.slice(0, tdropOptions));
     setFfDatas(fdatas.slice(0, fdropOptions));
-    console.log("!!!");
   }, [tdatas, fdatas, tdropOptions, fdropOptions]);
 
   const onClickHandler = (state) => {
@@ -152,8 +151,6 @@ function MemberPillList(props) {
   };
 
   useEffect(() => {
-    console.log("마운트");
-    // console.log(match.params.memberSeq);
     getMediList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -169,7 +166,6 @@ function MemberPillList(props) {
     getMemberMedicineList(
       memberSeq,
       (success) => {
-        console.log(success);
         var bools = success.data.data;
         setPills(bools);
         var isTrue = [];
@@ -202,7 +198,6 @@ function MemberPillList(props) {
 
   const PillList = (props) => {
     let result = [];
-    console.log(pills);
     // if (element.now == props.isNow) {
     if (props.isNow === true) {
       if (ttdatas.length === 0) {
@@ -262,28 +257,32 @@ function MemberPillList(props) {
         <div className="pt-4">
           <h5>현재 복용 중인 약</h5>
           <PillList isNow={true}></PillList>
-          {
-            (tdatas.length !== 0) ?
-              (tdropOptions < tdatas.length) ? 
+          {tdatas.length !== 0 ? (
+            tdropOptions < tdatas.length ? (
               <button onClick={onsubmitTbutton} className={style.buttoncolor}>
                 더보기
-              </button> 
-              : <></>
-            : <></>
-          }
+              </button>
+            ) : (
+              <></>
+            )
+          ) : (
+            <></>
+          )}
         </div>
         <div className="pt-4">
           <h5>이전에 복용한 약</h5>
           <PillList isNow={false}></PillList>
-          {
-            (fdatas.length !== 0) ?
-              (fdropOptions < fdatas.length) ?
+          {fdatas.length !== 0 ? (
+            fdropOptions < fdatas.length ? (
               <button onClick={onsubmitFbutton} className={style.buttoncolor}>
                 더보기
               </button>
-              : <></>
-            :<></>
-          }
+            ) : (
+              <></>
+            )
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     );
