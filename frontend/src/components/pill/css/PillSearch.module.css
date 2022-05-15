@@ -42,16 +42,10 @@ hr {
   padding-left: 10px !important;
 }
 
-.SearchBtn:hover {
+.SearchBtn:hover .SearchBtn:active,
+.SearchBtn:focus {
   background-color: #1f96d1 !important;
   color: whitesmoke !important;
-}
-
-.SearchBtn:active,
-.SearchBtn:focus {
-  color: black !important;
-  background-color: #0284c7 !important;
-  box-shadow: none !important;
 }
 
 .PillList {

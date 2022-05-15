@@ -76,17 +76,10 @@
   background-color: #0284c7 !important;
 }
 
-.PictureBtn:hover {
-  background-color: #1f96d1 !important;
-  color: whitesmoke !important;
-}
-
-.PictureBtn:hover,
-.PictureBtn:active,
+.PictureBtn:hover .PictureBtn:active,
 .PictureBtn:focus {
-  color: black !important;
-  background-color: #0284c7 !important;
-  box-shadow: none !important;
+  background-color: #31a7e2 !important;
+  color: whitesmoke !important;
 }
 
 .Icon {
