@@ -15,21 +15,21 @@ public class AlarmProtectorRepositoryCustomImpl implements AlarmProtectorReposit
 
     QAlarmProtector qAlarmProtector = QAlarmProtector.alarmProtector;
 
-    QAlarmProtege qAlarmProtege = QAlarmProtege.alarmProtege;
 
     @Override
     public List<ProtectorAlarmRes> findByProtectorAndProtege(Member protector, Member protege) {
 
         return jpaQueryFactory.select(Projections.constructor(ProtectorAlarmRes.class,
                         qAlarmProtector.alarmSeq,
-                        qAlarmProtector.protector.memberSeq,
-                        qAlarmProtector.alarmProtege.protege.memberSeq,
                         qAlarmProtector.alarmProtege.protege.memberNickname,
                         qAlarmProtector.alarmProtege.alarmDate,
                         qAlarmProtector.alarmProtege.alarmTime,
+                        qAlarmProtector.createdTime,
                         qAlarmProtector.alarmPhoto))
                 .from(qAlarmProtector)
-                .where(qAlarmProtector.alarmProtege.protege.memberSeq.eq(protege.getMemberSeq()))
+                .where(qAlarmProtector.alarmProtege.protege.memberSeq.eq(protege.getMemberSeq())
+                        .and(qAlarmProtector.protector.eq(protector)))
+                .orderBy(qAlarmProtector.createdTime.desc())
                 .fetch();
     }
 }
