@@ -19,6 +19,8 @@ function PillDetail(props) {
 
   var temp = "";
 
+  const [showByLink, setShowByLink] = useState();
+
   const [pillInfo, setPillInfo] = useState({
     image: "",
     name: "",
@@ -49,6 +51,10 @@ function PillDetail(props) {
           if (i !== response.data.data.ingredientList.length - 1) {
             temp += ", ";
           }
+        }
+
+        if (response.data.data.medicineDetail.effect.substring(0, 1) === "h") {
+          setShowByLink(true);
         }
 
         setPillInfo({
@@ -85,7 +91,6 @@ function PillDetail(props) {
       pillSeq,
       memberSeq,
       (response) => {
-        // event.preventDefault();
         if (response.data.data.checkType === 0) {
           history.push({
             pathname: `/pill-take`,
@@ -103,9 +108,7 @@ function PillDetail(props) {
               html: response.data.data.checkDesc,
               confirmButtonText: "확인",
               confirmButtonColor: `#d33`,
-            }).then(function () {
-              // setRegisterPillModal(false);
-            });
+            }).then(function () {});
           } else if (response.data.data.checkType === 2) {
             Swal.fire({
               icon: "warning",
@@ -113,9 +116,7 @@ function PillDetail(props) {
               html: response.data.data.checkDesc,
               confirmButtonText: "확인",
               confirmButtonColor: `#d33`,
-            }).then(function () {
-              // setRegisterPillModal(false);
-            });
+            }).then(function () {});
           } else if (response.data.data.checkType === 3) {
             Swal.fire({
               icon: "warning",
@@ -123,9 +124,7 @@ function PillDetail(props) {
               html: response.data.data.checkDesc,
               confirmButtonText: "확인",
               confirmButtonColor: `#d33`,
-            }).then(function () {
-              // setRegisterPillModal(false);
-            });
+            }).then(function () {});
           }
         }
       },
@@ -147,6 +146,83 @@ function PillDetail(props) {
         </Fragment>
       );
     });
+    return result;
+  };
+
+  function Label(params) {
+    return (
+      <>
+        <div className={PillDetailCSS.Label}>{params.value}</div>
+        <br></br>
+        <div className={PillDetailCSS.LabelContent}>
+          <div>{params.content}</div>
+        </div>
+        <br></br>
+      </>
+    );
+  }
+
+  const ShowAlert = (link) => {
+    Swal.fire({
+      icon: "warning",
+      text: "파일을 다운로드 하시겠습니까?",
+      width: "80%",
+      confirmButtonColor: `#0369a1`,
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = link;
+      }
+    });
+  };
+
+  const Effect = (props) => {
+    let result = [];
+
+    if (props.effect === true) {
+      result.push(
+        <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.effect)}>
+          {pillInfo.effect}
+        </span>
+      );
+    } else {
+      result.push(<span>{pillInfo.effect}</span>);
+    }
+
+    return result;
+  };
+
+  const Caution = (props) => {
+    let result = [];
+
+    if (props.caution === true) {
+      result.push(
+        <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.caution)}>
+          {pillInfo.caution}
+        </span>
+      );
+    } else {
+      result.push(<span>{pillInfo.caution}</span>);
+    }
+
+    return result;
+  };
+
+  const Dosage = (props) => {
+    let result = [];
+
+    if (props.dosage === true) {
+      result.push(
+        <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.dosage)}>
+          {pillInfo.dosage}
+        </span>
+      );
+    } else {
+      result.push(<pre>{pillInfo.dosage}</pre>);
+    }
+
     return result;
   };
 
@@ -187,9 +263,28 @@ function PillDetail(props) {
         <h3 className={PillDetailCSS.PillDetailTitle}>{pillInfo.name}</h3>
         <h3 className={PillDetailCSS.CompanyName}>{pillInfo.company}</h3>
         <br></br>
-        <Label value={"효능"} content={pillInfo.effect}></Label>
-        <Label value={"주의사항"} content={pillInfo.caution}></Label>
-        <Label value={"복용방법"} content={pillInfo.dosage}></Label>
+
+        <div className={PillDetailCSS.Label}>효능</div>
+        <br></br>
+        <div className={PillDetailCSS.LabelContent}>
+          <Effect effect={showByLink}></Effect>
+        </div>
+        <br></br>
+
+        <div className={PillDetailCSS.Label}>주의사항</div>
+        <br></br>
+        <div className={PillDetailCSS.LabelContent}>
+          <Caution caution={showByLink}></Caution>
+        </div>
+        <br></br>
+
+        <div className={PillDetailCSS.Label}>복용방법</div>
+        <br></br>
+        <div className={PillDetailCSS.LabelContent}>
+          <Dosage dosage={showByLink}></Dosage>
+        </div>
+        <br></br>
+
         <Label value={"유통기한"} content={pillInfo.validity}></Label>
         <Label value={"성분표"} content={pillInfo.ingredient}></Label>
       </div>
@@ -222,25 +317,6 @@ function PillDetail(props) {
           <br></br>
         </div>
       </Modal>
-    </>
-  );
-}
-
-function Label(params) {
-  return (
-    <>
-      <div className={PillDetailCSS.Label}>{params.value}</div>
-      <br></br>
-      <div className={PillDetailCSS.LabelContent}>
-        {params.value !== "유통기한" && params.value !== "성분표" ? (
-          <a style={{ textDecoration: "none", color: "black", cursor: "pointer" }} href={params.content}>
-            {params.content}
-          </a>
-        ) : (
-          <div>{params.content}</div>
-        )}
-      </div>
-      <br></br>
     </>
   );
 }

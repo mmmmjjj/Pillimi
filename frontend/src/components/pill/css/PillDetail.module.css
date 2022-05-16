@@ -16,6 +16,7 @@ hr {
 .LabelContent {
   font-size: 20px;
   word-break: break-all;
+  white-space: break-spaces;
 }
 
 .CompanyName {
@@ -65,4 +66,8 @@ hr {
 
 .familyName {
   font-size: 18px;
+}
+
+.Caution {
+  white-space: break-spaces;
 }
