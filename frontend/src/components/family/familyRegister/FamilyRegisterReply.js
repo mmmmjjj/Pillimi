@@ -27,7 +27,7 @@ function FamilyRegisterReply(props) {
     } else {
       console.log("정상 접근");
       setFamilyRequestSeq(props.history.location.state.memberInfo.reqSeq);
-      setname(`(${props.history.location.state.memberInfo.name})`);
+      setname(props.history.location.state.memberInfo.name);
       setnumber(props.history.location.state.memberInfo.phone);
     }
     console.log(props.history.location);
