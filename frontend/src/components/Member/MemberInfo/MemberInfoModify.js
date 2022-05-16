@@ -12,10 +12,13 @@ import "moment/locale/ko";
 import Navbar from "layout/Navbar.js";
 import Swal from "sweetalert2";
 import Loading from "components/main/Loading";
+import { loginAction } from "actions/memberAction";
+import { useDispatch } from "react-redux";
 
 // core components
 
 function MemberInfoModify(props) {
+  const dispatch = useDispatch();
   const memberSeq = props.match.params.memberSeq;
 
   const [profile, setProfile] = useState({
@@ -230,6 +233,14 @@ function MemberInfoModify(props) {
             width: "80%",
             confirmButtonColor: `#0369a1`,
           }).then(function () {
+            let tmp = {
+              first: false,
+              memberImage: profile.member_img,
+              memberSeq: memberSeq,
+              nickName: profile.member_nickname,
+              protector: profile.member_isprotector,
+            };
+            dispatch(loginAction(tmp));
             gotoMemberInfoDetail();
           });
         },
