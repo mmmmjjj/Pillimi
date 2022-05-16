@@ -39,6 +39,7 @@ function MemberInfoDetail(props) {
           member_img: success.data.data.memberImage,
           member_birthDate: success.data.data.birthDate,
           member_phone: success.data.data.phone,
+          member_isprotector: success.data.data.protector,
         });
         props.getheader(String(success.data.data.nickName));
       },
@@ -53,7 +54,7 @@ function MemberInfoDetail(props) {
   }
 
   function Content() {
-    if (profile.member_birthDate !== null) {
+    if (!profile.member_isprotector) {
       return (
         <div>
           <Label value={"닉네임"} content={profile.member_nickname}></Label>
