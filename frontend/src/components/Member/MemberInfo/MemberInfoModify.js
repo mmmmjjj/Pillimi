@@ -232,7 +232,7 @@ function MemberInfoModify(props) {
             width: "80%",
             confirmButtonColor: `#0369a1`,
           }).then(function () {
-            props.history.replace(`/member-info/member-info-detail/` + memberSeq);
+            gotoMemberInfoDetail();
           });
         },
         (fail) => {
@@ -243,7 +243,7 @@ function MemberInfoModify(props) {
   };
 
   const gotoMemberInfoDetail = () => {
-    window.location.href = "/member-info/member-info-detail/" + memberSeq;
+    props.history.replace(`/member-info/member-info-detail/` + memberSeq);
   };
 
   if (!isProtector) {
