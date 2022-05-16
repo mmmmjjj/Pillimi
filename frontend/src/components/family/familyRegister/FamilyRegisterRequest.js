@@ -153,6 +153,15 @@ function FamilyRegisterRequest(props) {
           }).then(function () {
             window.location.reload();
           });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "가족 요청을 실패하였습니다.",
+            width: "80%",
+            confirmButtonColor: `#ff0000`,
+          }).then(function () {
+            window.location.reload();
+          });
         }
       }
     );
