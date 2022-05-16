@@ -65,7 +65,6 @@ function ProtectorTakeAlarm(props) {
     alarmList.forEach((element) => {
       console.log(element.type);
       let time = timeFormat(element.alarmTime);
-      let titleTime = "";
 
       if (element.type === false) {
         result.push(
@@ -104,7 +103,7 @@ function ProtectorTakeAlarm(props) {
           >
             <div>
               <span className={`${style.bold}`}>
-                {element.alarmDate}&nbsp;{titleTime}
+                {element.alarmDate}&nbsp;{element.takeTime.split("T")[1].substring(0, 5)}
               </span>
               <br></br>
             </div>
@@ -123,7 +122,12 @@ function ProtectorTakeAlarm(props) {
 
   return (
     <>
-      <div className={`${style.center} ${style.whole}`}>
+      <div className={`${style.center}`} style={{
+          backgroundColor: "#eaf0f8",
+          width: "100vw",
+          minHeight: "100vh",
+          margin: "0 auto",
+        }}>
         <Row xs="2">
           <Col className="pt-2 pb-2 m-0 border border-top-0 border-dark bg-white" onClick={() => onClickHandler(false)}>
             약

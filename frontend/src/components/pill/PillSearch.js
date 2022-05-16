@@ -178,7 +178,7 @@ function PillSearch(props) {
         <br></br>
         <ShowPillList></ShowPillList>
       </div>
-      <Navbar />
+      <Navbar navarray={[false,true,false,false]}/>
     </>
   );
 }

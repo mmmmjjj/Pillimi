@@ -134,7 +134,7 @@ function MemberInfoDetail(props) {
           <ModiBtn></ModiBtn>
           <LogOutBtn></LogOutBtn>
         </div>
-        <Navbar />
+        <Navbar navarray={[false,false,false,true]}/>
       </>
     );
   } else {

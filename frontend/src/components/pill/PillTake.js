@@ -40,7 +40,7 @@ function PillTake(props) {
           />
         </Switch>
       </Switch>
-      <Navbar />
+      <Navbar navarray={[false,false,true,false]}/>
       {/* </BrowserRouter> */}
     </>
   );
