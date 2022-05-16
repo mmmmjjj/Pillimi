@@ -10,6 +10,7 @@ import Navbar from "layout/Navbar.js";
 import { useSelector } from "react-redux";
 import cn from "classnames";
 
+
 function PillSearch(props) {
   const [keyword, setKeyword] = useState("");
   const [pillList, setPillList] = useState([]);
@@ -31,6 +32,8 @@ function PillSearch(props) {
   }
 
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+
+  
 
   if (!isProtector) {
     Swal.fire({
@@ -67,7 +70,7 @@ function PillSearch(props) {
 
   const goPillSearch = () => {
     setPillList([]);
-
+    
     let regex = /([가-힣ㄱ-ㅎㅏ-ㅣ\x20])/i;
     if (keyword === "") {
       Swal.fire({
@@ -106,6 +109,7 @@ function PillSearch(props) {
       );
     }
   };
+  
 
   const ShowPillList = () => {
     let result = [];
