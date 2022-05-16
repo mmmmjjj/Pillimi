@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import { Row, Col, Container } from "reactstrap";
+import { useHistory } from "react-router-dom";
 import style from "../css/MemberPillCheck.module.css";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import MemberPillPage from "../MemberPillPage";
@@ -49,8 +50,15 @@ function ProtectorTakeAlarm(props) {
     return temp;
   };
 
+  const history = useHistory();
+
   const gotoAlarmDetail = (alarmSeq) => {
-    window.location.href = `/member-pill-check/pill-picture-alarm/${alarmSeq}`;
+    history.push({
+      pathname: `/member-pill-check/pill-picture-alarm/${alarmSeq}`,
+      state: {
+        protegeSeq: protegeSeq,
+      },
+    });
   };
 
   const onClickHandler = (state) => {
