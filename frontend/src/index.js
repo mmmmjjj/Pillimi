@@ -46,7 +46,6 @@ import PillToday from "components/main/PillToday.js";
 import PillDetail from "components/pill/PillDetail.js";
 import PillSearch from "components/pill/PillSearch.js";
 import PillTake from "components/pill/PillTake.js";
-import PillPicture from "components/pill/PillPicture.js";
 import Callback from "components/main/Callback.js";
 import MemberInfo from "components/Member/MemberInfo.js";
 import MemberPillPage from "components/Member/MemberPillPage";
@@ -77,7 +76,6 @@ ReactDOM.render(
             <Route exact path="/pill-detail/:pillSeq" render={(props) => <PillDetail {...props} />} />
             <Route exact path="/pill-search" render={(props) => <PillSearch {...props} />} />
             <Route path="/pill-take" render={(props) => <PillTake {...props} />} />
-            <Route path="/pill-picture" render={(props) => <PillPicture {...props} />} />
             <Route path="/member-info" render={(props) => <MemberInfo {...props} />} />
             <Route path="/member-pill-page" render={(props) => <MemberPillPage {...props} />} />
             <Route path="/member-pill-check" render={(props) => <MemberPillCheck {...props} />} />
