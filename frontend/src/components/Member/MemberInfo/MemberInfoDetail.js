@@ -10,12 +10,10 @@ import { logoutAction } from "actions/memberAction";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import Navbar from "layout/Navbar.js";
-import { useHistory } from "react-router-dom";
 
 // core components
 
 function MemberInfoDetail(props) {
-  console.log(props);
   const memberSeq = props.match.params.memberSeq;
   const dispatch = useDispatch();
   let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
@@ -29,8 +27,6 @@ function MemberInfoDetail(props) {
     member_isprotector: 0,
   });
   useEffect(() => {
-    console.log("마운트");
-    console.log(props.match.params.memberSeq);
     getMemberDetail(memberSeq);
   }, []);
 
@@ -38,14 +34,12 @@ function MemberInfoDetail(props) {
     getMemberInfoDetail(
       memberSeq,
       (success) => {
-        console.log(success);
         setProfile({
           member_nickname: success.data.data.nickName,
           member_img: success.data.data.memberImage,
           member_birthDate: success.data.data.birthDate,
           member_phone: success.data.data.phone,
         });
-        console.log("여기 " + success.data.data.nickName);
         props.getheader(String(success.data.data.nickName));
       },
       (fail) => {
@@ -55,7 +49,7 @@ function MemberInfoDetail(props) {
   };
 
   function gotoMemberInfoModify() {
-    window.location.href = "/member-info/member-info-modify/" + memberSeq;
+    props.history.push("/member-info/member-info-modify/" + memberSeq);
   }
 
   function Content() {
@@ -78,9 +72,6 @@ function MemberInfoDetail(props) {
   }
 
   function LogOutBtn() {
-    console.log(loginSeq);
-    console.log(memberSeq);
-    console.log(loginSeq == memberSeq);
     if (loginSeq == memberSeq) {
       return (
         <Button color="danger" className={`${style.bigbnt}`} onClick={LogOut}>

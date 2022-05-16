@@ -144,8 +144,6 @@ function MemberInfoModify(props) {
   };
 
   useEffect(() => {
-    console.log("마운트");
-    console.log(props.match.params.memberSeq);
     getMemberDetail(memberSeq);
   }, []);
 
@@ -153,7 +151,6 @@ function MemberInfoModify(props) {
     getMemberInfoDetail(
       memberSeq,
       (success) => {
-        console.log(success);
         setProfile({
           member_nickname: success.data.data.nickName,
           member_img: success.data.data.memberImage,
@@ -163,7 +160,6 @@ function MemberInfoModify(props) {
         });
         setnameok(true);
         setnumberok(true);
-        console.log(success.data.data.nickName);
         props.getheader(String(success.data.data.nickName));
         if (success.data.data.birthDate == null) {
           setIsProtector(true);
@@ -225,14 +221,13 @@ function MemberInfoModify(props) {
       modifyMemberInfo(
         memberInfo,
         (success) => {
-          console.log(success);
           Swal.fire({
             icon: "success",
             text: "수정되었습니다.",
             width: "80%",
             confirmButtonColor: `#0369a1`,
           }).then(function () {
-            props.history.replace(`/member-info/member-info-detail/` + memberSeq);
+            gotoMemberInfoDetail();
           });
         },
         (fail) => {
@@ -243,7 +238,7 @@ function MemberInfoModify(props) {
   };
 
   const gotoMemberInfoDetail = () => {
-    window.location.href = "/member-info/member-info-detail/" + memberSeq;
+    props.history.replace(`/member-info/member-info-detail/` + memberSeq);
   };
 
   if (!isProtector) {
@@ -276,7 +271,7 @@ function MemberInfoModify(props) {
                     e.name = "member_birthDate";
                     onChangeProfile(e);
                   }}
-                  // inputProps={inputprops}
+                  inputProps={{inputMode:"none"}}
                   timeFormat={false}
                 ></Datetime>
               </FormGroup>
