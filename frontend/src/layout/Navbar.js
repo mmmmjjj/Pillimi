@@ -52,36 +52,49 @@ function Navbar(props) {
             bottom: "0",
             width: "100%",
             height: "10vh",
+            visibility:"hidden"
           }}
         >
-          <Row xs="4">
+          <Row xs="4" style={{ verticalAlign: "middle", margin:"0px", height:"100%" }}>
             <Col
-              className="navcol"
+              className={ s1[0]? "navcol check":"navcol"}
               onClick={movepilltoday}
             >
-              <AiFillHome className="fa-3x" />
+              <div>
+
+              <AiFillHome className="fa-3x"/>
               <h6>홈</h6>
+              </div>
             </Col>
             <Col
-              className="navcol"
+              className={ s1[1]? "navcol check":"navcol"}
               onClick={movepillsearch}
             >
+              <div>
+
               <AiOutlineSearch className="fa-3x" />
               <h6>약 검색</h6>
+              </div>
             </Col>
             <Col
-              className="navcol"
+              className={ s1[2]? "navcol check":"navcol"}
               onClick={moveprotector}
             >
+              <div>
+
               <HiOutlineUserGroup className="fa-3x" />
               <h6>가족관리</h6>
+              </div>
             </Col>
             <Col
-              className="navcol"
+              className={ s1[3]? "navcol check":"navcol"}
               onClick={movemyinfo}
             >
+              <div>
+
               <CgUserList className="fa-3x" />
               <h6>내정보</h6>
+              </div>
             </Col>
           </Row>
         </div>
@@ -94,6 +107,7 @@ function Navbar(props) {
             bottom: "0",
             width: "100%",
             height: "10vh",
+            visibility:"hidden"
           }}
         >
           <Row xs="1">
@@ -118,34 +132,46 @@ function Navbar(props) {
             alignItems: "center",
           }}
         >
-          <Row xs="4" style={{ verticalAlign: "middle", margin: "auto" }}>
+          <Row xs="4" style={{ verticalAlign: "middle", margin:"0px", height:"100%" }}>
             <Col
               className={ s1[0]? "navcol check":"navcol"}
               onClick={movepilltoday}
             >
-              <AiFillHome className="fa-3x" />
+              <div>
+
+              <AiFillHome className="fa-3x"/>
               <h6>홈</h6>
+              </div>
             </Col>
             <Col
               className={ s1[1]? "navcol check":"navcol"}
               onClick={movepillsearch}
             >
+              <div>
+
               <AiOutlineSearch className="fa-3x" />
               <h6>약 검색</h6>
+              </div>
             </Col>
             <Col
               className={ s1[2]? "navcol check":"navcol"}
               onClick={moveprotector}
             >
+              <div>
+
               <HiOutlineUserGroup className="fa-3x" />
               <h6>가족관리</h6>
+              </div>
             </Col>
             <Col
               className={ s1[3]? "navcol check":"navcol"}
               onClick={movemyinfo}
             >
+              <div>
+
               <CgUserList className="fa-3x" />
               <h6>내정보</h6>
+              </div>
             </Col>
           </Row>
         </div>
