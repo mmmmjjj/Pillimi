@@ -11,6 +11,7 @@ import style from "../Member/css/MemberPillCheck.module.css";
 import { getMyFamily } from "../../api/family.js";
 import { getPillToday, getMyPillToday } from "../../api/pill.js";
 import Navbar from "layout/Navbar.js";
+import Loading from "./Loading";
 
 function PillToday() {
   const [familyList, setFamilyList] = useState([]);
@@ -22,6 +23,7 @@ function PillToday() {
 
   let firstFamilySeq = "";
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isProtector === true) {
@@ -35,7 +37,7 @@ function PillToday() {
     getMyFamily(
       (response) => {
         setFamilyList(response.data.data);
-        if (familyList !== "") {
+        if (familyList.length !==0) {
           firstFamilySeq = response.data.data[0].memberSeq;
           getPillToday(
             firstFamilySeq,
@@ -48,6 +50,7 @@ function PillToday() {
             }
           );
         }
+        setLoading(false);
       },
       (error) => {
         console.log(error);
@@ -60,6 +63,7 @@ function PillToday() {
       (response) => {
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
+        setLoading(false);
       },
       (error) => {
         console.log(error);
@@ -164,11 +168,11 @@ function PillToday() {
                 className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
               >
                 <div className={`${style.imgsize2} ml-2`}>
-                  {
-                    imageURL !== null ?
+                  {imageURL !== null ? (
                     <img src={imageURL} className={`${style.size}`} alt="pillImg"></img>
-                    : <img src="../../../img/basic.png" alt="basic.png" style={{borderRadius:`10px`}}></img>
-                  }
+                  ) : (
+                    <img src="../../../img/basic.png" alt="basic.png" style={{ borderRadius: `10px` }}></img>
+                  )}
                 </div>
                 <div className="flex-fill" style={{paddingLeft: "20px"}}>
                   <span>{medicineName}</span>
@@ -285,6 +289,7 @@ function PillToday() {
       >
         <div className={PillTodayCSS.Header}>
           <span className={PillTodayCSS.MemberName}>{myName}</span>
+          { loading ? <Loading></Loading> : <></>}
           {isProtector ? (
             !showFamily ? (
               <i
