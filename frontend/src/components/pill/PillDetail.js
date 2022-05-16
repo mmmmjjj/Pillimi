@@ -13,6 +13,7 @@ import { getPillInfo } from "../../api/pill.js";
 import { getMyFamily } from "../../api/family.js";
 import { getMemberMedicineCheck } from "../../api/member.js";
 import Navbar from "layout/Navbar.js";
+import Loading from "components/main/Loading";
 
 function PillDetail(props) {
   const pillSeq = props.match.params.pillSeq;
@@ -36,7 +37,7 @@ function PillDetail(props) {
   const [registerPillModal, setRegisterPillModal] = React.useState(false);
 
   const history = useHistory();
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getPillDetail(pillSeq);
     getFamilyList();
@@ -67,6 +68,7 @@ function PillDetail(props) {
           validity: response.data.data.medicineDetail.validity,
           ingredient: temp,
         });
+        setLoading(false);
       },
       (error) => {
         console.log(error);
@@ -237,6 +239,7 @@ function PillDetail(props) {
     });
     return <div></div>;
   }
+  if(loading) return <Loading></Loading>
   return (
     <>
       <Header header="알약 정보" canBack={true}></Header>
