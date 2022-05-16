@@ -31,4 +31,7 @@ public class MemberInfoRes {
     @ApiModelProperty(name = "전화번호", example = "010-1111-1111")
     private String phone;
 
+    @ApiModelProperty(name = "보호자 여부", example = "true")
+    private boolean isProtector;
+
 }

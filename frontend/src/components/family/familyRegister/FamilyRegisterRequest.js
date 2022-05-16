@@ -4,6 +4,7 @@ import "../familycss.css";
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { requestAddFamily } from "api/family";
 // reactstrap components
 import {
   Input,
@@ -45,15 +46,8 @@ function FamilyRegisterRequest(props) {
   };
   const history = useHistory();
   const onSubmit = (event) => {
-    event.preventDefault();
-    Swal.fire({
-      icon: "success",
-      text: "가족 등록을 요청하였습니다.",
-      width: "80%",
-      confirmButtonColor: `#0369a1`,
-    }).then(function () {
-      history.replace(`/family/myfamily`)
-    });
+    requestFamily();
+    
   };
 
   const checknumber = (event) => {
@@ -120,7 +114,7 @@ function FamilyRegisterRequest(props) {
     }
   };
 
-  const requestFamily = () => {
+  const requestFamily = (event) => {
     let memberInfo = {
       memberName: membername,
       memberPhone: phonenumber,
@@ -129,9 +123,37 @@ function FamilyRegisterRequest(props) {
       memberInfo,
       (success) => {
         console.log(success);
+        event.preventDefault();
+        Swal.fire({
+          icon: "success",
+          title: "가족 등록을 요청하였습니다.",
+          width: "80%",
+          confirmButtonColor: `#0369a1`,
+        }).then(function () {
+          history.replace(`/family/Protector`)
+        });
       },
       (fail) => {
         console.log(fail);
+        if(fail.response.status === 404) {
+          Swal.fire({
+            icon: "warning",
+            title: "존재하지 않는\n 회원입니다",
+            width: "80%",
+            confirmButtonColor: `#ff0000`,
+          }).then(function () {
+            window.location.reload();
+          });
+        } else if(fail.response.status === 403) {
+          Swal.fire({
+            icon: "warning",
+            title: "이미 가족으로\n 등록된 회원입니다.",
+            width: "80%",
+            confirmButtonColor: `#ff0000`,
+          }).then(function () {
+            window.location.reload();
+          });
+        }
       }
     );
   };
