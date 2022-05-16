@@ -104,6 +104,7 @@ public class MemberServiceImpl implements MemberService {
                 .birthDate(member.getMemberBirthdate())
                 .phone(member.getMemberPhone())
                 .memberImage(member.getMemberImage())
+                .isProtector(member.getMemberIsprotector()==1)
                 .build();
     }
 

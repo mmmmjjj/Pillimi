@@ -45,7 +45,7 @@ hr {
 .onTab {
   display: flex;
   justify-content: center;
-  height: 30px;
+  height: 50px;
   padding: 0px;
   align-items: center;
 }
@@ -55,7 +55,7 @@ hr {
   background-color: #ffffff;
   border-bottom: 1px;
   border-color: #676767;
-  height: 30px;
+  height: 50px;
   align-items: center;
   padding: 0px;
 }
@@ -80,6 +80,7 @@ hr {
   position: relative;
   display: inline-block;
   font-size: large;
+  font-weight: bold;
 }
 .Exclamation {
   position: absolute;
