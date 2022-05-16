@@ -34,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
         // TODO 프론트 로그인 구현 후 서버URI로 변경하기
         String param = "grant_type=authorization_code" +
                 "&client_id=" + KAKAO_CLIENT_ID +
-                "&redirect_uri=http://localhost:3000/callback" +
+                "&redirect_uri=https://k6a3071.p.ssafy.io/callback" +
                 "&code=" + code;
         return getAccessToken(reqURL, param);
     }

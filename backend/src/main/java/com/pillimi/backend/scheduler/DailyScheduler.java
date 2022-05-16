@@ -25,61 +25,7 @@ import java.util.List;
 public class DailyScheduler {
 
     private final FirebaseMessageService firebaseMessageService;
-    private final MedicineIntakeRepository medicineIntakeRepository;
     private final AlarmProtegeRepository alarmProtegeRepository;
-    private final MemberMedicineRepository memberMedicineRepository;
-    private final MedicineIngredientRepository medicineIngredientRepository;
-    private final MemberIngredientRepository memberIngredientRepository;
-
-
-    /*
-    매일 서버시간 23:59에 복용 기간 지난 약품 만료 처리
-    */
-    @Scheduled(cron = "0 59 23 * * ?")
-    @Transactional
-    public void DailyNowFalse() {
-
-        // now false 처리
-        List<MemberMedicine> memberMedicines = memberMedicineRepository.findByMemberMedicineEndBeforeAndMemberMedicineNow(LocalDate.now().plusDays(1),true);
-
-        // false 처리된 약 성분 삭제
-        for (MemberMedicine medicine : memberMedicines) {
-            medicine.setMemberMedicineNow(false);
-
-            List<MedicineIngredient> medicineIngredients = medicineIngredientRepository.findMedicineIngredientByMedicine(medicine.getMedicine());
-
-            Member member = medicine.getMember();
-
-            //멤버 성분 테이블에서 약품 성분을 삭제함
-            for (MedicineIngredient medicineIngredient : medicineIngredients) {
-                memberIngredientRepository.deleteByMemberAndMedicineIngredient(member, medicineIngredient);
-            }
-        }
-
-        log.info(LocalDate.now()+" now 스케줄러 작업 완료");
-    }
-
-    /*
-    매일 서버시간 00:00에 피보호자 알림 생성
-    */
-    @Scheduled(cron = "0 0 0 * * ?")
-    @Transactional
-    public void DailyCreateAlarm() {
-
-        LocalDate today = LocalDate.now();
-        // 내일 피보호자 알림 생성
-        List<SchedulerDTO> todayAlarm = medicineIntakeRepository.findAlarmByDate(today);
-
-        for (SchedulerDTO item : todayAlarm) {
-            alarmProtegeRepository.save(AlarmProtege.builder()
-                    .alarmDate(today)
-                    .alarmTime(item.getTime())
-                    .protege(item.getMember())
-                    .build());
-        }
-
-        log.info(LocalDate.now()+" 알림 생성 스케줄러 작업 완료");
-    }
 
     /*
     10분마다 알림 체크 후 알림이 존재하면 앱으로 push 알림 전송
@@ -95,10 +41,10 @@ public class DailyScheduler {
         // 반복문 돌면서 알림 전송
         for (AlarmProtege alarm : list) {
             String token = alarm.getProtege().getMemberFcmToken();
-            String title = "약 드실 시간입니다.💙";
+            String title = "약 드실 시간입니다.💙(테스트서버)";
             String body = now.format(DateTimeFormatter.ofPattern("HH시 mm분"))
                     + " 알림을 눌러 약을 복용해주세요.";
-            String url = "https://k6a307.p.ssafy.io/family/camera/"+alarm.getAlarmSeq();
+            String url = "https://k6a3071.p.ssafy.io/family/camera/"+alarm.getAlarmSeq();
             try {
                 firebaseMessageService.sendMessageToProtege(token,title,body,url);
             } catch (IOException e) {
