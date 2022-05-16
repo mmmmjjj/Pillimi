@@ -305,7 +305,7 @@ function MemberInfoModify(props) {
             취소
           </Button>
         </div>
-        <Navbar />
+        <Navbar navarray={[false,false,false,true]}/>
       </>
     );
   } else {
@@ -352,7 +352,7 @@ function MemberInfoModify(props) {
             취소
           </Button>
         </div>
-        <Navbar />
+        <Navbar navarray={[false,false,false,true]}/>
       </>
     );
   }
