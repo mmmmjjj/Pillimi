@@ -185,7 +185,7 @@ def run_detector(detector1, path):
         's3',
         aws_access_key_id="AKIAVN4VQKMH6YG3WRAO",
         aws_secret_access_key="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")
-    res = s3.put_object(Bucket="pillimi", Key="detect/" + path[55:200], Body=buf_im)
+    res = s3.put_object(Bucket="pillimi", Key="upload/" + path[55:200], Body=buf_im)
 
     cnt = cnt_boxes(img.numpy(), result["detection_boxes"],
                     result["detection_scores"])

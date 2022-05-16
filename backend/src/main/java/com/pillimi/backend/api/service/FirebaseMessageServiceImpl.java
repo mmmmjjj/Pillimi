@@ -21,7 +21,7 @@ public class FirebaseMessageServiceImpl implements FirebaseMessageService {
 
     // 피보호자 Fcm 전송
     @Override
-    public void sendMessageToProtege(String targetToken, String title, String body, String URL) throws IOException {
+    public void sendMessageWithoutImage(String targetToken, String title, String body, String URL) throws IOException {
         String message = makeMessage(targetToken, title, body, URL);
 
         sendToFirebase(message);
