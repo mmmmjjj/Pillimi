@@ -288,7 +288,7 @@ function PillDetail(props) {
         <Label value={"유통기한"} content={pillInfo.validity}></Label>
         <Label value={"성분표"} content={pillInfo.ingredient}></Label>
       </div>
-      <Navbar />
+      <Navbar navarray={[false,true,false,false]}/>
 
       <Modal
         centered

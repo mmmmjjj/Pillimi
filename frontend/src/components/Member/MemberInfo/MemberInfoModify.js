@@ -24,6 +24,41 @@ function MemberInfoModify(props) {
     member_phone: "",
     member_isprotector: 0,
   });
+  const [nameok, setnameok] = useState(false);
+
+  const checkname = (event) => {
+    var strname = event.currentTarget.value;
+    if (strname.length > 0) {
+      var tmp = {
+        target: {
+          name: "member_nickname",
+          value: strname,
+        },
+      };
+      var strname2 = strname.substr(0, strname.length - 1).replace(/[^가-힣]/g, "");
+      if (strname.length > 1 && /[가-힣]/.test(strname[strname.length - 1])) {
+        setnameok(true);
+      } else {
+        setnameok(false);
+      }
+      tmp = {
+        target:{
+          name: "member_nickname",
+          value: strname2 + strname[strname.length - 1]
+        }
+      }
+      onChangeProfile(tmp);
+    } else {
+      var tmp = {
+        target: {
+          name: "member_nickname",
+          value: strname,
+        },
+      };
+      onChangeProfile(tmp);
+      setnameok(false);
+    }
+  };
 
   const [isProtector, setIsProtector] = useState(false);
 
@@ -124,7 +159,10 @@ function MemberInfoModify(props) {
           member_img: success.data.data.memberImage,
           member_birthDate: success.data.data.birthDate == null ? null : new Date(success.data.data.birthDate),
           member_phone: success.data.data.phone,
+          member_isprotector: success.data.data.protector
         });
+        setnameok(true);
+        setnumberok(true);
         console.log(success.data.data.nickName);
         props.getheader(String(success.data.data.nickName));
         if (success.data.data.birthDate == null) {
@@ -150,30 +188,58 @@ function MemberInfoModify(props) {
   }
 
   const modifyInfo = () => {
-    let birthDate = dateformat(new Date(profile.member_birthDate));
-    let memberInfo = {
-      birthDate: isProtector ? null : birthDate,
-      memberSeq: memberSeq,
-      nickName: profile.member_nickname,
-      phone: profile.member_phone,
-    };
-    modifyMemberInfo(
-      memberInfo,
-      (success) => {
-        console.log(success);
-        Swal.fire({
-          icon: "success",
-          text: "수정되었습니다.",
-          width: "80%",
-          confirmButtonColor: `#0369a1`,
-        }).then(function () {
-          props.history.push(`/member-info/member-info-detail/` + memberSeq);
-        });
-      },
-      (fail) => {
-        console.log(fail);
-      }
-    );
+    if(profile.member_nickname === "" || !nameok) {
+      Swal.fire({
+        icon: "warning",
+        title: "닉네임을 입력해주세요",
+        width: "80%",
+        confirmButtonColor: `#ff0000`,
+      }).then(function () {
+      });
+    } else if(profile.member_phone === "" || !numberok) {
+      Swal.fire({
+        icon: "warning",
+        title: "전화번호를 입력해주세요",
+        width: "80%",
+        confirmButtonColor: `#ff0000`,
+      }).then(function () {
+      });
+    } else if(!profile.member_isprotector && profile.member_birthDate==="") {
+      Swal.fire({
+        icon: "warning",
+        title: "생년월일을 입력해주세요",
+        width: "80%",
+        confirmButtonColor: `#ff0000`,
+      }).then(function () {
+      });
+    } else {
+      let birthDate = dateformat(new Date(profile.member_birthDate));
+      let memberInfo = {
+        birthDate: profile.member_birthDate==="" ? null : birthDate,
+        memberSeq: memberSeq,
+        nickName: profile.member_nickname,
+        phone: profile.member_phone,
+        protector: profile.member_isprotector
+      };
+      console.log(memberInfo);
+      modifyMemberInfo(
+        memberInfo,
+        (success) => {
+          console.log(success);
+          Swal.fire({
+            icon: "success",
+            text: "수정되었습니다.",
+            width: "80%",
+            confirmButtonColor: `#0369a1`,
+          }).then(function () {
+            props.history.replace(`/member-info/member-info-detail/` + memberSeq);
+          });
+        },
+        (fail) => {
+          console.log(fail);
+        }
+      );
+    }
   };
 
   const gotoMemberInfoDetail = () => {
@@ -195,7 +261,7 @@ function MemberInfoModify(props) {
                   name="member_nickname"
                   type="text"
                   value={profile.member_nickname}
-                  onChange={onChangeProfile}
+                  onChange={checkname}
                   className={`${style.datepicker}`}
                 ></Input>
               </FormGroup>
@@ -239,7 +305,7 @@ function MemberInfoModify(props) {
             취소
           </Button>
         </div>
-        <Navbar />
+        <Navbar navarray={[false,false,false,true]}/>
       </>
     );
   } else {
@@ -257,7 +323,7 @@ function MemberInfoModify(props) {
                   name="member_nickname"
                   type="text"
                   value={profile.member_nickname}
-                  onChange={onChangeProfile}
+                  onChange={checkname}
                   className={`${style.datepicker}`}
                 ></Input>
               </FormGroup>
@@ -286,7 +352,7 @@ function MemberInfoModify(props) {
             취소
           </Button>
         </div>
-        <Navbar />
+        <Navbar navarray={[false,false,false,true]}/>
       </>
     );
   }
