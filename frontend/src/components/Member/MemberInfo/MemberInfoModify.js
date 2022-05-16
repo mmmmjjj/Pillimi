@@ -292,11 +292,9 @@ function MemberInfoModify(props) {
                     maxLength="13"
                   ></Input>
                 </span>
-                <br></br>
               </FormGroup>
             </Form>
           </div>
-          <br></br>
           <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>
             완료
           </Button>
@@ -343,7 +341,6 @@ function MemberInfoModify(props) {
               </FormGroup>
             </Form>
           </div>
-          <br></br>
           <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>
             완료
           </Button>
