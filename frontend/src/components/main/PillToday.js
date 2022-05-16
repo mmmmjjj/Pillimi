@@ -24,6 +24,7 @@ function PillToday() {
   let firstFamilySeq = "";
   const history = useHistory();
   const [loading, setLoading] = useState(true);
+  const [selectedFamily, setSelectedFamily] = useState();
 
   useEffect(() => {
     if (isProtector === true) {
@@ -39,6 +40,7 @@ function PillToday() {
         setFamilyList(response.data.data);
         if (response.data.data.length !==0) {
           firstFamilySeq = response.data.data[0].memberSeq;
+          setSelectedFamily(firstFamilySeq);
           getPillToday(
             firstFamilySeq,
             (response) => {
@@ -257,14 +259,25 @@ function PillToday() {
               onClick={() => otherFamily(element.memberSeq)}
             >
               <div style={{ display: "inlineBlock", justifyContent: "center" }}>
-                <img
-                  style={{ margin: "0px" }}
+                {
+                  selectedFamily === Number(element.memberSeq) ?
+                  <img
+                  style={{border:"3px solid #0369a1"}}
                   src={element.memberImage}
                   alt="memberImg"
                   className={PillTodayCSS.img}
                 ></img>
+                : <img
+                  src={element.memberImage}
+                  alt="memberImg"
+                  className={PillTodayCSS.img}
+                ></img>
+                }
               </div>
-              <span>{element.memberName}</span>
+              {selectedFamily === Number(element.memberSeq) ?
+                <span style={{fontWeight:`bold`, color:"#0369a1"}}>{element.memberName}</span>
+                : <span>{element.memberName}</span>
+              }
             </Col>
           </>
         );
