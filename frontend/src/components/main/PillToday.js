@@ -101,16 +101,16 @@ function PillToday() {
 
     if (pillListKey.length !== 0) {
       result.push(
-        <>
+        <Fragment key={`something`}>
           <h3 className={PillTodayCSS.MainText}>시간에 맞춰 복약하세요!</h3>
           <br></br>
-        </>
+        </Fragment>
       );
     } else {
       result.push(
-        <>
+        <Fragment key={`nothing`}>
           <h3 className={PillTodayCSS.MainText}>오늘 먹을 약이 없습니다</h3>
-        </>
+        </Fragment>
       );
     }
 
@@ -183,7 +183,7 @@ function PillToday() {
               taken = pillList[element][0].taken;
               if (taken === true) {
                 result.push(
-                  <Fragment key={pillList[element]}>
+                  <Fragment key={`button${pillList[element][i]}${element}${i}`}>
                     <div className={PillTodayCSS.WhiteBox}>
                       <br></br>
                       <br></br>
@@ -195,7 +195,7 @@ function PillToday() {
               } else if (taken === false) {
                 if (isProtector === false) {
                   result.push(
-                    <Fragment key={element}>
+                    <Fragment key={`22${element}`}>
                       <div className={PillTodayCSS.WhiteBox}>
                         <br></br>
                         <br></br>
@@ -211,7 +211,7 @@ function PillToday() {
                   );
                 } else {
                   result.push(
-                    <div className={PillTodayCSS.WhiteBox} key={element}>
+                    <div className={PillTodayCSS.WhiteBox} key={`br${element}`}>
                       <br></br>
                     </div>
                   );
@@ -232,7 +232,7 @@ function PillToday() {
           </div>
         );
       } else {
-        result.push();
+        result.push(<Fragment key={`blank space`}></Fragment>);
       }
     });
 
