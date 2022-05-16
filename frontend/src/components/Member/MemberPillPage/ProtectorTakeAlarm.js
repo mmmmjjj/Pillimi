@@ -130,7 +130,12 @@ function ProtectorTakeAlarm(props) {
 
   return (
     <>
-      <div className={`${style.center} ${style.whole}`}>
+      <div className={`${style.center}`} style={{
+          backgroundColor: "#eaf0f8",
+          width: "100vw",
+          minHeight: "100vh",
+          margin: "0 auto",
+        }}>
         <Row xs="2">
           <Col className="pt-2 pb-2 m-0 border border-top-0 border-dark bg-white" onClick={() => onClickHandler(false)}>
             약
