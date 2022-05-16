@@ -121,11 +121,12 @@ import { useHistory } from "react-router-dom";
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css";
 import { getMemberMedicineList } from "../../../api/member";
-import PillTakeAlarm from "./PillTakeAlarm";
 import { useSelector } from "react-redux";
 import ProtectorTakeAlarm from "./ProtectorTakeAlarm";
 import Navbar from "layout/Navbar.js";
 import { Row, Col } from "reactstrap";
+import { getProtegeSeqAlarmList } from "api/alarm";
+
 // core components
 
 function MemberPillList(props) {
@@ -140,6 +141,7 @@ function MemberPillList(props) {
   const [ffdatas, setFfDatas] = useState([]); //PillList에서 엑시오스에서 넘어온 모든 데이터를 반복하는게 아니라 false인 데이터만 돌려서 원하는 갯수만큼만 뽑는다.
   const [tdropOptions, setTDropOptions] = useState(5);
   const [fdropOptions, setFDropOptions] = useState(5);
+  const [newAlarm, setNewAlarm] = useState(false);
 
   useEffect(() => {
     setTtDatas(tdatas.slice(0, tdropOptions));
@@ -152,6 +154,17 @@ function MemberPillList(props) {
 
   useEffect(() => {
     getMediList();
+    getProtegeSeqAlarmList(
+      memberSeq,
+      (success) => {
+        if(success.data.data.length > 0) {
+          setNewAlarm(true);
+        }
+      },
+      (fail) => {
+        console.log(fail);
+      }
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -315,6 +328,15 @@ function MemberPillList(props) {
               <Col className="pt-2 pb-2 m-0 ">약</Col>
               <Col className="pt-2 pb-2 border border-top-0 border-dark bg-white" onClick={() => onClickHandler(true)}>
                 복용확인
+                {newAlarm ? (
+                    <i
+                      className="fa fa-exclamation-circle fa-2x"
+                      size="lg"
+                      style={{ position: "absolute", color: "red", top: "-14px", right: "7px", zIndex: "1" }}
+                    ></i>
+                  ) : (
+                    <></>
+                )}
               </Col>
             </Row>
             <PillListPage></PillListPage>
@@ -333,7 +355,7 @@ function MemberPillList(props) {
           <PillListPage></PillListPage>
         </div>
       )}
-      <Navbar />
+      <Navbar navarray={[false, false, true, false]}/>
     </>
   );
 }

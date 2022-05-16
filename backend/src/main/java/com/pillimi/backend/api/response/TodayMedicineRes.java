@@ -3,16 +3,14 @@ package com.pillimi.backend.api.response;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalTime;
 
 @ApiModel("TodayMedicineResponse")
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 public class TodayMedicineRes {
 
