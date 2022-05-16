@@ -116,7 +116,7 @@ public class AlarmServiceImpl implements AlarmService {
                 .orElseThrow(() -> new NotFoundException(ErrorCode.ALARM_NOT_FOUND));
 
         byte[] imageBytes = DatatypeConverter.parseBase64Binary(req.getImage());
-        String path = "/" + req.getAlarmSeq() + "_" + LocalDateTime.now() + ".jpg";
+        String path = "/" + alarm.getProtege().getMemberSeq() + "_" + req.getAlarmSeq() + ".jpg";
         File file = new File(path);
 
         // Base64 -> File로 변환
