@@ -33,11 +33,8 @@ function ElderMain() {
 function Menu(params) {
   return (
     <>
-      <br></br>
-      <br></br>
-      <div className={ElderMainCSS.WhiteBox}>
+      <div className={`${ElderMainCSS.WhiteBox} mt-4 pt-4`}>
         <div className={ElderMainCSS.WhiteBoxHeight}></div>
-        <br></br>
         <h3 className={ElderMainCSS.MainText}>{params.content}</h3>
         <div className={ElderMainCSS.WhiteBoxHeight}></div>
       </div>
