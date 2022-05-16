@@ -3,7 +3,6 @@ package com.pillimi.backend.api.service;
 import com.pillimi.backend.api.request.FamilyRegistReq;
 import com.pillimi.backend.api.response.FamilyRequestRes;
 import com.pillimi.backend.api.response.FamilyRes;
-import com.pillimi.backend.common.auth.JwtTokenProvider;
 import com.pillimi.backend.common.exception.InvalidException;
 import com.pillimi.backend.common.exception.NotFoundException;
 import com.pillimi.backend.common.exception.handler.ErrorCode;
@@ -14,19 +13,21 @@ import com.pillimi.backend.db.repository.FamilyRepository;
 import com.pillimi.backend.db.repository.FamilyRequestRepository;
 import com.pillimi.backend.db.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Optional;
 import java.util.List;
-import java.util.Objects;
 
 import static com.pillimi.backend.common.exception.handler.ErrorCode.*;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -34,6 +35,8 @@ public class FamilyServiceImpl implements FamilyService {
     private final MemberRepository memberRepository;
     private final FamilyRepository familyRepository;
     private final FamilyRequestRepository familyRequestRepository;
+    private final FirebaseMessageService firebaseMessageService;
+
 
     /*
     가족 요청
@@ -57,6 +60,17 @@ public class FamilyServiceImpl implements FamilyService {
                 .build();
 
         familyRequestRepository.save(familyrequest);
+
+        // 피보호자에게 알림 보내기
+        String token = protege.getMemberFcmToken();
+        String title = "가족 요청 알림";
+        String body = protector.getMemberNickname() + "님의 가족 요청입니다.";
+        String url = "https://k6a307.p.ssafy.io/family/myfamily";
+        try {
+            firebaseMessageService.sendMessageWithoutImage(token,title,body,url);
+        } catch (IOException e) {
+            log.info(protege.getMemberNickname()+" 님에게 알림 전송을 실패하였습니다.");
+        }
     }
 
     /*
@@ -109,6 +123,18 @@ public class FamilyServiceImpl implements FamilyService {
 
         familyRepository.save(family);
         familyRequestRepository.delete(request);
+
+        // 보호자에게 알림 보내기
+        String token = request.getRequestProtector().getMemberFcmToken();
+        String title = "가족 등록 알림";
+        String body = request.getRequestProtege().getMemberNickname() + "님이 가족 요청을 수락하였습니다.";
+        String url = "https://k6a307.p.ssafy.io/family/myfamily";
+        try {
+            firebaseMessageService.sendMessageWithoutImage(token,title,body,url);
+        } catch (IOException e) {
+            log.info(request.getRequestProtege().getMemberNickname()+" 님에게 알림 전송을 실패하였습니다.");
+        }
+
     }
 
     /*
@@ -122,6 +148,18 @@ public class FamilyServiceImpl implements FamilyService {
             throw new AccessDeniedException(ErrorCode.ACCESS_DENIED.getMessage());
 
         familyRequestRepository.delete(request);
+
+        // 보호자에게 알림 보내기
+        String token = request.getRequestProtector().getMemberFcmToken();
+        String title = "가족 등록 알림";
+        String body = request.getRequestProtege().getMemberNickname() + "님이 가족 요청을 거절하였습니다.";
+        String url = "https://k6a307.p.ssafy.io/family/myfamily";
+        try {
+            firebaseMessageService.sendMessageWithoutImage(token,title,body,url);
+        } catch (IOException e) {
+            log.info(request.getRequestProtege().getMemberNickname()+" 님에게 알림 전송을 실패하였습니다.");
+        }
+
     }
 
     @Override
