@@ -183,6 +183,9 @@ function PillDetail(props) {
   const Effect = (props) => {
     let result = [];
 
+    var strTest = pillInfo.effect;
+    var temp = strTest.replace(/\\n/g, "\n");
+
     if (props.effect === true) {
       result.push(
         <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.effect)}>
@@ -190,7 +193,7 @@ function PillDetail(props) {
         </span>
       );
     } else {
-      result.push(<span>{pillInfo.effect}</span>);
+      result.push(<span>{temp}</span>);
     }
 
     return result;
@@ -199,6 +202,9 @@ function PillDetail(props) {
   const Caution = (props) => {
     let result = [];
 
+    var strTest = pillInfo.caution;
+    var temp = strTest.replace(/\\n/g, "\n");
+
     if (props.caution === true) {
       result.push(
         <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.caution)}>
@@ -206,7 +212,7 @@ function PillDetail(props) {
         </span>
       );
     } else {
-      result.push(<span>{pillInfo.caution}</span>);
+      result.push(<span className={PillDetailCSS.AboutPill}>{temp}</span>);
     }
 
     return result;
@@ -215,6 +221,9 @@ function PillDetail(props) {
   const Dosage = (props) => {
     let result = [];
 
+    var strTest = pillInfo.dosage;
+    var temp = strTest.replace(/\\n/g, "\n");
+
     if (props.dosage === true) {
       result.push(
         <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.dosage)}>
@@ -222,7 +231,7 @@ function PillDetail(props) {
         </span>
       );
     } else {
-      result.push(<span>{pillInfo.dosage}</span>);
+      result.push(<span>{temp}</span>);
     }
 
     return result;
