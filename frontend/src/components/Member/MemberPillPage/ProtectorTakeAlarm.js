@@ -23,7 +23,6 @@ function ProtectorTakeAlarm(props) {
     getProtegeSeqAlarmList(
       protegeSeq,
       (success) => {
-        console.log(success.data.data);
         setAlarmList(success.data.data);
       },
       (fail) => {
