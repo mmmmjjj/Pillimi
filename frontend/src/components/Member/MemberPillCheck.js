@@ -24,10 +24,12 @@ function MemberPillCheck(props) {
     });
   }
   let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  let memberInfo = useSelector((state) => state.memberInfo.memberInfo)
   if (!isProtector) {
     Swal.fire({
       icon: "warning",
       title: "권한이 없는 페이지입니다.",
+      text: {memberInfo},
       width: "80%",
       confirmButtonColor: `#ff0000`,
     }).then(function () {
