@@ -26,12 +26,9 @@ function MemberInfo(props) {
       props.history.push(`/`);
     });
   }
-  console.log(nickName);
   const [header, setheader] = useState(nickName);
   const getheader = (str) => {
-    console.log(str);
     setheader(str);
-    console.log(header);
   };
   const getnavbar = (bool) => {
     setnavbar(bool);

@@ -29,16 +29,13 @@ function MemberRegisterInfo(props) {
 
   const onChangeIsProtector = () => {
     setIsProtector(!isProtector);
-    console.log(isProtector);
   }
 
   const onChangeProfile = (e) => {
       if (moment.isMoment(e)){
           setProfile({...profile, [e.name]:e._d});
-          console.log(profile.Moment)
       }
       else{
-          console.log(e.target.value);
           setProfile({...profile, [e.target.name]:e.target.value});
       }
   }
@@ -147,9 +144,7 @@ function MemberRegisterInfo(props) {
       }).then(function () {
       });
     } else {
-      console.log(reginfo);
       addRegInfo(reginfo, (success) =>{
-        console.log(success)
         Swal.fire({
           icon: "success",
           title: "정보가 입력되었습니다!",
@@ -177,15 +172,10 @@ function MemberRegisterInfo(props) {
       });
     }
     
-    console.log(profile.phone)
   }
 
   function gotoMain() {
-    if(isProtector){
-      window.location.href = "/pill-today";
-    }else{
-      window.location.href = "/main";
-    }
+    props.history.push("/")
   }
   if(!isProtector){
     return (
