@@ -1,4 +1,5 @@
-import React from "react";
+/*eslint-disable*/
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "reactstrap";
 import { AiFillHome, AiOutlineSearch } from "react-icons/ai";
 import { HiOutlineUserGroup } from "react-icons/hi";
@@ -6,7 +7,18 @@ import { CgUserList } from "react-icons/cg";
 import "../components/family/familycss.css";
 import { useSelector } from "react-redux";
 
-function Navbar() {
+function Navbar(props) {
+  Navbar.defaultProps = {
+    navarray:[false, false, false, false]
+  };
+  const [s1, sets1] = useState([false, false, false, false]);
+
+  useEffect(() => {
+    if (props.navarray){
+      sets1(props.navarray)
+    }
+  }, [props]);
+
   let isProtector = useSelector(
     (state) => state.memberInfo.memberInfo.protector
   );
@@ -43,19 +55,31 @@ function Navbar() {
           }}
         >
           <Row xs="4">
-            <Col className="navcol" onClick={movepilltoday}>
+            <Col
+              className="navcol"
+              onClick={movepilltoday}
+            >
               <AiFillHome className="fa-3x" />
               <h6>홈</h6>
             </Col>
-            <Col className="navcol" onClick={movepillsearch}>
+            <Col
+              className="navcol"
+              onClick={movepillsearch}
+            >
               <AiOutlineSearch className="fa-3x" />
               <h6>약 검색</h6>
             </Col>
-            <Col className="navcol" onClick={moveprotector}>
+            <Col
+              className="navcol"
+              onClick={moveprotector}
+            >
               <HiOutlineUserGroup className="fa-3x" />
               <h6>가족관리</h6>
             </Col>
-            <Col className="navcol" onClick={movemyinfo}>
+            <Col
+              className="navcol"
+              onClick={movemyinfo}
+            >
               <CgUserList className="fa-3x" />
               <h6>내정보</h6>
             </Col>
@@ -95,19 +119,31 @@ function Navbar() {
           }}
         >
           <Row xs="4" style={{ verticalAlign: "middle", margin: "auto" }}>
-            <Col className="navcol" onClick={movepilltoday}>
+            <Col
+              className={ s1[0]? "navcol check":"navcol"}
+              onClick={movepilltoday}
+            >
               <AiFillHome className="fa-3x" />
               <h6>홈</h6>
             </Col>
-            <Col className="navcol" onClick={movepillsearch}>
+            <Col
+              className={ s1[1]? "navcol check":"navcol"}
+              onClick={movepillsearch}
+            >
               <AiOutlineSearch className="fa-3x" />
               <h6>약 검색</h6>
             </Col>
-            <Col className="navcol" onClick={moveprotector}>
+            <Col
+              className={ s1[2]? "navcol check":"navcol"}
+              onClick={moveprotector}
+            >
               <HiOutlineUserGroup className="fa-3x" />
               <h6>가족관리</h6>
             </Col>
-            <Col className="navcol" onClick={movemyinfo}>
+            <Col
+              className={ s1[3]? "navcol check":"navcol"}
+              onClick={movemyinfo}
+            >
               <CgUserList className="fa-3x" />
               <h6>내정보</h6>
             </Col>
