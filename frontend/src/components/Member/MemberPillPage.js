@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 import "../../assets/css/now-ui-kit.css";
 import style from "./css/MemberPillCheck.module.css";
 import MemberPillList from "./MemberPillPage/MemberPillList";
-import PillTakeAlarm from "./MemberPillPage/PillTakeAlarm";
 import PillTakePicture from "./MemberPillPage/PillTakePicture";
 import ProtectorTakeAlarm from "./MemberPillPage/ProtectorTakeAlarm";
 import Swal from "sweetalert2";
@@ -79,7 +78,6 @@ function MemberPillPage(props) {
               path={`${basicurl}/pill-take-picture/:alarmSeq`}
               render={(props) => <PillTakePicture {...props} />}
             />
-            <Route path={`${basicurl}/pill-take-alarm`} render={(props) => <PillTakeAlarm {...props} />} />
             {/* <Redirect to={`${basicurl}/protector-take-alarm`}></Redirect> */}
           </Switch>
         </Switch>
