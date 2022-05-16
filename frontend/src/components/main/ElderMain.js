@@ -12,12 +12,9 @@ function ElderMain() {
       <div className={ElderMainCSS.Whole}>
         <div className={ElderMainCSS.Header}></div>
         <div className={ElderMainCSS.MainTitle}>
-          <div className={ElderMainCSS.WhiteBox} onClick={gotoPillToday}>
-            <div className={ElderMainCSS.WhiteBoxHeight}></div>
-            <br></br>
-            <h3 className={ElderMainCSS.MainText}>오늘 먹을 약</h3>
-            <div className={ElderMainCSS.WhiteBoxHeight}></div>
-          </div>
+          <Link to={`/pill-today`} style={{ textDecoration: 'none' }}>
+            <Menu content={"오늘 먹을 약"}></Menu>
+          </Link>
           <Link to={`/member-pill-page/member-pill-list/${memberSeq}`} style={{ textDecoration: 'none' }}>
             <Menu content={"내 약"}></Menu>
           </Link>
@@ -43,10 +40,6 @@ function Menu(params) {
       </div>
     </>
   );
-}
-
-function gotoPillToday() {
-  window.location.href = "/pill-today";
 }
 
 export default ElderMain;

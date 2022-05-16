@@ -47,7 +47,6 @@ function FamilyRegisterRequest(props) {
   const history = useHistory();
   const onSubmit = (event) => {
     requestFamily();
-    
   };
 
   const checknumber = (event) => {
@@ -123,19 +122,19 @@ function FamilyRegisterRequest(props) {
       memberInfo,
       (success) => {
         console.log(success);
-        event.preventDefault();
+        // event.preventDefault();
         Swal.fire({
           icon: "success",
           title: "가족 등록을 요청하였습니다.",
           width: "80%",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
-          history.replace(`/family/Protector`)
+          history.replace(`/family/Protector`);
         });
       },
       (fail) => {
         console.log(fail);
-        if(fail.response.status === 404) {
+        if (fail.response.status === 404) {
           Swal.fire({
             icon: "warning",
             title: "존재하지 않는\n 회원입니다",
@@ -144,10 +143,19 @@ function FamilyRegisterRequest(props) {
           }).then(function () {
             window.location.reload();
           });
-        } else if(fail.response.status === 403) {
+        } else if (fail.response.status === 403) {
           Swal.fire({
             icon: "warning",
             title: "이미 가족으로\n 등록된 회원입니다.",
+            width: "80%",
+            confirmButtonColor: `#ff0000`,
+          }).then(function () {
+            window.location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "가족 요청을 실패하였습니다.",
             width: "80%",
             confirmButtonColor: `#ff0000`,
           }).then(function () {
@@ -179,7 +187,14 @@ function FamilyRegisterRequest(props) {
                 <i className="now-ui-icons users_circle-08"></i>
               </InputGroupText>
             </InputGroupAddon>
-            <Input placeholder="성함" type="text" onChange={checkname} value={membername} maxLength="10"></Input>
+            <Input
+              placeholder="성함"
+              type="text"
+              onChange={checkname}
+              value={membername}
+              maxLength="10"
+              style={{ height: `50px` }}
+            ></Input>
           </InputGroup>
           {nameok == false ? (
             <div
@@ -209,6 +224,7 @@ function FamilyRegisterRequest(props) {
               value={phonenumber}
               pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
               maxLength="13"
+              style={{ height: `50px` }}
             ></Input>
           </InputGroup>
           {numberok == false ? (
