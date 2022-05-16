@@ -61,7 +61,7 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <BrowserRouter>
-        <ScrollRestoration></ScrollRestoration>
+        <ScrollRestoration />
         <Switch>
           <Switch>
             <Route path="/test" render={(props) => <FamilyRegisterRequest {...props} />} />
