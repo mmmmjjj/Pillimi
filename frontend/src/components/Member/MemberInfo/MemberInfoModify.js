@@ -245,7 +245,7 @@ function MemberInfoModify(props) {
   };
 
   if (loading) return <Loading></Loading>
-  if (!isProtector) {
+  if (!profile.member_isprotector) {
     return (
       <>
         <div id="pillimi" className={`${style.center}`}>
