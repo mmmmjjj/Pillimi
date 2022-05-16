@@ -11,6 +11,7 @@ import style from "../Member/css/MemberPillCheck.module.css";
 import { getMyFamily } from "../../api/family.js";
 import { getPillToday, getMyPillToday } from "../../api/pill.js";
 import Navbar from "layout/Navbar.js";
+import Loading from "./Loading";
 
 function PillToday() {
   const [familyList, setFamilyList] = useState([]);
@@ -22,6 +23,7 @@ function PillToday() {
 
   let firstFamilySeq = "";
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isProtector === true) {
@@ -42,6 +44,7 @@ function PillToday() {
             (response) => {
               setPillListKey(Object.getOwnPropertyNames(response.data.data));
               setPillList(response.data.data);
+              setLoading(false);
             },
             (error) => {
               console.log(error);
@@ -60,6 +63,7 @@ function PillToday() {
       (response) => {
         setPillListKey(Object.getOwnPropertyNames(response.data.data));
         setPillList(response.data.data);
+        setLoading(false);
       },
       (error) => {
         console.log(error);
@@ -285,6 +289,7 @@ function PillToday() {
       >
         <div className={PillTodayCSS.Header}>
           <span className={PillTodayCSS.MemberName}>{myName}</span>
+          { loading ? <Loading></Loading> : <></>}
           {isProtector ? (
             !showFamily ? (
               <i
