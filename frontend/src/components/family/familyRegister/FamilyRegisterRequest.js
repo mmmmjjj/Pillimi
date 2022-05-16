@@ -144,6 +144,15 @@ function FamilyRegisterRequest(props) {
           }).then(function () {
             window.location.reload();
           });
+        } else if(fail.response.status === 403) {
+          Swal.fire({
+            icon: "warning",
+            title: "이미 가족으로\n 등록된 회원입니다.",
+            width: "80%",
+            confirmButtonColor: `#ff0000`,
+          }).then(function () {
+            window.location.reload();
+          });
         }
       }
     );
