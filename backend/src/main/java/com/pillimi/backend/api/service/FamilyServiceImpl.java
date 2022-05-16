@@ -128,7 +128,7 @@ public class FamilyServiceImpl implements FamilyService {
         String token = request.getRequestProtector().getMemberFcmToken();
         String title = "가족 등록 알림";
         String body = request.getRequestProtege().getMemberNickname() + "님이 가족 요청을 수락하였습니다.";
-        String url = "https://k6a307.p.ssafy.io/family/myfamily";
+        String url = "https://k6a307.p.ssafy.io/family/Protector";
         try {
             firebaseMessageService.sendMessageWithoutImage(token,title,body,url);
         } catch (IOException e) {
@@ -153,7 +153,7 @@ public class FamilyServiceImpl implements FamilyService {
         String token = request.getRequestProtector().getMemberFcmToken();
         String title = "가족 등록 알림";
         String body = request.getRequestProtege().getMemberNickname() + "님이 가족 요청을 거절하였습니다.";
-        String url = "https://k6a307.p.ssafy.io/family/myfamily";
+        String url = "https://k6a307.p.ssafy.io/family/Protector";
         try {
             firebaseMessageService.sendMessageWithoutImage(token,title,body,url);
         } catch (IOException e) {
