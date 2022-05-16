@@ -100,7 +100,7 @@ public class DailyScheduler {
                     + " 알림을 눌러 약을 복용해주세요.";
             String url = "https://k6a307.p.ssafy.io/family/camera/"+alarm.getAlarmSeq();
             try {
-                firebaseMessageService.sendMessageToProtege(token,title,body,url);
+                firebaseMessageService.sendMessageWithoutImage(token,title,body,url);
             } catch (IOException e) {
                 log.info(now+" : "+alarm.getProtege().getMemberNickname()+" 님에게 알림 전송을 실패하였습니다.");
             }
