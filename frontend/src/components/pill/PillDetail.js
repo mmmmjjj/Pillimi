@@ -222,7 +222,7 @@ function PillDetail(props) {
         </span>
       );
     } else {
-      result.push(<pre>{pillInfo.dosage}</pre>);
+      result.push(<span>{pillInfo.dosage}</span>);
     }
 
     return result;
@@ -239,7 +239,7 @@ function PillDetail(props) {
     });
     return <div></div>;
   }
-  if(loading) return <Loading></Loading>
+  if (loading) return <Loading></Loading>;
   return (
     <>
       <Header header="알약 정보" canBack={true}></Header>
@@ -291,7 +291,7 @@ function PillDetail(props) {
         <Label value={"유통기한"} content={pillInfo.validity}></Label>
         <Label value={"성분표"} content={pillInfo.ingredient}></Label>
       </div>
-      <Navbar navarray={[false,true,false,false]}/>
+      <Navbar navarray={[false, true, false, false]} />
 
       <Modal
         centered
