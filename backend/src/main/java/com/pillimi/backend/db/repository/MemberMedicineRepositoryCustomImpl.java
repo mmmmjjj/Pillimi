@@ -58,7 +58,7 @@ public class MemberMedicineRepositoryCustomImpl implements MemberMedicineReposit
                 .on(qMedicineIntake.memberMedicine.eq(qMemberMedicine))
                 .where(qMember.eq(member).and(qMedicineIntake.intakeDay.eq(day))
                         .and(qMemberMedicine.memberMedicineNow.eq(true)))
-                .orderBy(qMedicineIntake.intakeDay.asc())
+                .orderBy(qMedicineIntake.intakeTime.asc())
                 .fetch();
     }
 

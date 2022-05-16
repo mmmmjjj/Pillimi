@@ -316,6 +316,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
         Long alarmSeq = null;
         for (TodayMedicineRes todayMedicineRes : list) {
+
             LocalTime time = todayMedicineRes.getTime();
 
             if(!res.containsKey(time+" "+alarmSeq)){
@@ -327,6 +328,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
 
                 res.put(time+" "+alarmSeq, new ArrayList<>());
             }
+
             res.get(time+" "+alarmSeq).add(todayMedicineRes);
         }
 
