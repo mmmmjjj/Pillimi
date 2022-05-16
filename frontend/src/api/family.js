@@ -18,4 +18,8 @@ function revertFamilyRequest(familyRequestSeq, success, fail) {
   api.delete(`/family/request?familyRequestSeq=${familyRequestSeq}`).then(success).catch(fail);
 }
 
-export { getMyFamily, getFamilyRequest, addFamily, revertFamilyRequest };
+function requestAddFamily(memberInfo, success, fail) {
+  api.post(`/family/request`, memberInfo).then(success).catch(fail);
+}
+
+export { getMyFamily, getFamilyRequest, addFamily, revertFamilyRequest, requestAddFamily };
