@@ -79,7 +79,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .build());
 
                 // 오늘 복용해야 한다면
-                if(today.getDayOfWeek().getValue()==day&&time.isAfter(today.toLocalTime())){
+                if(today.getDayOfWeek().getValue()==day){
                     AlarmProtege alarmProtege =
                             alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(today.toLocalDate(),time,member).orElse(null);
 
