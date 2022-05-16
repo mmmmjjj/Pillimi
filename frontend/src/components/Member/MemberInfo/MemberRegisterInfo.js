@@ -205,7 +205,7 @@ function MemberRegisterInfo(props) {
                   e.name = "Moment"
                   onChangeProfile(e)
                 }}
-                inputProps={{inputMode:"none"}}
+                inputProps={{inputMode:"none", placeholder:"생년월일"}}
                 timeFormat={false}></Datetime>
             </FormGroup>
             <FormGroup>
