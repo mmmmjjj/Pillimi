@@ -161,6 +161,8 @@ function MemberInfoModify(props) {
           member_phone: success.data.data.phone,
           member_isprotector: success.data.data.protector
         });
+        setnameok(true);
+        setnumberok(true);
         console.log(success.data.data.nickName);
         props.getheader(String(success.data.data.nickName));
         if (success.data.data.birthDate == null) {
@@ -230,7 +232,7 @@ function MemberInfoModify(props) {
             width: "80%",
             confirmButtonColor: `#0369a1`,
           }).then(function () {
-            props.history.push(`/member-info/member-info-detail/` + memberSeq);
+            props.history.replace(`/member-info/member-info-detail/` + memberSeq);
           });
         },
         (fail) => {
