@@ -277,7 +277,7 @@
 .bootstrap-switch.bootstrap-switch-off .bootstrap-switch-blue,
 .bootstrap-switch.bootstrap-switch-off .bootstrap-switch-orange,
 .bootstrap-switch.bootstrap-switch-off .bootstrap-switch-green {
-  background-color: #e3e3e3;
+  background-color: #0369A1;
 }
 
 .bootstrap-switch-off .bootstrap-switch-handle-on {
@@ -2640,7 +2640,7 @@ fieldset[disabled] .btn-link.active {
   box-shadow: none;
 }
 .has-success .form-control {
-  border-color: #e3e3e3;
+  border-color: #0369A1;
 }
 .form-control:focus {
   border: 1px solid #0369a1;
@@ -2834,8 +2834,8 @@ fieldset[disabled] .btn-link.active {
 
 .input-group-text {
   background-color: #ffffff;
-  border: 1px solid #e3e3e3;
-  border-radius: 30px;
+  border: 1px solid #0369A1;
+  border-radius: 15px;
   color: #555555;
   -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
   -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -2873,7 +2873,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .input-group[disabled] .input-group-text {
-  background-color: #e3e3e3;
+  background-color: #0369A1;
 }
 
 .input-group .input-group-prepend,
@@ -2882,12 +2882,12 @@ fieldset[disabled] .btn-link.active {
 }
 .input-group .input-group-prepend .input-group-text,
 .form-group .input-group-prepend .input-group-text {
-  border-left: 1px solid #e3e3e3;
+  border-left: 1px solid #0369A1;
 }
 
 .input-group .input-group-append .input-group-text,
 .form-group .input-group-append .input-group-text {
-  border-right: 1px solid #e3e3e3;
+  border-right: 1px solid #0369A1;
   padding: 10px 18px 10px 0;
 }
 
@@ -2923,7 +2923,7 @@ fieldset[disabled] .btn-link.active {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: #e3e3e3;
+  background-color: #0369A1;
   color: #888888;
   cursor: not-allowed;
 }
@@ -2947,7 +2947,7 @@ textarea.form-control {
   padding: 10px 10px 0 0;
   resize: none;
   border: none;
-  border-bottom: 1px solid #e3e3e3;
+  border-bottom: 1px solid #0369A1;
   border-radius: 0;
   line-height: 2;
 }
@@ -3023,7 +3023,7 @@ textarea.form-control:active {
   border-radius: 3px;
   top: 0;
   background-color: transparent;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #0369A1;
   -webkit-transition: opacity 0.3s linear;
   -moz-transition: opacity 0.3s linear;
   -o-transition: opacity 0.3s linear;
@@ -3077,7 +3077,7 @@ textarea.form-control:active {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #0369A1;
   display: inline-block;
   position: absolute;
   left: 3px;
@@ -3331,7 +3331,7 @@ textarea.form-control:active {
 }
 
 .pagination .page-item.active > .page-link {
-  color: #e3e3e3;
+  color: #0369A1;
   box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
 }
 .pagination .page-item.active > .page-link,
@@ -7416,7 +7416,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .rdtDays tr .dow {
   text-align: center;
-  border-bottom: 1px solid #e3e3e3;
+  border-bottom: 1px solid #0369A1;
   font-size: 12px;
   text-transform: uppercase;
   font-weight: inherit;

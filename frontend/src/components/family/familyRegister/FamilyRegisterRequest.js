@@ -179,7 +179,14 @@ function FamilyRegisterRequest(props) {
                 <i className="now-ui-icons users_circle-08"></i>
               </InputGroupText>
             </InputGroupAddon>
-            <Input placeholder="성함" type="text" onChange={checkname} value={membername} maxLength="10"></Input>
+            <Input 
+              placeholder="성함" 
+              type="text" 
+              onChange={checkname} 
+              value={membername} 
+              maxLength="10"
+              style={{height:`50px`}}
+              ></Input>
           </InputGroup>
           {nameok == false ? (
             <div
@@ -209,6 +216,7 @@ function FamilyRegisterRequest(props) {
               value={phonenumber}
               pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
               maxLength="13"
+              style={{height:`50px`}}
             ></Input>
           </InputGroup>
           {numberok == false ? (
