@@ -123,7 +123,7 @@ function FamilyRegisterRequest(props) {
       memberInfo,
       (success) => {
         console.log(success);
-        event.preventDefault();
+        // event.preventDefault();
         Swal.fire({
           icon: "success",
           title: "가족 등록을 요청하였습니다.",
