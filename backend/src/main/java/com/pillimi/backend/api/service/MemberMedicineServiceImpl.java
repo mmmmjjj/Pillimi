@@ -79,7 +79,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .build());
 
                 // 오늘 복용해야 한다면
-                if(today.getDayOfWeek().getValue()==day&&time.isAfter(today.toLocalTime())){
+                if(today.getDayOfWeek().getValue()==day){
                     AlarmProtege alarmProtege =
                             alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(today.toLocalDate(),time,member).orElse(null);
 
@@ -249,9 +249,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
             Ingredient ingredient = medicineIngredient.getIngredient();
 
+            int age = LocalDateTime.now().getYear() -  member.getMemberBirthdate().getYear();
+
             //연령대 금기
             Optional<Daa> daaOptional = daaRepository.findByIngredient(ingredient);
-            if (daaOptional.isPresent()) {
+
+            if (daaOptional.isPresent() && daaOptional.get().getDaaAge() < age) {
                 Daa daa = daaOptional.get();
                 return CheckMedicineRes.builder()
                         .checkType(1)
