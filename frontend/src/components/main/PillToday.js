@@ -37,20 +37,20 @@ function PillToday() {
     getMyFamily(
       (response) => {
         setFamilyList(response.data.data);
-        if (familyList !== "") {
+        if (familyList.length !==0) {
           firstFamilySeq = response.data.data[0].memberSeq;
           getPillToday(
             firstFamilySeq,
             (response) => {
               setPillListKey(Object.getOwnPropertyNames(response.data.data));
               setPillList(response.data.data);
-              setLoading(false);
             },
             (error) => {
               console.log(error);
             }
           );
         }
+        setLoading(false);
       },
       (error) => {
         console.log(error);
