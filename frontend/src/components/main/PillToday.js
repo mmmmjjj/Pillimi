@@ -76,6 +76,7 @@ function PillToday() {
   const otherFamily = (memberSeq) => {
     setPillListKey([]);
     setPillList([]);
+    setSelectedFamily(memberSeq);
     getPillToday(
       memberSeq,
       (response) => {
