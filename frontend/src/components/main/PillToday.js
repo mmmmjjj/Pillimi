@@ -37,7 +37,7 @@ function PillToday() {
     getMyFamily(
       (response) => {
         setFamilyList(response.data.data);
-        if (familyList.length !==0) {
+        if (response.data.data.length !==0) {
           firstFamilySeq = response.data.data[0].memberSeq;
           getPillToday(
             firstFamilySeq,
