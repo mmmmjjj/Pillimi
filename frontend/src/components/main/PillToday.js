@@ -164,11 +164,11 @@ function PillToday() {
                 className={`d-flex align-items-center flex-row pl-3 pr-2 ${PillTodayCSS.WhiteBox} ${PillTodayCSS.ItemAlign}`}
               >
                 <div className={`${style.imgsize2} ml-2`}>
-                  {
-                    imageURL !== null ?
+                  {imageURL !== null ? (
                     <img src={imageURL} className={`${style.size}`} alt="pillImg"></img>
-                    : <img src="../../../img/basic.png" alt="basic.png" style={{borderRadius:`10px`}}></img>
-                  }
+                  ) : (
+                    <img src="../../../img/basic.png" alt="basic.png" style={{ borderRadius: `10px` }}></img>
+                  )}
                 </div>
                 <div className="flex-fill" style={{paddingLeft: "20px"}}>
                   <span>{medicineName}</span>
