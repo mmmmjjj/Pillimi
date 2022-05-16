@@ -130,7 +130,9 @@ public class MemberServiceImpl implements MemberService {
 
         }
 
-        if(Objects.equals(req.getNickName(), "")||Objects.equals(req.getBirthDate(), null)||Objects.equals(req.getPhone(), ""))
+        if(Objects.equals(req.getNickName(), "")
+                ||Objects.equals(req.getPhone(), "")
+                ||(Objects.equals(req.getBirthDate(), null)&&member.getMemberIsprotector()==0))
             throw new InvalidException(ErrorCode.INVALID_INPUT_VALUE);
 
         target.setMemberPhone(req.getPhone());
