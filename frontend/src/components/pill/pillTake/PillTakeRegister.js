@@ -127,7 +127,11 @@ function PillTakeRegister(props) {
             width: "80%",
             text: `${props.location.state.medicineName}을(를) 등록했습니다.`,
             confirmButtonColor: `#0369a1`,
-          }).then(gotoMedicineList());
+          }).then((result) => {
+            if (result.isConfirmed) {
+              gotoMedicineList();
+            }
+          });
         },
         (fail) => {
           console.log(fail);
