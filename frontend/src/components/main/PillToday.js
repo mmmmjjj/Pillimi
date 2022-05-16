@@ -170,7 +170,7 @@ function PillToday() {
                     : <img src="../../../img/basic.png" alt="basic.png" style={{borderRadius:`10px`}}></img>
                   }
                 </div>
-                <div className="flex-fill">
+                <div className="flex-fill" style={{paddingLeft: "20px"}}>
                   <span>{medicineName}</span>
                   <br></br>
                   <span>({memberMedicineName})</span>
@@ -310,7 +310,7 @@ function PillToday() {
         <br></br> */}
         <ShowPillList></ShowPillList>
       </div>
-      <Navbar />
+      <Navbar navarray={[true,false,false,false]}/>
     </>
   );
 }
