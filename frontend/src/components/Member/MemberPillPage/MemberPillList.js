@@ -356,7 +356,7 @@ function MemberPillList(props) {
           <PillListPage></PillListPage>
         </div>
       )}
-      <Navbar />
+      <Navbar navarray={[false, false, true, false]}/>
     </>
   );
 }

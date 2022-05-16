@@ -96,6 +96,10 @@ h6 {
   margin: 0px;
   padding: 8px;
   text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .familypagecol2 {
   text-align: center;
@@ -112,8 +116,9 @@ h6 {
   min-height: 100vh;
 }
 .check {
-  box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+  /* box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
     -4px -4px 6px 0 rgba(116, 125, 136, 0.5),
     inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
-    inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4);
+    inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4); */
+  color: #7dd3fc;
 }
