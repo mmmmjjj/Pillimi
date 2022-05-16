@@ -28,7 +28,7 @@ function PillPicture() {
       <div>
         <Button className={PillPictureCSS.SendBtn}>전송</Button>
       </div>
-      <Navbar />
+      <Navbar navarray={[false,false,false,false]}/>
     </>
   );
 }
