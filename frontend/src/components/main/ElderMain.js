@@ -45,8 +45,4 @@ function Menu(params) {
   );
 }
 
-function gotoPillToday() {
-  window.location.href = "/pill-today";
-}
-
 export default ElderMain;
