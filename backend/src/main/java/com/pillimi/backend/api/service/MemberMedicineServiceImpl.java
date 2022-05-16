@@ -249,9 +249,12 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
         for (MedicineIngredient medicineIngredient : medicineIngredients) {
             Ingredient ingredient = medicineIngredient.getIngredient();
 
+            int age = LocalDateTime.now().getYear() -  member.getMemberBirthdate().getYear();
+
             //연령대 금기
             Optional<Daa> daaOptional = daaRepository.findByIngredient(ingredient);
-            if (daaOptional.isPresent()) {
+
+            if (daaOptional.isPresent() && daaOptional.get().getDaaAge() < age) {
                 Daa daa = daaOptional.get();
                 return CheckMedicineRes.builder()
                         .checkType(1)
