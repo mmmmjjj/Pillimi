@@ -23,6 +23,7 @@ function ProtectorTakeAlarm(props) {
     getProtegeSeqAlarmList(
       protegeSeq,
       (success) => {
+        console.log(success.data.data);
         setAlarmList(success.data.data);
       },
       (fail) => {
@@ -65,7 +66,6 @@ function ProtectorTakeAlarm(props) {
     alarmList.forEach((element) => {
       console.log(element.type);
       let time = timeFormat(element.alarmTime);
-      let titleTime = "";
 
       if (element.type === false) {
         result.push(
@@ -104,7 +104,7 @@ function ProtectorTakeAlarm(props) {
           >
             <div>
               <span className={`${style.bold}`}>
-                {element.alarmDate}&nbsp;{titleTime}
+                {element.alarmDate}&nbsp;{element.takeTime.split("T")[1].substring(0, 5)}
               </span>
               <br></br>
             </div>
