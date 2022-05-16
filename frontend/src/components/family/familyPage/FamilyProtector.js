@@ -152,7 +152,7 @@ function FamilyProtector(props) {
           width: "100%"
         }}>
         <i 
-          class="fa fa-solid fa-plus fa-3x" 
+          className="fa fa-solid fa-plus fa-3x" 
           style={{
             position: "absolute",
             left: "45%",
