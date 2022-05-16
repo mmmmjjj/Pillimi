@@ -121,7 +121,6 @@ import { useHistory } from "react-router-dom";
 // reactstrap components
 import style from "../css/MemberPillCheck.module.css";
 import { getMemberMedicineList } from "../../../api/member";
-import PillTakeAlarm from "./PillTakeAlarm";
 import { useSelector } from "react-redux";
 import ProtectorTakeAlarm from "./ProtectorTakeAlarm";
 import Navbar from "layout/Navbar.js";
