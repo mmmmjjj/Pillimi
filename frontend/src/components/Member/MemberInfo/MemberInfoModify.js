@@ -271,7 +271,7 @@ function MemberInfoModify(props) {
                     e.name = "member_birthDate";
                     onChangeProfile(e);
                   }}
-                  // inputProps={inputprops}
+                  inputProps={{inputMode:"none"}}
                   timeFormat={false}
                 ></Datetime>
               </FormGroup>
