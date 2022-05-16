@@ -4,6 +4,7 @@ import { React, useEffect, useState } from "react";
 // reactstrap components
 import { Button, Container } from "reactstrap";
 import MemberPillCheck from "../MemberPillCheck";
+import { useHistory } from "react-router-dom";
 import style from "../css/MemberPillCheck.module.css";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { getProtegeSeqAlarmDetail, deleteProtegeSeqAlarm } from "api/alarm";
@@ -28,6 +29,8 @@ function PillPictureAlarm(props) {
     );
   }, []);
 
+  const history = useHistory();
+
   const gotoAlarmList = (event) => {
     // props.history.locaion.props.onClickHandler(false);
     deleteProtegeSeqAlarm(
@@ -40,7 +43,7 @@ function PillPictureAlarm(props) {
           width: "80%",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
-          props.history.replace(`/member-pill-page/member-pill-list/` + alarm.protegeSeq);
+          props.history.replace(`/member-pill-page/member-pill-list/` + props.location.state.protegeSeq);
         });
       },
       (fail) => {
@@ -54,11 +57,13 @@ function PillPictureAlarm(props) {
     if (alarm != null) {
       alarm.medicineList.forEach((element) => {
         result.push(
-          <span key={element.medicineSeq}>
+          <span key={element.medicineName+element.count}>
             {element.medicineName}({element.memberMedicineName})&nbsp;{element.count}정<br></br>
           </span>
         );
       });
+    } else {
+      result.push(<div key={`nothing`}></div>)
     }
     return result;
   };

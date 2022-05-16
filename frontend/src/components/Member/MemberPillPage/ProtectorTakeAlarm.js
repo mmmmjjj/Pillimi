@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from "react";
 
 // reactstrap components
-import { Row, Col, Container } from "reactstrap";
+import { Row, Col } from "reactstrap";
+import { useHistory } from "react-router-dom";
 import style from "../css/MemberPillCheck.module.css";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import MemberPillPage from "../MemberPillPage";
 import { getProtegeSeqAlarmList } from "api/alarm";
 
 // core components
@@ -49,8 +48,15 @@ function ProtectorTakeAlarm(props) {
     return temp;
   };
 
+  const history = useHistory();
+
   const gotoAlarmDetail = (alarmSeq) => {
-    window.location.href = `/member-pill-check/pill-picture-alarm/${alarmSeq}`;
+    history.push({
+      pathname: `/member-pill-check/pill-picture-alarm/${alarmSeq}`,
+      state: {
+        protegeSeq: protegeSeq,
+      },
+    });
   };
 
   const onClickHandler = (state) => {
@@ -63,7 +69,6 @@ function ProtectorTakeAlarm(props) {
       <div key={`nothing`}></div>;
     }
     alarmList.forEach((element) => {
-      console.log(element.type);
       let time = timeFormat(element.alarmTime);
 
       if (element.type === false) {
@@ -132,7 +137,18 @@ function ProtectorTakeAlarm(props) {
           <Col className="pt-2 pb-2 m-0 border border-top-0 border-dark bg-white" onClick={() => onClickHandler(false)}>
             약
           </Col>
-          <Col className="pt-2 pb-2">복용확인</Col>
+          <Col className="pt-2 pb-2">
+            복용확인
+            {
+              alarmList.length > 0 ?
+              <i
+              className="fa fa-exclamation-circle fa-2x"
+              size="lg"
+              style={{ position: "absolute", color: "red", top: "-14px", right: "7px", zIndex: "1" }}
+            ></i>
+            : <></>
+            }
+          </Col>
         </Row>
         <div className={`pt-3 mb-0 ${style.alarmDescript2}`}>
           <span className={`${style.alarmDescript}`}>💡 미확인 알람이 {alarmList.length}개 있습니다</span>
