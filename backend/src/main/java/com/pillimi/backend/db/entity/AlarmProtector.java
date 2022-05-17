@@ -27,4 +27,10 @@ public class AlarmProtector extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "alarm_protege_seq")
     private AlarmProtege alarmProtege;
+
+    @Column
+    private int medicineCountDetected;
+
+    @Column
+    private int medicineCountTotal;
 }
