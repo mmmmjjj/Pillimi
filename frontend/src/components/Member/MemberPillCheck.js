@@ -44,7 +44,7 @@ function MemberPillCheck(props) {
           <Switch>
             <Route
               exact
-              path={`${props.match.path}/pill-picture-alarm/:alarmSeq`}
+              path={`${props.match.path}/pill-picture-alarm/:alarmSeq/:protegeSeq`}
               render={(props) => <PillPictureAlarm {...props} />}
             />
           </Switch>

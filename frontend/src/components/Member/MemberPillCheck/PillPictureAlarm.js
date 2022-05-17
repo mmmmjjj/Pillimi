@@ -14,6 +14,8 @@ import Swal from "sweetalert2";
 
 function PillPictureAlarm(props) {
   const alarmSeq = props.match.params.alarmSeq;
+  const protegeSeq = props.match.params.protegeSeq;
+
   const [alarm, setAlarm] = useState();
   const [isChecked, setIsChecked] = useState(false);
 
@@ -43,7 +45,7 @@ function PillPictureAlarm(props) {
           width: "80%",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
-          props.history.replace(`/member-pill-page/member-pill-list/` + props.location.state.protegeSeq);
+          props.history.replace(`/member-pill-page/member-pill-list/` + protegeSeq);
         });
       },
       (fail) => {
@@ -57,13 +59,13 @@ function PillPictureAlarm(props) {
     if (alarm != null) {
       alarm.medicineList.forEach((element) => {
         result.push(
-          <span key={element.medicineName+element.count}>
+          <span key={element.medicineName + element.count}>
             {element.medicineName}({element.memberMedicineName})&nbsp;{element.count}정<br></br>
           </span>
         );
       });
     } else {
-      result.push(<div key={`nothing`}></div>)
+      result.push(<div key={`nothing`}></div>);
     }
     return result;
   };

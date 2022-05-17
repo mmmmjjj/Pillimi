@@ -49,10 +49,9 @@
   font-weight: bold !important;
   font-size: 20px !important;
   text-align: center !important;
-  width: 35% !important;
+  width: 80% !important;
   float: left !important;
-  margin-left: 10% !important;
-  margin-right: 10% !important;
+  margin-left: 20% !important;
   display: block !important;
   background-color: #0284c7 !important;
 }
@@ -89,6 +88,7 @@
   font-weight: bold;
   text-align: center;
   cursor: pointer;
+  padding-top: 20px;
 }
 
 .RemoveBtn {
@@ -96,8 +96,7 @@
   font-weight: bold !important;
   font-size: 20px !important;
   text-align: center !important;
-  width: 35% !important;
-  margin-right: 10% !important;
+  width: 80% !important;
   display: block !important;
   background-color: #f44444 !important;
 }
