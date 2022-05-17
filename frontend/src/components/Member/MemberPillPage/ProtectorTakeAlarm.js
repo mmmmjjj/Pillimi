@@ -52,10 +52,10 @@ function ProtectorTakeAlarm(props) {
 
   const gotoAlarmDetail = (alarmSeq) => {
     history.push({
-      pathname: `/member-pill-check/pill-picture-alarm/${alarmSeq}`,
-      state: {
-        protegeSeq: protegeSeq,
-      },
+      pathname: `/member-pill-check/pill-picture-alarm/${alarmSeq}/${protegeSeq}`,
+      // state: {
+      //   protegeSeq: protegeSeq,
+      // },
     });
   };
 
@@ -127,27 +127,30 @@ function ProtectorTakeAlarm(props) {
 
   return (
     <>
-      <div className={`${style.center}`} style={{
+      <div
+        className={`${style.center}`}
+        style={{
           backgroundColor: "#eaf0f8",
           width: "100vw",
           minHeight: "100vh",
           margin: "0 auto",
-        }}>
+        }}
+      >
         <Row xs="2">
           <Col className="pt-2 pb-2 m-0 border border-top-0 border-dark bg-white" onClick={() => onClickHandler(false)}>
             약
           </Col>
           <Col className="pt-2 pb-2">
             복용확인
-            {
-              alarmList.length > 0 ?
+            {alarmList.length > 0 ? (
               <i
-              className="fa fa-exclamation-circle fa-2x"
-              size="lg"
-              style={{ position: "absolute", color: "red", top: "-14px", right: "7px", zIndex: "1" }}
-            ></i>
-            : <></>
-            }
+                className="fa fa-exclamation-circle fa-2x"
+                size="lg"
+                style={{ position: "absolute", color: "red", top: "-14px", right: "7px", zIndex: "1" }}
+              ></i>
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
         <div className={`pt-3 mb-0 ${style.alarmDescript2}`}>
