@@ -34,4 +34,7 @@ public class ProtectorAlarmRes {
 
     @ApiModelProperty(name = "복용약 이미지 주소", example = "???")
     private String photoURL;
+
+    @ApiModelProperty(name = "복용약 이미지 인식 알약 갯수", example = "1")
+    private int medicineCountDetected;
 }

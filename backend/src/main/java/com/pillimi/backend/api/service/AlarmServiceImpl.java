@@ -96,6 +96,7 @@ public class AlarmServiceImpl implements AlarmService {
                 .takeTime(alarmProtector.getCreatedTime().toLocalTime())
                 .photoURL(alarmProtector.getAlarmPhoto())
                 .medicineList(alarmMedicineResList)
+                .medicineCountDetected(alarmProtector.getMedicineCountDetected())
                 .build();
     }
 
