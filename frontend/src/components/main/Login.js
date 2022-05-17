@@ -33,7 +33,7 @@ function Login() {
           <div style={{ width: `50%`, margin: `auto` }}>
             <img src="img/pillclock.png" alt="pillimi"></img>
           </div>
-          <div className={`${LoginCSS.LoginBtnDiv} mt-3`}>
+          <div className={`${LoginCSS.LoginBtnDiv} pt-3`}>
             <br></br>
             <a
               href="https://kauth.kakao.com/oauth/authorize?client_id=74245badb067a597419134fbf90742dd&redirect_uri=https://pillimi.com/callback
