@@ -1,6 +1,5 @@
 /*eslint-disable*/
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import { Button, Container, FormGroup, Form, Input } from "reactstrap";
