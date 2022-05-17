@@ -17,9 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -129,34 +130,68 @@ public class AlarmServiceImpl implements AlarmService {
 
         String imgURL = s3Uploader.upload(file,"upload");
 
-        List<Member> protectors = familyRepository.findFamilyByMember(alarm.getProtege());
+        StringBuilder response = null;
+        try {
+            URL url = new URL("https://k6a307.p.ssafy.io/detect/");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "applicaiton/json;utf-8");
+            con.setRequestProperty("Accept", "application/json");
+            con.setDoOutput(true);
 
-        // 보호자 알림 생성
-        for (Member protector : protectors) {
-            AlarmProtector alarmProtector = alarmProtectorRepository.save(AlarmProtector.builder()
-                    .protector(protector)
-                    .alarmProtege(alarm)
-                    .alarmPhoto(imgURL)
-                    .build());
+            String jsonInputString = "{\"url\":\"" + imgURL + "\"}";
 
-            String token = protector.getMemberFcmToken();
-            String title = "복용 완료 알림";
-            String body = alarm.getProtege().getMemberNickname()+"님이 약을 복용하였습니다.";
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
 
-            if(token!=null) {
-                try {
-                    String url = "https://pillimi.com/member-pill-check/pill-picture-alarm/"+alarmProtector.getAlarmSeq();
-                    firebaseMessageService.sendMessageToProtector(token, title, body, imgURL,url);
-                } catch (IOException e) {
-                    log.info(protector.getMemberNickname() + " 님에게 보호자 알림 전송을 실패하였습니다.");
+
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                response = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                System.out.println(response.toString());
+            }
+            int cnt = Integer.parseInt(response.toString().substring(response.length()-2,response.length()-1));
+
+            List<Member> protectors = familyRepository.findFamilyByMember(alarm.getProtege());
+
+            // 보호자 알림 생성
+            for (Member protector : protectors) {
+                AlarmProtector alarmProtector = alarmProtectorRepository.save(AlarmProtector.builder()
+                        .protector(protector)
+                        .alarmProtege(alarm)
+                        .alarmPhoto(imgURL)
+                        .medicineCountDetected(cnt)
+                        .build());
+
+                String token = protector.getMemberFcmToken();
+                String title = "복용 완료 알림";
+                String body = alarm.getProtege().getMemberNickname()+"님이 약을 복용하였습니다.";
+
+                if(token!=null) {
+                    try {
+                        String url2 = "https://pillimi.com/member-pill-check/pill-picture-alarm/"+alarmProtector.getAlarmSeq();
+                        firebaseMessageService.sendMessageToProtector(token, title, body, imgURL,url2);
+                    } catch (IOException e) {
+                        log.info(protector.getMemberNickname() + " 님에게 보호자 알림 전송을 실패하였습니다.");
+                    }
                 }
             }
+
+            // 해당 시간 복용 완료 처리
+            memberMedicineRepository
+                    .updateMemberMedicine(alarm.getProtege(),alarm.getAlarmTime(), LocalDate.now().getDayOfWeek().getValue());
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        // 해당 시간 복용 완료 처리
-        memberMedicineRepository
-                .updateMemberMedicine(alarm.getProtege(),alarm.getAlarmTime(), LocalDate.now().getDayOfWeek().getValue());
-
     }
 }
 
