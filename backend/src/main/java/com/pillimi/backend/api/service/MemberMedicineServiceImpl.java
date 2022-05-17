@@ -141,6 +141,27 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                         .intakeTime(time)
                         .intakeIsconfirm(false)
                         .build());
+
+                LocalDateTime today = LocalDateTime.now();
+
+                // 오늘 복용해야 한다면
+                if(today.getDayOfWeek().getValue()==day){
+                    AlarmProtege alarmProtege =
+                            alarmRepository.findByAlarmDateAndAlarmTimeAndProtege(today.toLocalDate(),time,member).orElse(null);
+
+                    if(alarmProtege==null){
+                        alarmRepository.save(AlarmProtege.builder()
+                                .protege(member)
+                                .alarmTime(time)
+                                .alarmDate(today.toLocalDate())
+                                .medicineCountTotal(req.getIntakeCount())
+                                .build());
+                    }
+                    else {
+                        int count = alarmProtege.getMedicineCountTotal();
+                        alarmProtege.setMedicineCountTotal(count+req.getIntakeCount());
+                    }
+                }
             }
         }
 
