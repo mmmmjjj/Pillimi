@@ -9,7 +9,7 @@ const MyWebView = ({
   pushUrl,
   webviewRef,
 }) => {
-  const BASE_URL = 'https://k6a307.p.ssafy.io';
+  const BASE_URL = 'https://pillimi.com';
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
 

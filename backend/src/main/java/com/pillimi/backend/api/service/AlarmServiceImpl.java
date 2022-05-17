@@ -145,7 +145,7 @@ public class AlarmServiceImpl implements AlarmService {
 
             if(token!=null) {
                 try {
-                    String url = "https://k6a307.p.ssafy.io/member-pill-check/pill-check-alarm/"+alarmProtector.getAlarmSeq();
+                    String url = "https://pillimi.com/member-pill-check/pill-check-alarm/"+alarmProtector.getAlarmSeq();
                     firebaseMessageService.sendMessageToProtector(token, title, body, imgURL,url);
                 } catch (IOException e) {
                     log.info(protector.getMemberNickname() + " 님에게 보호자 알림 전송을 실패하였습니다.");
