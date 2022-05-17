@@ -29,7 +29,7 @@ const App = () => {
     webviewRef = _ref;
   };
 
-  const [pushUrl, setPushUrl] = useState('https://k6a307.p.ssafy.io');
+  const [pushUrl, setPushUrl] = useState('https://pillimi.com');
 
   /** webview 로딩 완료시 */
   const handleEndLoading = async () => {

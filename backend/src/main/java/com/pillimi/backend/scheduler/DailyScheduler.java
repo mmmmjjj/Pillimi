@@ -99,7 +99,7 @@ public class DailyScheduler {
             String title = "약 드실 시간입니다.💙";
             String body = now.format(DateTimeFormatter.ofPattern("HH시 mm분"))
                     + " 알림을 눌러 약을 복용해주세요.";
-            String url = "https://k6a307.p.ssafy.io/family/camera/"+alarm.getAlarmSeq();
+            String url = "https://pillimi.com/family/camera/"+alarm.getAlarmSeq();
             try {
                 firebaseMessageService.sendMessageWithoutImage(token,title,body,url);
             } catch (IOException e) {
