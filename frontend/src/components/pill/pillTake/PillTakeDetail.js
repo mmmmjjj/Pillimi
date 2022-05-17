@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Badge, Button, FormGroup } from "reactstrap";
+import { Badge, Button, FormGroup, Row, Col } from "reactstrap";
 
 import Swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
@@ -213,24 +213,28 @@ function PillTakeDetail(props) {
         {pillInfo.remarkContent ? <h5>{pillInfo.remarkContent}</h5> : <h5>없음</h5>}
       </div>
       <br></br>
-      {
-        isProtector ? 
-        <div>
-          <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={() => gotoPillModify(memberMedicineSeq)}>
-            수정
-          </Button>
-          <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={onSubmit}>
-            삭제
-          </Button>
+      {isProtector ? (
+        <Row>
+          <Col xs="6" sm="6" md="6">
+            <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={() => gotoPillModify(memberMedicineSeq)}>
+              수정
+            </Button>
+          </Col>
+          <Col xs="6" sm="6" md="6">
+            <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={onSubmit}>
+              삭제
+            </Button>
+          </Col>
           <br></br>
           <br></br>
           <h3 className={PillTakeRegisterCSS.More} onClick={() => gotoPillDetail(pillInfo.medicineSeq)}>
             약 상세 정보 더보기
           </h3>
           <br></br>
-        </div>
-        : <></>
-      }
+        </Row>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
