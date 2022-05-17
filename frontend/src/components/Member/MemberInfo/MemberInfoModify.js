@@ -71,9 +71,7 @@ function MemberInfoModify(props) {
   const onChangeProfile = (e) => {
     if (moment.isMoment(e)) {
       setProfile({ ...profile, [e.name]: e._d });
-      console.log(profile.member_birthDate);
     } else {
-      console.log(e.target.value);
       setProfile({ ...profile, [e.target.name]: e.target.value });
     }
   };
@@ -224,7 +222,6 @@ function MemberInfoModify(props) {
         phone: profile.member_phone,
         protector: profile.member_isprotector
       };
-      console.log(memberInfo);
       modifyMemberInfo(
         memberInfo,
         (success) => {

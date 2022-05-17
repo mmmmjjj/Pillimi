@@ -18,24 +18,20 @@ function Cameratest(props) {
     setPicture(true);
   };
   const retry = () => {
-    console.log(picimg.split(","));
     setPicture(false);
   };
 
   const history = useHistory();
 
   const sendImage = (event) => {
-    console.log(picimg);
     let picimgData = picimg.split(",");
     let imgInfo = {
       alarmSeq: Number(alarmSeq),
       image: picimgData[1],
     };
-    console.log(imgInfo);
     addPillTakePicture(
       imgInfo,
       (success) => {
-        console.log(success);
         event.preventDefault();
         Swal.fire({
           icon: "success",

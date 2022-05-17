@@ -33,7 +33,6 @@ function PillTakeDetail(props) {
         if (response.status === 200) {
           setPillInfo(response.data.data);
         }
-        console.log(response.data.data);
       },
       (error) => {
         console.log(error);
@@ -144,7 +143,6 @@ function PillTakeDetail(props) {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("isConfirmed");
         deleteMemberMedicine(
           memberMedicineSeq,
           memberSeq,

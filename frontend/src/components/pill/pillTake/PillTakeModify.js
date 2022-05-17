@@ -86,25 +86,12 @@ function PillTakeModify(props) {
         saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) + pillRegister.time[j].slice(2, 5));
       } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
     }
-    console.log(saveintakeTime);
     for (var k = 0; k < saveintakeTime.length; k++) {
       if (parseInt(saveintakeTime[k].slice(0, 2)) > 23) {
         saveintakeTime[k] = "00" + saveintakeTime[k].slice(2, 5);
       }
     }
-    console.log(saveintakeTime);
-    console.log({
-      endDay: pillRegister.endDate,
-      intakeCount: parseInt(pillRegister.volume),
-      intakeDay: saveintakeDay,
-      intakeTime: saveintakeTime,
-      medicineSeq: props.location.state.info.medicineSeq,
-      memberMedicineName: pillRegister.nick,
-      memberMedicineSeq: parseInt(memberMedicineSeq),
-      memberSeq: parseInt(props.location.state.memberSeq),
-      remarkContent: pillRegister.caution,
-      startDay: pillRegister.startDate,
-    });
+
     if (!pillRegister.nick) {
       Swal.fire({
         icon: "error",
@@ -169,7 +156,6 @@ function PillTakeModify(props) {
           startDay: pillRegister.startDate,
         },
         (success) => {
-          console.log(success);
           Swal.fire({
             icon: "success",
             text: "수정하였습니다.",
@@ -186,13 +172,11 @@ function PillTakeModify(props) {
 
   const changeday = (index) => {
     setday([...checkday.slice(0, index), !checkday[index], ...checkday.slice(index + 1)]);
-    console.log(checkday);
   };
 
   const onChangetimeinput = (e) => {
     settimeinput(e.format("hh:mm A"));
     settimecheck(false);
-    console.log(timeinput);
   };
 
   const pushtime = () => {
@@ -205,7 +189,6 @@ function PillTakeModify(props) {
     } else {
       settimecheck(true);
     }
-    console.log(pillRegister.time);
   };
 
   const deletetime = (index) => {
@@ -253,7 +236,6 @@ function PillTakeModify(props) {
         ...pillRegister,
         [e.target.name]: e.target.value,
       });
-      console.log(checkday);
     }
   };
 
