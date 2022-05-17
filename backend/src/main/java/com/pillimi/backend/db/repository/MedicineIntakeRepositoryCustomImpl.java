@@ -26,13 +26,14 @@ public class MedicineIntakeRepositoryCustomImpl implements MedicineIntakeReposit
     public List<SchedulerDTO> findAlarmByDate(LocalDate date){
         return jpaQueryFactory.select(Projections.constructor(SchedulerDTO.class,
                 qMemberMedicine.member,
-                qMedicineIntake.intakeTime))
-                .distinct()
+                qMedicineIntake.intakeTime,
+                qMemberMedicine.memberMedicineCount.sum()))
                 .from(qMedicineIntake)
                 .join(qMemberMedicine)
                 .on(qMedicineIntake.memberMedicine.eq(qMemberMedicine))
                 .where(qMedicineIntake.intakeDay.eq(date.getDayOfWeek().getValue())
                         .and(qMemberMedicine.memberMedicineNow.eq(true)))
+                .groupBy(qMedicineIntake.intakeTime,qMemberMedicine.member)
                 .fetch();
     }
 

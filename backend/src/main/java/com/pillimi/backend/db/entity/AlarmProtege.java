@@ -29,4 +29,7 @@ public class AlarmProtege extends BaseTimeEntity {
     @JoinColumn(name = "protege_seq")
     private Member protege;
 
+    @Column
+    private int medicineCountTotal;
+
 }
