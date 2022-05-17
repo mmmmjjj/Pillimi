@@ -7,11 +7,13 @@ import PillTakeRegisterCSS from "../css/PillTakeRegister.module.css";
 import { getMemberMedicineInfo, deleteMemberMedicine } from "../../../api/member.js";
 
 import Header from "components/Headers/Header";
+import { useSelector } from "react-redux";
 
 function PillTakeDetail(props) {
   const memberMedicineSeq = props.match.params.memberMedicineSeq;
   const memberSeq = props.history.location.state.memberSeq;
 
+  const isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
   const [pillInfo, setPillInfo] = useState({
     medicineName: "",
     memberMedicineName: "",
@@ -213,18 +215,24 @@ function PillTakeDetail(props) {
         {pillInfo.remarkContent ? <h5>{pillInfo.remarkContent}</h5> : <h5>없음</h5>}
       </div>
       <br></br>
-      <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={() => gotoPillModify(memberMedicineSeq)}>
-        수정
-      </Button>
-      <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={onSubmit}>
-        삭제
-      </Button>
-      <br></br>
-      <br></br>
-      <h3 className={PillTakeRegisterCSS.More} onClick={() => gotoPillDetail(pillInfo.medicineSeq)}>
-        약 상세 정보 더보기
-      </h3>
-      <br></br>
+      {
+        isProtector ? 
+        <div>
+          <Button className={PillTakeRegisterCSS.ModifyBtn} onClick={() => gotoPillModify(memberMedicineSeq)}>
+            수정
+          </Button>
+          <Button className={PillTakeRegisterCSS.RemoveBtn} onClick={onSubmit}>
+            삭제
+          </Button>
+          <br></br>
+          <br></br>
+          <h3 className={PillTakeRegisterCSS.More} onClick={() => gotoPillDetail(pillInfo.medicineSeq)}>
+            약 상세 정보 더보기
+          </h3>
+          <br></br>
+        </div>
+        : <></>
+      }
     </>
   );
 }

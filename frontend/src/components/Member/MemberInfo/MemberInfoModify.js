@@ -11,10 +11,14 @@ import moment from "moment";
 import "moment/locale/ko";
 import Navbar from "layout/Navbar.js";
 import Swal from "sweetalert2";
+import Loading from "components/main/Loading";
+import { loginAction } from "actions/memberAction";
+import { useDispatch } from "react-redux";
 
 // core components
 
 function MemberInfoModify(props) {
+  const dispatch = useDispatch();
   const memberSeq = props.match.params.memberSeq;
 
   const [profile, setProfile] = useState({
@@ -24,6 +28,7 @@ function MemberInfoModify(props) {
     member_phone: "",
     member_isprotector: 0,
   });
+  const [loading, setLoading] = useState(true);
   const [nameok, setnameok] = useState(false);
 
   const checkname = (event) => {
@@ -164,6 +169,7 @@ function MemberInfoModify(props) {
         if (success.data.data.birthDate == null) {
           setIsProtector(true);
         }
+        setLoading(false);
       },
       (fail) => {
         console.log(fail);
@@ -227,6 +233,14 @@ function MemberInfoModify(props) {
             width: "80%",
             confirmButtonColor: `#0369a1`,
           }).then(function () {
+            let tmp = {
+              first: false,
+              memberImage: profile.member_img,
+              memberSeq: memberSeq,
+              nickName: profile.member_nickname,
+              protector: profile.member_isprotector,
+            };
+            dispatch(loginAction(tmp));
             gotoMemberInfoDetail();
           });
         },
@@ -241,7 +255,8 @@ function MemberInfoModify(props) {
     props.history.replace(`/member-info/member-info-detail/` + memberSeq);
   };
 
-  if (!isProtector) {
+  if (loading) return <Loading></Loading>
+  if (!profile.member_isprotector) {
     return (
       <>
         <div id="pillimi" className={`${style.center}`}>
@@ -271,7 +286,7 @@ function MemberInfoModify(props) {
                     e.name = "member_birthDate";
                     onChangeProfile(e);
                   }}
-                  inputProps={{inputMode:"none"}}
+                  inputProps={{inputMode:"none", placeholder:"생년월일"}}
                   timeFormat={false}
                 ></Datetime>
               </FormGroup>
@@ -288,11 +303,9 @@ function MemberInfoModify(props) {
                     maxLength="13"
                   ></Input>
                 </span>
-                <br></br>
               </FormGroup>
             </Form>
           </div>
-          <br></br>
           <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>
             완료
           </Button>
@@ -339,7 +352,6 @@ function MemberInfoModify(props) {
               </FormGroup>
             </Form>
           </div>
-          <br></br>
           <Button color="sky" className={`${style.bigbnt}`} onClick={modifyInfo}>
             완료
           </Button>

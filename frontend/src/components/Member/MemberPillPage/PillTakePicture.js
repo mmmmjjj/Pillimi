@@ -40,11 +40,11 @@ function PillTakePicture(props) {
     pillList.forEach((element) => {
       result.push(
         <div style={{ width: `100%` }} key={element}>
-          {
-            element.imageURL !== null ?
+          {element.imageURL !== null ? (
             <img src={element.imageURL} alt="약 사진" className={`pt-4 mr-4`} style={{ width: `80%` }}></img>
-            : <img src="../../../img/basic.png" alt="basic.png" style={{width:`60%`, borderRadius:`10px`}}></img>
-          }
+          ) : (
+            <img src="../../../img/basic.png" alt="basic.png" style={{ width: `60%`, borderRadius: `10px` }}></img>
+          )}
           <div>
             <span>
               <h5>{element.medicineName}</h5>
@@ -61,7 +61,10 @@ function PillTakePicture(props) {
 
   return (
     <>
-      <div className={`${style.center} ${style.whole}`}>
+      <div
+        className={`${style.center}`}
+        style={{ width: "100vw", minHeight: "100vh", backgroundColor: "#eaf0f8", margin: "0 auto" }}
+      >
         <div className="pl-4 pt-3">
           <PillImageList></PillImageList>
         </div>

@@ -129,7 +129,7 @@ function MemberRegisterInfo(props) {
       isProtector: isProtector === true? 1 : 0,
       phone: profile.phone
     };
-    if(profile.phone===""){
+    if(profile.phone==="" || !numberok){
       Swal.fire({
         icon: "warning",
         title: "전화번호를 입력해주세요",
@@ -205,6 +205,7 @@ function MemberRegisterInfo(props) {
                   e.name = "Moment"
                   onChangeProfile(e)
                 }}
+                inputProps={{inputMode:"none", placeholder:"생년월일"}}
                 timeFormat={false}></Datetime>
             </FormGroup>
             <FormGroup>

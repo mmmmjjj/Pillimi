@@ -13,6 +13,7 @@ import { getPillInfo } from "../../api/pill.js";
 import { getMyFamily } from "../../api/family.js";
 import { getMemberMedicineCheck } from "../../api/member.js";
 import Navbar from "layout/Navbar.js";
+import Loading from "components/main/Loading";
 
 function PillDetail(props) {
   const pillSeq = props.match.params.pillSeq;
@@ -36,7 +37,7 @@ function PillDetail(props) {
   const [registerPillModal, setRegisterPillModal] = React.useState(false);
 
   const history = useHistory();
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     getPillDetail(pillSeq);
     getFamilyList();
@@ -67,6 +68,7 @@ function PillDetail(props) {
           validity: response.data.data.medicineDetail.validity,
           ingredient: temp,
         });
+        setLoading(false);
       },
       (error) => {
         console.log(error);
@@ -181,6 +183,9 @@ function PillDetail(props) {
   const Effect = (props) => {
     let result = [];
 
+    var strTest = pillInfo.effect;
+    var temp = strTest.replace(/\\n/g, "\n");
+
     if (props.effect === true) {
       result.push(
         <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.effect)}>
@@ -188,7 +193,7 @@ function PillDetail(props) {
         </span>
       );
     } else {
-      result.push(<span>{pillInfo.effect}</span>);
+      result.push(<span>{temp}</span>);
     }
 
     return result;
@@ -197,6 +202,9 @@ function PillDetail(props) {
   const Caution = (props) => {
     let result = [];
 
+    var strTest = pillInfo.caution;
+    var temp = strTest.replace(/\\n/g, "\n");
+
     if (props.caution === true) {
       result.push(
         <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.caution)}>
@@ -204,7 +212,7 @@ function PillDetail(props) {
         </span>
       );
     } else {
-      result.push(<span>{pillInfo.caution}</span>);
+      result.push(<span className={PillDetailCSS.AboutPill}>{temp}</span>);
     }
 
     return result;
@@ -213,6 +221,9 @@ function PillDetail(props) {
   const Dosage = (props) => {
     let result = [];
 
+    var strTest = pillInfo.dosage;
+    var temp = strTest.replace(/\\n/g, "\n");
+
     if (props.dosage === true) {
       result.push(
         <span style={{ cursor: "pointer" }} onClick={() => ShowAlert(pillInfo.dosage)}>
@@ -220,7 +231,7 @@ function PillDetail(props) {
         </span>
       );
     } else {
-      result.push(<pre>{pillInfo.dosage}</pre>);
+      result.push(<span>{temp}</span>);
     }
 
     return result;
@@ -237,6 +248,7 @@ function PillDetail(props) {
     });
     return <div></div>;
   }
+  if (loading) return <Loading></Loading>;
   return (
     <>
       <Header header="알약 정보" canBack={true}></Header>
@@ -288,7 +300,7 @@ function PillDetail(props) {
         <Label value={"유통기한"} content={pillInfo.validity}></Label>
         <Label value={"성분표"} content={pillInfo.ingredient}></Label>
       </div>
-      <Navbar navarray={[false,true,false,false]}/>
+      <Navbar navarray={[false, true, false, false]} />
 
       <Modal
         centered
