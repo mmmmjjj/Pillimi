@@ -17,9 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -95,6 +96,7 @@ public class AlarmServiceImpl implements AlarmService {
                 .takeTime(alarmProtector.getCreatedTime().toLocalTime())
                 .photoURL(alarmProtector.getAlarmPhoto())
                 .medicineList(alarmMedicineResList)
+                .medicineCountDetected(alarmProtector.getMedicineCountDetected())
                 .build();
     }
 
@@ -129,6 +131,42 @@ public class AlarmServiceImpl implements AlarmService {
 
         String imgURL = s3Uploader.upload(file,"upload");
 
+        int cnt = 0;
+        StringBuilder response = null;
+        
+        try {
+            URL url = new URL("https://k6a307.p.ssafy.io/detect/");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "applicaiton/json;utf-8");
+            con.setRequestProperty("Accept", "application/json");
+            con.setDoOutput(true);
+
+            String jsonInputString = "{\"url\":\"" + imgURL + "\"}";
+
+            try (OutputStream os = con.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+
+            try (BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                response = new StringBuilder();
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+                System.out.println(response.toString());
+            }
+            cnt = Integer.parseInt(response.toString().substring(response.length()-2,response.length()-1));
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         List<Member> protectors = familyRepository.findFamilyByMember(alarm.getProtege());
 
         // 보호자 알림 생성
@@ -137,6 +175,7 @@ public class AlarmServiceImpl implements AlarmService {
                     .protector(protector)
                     .alarmProtege(alarm)
                     .alarmPhoto(imgURL)
+                    .medicineCountDetected(cnt)
                     .build());
 
             String token = protector.getMemberFcmToken();
@@ -145,8 +184,8 @@ public class AlarmServiceImpl implements AlarmService {
 
             if(token!=null) {
                 try {
-                    String url = "https://pillimi.com/member-pill-check/pill-picture-alarm/"+alarmProtector.getAlarmSeq();
-                    firebaseMessageService.sendMessageToProtector(token, title, body, imgURL,url);
+                    String url2 = "https://pillimi.com/member-pill-check/pill-picture-alarm/"+alarmProtector.getAlarmSeq();
+                    firebaseMessageService.sendMessageToProtector(token, title, body, imgURL,url2);
                 } catch (IOException e) {
                     log.info(protector.getMemberNickname() + " 님에게 보호자 알림 전송을 실패하였습니다.");
                 }
@@ -156,7 +195,6 @@ public class AlarmServiceImpl implements AlarmService {
         // 해당 시간 복용 완료 처리
         memberMedicineRepository
                 .updateMemberMedicine(alarm.getProtege(),alarm.getAlarmTime(), LocalDate.now().getDayOfWeek().getValue());
-
     }
 }
 
