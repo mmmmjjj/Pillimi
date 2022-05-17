@@ -204,8 +204,7 @@ def image_list(request):
 
             # print(run_detector(detector, downloaded_image_path))
             cnt = run_detector(detector, url)
-
-	    print(cnt)
+            print(cnt)
 
             data = {'url': url, 'count': cnt}
 
