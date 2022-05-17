@@ -240,8 +240,8 @@ function MemberInfoModify(props) {
               nickName: profile.member_nickname,
               protector: profile.member_isprotector,
             };
-            const loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
-            const protegeSeq = useSelector((state) => state.protegeInfo.protegeInfo.memberSeq);
+            let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
+            let protegeSeq = useSelector((state) => state.protegeInfo.protegeInfo.memberSeq);
             if(memberSeq === loginSeq) dispatch(loginAction(tmp));
             else if (memberSeq === protegeSeq) {
               tmp = {
