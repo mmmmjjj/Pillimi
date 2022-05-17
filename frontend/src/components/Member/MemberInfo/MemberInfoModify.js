@@ -20,7 +20,8 @@ import { setProtegeInfoAction } from "actions/protegeAction";
 function MemberInfoModify(props) {
   const dispatch = useDispatch();
   const memberSeq = props.match.params.memberSeq;
-
+  const loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
+  const protegeSeq = useSelector((state) => state.protegeInfo.protegeInfo.memberSeq);
   const [profile, setProfile] = useState({
     member_nickname: "",
     member_img: "",
@@ -240,8 +241,6 @@ function MemberInfoModify(props) {
               nickName: profile.member_nickname,
               protector: profile.member_isprotector,
             };
-            let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
-            let protegeSeq = useSelector((state) => state.protegeInfo.protegeInfo.memberSeq);
             if(memberSeq === loginSeq) dispatch(loginAction(tmp));
             else if (memberSeq === protegeSeq) {
               tmp = {
