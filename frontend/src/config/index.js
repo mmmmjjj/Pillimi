@@ -1,3 +1,3 @@
-const API_BASE_URL = "https://pillimi.com/api/v1";
+const API_BASE_URL = "https://k6a307.p.ssafy.io/api/v1";
 
 export { API_BASE_URL };
