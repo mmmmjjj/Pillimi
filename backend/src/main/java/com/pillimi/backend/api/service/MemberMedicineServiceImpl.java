@@ -90,6 +90,10 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                                 .alarmDate(today.toLocalDate())
                                 .build());
                     }
+                    else {
+                        int count = alarmProtege.getMedicineCountTotal();
+                        alarmProtege.setMedicineCountTotal(count+req.getIntakeCount());
+                    }
                 }
             }
         }
