@@ -88,6 +88,7 @@ public class MemberMedicineServiceImpl implements MemberMedicineService {
                                 .protege(member)
                                 .alarmTime(time)
                                 .alarmDate(today.toLocalDate())
+                                .medicineCountTotal(req.getIntakeCount())
                                 .build());
                     }
                     else {
