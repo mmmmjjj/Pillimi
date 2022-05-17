@@ -22,34 +22,27 @@ function Login() {
   return (
     <>
       {!isLogin ? (
-        <Fragment >
-          
-          <div style={{textAlign:`center`, paddingTop:`30%`}}>
-            {/* <h1 style={{fontFamily:`LeeSeoyun`}}>Pillimi</h1> */}
-            {/* <span>부모님을 위한 복약 알리미</span> */}
-            <h1 style={{fontFamily:`LeeSeoyun`, fontWeight:`bold`, color:`#0369A1`, marginBottom:`0px`}}>필리미</h1>
-            <div style={{width:`50%`, margin:`auto`, paddingBottom:`0px`}}>
-              <img src="img/logo2.png" alt="pillimi"></img>
-            </div>
-            <h3 style={{fontFamily:`LeeSeoyun`}}> 어르신을 위한 복약 알리미</h3>          
+        <Fragment>
+          <div style={{ textAlign: `center`, paddingTop: `30%` }}>
+            <h1 style={{ fontFamily: `ONE-Mobile-POP`, marginBottom: `0px` }}>필리미</h1>
+            <h3 style={{ fontFamily: `LeeSeoyun` }} className="pt-3">
+              {" "}
+              어르신을 위한 복약 알리미
+            </h3>
           </div>
-          {/* <div style={{width:`50%`, margin:`auto`}}>
-            <img src="img/alarm.png" alt="pillimi" ></img>
-          </div> */}
-          <div className={`${LoginCSS.LoginBtnDiv} mt-5`}>
+          <div style={{ width: `50%`, margin: `auto` }}>
+            <img src="img/pillclock.png" alt="pillimi"></img>
+          </div>
+          <div className={`${LoginCSS.LoginBtnDiv} mt-3`}>
             <br></br>
             <a
-              href="https://kauth.kakao.com/oauth/authorize?client_id=74245badb067a597419134fbf90742dd&redirect_uri=http://localhost:3000/callback
+              href="https://kauth.kakao.com/oauth/authorize?client_id=74245badb067a597419134fbf90742dd&redirect_uri=https://pillimi.com/callback
 &response_type=code"
             >
               <img src={kakao_login} className={LoginCSS.LoginBtn} alt="kakao_login" />
             </a>
             <br></br>
             <br></br>
-
-            {/* <Link to="/pill-today">
-          <img src={naver_login} className={LoginCSS.LoginBtn} alt="naver_login" />
-        </Link> */}
           </div>
         </Fragment>
       ) : (
