@@ -75,6 +75,7 @@ public class DailyScheduler {
                     .alarmDate(today)
                     .alarmTime(item.getTime())
                     .protege(item.getMember())
+                    .medicineCountTotal(item.getCount())
                     .build());
         }
 

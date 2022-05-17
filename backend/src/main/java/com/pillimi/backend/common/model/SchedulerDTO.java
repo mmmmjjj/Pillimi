@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalTime;
 
+@ToString
 @Builder
 @Getter
 @Setter
@@ -15,4 +16,6 @@ public class SchedulerDTO {
     Member member;
 
     LocalTime time;
+
+    int count;
 }
