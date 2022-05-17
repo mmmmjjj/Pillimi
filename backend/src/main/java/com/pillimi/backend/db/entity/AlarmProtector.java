@@ -31,6 +31,4 @@ public class AlarmProtector extends BaseTimeEntity {
     @Column
     private int medicineCountDetected;
 
-    @Column
-    private int medicineCountTotal;
 }
