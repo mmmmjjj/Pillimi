@@ -1,6 +1,5 @@
 /*eslint-disable*/
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 // reactstrap components
 import { Button, Container, FormGroup, Form, Input } from "reactstrap";
@@ -13,14 +12,16 @@ import Navbar from "layout/Navbar.js";
 import Swal from "sweetalert2";
 import Loading from "components/main/Loading";
 import { loginAction } from "actions/memberAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setProtegeInfoAction } from "actions/protegeAction";
 
 // core components
 
 function MemberInfoModify(props) {
   const dispatch = useDispatch();
   const memberSeq = props.match.params.memberSeq;
-
+  const loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
+  const protegeSeq = useSelector((state) => state.protegeInfo.memberSeq);
   const [profile, setProfile] = useState({
     member_nickname: "",
     member_img: "",
@@ -240,7 +241,14 @@ function MemberInfoModify(props) {
               nickName: profile.member_nickname,
               protector: profile.member_isprotector,
             };
-            dispatch(loginAction(tmp));
+            if(memberSeq === loginSeq) dispatch(loginAction(tmp));
+            else if (memberSeq === protegeSeq) {
+              tmp = {
+                memberSeq: memberSeq,
+                nickName: profile.member_nickname
+              }
+              dispatch(setProtegeInfoAction(tmp));
+            }
             gotoMemberInfoDetail();
           });
         },
