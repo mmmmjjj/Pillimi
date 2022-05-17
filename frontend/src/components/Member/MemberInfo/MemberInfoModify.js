@@ -13,7 +13,8 @@ import Navbar from "layout/Navbar.js";
 import Swal from "sweetalert2";
 import Loading from "components/main/Loading";
 import { loginAction } from "actions/memberAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setProtegeInfoAction } from "actions/protegeAction";
 
 // core components
 
@@ -240,7 +241,16 @@ function MemberInfoModify(props) {
               nickName: profile.member_nickname,
               protector: profile.member_isprotector,
             };
-            dispatch(loginAction(tmp));
+            const loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
+            const protegeSeq = useSelector((state) => state.protegeInfo.protegeInfo.memberSeq);
+            if(memberSeq === loginSeq) dispatch(loginAction(tmp));
+            else if (memberSeq === protegeSeq) {
+              tmp = {
+                memberSeq: memberSeq,
+                nickName: profile.member_nickname
+              }
+              dispatch(setProtegeInfoAction(tmp));
+            }
             gotoMemberInfoDetail();
           });
         },
