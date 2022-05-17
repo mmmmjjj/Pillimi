@@ -43,7 +43,8 @@ function PillPictureAlarm(props) {
           width: "80%",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
-          props.history.replace(`/member-pill-page/member-pill-list/` + props.location.state.protegeSeq);
+          history.replace({pathname: `/member-pill-page/member-pill-list/` + props.location.state.protegeSeq,
+          state: {right: true}});
         });
       },
       (fail) => {
