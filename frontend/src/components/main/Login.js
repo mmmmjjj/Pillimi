@@ -36,7 +36,7 @@ function Login() {
           <div className={`${LoginCSS.LoginBtnDiv} mt-3`}>
             <br></br>
             <a
-              href="https://kauth.kakao.com/oauth/authorize?client_id=74245badb067a597419134fbf90742dd&redirect_uri=http://localhost:3000/callback
+              href="https://kauth.kakao.com/oauth/authorize?client_id=74245badb067a597419134fbf90742dd&redirect_uri=https://pillimi.com/callback
 &response_type=code"
             >
               <img src={kakao_login} className={LoginCSS.LoginBtn} alt="kakao_login" />
