@@ -25,7 +25,8 @@ public class AlarmProtectorRepositoryCustomImpl implements AlarmProtectorReposit
                         qAlarmProtector.alarmProtege.alarmDate,
                         qAlarmProtector.alarmProtege.alarmTime,
                         qAlarmProtector.createdTime,
-                        qAlarmProtector.alarmPhoto))
+                        qAlarmProtector.alarmPhoto,
+                        qAlarmProtector.medicineCountDetected))
                 .from(qAlarmProtector)
                 .where(qAlarmProtector.alarmProtege.protege.memberSeq.eq(protege.getMemberSeq())
                         .and(qAlarmProtector.protector.eq(protector)))
