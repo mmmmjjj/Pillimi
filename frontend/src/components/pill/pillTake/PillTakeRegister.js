@@ -36,7 +36,14 @@ function PillTakeRegister(props) {
     }
     var saveintakeTime = [];
     for (var j = 0; j < pillRegister.time.length; j++) {
-      if (pillRegister.time[j].slice(6, 8) === "오후") {
+      if (pillRegister.time[j].slice(0, 2) ==="12"){
+        if(pillRegister.time[j].slice(6, 8) ==="오후"){
+          saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2))) + pillRegister.time[j].slice(2, 5));
+        } else {
+          saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2))-12) + pillRegister.time[j].slice(2, 5));
+        }
+      }
+      else if (pillRegister.time[j].slice(6, 8) === "오후") {
         saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) + pillRegister.time[j].slice(2, 5));
       } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
     }
