@@ -234,7 +234,7 @@ function MemberInfoModify(props) {
             let tmp = {
               first: false,
               memberImage: profile.member_img,
-              memberSeq: memberSeq,
+              memberSeq: Number(memberSeq),
               nickName: profile.member_nickname,
               protector: profile.member_isprotector,
             };
