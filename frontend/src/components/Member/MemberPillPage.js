@@ -36,8 +36,6 @@ function MemberPillPage(props) {
     });
   }
   useEffect(() => {
-    console.log(memberSeq);
-    console.log(protegeName);
     if (isProtector) {
       setHeader(protegeName);
     } else {

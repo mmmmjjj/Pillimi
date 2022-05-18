@@ -25,19 +25,16 @@ function FamilyRegisterReply(props) {
         history.push(`/`);
       });
     } else {
-      console.log("정상 접근");
       setFamilyRequestSeq(props.history.location.state.memberInfo.reqSeq);
       setname(props.history.location.state.memberInfo.name);
       setnumber(props.history.location.state.memberInfo.phone);
     }
-    console.log(props.history.location);
   }, [props, history]);
 
   const onSubmityes = (event) => {
     addFamily(
       familyRequestSeq,
       (success) => {
-        console.log(success);
         event.preventDefault();
         Swal.fire({
           icon: "success",
@@ -57,7 +54,6 @@ function FamilyRegisterReply(props) {
     revertFamilyRequest(
       familyRequestSeq,
       (success) => {
-        console.log(success);
         event.preventDefault();
         Swal.fire({
           icon: "warning",

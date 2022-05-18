@@ -52,7 +52,6 @@ function Callback() {
           memberSeq,
           async (response) => {
             if (response.status === 200) {
-              console.log(fcmToken);
               if (isFirst) {
                 gotoRegisterInfo();
               } else {

@@ -17,7 +17,6 @@ function MyFamily(props) {
   };
 
   useEffect(() => {
-    console.log("마운트");
     getFamilyList();
     getFamilyRequestList();
   }, []);
@@ -28,8 +27,6 @@ function MyFamily(props) {
     getMyFamily(
       (success) => {
         setFamilyList(success.data.data);
-        console.log(success);
-        console.log(success.data.data);
       },
       (fail) => {
         console.log(fail);
@@ -44,7 +41,6 @@ function MyFamily(props) {
       (success) => {
         setPreFamilyList(success.data.data);
         if (success.data.data.length > 0) setNewAlarm(true);
-        console.log(success);
       },
       (fail) => {
         console.log(fail);
@@ -57,8 +53,6 @@ function MyFamily(props) {
   };
 
   const gotoFamilyResponse = (memberInfo) => {
-    // console.log(memberInfo.requestName);
-    // console.log(memberInfo.requestPhone);
     props.history.push({
       pathname: `/family/reply`,
       state: {
