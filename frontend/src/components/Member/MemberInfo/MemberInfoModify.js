@@ -238,8 +238,8 @@ function MemberInfoModify(props) {
               nickName: profile.member_nickname,
               protector: profile.member_isprotector,
             };
-            if(memberSeq === loginSeq) dispatch(loginAction(tmp));
-            else if (memberSeq === protegeSeq) {
+            if(Number(memberSeq) === Number(loginSeq)) dispatch(loginAction(tmp));
+            else if (Number(memberSeq) === Number(protegeSeq)) {
               tmp = {
                 memberSeq: memberSeq,
                 nickName: profile.member_nickname
