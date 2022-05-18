@@ -42,7 +42,7 @@ function FamilyRegisterReply(props) {
           width: "80%",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
-          history.push(`/family/myfamily`);
+          history.replace(`/family/myfamily`);
         });
       },
       (fail) => {
@@ -61,7 +61,7 @@ function FamilyRegisterReply(props) {
           width: "80%",
           confirmButtonColor: `#C4C4C4`,
         }).then(function () {
-          history.push(`/family/myfamily`);
+          history.replace(`/family/myfamily`);
         });
       },
       (fail) => {
