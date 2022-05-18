@@ -71,9 +71,7 @@ function MemberInfoModify(props) {
   const onChangeProfile = (e) => {
     if (moment.isMoment(e)) {
       setProfile({ ...profile, [e.name]: e._d });
-      console.log(profile.member_birthDate);
     } else {
-      console.log(e.target.value);
       setProfile({ ...profile, [e.target.name]: e.target.value });
     }
   };
@@ -224,7 +222,6 @@ function MemberInfoModify(props) {
         phone: profile.member_phone,
         protector: profile.member_isprotector
       };
-      console.log(memberInfo);
       modifyMemberInfo(
         memberInfo,
         (success) => {
@@ -237,12 +234,12 @@ function MemberInfoModify(props) {
             let tmp = {
               first: false,
               memberImage: profile.member_img,
-              memberSeq: memberSeq,
+              memberSeq: Number(memberSeq),
               nickName: profile.member_nickname,
               protector: profile.member_isprotector,
             };
-            if(memberSeq === loginSeq) dispatch(loginAction(tmp));
-            else if (memberSeq === protegeSeq) {
+            if(Number(memberSeq) === Number(loginSeq)) dispatch(loginAction(tmp));
+            else if (Number(memberSeq) === Number(protegeSeq)) {
               tmp = {
                 memberSeq: memberSeq,
                 nickName: profile.member_nickname

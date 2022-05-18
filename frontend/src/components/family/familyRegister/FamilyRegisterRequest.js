@@ -121,7 +121,6 @@ function FamilyRegisterRequest(props) {
     requestAddFamily(
       memberInfo,
       (success) => {
-        console.log(success);
         Swal.fire({
           icon: "success",
           title: "가족 등록을 요청하였습니다.",
