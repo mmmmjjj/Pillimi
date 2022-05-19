@@ -27,6 +27,7 @@ function FamilyProtector(props) {
   });
 
   useEffect(() => {
+    props.getnavbar(true);
     getFamilyList();
   }, []);
 

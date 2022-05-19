@@ -17,6 +17,7 @@ function MyFamily(props) {
   };
 
   useEffect(() => {
+    props.getnavbar(true);
     getFamilyList();
     getFamilyRequestList();
   }, []);
