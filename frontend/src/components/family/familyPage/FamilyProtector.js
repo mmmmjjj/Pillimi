@@ -29,7 +29,7 @@ function FamilyProtector(props) {
   useEffect(() => {
     props.getnavbar(true);
     getFamilyList();
-  }, []);
+  }, [props]);
 
   const [familyList, setFamilyList] = useState([]);
 

@@ -20,7 +20,7 @@ function MyFamily(props) {
     props.getnavbar(true);
     getFamilyList();
     getFamilyRequestList();
-  }, []);
+  }, [props]);
 
   const [familyList, setFamilyList] = useState([]);
 
