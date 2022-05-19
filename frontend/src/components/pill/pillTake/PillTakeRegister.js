@@ -121,23 +121,39 @@ function PillTakeRegister(props) {
           startDay: pillRegister.startDate,
         },
         (success) => {
-          console.log(success);
-          Swal.fire({
-            icon: "success",
-            width: "80%",
-            text: `${props.location.state.medicineName}을(를) 등록했습니다.`,
-            confirmButtonColor: `#0369a1`,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              gotoMedicineList();
-            }
-          });
+          if (success.status === 200) {
+            Swal.fire({
+              icon: "success",
+              width: "80%",
+              text: `${props.location.state.medicineName}을(를) 등록했습니다.`,
+              confirmButtonColor: `#0369a1`,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                gotoMedicineList();
+              }
+            });
+          }
         },
         (fail) => {
-          console.log(fail);
+          if (fail.response.status === 403) {
+            Swal.fire({
+              icon: "error",
+              width: "80%",
+              text: `이미 등록된 약입니다.`,
+              confirmButtonColor: `#0369a1`,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                gotoSearch();
+              }
+            });
+          }
         }
       );
     }
+  };
+
+  const gotoSearch = () => {
+    window.location.href = `/pill-search`;
   };
 
   const changeday = (index) => {
