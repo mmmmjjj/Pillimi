@@ -25,19 +25,16 @@ function FamilyRegisterReply(props) {
         history.push(`/`);
       });
     } else {
-      console.log("정상 접근");
       setFamilyRequestSeq(props.history.location.state.memberInfo.reqSeq);
       setname(props.history.location.state.memberInfo.name);
       setnumber(props.history.location.state.memberInfo.phone);
     }
-    console.log(props.history.location);
   }, [props, history]);
 
   const onSubmityes = (event) => {
     addFamily(
       familyRequestSeq,
       (success) => {
-        console.log(success);
         event.preventDefault();
         Swal.fire({
           icon: "success",
@@ -45,7 +42,7 @@ function FamilyRegisterReply(props) {
           width: "80%",
           confirmButtonColor: `#0369a1`,
         }).then(function () {
-          history.push(`/family/myfamily`);
+          history.replace(`/family/myfamily`);
         });
       },
       (fail) => {
@@ -57,7 +54,6 @@ function FamilyRegisterReply(props) {
     revertFamilyRequest(
       familyRequestSeq,
       (success) => {
-        console.log(success);
         event.preventDefault();
         Swal.fire({
           icon: "warning",
@@ -65,7 +61,7 @@ function FamilyRegisterReply(props) {
           width: "80%",
           confirmButtonColor: `#C4C4C4`,
         }).then(function () {
-          history.push(`/family/myfamily`);
+          history.replace(`/family/myfamily`);
         });
       },
       (fail) => {

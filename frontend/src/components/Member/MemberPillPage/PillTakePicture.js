@@ -19,7 +19,6 @@ function PillTakePicture(props) {
     getAlarmPillList(
       alarmSeq,
       (success) => {
-        console.log(success.data.data);
         setPillList(success.data.data.pillList);
         setMemberName(success.data.data.nickName);
       },
@@ -30,7 +29,6 @@ function PillTakePicture(props) {
   }, []);
 
   const gotoCamera = () => {
-    console.log("hi");
     props.history.push(`/family/camera/${alarmSeq}`);
     // window.location.href = `/family/camera/${alarmSeq}`
   };

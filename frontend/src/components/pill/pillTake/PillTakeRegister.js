@@ -36,28 +36,22 @@ function PillTakeRegister(props) {
     }
     var saveintakeTime = [];
     for (var j = 0; j < pillRegister.time.length; j++) {
-      if (pillRegister.time[j].slice(6, 8) === "오후") {
+      if (pillRegister.time[j].slice(0, 2) === "12") {
+        if (pillRegister.time[j].slice(6, 8) === "오후") {
+          saveintakeTime.push("12" + pillRegister.time[j].slice(2, 5));
+        } else {
+          saveintakeTime.push("00" + pillRegister.time[j].slice(2, 5));
+        }
+      } else if (pillRegister.time[j].slice(6, 8) === "오후") {
         saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) + pillRegister.time[j].slice(2, 5));
       } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
     }
-    console.log(saveintakeTime);
     for (var k = 0; k < saveintakeTime.length; k++) {
       if (parseInt(saveintakeTime[k].slice(0, 2)) > 23) {
         saveintakeTime[k] = "00" + saveintakeTime[k].slice(2, 5);
       }
     }
-    console.log(saveintakeTime);
-    console.log({
-      endDay: pillRegister.endDate,
-      intakeCount: parseInt(pillRegister.volume),
-      intakeDay: saveintakeDay,
-      intakeTime: saveintakeTime,
-      medicineSeq: parseInt(props.location.state.medicineSeq),
-      memberMedicineName: pillRegister.nick,
-      memberSeq: parseInt(props.location.state.memberSeq),
-      remarkContent: pillRegister.caution,
-      startDay: pillRegister.startDate,
-    });
+
     if (!pillRegister.nick) {
       Swal.fire({
         icon: "error",
@@ -158,13 +152,11 @@ function PillTakeRegister(props) {
 
   const changeday = (index) => {
     setday([...checkday.slice(0, index), !checkday[index], ...checkday.slice(index + 1)]);
-    console.log(checkday);
   };
 
   const onChangetimeinput = (e) => {
     settimeinput(e.format("hh:mm A"));
     settimecheck(false);
-    console.log(timeinput);
   };
 
   const pushtime = () => {
@@ -177,7 +169,6 @@ function PillTakeRegister(props) {
     } else {
       settimecheck(true);
     }
-    console.log(pillRegister.time);
   };
 
   const deletetime = (index) => {

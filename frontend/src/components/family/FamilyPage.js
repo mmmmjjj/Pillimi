@@ -60,12 +60,12 @@ function Family(props) {
           />
           <Route
             path={`${basicurl}/myfamily`}
-            render={(props) => <MyFamily getheader={getheader} {...props} />}
+            render={(props) => <MyFamily getheader={getheader} getnavbar={getnavbar} {...props} />}
           />
           <Route
             path={`${basicurl}/Protector`}
             render={(props) => (
-              <FamilyProtector getheader={getheader} {...props} />
+              <FamilyProtector getheader={getheader} getnavbar={getnavbar} {...props} />
             )}
           />
           <Route

@@ -13,16 +13,13 @@ function FamilyProtector(props) {
   const [modalName, setModalName] = useState("");
 
   const toggle = (num, str) => {
-    console.log(num);
     setModalNum(num);
     setModalName(str);
     setmodalbool(!modalbool);
   };
   // const [FamilyData, setFamilyData] = useState([])
   const getFamilyData = () => {
-    getMyFamily((success) => {
-      console.log(success);
-    });
+    getMyFamily();
   };
 
   useEffect(() => {
@@ -30,9 +27,10 @@ function FamilyProtector(props) {
   });
 
   useEffect(() => {
-    console.log("마운트");
+    props.getnavbar(true);
+    props.getheader("가족");
     getFamilyList();
-  }, []);
+  }, [props]);
 
   const [familyList, setFamilyList] = useState([]);
 
@@ -40,8 +38,6 @@ function FamilyProtector(props) {
     getMyFamily(
       (success) => {
         setFamilyList(success.data.data);
-        console.log(success);
-        console.log(success.data.data);
       },
       (fail) => {
         console.log(fail);
@@ -78,7 +74,6 @@ function FamilyProtector(props) {
   };
 
   const ProtegeModal = () => {
-    console.log(modalnum);
     return (
       <Modal isOpen={modalbool} toggle={(e) => toggle(-1, "", e)} centered>
         <Row style={{ padding: "20px", borderBottom: "1px solid black" }} onClick={gotoMemberInfoDetail}>
@@ -100,7 +95,6 @@ function FamilyProtector(props) {
   };
 
   const gotoMedicineList = () => {
-    console.log(modalName + " " + modalnum);
     dispatch(setProtegeInfoAction({ memberSeq: modalnum, nickName: modalName }));
     window.location.href = `/member-pill-page/member-pill-list/` + modalnum;
   };
