@@ -28,6 +28,7 @@ function FamilyProtector(props) {
 
   useEffect(() => {
     props.getnavbar(true);
+    props.getheader("가족");
     getFamilyList();
   }, [props]);
 
