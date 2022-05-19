@@ -36,14 +36,13 @@ function PillTakeRegister(props) {
     }
     var saveintakeTime = [];
     for (var j = 0; j < pillRegister.time.length; j++) {
-      if (pillRegister.time[j].slice(0, 2) ==="12"){
-        if(pillRegister.time[j].slice(6, 8) ==="오후"){
+      if (pillRegister.time[j].slice(0, 2) === "12") {
+        if (pillRegister.time[j].slice(6, 8) === "오후") {
           saveintakeTime.push("12" + pillRegister.time[j].slice(2, 5));
         } else {
           saveintakeTime.push("00" + pillRegister.time[j].slice(2, 5));
         }
-      }
-      else if (pillRegister.time[j].slice(6, 8) === "오후") {
+      } else if (pillRegister.time[j].slice(6, 8) === "오후") {
         saveintakeTime.push(String(parseInt(pillRegister.time[j].slice(0, 2)) + 12) + pillRegister.time[j].slice(2, 5));
       } else saveintakeTime.push(pillRegister.time[j].slice(0, 5));
     }
@@ -52,7 +51,7 @@ function PillTakeRegister(props) {
         saveintakeTime[k] = "00" + saveintakeTime[k].slice(2, 5);
       }
     }
-    
+
     if (!pillRegister.nick) {
       Swal.fire({
         icon: "error",
@@ -116,22 +115,39 @@ function PillTakeRegister(props) {
           startDay: pillRegister.startDate,
         },
         (success) => {
-          Swal.fire({
-            icon: "success",
-            width: "80%",
-            text: `${props.location.state.medicineName}을(를) 등록했습니다.`,
-            confirmButtonColor: `#0369a1`,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              gotoMedicineList();
-            }
-          });
+          if (success.status === 200) {
+            Swal.fire({
+              icon: "success",
+              width: "80%",
+              text: `${props.location.state.medicineName}을(를) 등록했습니다.`,
+              confirmButtonColor: `#0369a1`,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                gotoMedicineList();
+              }
+            });
+          }
         },
         (fail) => {
-          console.log(fail);
+          if (fail.response.status === 403) {
+            Swal.fire({
+              icon: "error",
+              width: "80%",
+              text: `이미 등록된 약입니다.`,
+              confirmButtonColor: `#0369a1`,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                gotoSearch();
+              }
+            });
+          }
         }
       );
     }
+  };
+
+  const gotoSearch = () => {
+    window.location.href = `/pill-search`;
   };
 
   const changeday = (index) => {

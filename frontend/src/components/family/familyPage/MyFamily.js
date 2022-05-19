@@ -17,9 +17,11 @@ function MyFamily(props) {
   };
 
   useEffect(() => {
+    props.getnavbar(true);
+    props.getheader("가족");
     getFamilyList();
     getFamilyRequestList();
-  }, []);
+  }, [props]);
 
   const [familyList, setFamilyList] = useState([]);
 
