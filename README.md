@@ -57,6 +57,10 @@ Server : 김중우
 - MySQL - `v8.0.27`
 - Swagger - `v3`
 
+## App
+
+- React-Native
+
 ## Infra
 
 - AWS EC2 Ubuntu 20.04
