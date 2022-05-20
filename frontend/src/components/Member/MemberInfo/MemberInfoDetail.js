@@ -1,0 +1,148 @@
+/*eslint-disable*/
+import React, { useState, useEffect } from "react";
+
+// reactstrap components
+import { Button } from "reactstrap";
+import style from "../css/MemberInfo.module.css";
+import { getMemberInfoDetail } from "../../../api/member";
+import { useSelector } from "react-redux";
+import { logoutAction } from "actions/memberAction";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import Navbar from "layout/Navbar.js";
+
+// core components
+
+function MemberInfoDetail(props) {
+  const memberSeq = props.match.params.memberSeq;
+  const dispatch = useDispatch();
+  let loginSeq = useSelector((state) => state.memberInfo.memberInfo.memberSeq);
+  let isLogin = useSelector((state) => state.memberInfo.isLogin);
+  let isProtector = useSelector((state) => state.memberInfo.memberInfo.protector);
+  const [profile, setProfile] = useState({
+    member_nickname: "",
+    member_img: "",
+    member_birthDate: "",
+    member_phone: "",
+    member_isprotector: 0,
+  });
+  useEffect(() => {
+    getMemberDetail(memberSeq);
+  }, []);
+
+  const getMemberDetail = (memberSeq) => {
+    getMemberInfoDetail(
+      memberSeq,
+      (success) => {
+        setProfile({
+          member_nickname: success.data.data.nickName,
+          member_img: success.data.data.memberImage,
+          member_birthDate: success.data.data.birthDate,
+          member_phone: success.data.data.phone,
+          member_isprotector: success.data.data.protector,
+        });
+        props.getheader(String(success.data.data.nickName));
+      },
+      (fail) => {
+        console.log(fail);
+      }
+    );
+  };
+
+  function gotoMemberInfoModify() {
+    props.history.push("/member-info/member-info-modify/" + memberSeq);
+  }
+
+  function Content() {
+    if (!profile.member_isprotector) {
+      return (
+        <div>
+          <Label value={"닉네임"} content={profile.member_nickname}></Label>
+          <Label value={"생년월일"} content={profile.member_birthDate}></Label>
+          <Label value={"전화번호"} content={profile.member_phone}></Label>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Label value={"닉네임"} content={profile.member_nickname}></Label>
+          <Label value={"전화번호"} content={profile.member_phone}></Label>
+        </div>
+      );
+    }
+  }
+
+  function LogOutBtn() {
+    if (loginSeq == memberSeq) {
+      return (
+        <Button color="danger" className={`${style.bigbnt}`} onClick={LogOut}>
+          로그아웃
+        </Button>
+      );
+    } else {
+      return <></>;
+    }
+  }
+
+  const ModiBtn = () => {
+    if (loginSeq == memberSeq || isProtector) {
+      return (
+        <Button color="sky" className={`${style.bigbnt}`} onClick={gotoMemberInfoModify}>
+          수정
+        </Button>
+      );
+    } else {
+      return <div></div>;
+    }
+  };
+
+  function LogOut() {
+    Swal.fire({
+      icon: "success",
+      text: "로그아웃 되었습니다.",
+      width: "80%",
+      confirmButtonColor: `#0369a1`,
+    }).then(function () {
+      //history.push(`/`)
+      dispatch(logoutAction());
+      localStorage.removeItem("ACCESS_TOKEN");
+      props.history.replace(`/`);
+    });
+    // dispatch(logoutAction());
+    // localStorage.removeItem('ACCESS_TOKEN');
+    // window.location.href="/"
+  }
+
+  if (isLogin) {
+    return (
+      <>
+        <div className={`${style.center}`}>
+          <div className={`${style.top}`}>
+            <img src={profile.member_img} alt="프로필 사진" className={`mt-5 ${style.imgsize}`}></img>
+            <br></br>
+            <Content></Content>
+            <br></br>
+          </div>
+          <ModiBtn></ModiBtn>
+          <LogOutBtn></LogOutBtn>
+        </div>
+        <Navbar navarray={[false,false,false,true]}/>
+      </>
+    );
+  } else {
+    return <div></div>;
+  }
+}
+
+function Label(params) {
+  return (
+    <>
+      <label className={`mt-3 ${style.infolabel}`}>{params.value}</label>
+      <br></br>
+      <span>{params.content}</span>
+      <br></br>
+    </>
+  );
+}
+
+export default MemberInfoDetail;

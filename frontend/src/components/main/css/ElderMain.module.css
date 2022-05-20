@@ -1,0 +1,24 @@
+.MainTitle {
+  text-align: center;
+}
+.MainText {
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+.Header {
+  height: 35px;
+}
+.Whole {
+  background-color: #eaf0f8;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+}
+.WhiteBox {
+  background-color: white;
+}
+.WhiteBoxHeight {
+  height: 17px;
+}
