@@ -1,0 +1,124 @@
+body {
+  margin: 0px;
+}
+#reg_caution {
+  text-align: center;
+  font-size: large;
+  background-color: #eaf0f8;
+  padding: 1rem;
+}
+.row {
+  width: 100%;
+  margin: 0px;
+  justify-content: center;
+  vertical-align: middle;
+}
+.activebtn {
+  background-color: #0ea5e9;
+  font-size: x-large;
+}
+.unactivebtn {
+  background-color: #777777;
+  font-size: x-large;
+}
+.tooltip-inner {
+  background-color: red;
+  color: white;
+  font-size: large;
+}
+.input-group {
+  margin: 0px;
+}
+.confirmbutton {
+  font-size: large;
+}
+hr {
+  background-color: #676767;
+  margin-bottom: 0px;
+}
+#outsidecon {
+  width: 100%;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+}
+.onTab {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  padding: 0px;
+  align-items: center;
+}
+.offTab {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  border-bottom: 1px;
+  border-color: #676767;
+  height: 50px;
+  align-items: center;
+  padding: 0px;
+}
+.list-group-item {
+  margin-top: 10px;
+}
+.listimg {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 70px;
+}
+.listitemtext {
+  text-align: left;
+  vertical-align: middle;
+  margin: auto;
+}
+.familyh3 {
+  margin: 0px;
+}
+.textdiv {
+  position: relative;
+  display: inline-block;
+  font-size: large;
+  font-weight: bold;
+}
+.Exclamation {
+  position: absolute;
+  color: red;
+  font-size: x-large;
+  right: 20px;
+  top: 20px;
+}
+h6 {
+  margin: 0px;
+}
+.navcol {
+  margin: 0px;
+  padding: 8px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.familypagecol2 {
+  text-align: center;
+  vertical-align: middle;
+  margin: auto;
+}
+.familypagecol1 {
+  text-align: left;
+  vertical-align: middle;
+  margin: auto;
+  padding-left: 0px;
+}
+#root {
+  min-height: 100vh;
+}
+.check {
+  /* box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.5),
+    -4px -4px 6px 0 rgba(116, 125, 136, 0.5),
+    inset -4px -4px 6px 0 rgba(255, 255, 255, 0.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, 0.4); */
+  color: #7dd3fc;
+}

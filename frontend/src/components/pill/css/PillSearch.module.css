@@ -1,0 +1,97 @@
+hr {
+  background-color: #676767;
+}
+
+.Whole {
+  background-color: #eaf0f8;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.PillDetailTitle {
+  font-weight: bold;
+  text-align: center;
+}
+
+.SearchInput {
+  background-color: white !important;
+  margin-left: 10% !important;
+  margin-right: 5% !important;
+  width: 52.5% !important;
+  height: 6% !important;
+  float: left !important;
+  border-radius: 10px !important;
+}
+
+.SearchInput:focus {
+  border-color: #0284c7 !important;
+}
+
+.SearchBtn {
+  color: black !important;
+  border-radius: 5px !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  width: 20% !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  display: block !important;
+  background-color: #0284c7 !important;
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+}
+
+.SearchBtn:hover,
+.SearchBtn:active,
+.SearchBtn:focus {
+  background-color: #1f96d1 !important;
+  color: whitesmoke !important;
+}
+
+.PillList {
+  margin-left: 10% !important;
+  width: 77.5% !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  word-break: break-all;
+  min-height: 9vh;
+  height: 70px;
+}
+
+.PillText {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.Img {
+  width: 17%;
+  /* margin-top: 3%; */
+  margin-left: 3%;
+  border-radius: 5px;
+}
+
+.PillName {
+  /* margin-top: 4%; */
+  margin-left: 5%;
+  font-size: 17px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+i {
+  float: right;
+  margin-right: 2%;
+}
+
+.AlertText {
+  margin-left: 10% !important;
+}
+
+.Background {
+  background-color: #eaf0f8;
+}
